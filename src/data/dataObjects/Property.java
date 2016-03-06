@@ -79,11 +79,11 @@ public class Property {
         if (!correctPropertyID)
             return "The introduced property ID format is not correct";
 
-        boolean correctTitle = title != null && title.length() <= 20;
+        boolean correctTitle = title != null && title.length() <= 20 && !title.isEmpty();
         if (!correctTitle)
             return "The introduced property title format is not correct";
 
-        boolean correctLocation = location != null && location.length() <= 15;
+        boolean correctLocation = location != null && location.length() <= 15 && !location.isEmpty();
         if (!correctLocation)
             return "The introduced property location format is not correct";
 
@@ -111,11 +111,11 @@ public class Property {
         if (!correctPricePerDay)
             return "The introduced property price per day format is not correct";
 
-        boolean correctType = type != null && type.length() <= 20;
+        boolean correctType = type != null && type.length() <= 20 && !type.isEmpty();
         if (!correctType)
             return "The introduced property type format is not correct";
 
-        boolean correctDescription = description != null && description.length() <= 500;
+        boolean correctDescription = description != null && description.length() <= 500 && !description.isEmpty();
         if (!correctDescription)
             return "The introduced property description format is not correct";
 

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="JAVA_MODULE" version="4">
-  <component name="NewModuleRootManager" inherit-compiler-output="false">
-    <output url="file://$MODULE_DIR$/production/EasyRentProduction" />
-    <output-test url="file:///test/EasyRentTestOutput" />
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
@@ -15,5 +13,6 @@
     <orderEntry type="library" name="postgresql-9.3-1100.jdbc41" level="project" />
     <orderEntry type="library" name="postgresql-9.4-1200.jdbc41" level="project" />
     <orderEntry type="library" name="junit-4.12" level="project" />
+    <orderEntry type="library" name="hamcrest-core-1.3" level="project" />
   </component>
 </module>
