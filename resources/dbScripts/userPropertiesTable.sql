@@ -1,0 +1,14 @@
+CREATE TABLE USER_PROPERTIES (
+  username    VARCHAR(10)   NOT NULL,
+  propertyID  NUMERIC(8, 0) NOT NULL,
+
+  CONSTRAINT pk_userProperties PRIMARY KEY (username, propertyID),
+  CONSTRAINT fk_up_username FOREIGN KEY (username)
+    REFERENCES "USER"(username)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+  CONSTRAINT fk_up_propertyID FOREIGN KEY (propertyID)
+    REFERENCES PROPERTY(propertyID)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
+);
