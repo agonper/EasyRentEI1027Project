@@ -1,6 +1,6 @@
 package dataTests.doTests;
 
-import data.dataObjects.Property;
+import models.transfer_objects.Property;
 import org.junit.Test;
 
 import javax.management.InvalidAttributeValueException;
