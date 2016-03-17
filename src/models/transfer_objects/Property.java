@@ -29,4 +29,9 @@ public class Property {
         // TODO: Implement
         return null;
     }
+
+    public List<Photo> getPhotos() {
+        // TODO: Implement
+        return null;
+    }
 }
