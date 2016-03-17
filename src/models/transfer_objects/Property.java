@@ -25,12 +25,22 @@ public class Property {
         return null;
     }
 
+    public List<AvailabilityPeriod> getAvailabilityPeriods() {
+        // TODO: Implement
+        return null;
+    }
+
     public List<BookingProposal> getBookingProposals() {
         // TODO: Implement
         return null;
     }
 
     public List<Photo> getPhotos() {
+        // TODO: Implement
+        return null;
+    }
+
+    public List<Service> getServices() {
         // TODO: Implement
         return null;
     }

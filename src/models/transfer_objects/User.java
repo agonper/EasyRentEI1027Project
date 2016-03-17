@@ -31,4 +31,12 @@ public class User {
         // TODO: Implement
         return null;
     }
+
+    public void activate() {
+        // TODO: Implement
+    }
+
+    public void deactivate() {
+        // TODO: Implement
+    }
 }
