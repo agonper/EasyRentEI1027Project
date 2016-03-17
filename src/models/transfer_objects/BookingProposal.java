@@ -11,7 +11,7 @@ public class BookingProposal {
     public String tenantID;
     public Date startDate;
     public Date endDate;
-    public BPStatus status;
+    public ProposalStatus status;
     public String paymentReference;
     public float totalAmount;
     public int numberOfTenants;

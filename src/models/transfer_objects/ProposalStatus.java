@@ -1,11 +1,9 @@
 package models.transfer_objects;
 
-import java.security.PublicKey;
-
 /**
  * Created by Alberto on 17/03/2016.
  */
-public enum BPStatus {
+public enum ProposalStatus {
     PENDING,
     ACCEPTED,
     REJECTED;
@@ -14,8 +12,8 @@ public enum BPStatus {
         return this.name().toLowerCase();
     }
 
-    public static BPStatus obtainStatus(String serializedStatus) throws StatusNotFoundException {
-        BPStatus status = findSuitableStatus(serializedStatus);
+    public static ProposalStatus obtainStatusFor(String serializedStatus) throws StatusNotFoundException {
+        ProposalStatus status = findSuitableStatus(serializedStatus);
         if (status == null) {
             throw new StatusNotFoundException(serializedStatus);
         } else {
@@ -23,15 +21,15 @@ public enum BPStatus {
         }
     }
 
-    private static BPStatus findSuitableStatus(String serializedStatus) {
-        BPStatus suitableStatus = null;
-        for (BPStatus status : BPStatus.values()) {
+    private static ProposalStatus findSuitableStatus(String serializedStatus) {
+        ProposalStatus suitableStatus = null;
+        for (ProposalStatus status : ProposalStatus.values()) {
             suitableStatus = status.getStatusIfSuitable(serializedStatus);
         }
         return suitableStatus;
     }
 
-    private BPStatus getStatusIfSuitable(String serializerStatus) {
+    private ProposalStatus getStatusIfSuitable(String serializerStatus) {
         if (isSuitableStatus(serializerStatus)) {
             return this;
         }

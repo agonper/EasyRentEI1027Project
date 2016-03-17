@@ -12,7 +12,7 @@ public enum UserRole {
         return this.name().toLowerCase();
     }
 
-    public static UserRole obtainRole(String serializedRole) throws RoleNotFoundException {
+    public static UserRole obtainRoleFor(String serializedRole) throws RoleNotFoundException {
         UserRole role = findSuitableRole(serializedRole);
         if (role == null) {
             throw new RoleNotFoundException(serializedRole);
