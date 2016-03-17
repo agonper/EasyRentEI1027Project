@@ -17,7 +17,7 @@ public class User {
     public String phoneNumber;
     public String postalAddress;
     public String country;
-    public String postCode;
+    public int postCode;
     public Date signUpDate;
     public Boolean active;
     public Date deactivatedSince;
