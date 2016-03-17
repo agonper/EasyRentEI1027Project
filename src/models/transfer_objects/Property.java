@@ -1,4 +1,4 @@
-package data.dataObjects;
+package models.transfer_objects;
 
 import javax.management.InvalidAttributeValueException;
 import java.util.Date;
