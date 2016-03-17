@@ -6,7 +6,7 @@ import java.sql.Date;
  * Created by daniel on 27/02/16.
  */
 public class BookingProposal {
-    public String trackingNumber;
+    public String proposalID;
     public String propertyID;
     public String tenantID;
     public Date startDate;
