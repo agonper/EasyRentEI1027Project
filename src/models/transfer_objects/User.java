@@ -9,7 +9,7 @@ import java.util.List;
 public class User {
     public String username;
     public String DNI;
-    public UserRoles role;
+    public UserRole role;
     public String password;
     public String name;
     public String surname;
@@ -19,7 +19,7 @@ public class User {
     public String country;
     public int postCode;
     public Date signUpDate;
-    public Boolean active;
+    public boolean active;
     public Date deactivatedSince;
 
     public List<BookingProposal> getBookingProposals() {
@@ -32,11 +32,13 @@ public class User {
         return null;
     }
 
-    public void activate() {
+    public User activate() {
         // TODO: Implement
+        return this;
     }
 
-    public void deactivate() {
+    public User deactivate() {
         // TODO: Implement
+        return this;
     }
 }

@@ -14,7 +14,8 @@ public class Service {
     public Date activeSince;
     public Date offeredSince;
 
-    public void activate() {
+    public Service activate() {
         // TODO: Implement
+        return this;
     }
 }
