@@ -5,7 +5,7 @@ import java.sql.Date;
 /**
  * Created by alberto on 17/03/16.
  */
-public class AvailabilityPeriod {
+public class AvailabilityPeriod extends Model {
     public String propertyID;
     public Date startDate;
     public Date endDate;

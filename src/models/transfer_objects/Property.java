@@ -4,9 +4,7 @@ import javax.management.InvalidAttributeValueException;
 import java.sql.Date;
 import java.util.List;
 
-public class Property {
-
-    public int propertyID;
+public class Property extends Model {
     public String username;
     public String title;
     public String location;

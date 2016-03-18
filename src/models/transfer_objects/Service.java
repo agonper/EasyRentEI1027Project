@@ -5,7 +5,7 @@ import java.sql.Date;
 /**
  * Created by alberto on 17/03/16.
  */
-public class Service {
+public class Service extends Model {
     public String serviceName;
     public String serviceValue;
     public String username;
