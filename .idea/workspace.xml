@@ -1,68 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="49f8602a-5f25-4a36-be7b-335badb29dbb" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/configFiles/.gitkeep" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/dbScripts/booking_proposal.sql" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/dbScripts/photos.sql" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/dbScripts/properties.sql" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/dbScripts/services.sql" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/dbScripts/users.sql" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/adapters/.gitkeep" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/connectors/.gitkeep" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/models/daos/AvailabilitiyPeriodDAO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/models/daos/BookingProposalDAO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/models/daos/InvoiceDAO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/models/daos/PhotoDAO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/models/daos/PropertyDAO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/models/daos/ServiceDAO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/models/daos/UserDAO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/models/model_views/.gitkeep" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/models/transfer_objects/AvailabilityPeriod.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/models/transfer_objects/Photo.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/models/transfer_objects/Service.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/EasyRentEI1027Project.iml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/hamcrest_core_1_3.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/junit_4_12.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/postgresql_9_3_1100_jdbc41.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/postgresql_9_4_1200_jdbc41.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/production/production/EasyRentEI1027Project/data/dataObjects/ACUser.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/production/production/EasyRentEI1027Project/data/dataObjects/AvailableLocations.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/production/production/EasyRentEI1027Project/data/dataObjects/BookingProposal.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/production/production/EasyRentEI1027Project/data/dataObjects/InterfaceUser.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/production/production/EasyRentEI1027Project/data/dataObjects/Invoice.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/production/production/EasyRentEI1027Project/data/dataObjects/Owner.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/production/production/EasyRentEI1027Project/data/dataObjects/Property.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/production/production/EasyRentEI1027Project/data/dataObjects/Tenant.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/production/test/EasyRentEI1027Project/dataTests/doTests/propertyTest.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/dbScripts/bookingProposalInvoiceTable.sql" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/dbScripts/bookingProposalTable.sql" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/dbScripts/propertyTable.sql" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/dbScripts/userPropertiesTable.sql" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/dbScripts/userTable.sql" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/models/transfer_objects/AbstractUser.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/models/transfer_objects/AvailableLocations.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/models/transfer_objects/Owner.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/models/transfer_objects/Tenant.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/resources/dbScripts/invoiceTable.sql" afterPath="$PROJECT_DIR$/resources/dbScripts/invoice.sql" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/resources/dbScripts/propertyAvailabilityTable.sql" afterPath="$PROJECT_DIR$/resources/dbScripts/availability_of_properties.sql" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/resources/dbScripts/propertyPhotosTable.sql" afterPath="$PROJECT_DIR$/resources/dbScripts/properties_photos.sql" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/resources/dbScripts/propertyServicesTable.sql" afterPath="$PROJECT_DIR$/resources/dbScripts/properties_services.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/production/production/EasyRentEI1027Project/libs/postgresql-9.3-1100.jdbc41.jar" afterPath="$PROJECT_DIR$/production/production/EasyRentEI1027Project/libs/postgresql-9.3-1100.jdbc41.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/libs/postgresql-9.3-1100.jdbc41.jar" afterPath="$PROJECT_DIR$/resources/libs/postgresql-9.3-1100.jdbc41.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/models/transfer_objects/User.java" afterPath="$PROJECT_DIR$/src/models/transfer_objects/User.java" />
-    </list>
+    <list default="true" id="49f8602a-5f25-4a36-be7b-335badb29dbb" name="Default" comment="" />
     <ignored path="EasyRentEI1027Project.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -82,18 +21,7 @@
     <favorites_list name="EasyRentEI1027Project" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="invoice.sql" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/resources/dbScripts/invoice.sql">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.37894738">
-              <caret line="10" column="43" selection-start-line="10" selection-start-column="43" selection-end-line="10" selection-end-column="43" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -160,9 +88,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="683" />
     <option name="y" value="27" />
-    <option name="width" value="673" />
+    <option name="width" value="1366" />
     <option name="height" value="708" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -223,7 +150,25 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EasyRentEI1027Project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EasyRentEI1027Project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="models" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -238,10 +183,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dbScripts" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -747,7 +688,7 @@
       <workItem from="1458229671317" duration="14000" />
       <workItem from="1458229701727" duration="101000" />
       <workItem from="1458229812165" duration="4107000" />
-      <workItem from="1458290933264" duration="716000" />
+      <workItem from="1458290933264" duration="981000" />
     </task>
     <servers />
   </component>
@@ -784,11 +725,11 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22368000" />
+    <option name="totallyTimeSpent" value="22633000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="683" y="27" width="673" height="708" extended-state="4" />
-    <editor active="true" />
+    <frame x="0" y="27" width="1366" height="708" extended-state="6" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -798,7 +739,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2656" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22003035" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962063" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -919,13 +860,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/models/transfer_objects/Property.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.13407822">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/configFiles/.gitkeep">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1009,6 +943,30 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.37894738">
           <caret line="10" column="43" selection-start-line="10" selection-start-column="43" selection-end-line="10" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/models/transfer_objects/Property.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.5698324">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/models/transfer_objects/RoleNotFoundException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.16759777">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/models/transfer_objects/PropertyOLD.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.24022347">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
           <folding />
         </state>
       </provider>
