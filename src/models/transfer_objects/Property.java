@@ -1,6 +1,7 @@
 package models.transfer_objects;
 
-import javax.management.InvalidAttributeValueException;
+import models.common.Model;
+
 import java.sql.Date;
 import java.util.List;
 

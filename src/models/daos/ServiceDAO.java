@@ -1,5 +1,6 @@
 package models.daos;
 
+import models.common.Store;
 import models.transfer_objects.Service;
 
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 /**
  * Created by alberto on 17/03/16.
  */
-public class ServiceDAO implements DAO<Service> {
+public class ServiceDAO implements Store<Service> {
     @Override
     public List<Service> findAllRecords() {
         return null;

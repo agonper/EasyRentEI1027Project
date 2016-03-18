@@ -1,5 +1,6 @@
 package models.daos;
 
+import models.common.Store;
 import models.transfer_objects.Invoice;
 
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 /**
  * Created by alberto on 17/03/16.
  */
-public class InvoiceDAO implements DAO<Invoice> {
+public class InvoiceDAO implements Store<Invoice> {
     @Override
     public List<Invoice> findAllRecords() {
         return null;

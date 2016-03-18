@@ -1,5 +1,7 @@
 package models.transfer_objects;
 
+import models.common.Model;
+
 import java.sql.Date;
 
 /**

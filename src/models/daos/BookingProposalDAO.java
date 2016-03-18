@@ -1,5 +1,6 @@
 package models.daos;
 
+import models.common.Store;
 import models.transfer_objects.BookingProposal;
 
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 /**
  * Created by alberto on 17/03/16.
  */
-public class BookingProposalDAO implements DAO<BookingProposal> {
+public class BookingProposalDAO implements Store<BookingProposal> {
     @Override
     public List<BookingProposal> findAllRecords() {
         return null;

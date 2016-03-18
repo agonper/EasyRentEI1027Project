@@ -1,11 +1,11 @@
-package models.daos;
+package models.common;
 
 import java.util.List;
 
 /**
  * Created by Alberto on 18/03/2016.
  */
-public interface DAO<T> {
+public interface Store<T extends Model> {
     public List<T> findAllRecords();
     public T findRecordByID(String id);
     public T storeRecord(T record);

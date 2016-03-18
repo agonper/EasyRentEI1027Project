@@ -1,5 +1,6 @@
 package models.daos;
 
+import models.common.Store;
 import models.transfer_objects.Photo;
 
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 /**
  * Created by alberto on 17/03/16.
  */
-public class PhotoDAO implements DAO<Photo> {
+public class PhotoDAO implements Store<Photo> {
     @Override
     public List<Photo> findAllRecords() {
         return null;
