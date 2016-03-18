@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by alberto on 17/03/16.
  */
-public class BookingProposalDAO implements Store<BookingProposal> {
+public class BookingProposalDAO extends DAO implements Store<BookingProposal> {
     @Override
     public List<BookingProposal> findAllRecords() {
         return null;

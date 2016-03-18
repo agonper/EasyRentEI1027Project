@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by alberto on 17/03/16.
  */
-public class PhotoDAO implements Store<Photo> {
+public class PhotoDAO extends DAO implements Store<Photo> {
     @Override
     public List<Photo> findAllRecords() {
         return null;

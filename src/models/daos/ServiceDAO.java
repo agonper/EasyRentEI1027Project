@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by alberto on 17/03/16.
  */
-public class ServiceDAO implements Store<Service> {
+public class ServiceDAO extends DAO implements Store<Service> {
     @Override
     public List<Service> findAllRecords() {
         return null;

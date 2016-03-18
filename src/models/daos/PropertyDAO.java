@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by alberto on 17/03/16.
  */
-public class PropertyDAO implements Store<Property> {
+public class PropertyDAO extends DAO implements Store<Property> {
     @Override
     public List<Property> findAllRecords() {
         return null;

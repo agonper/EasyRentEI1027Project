@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by alberto on 17/03/16.
  */
-public class UserDAO implements Store<User> {
+public class UserDAO extends DAO implements Store<User> {
     @Override
     public List<User> findAllRecords() {
         return null;

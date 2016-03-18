@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by alberto on 17/03/16.
  */
-public class AvailabilitiyPeriodDAO implements Store<AvailabilityPeriod> {
+public class AvailabilitiyPeriodDAO extends DAO implements Store<AvailabilityPeriod> {
     @Override
     public List<AvailabilityPeriod> findAllRecords() {
         return null;

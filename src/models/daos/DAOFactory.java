@@ -11,15 +11,15 @@ import java.util.logging.Logger;
  */
 public class DAOFactory implements StoreFactory {
 
-    private static final Logger log = Logger.getLogger(DAOFactory.class.getName());
     private static final String STORE_SUFFIX = "DAO";
+    private static Logger log = Logger.getLogger(DAOFactory.class.getName());
 
     @Override
     public Store<Model> getStore(Class modelClass) {
         String modelName = getModelName(modelClass);
         Class storeClass = loadStoreClassFor(modelName);
 
-        return getStoreInstance(storeClass);
+        return getStoreInstanceFor(storeClass);
     }
 
     private String getModelName(Class modelClass) {
@@ -46,7 +46,7 @@ public class DAOFactory implements StoreFactory {
         return this.getClass().getPackage().getName();
     }
 
-    private Store<Model> getStoreInstance(Class storeClass) {
+    private Store<Model> getStoreInstanceFor(Class storeClass) {
         Store<Model> store = null;
         try {
             store = (Store<Model>) storeClass.newInstance();

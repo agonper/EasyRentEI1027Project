@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by alberto on 17/03/16.
  */
-public class InvoiceDAO implements Store<Invoice> {
+public class InvoiceDAO extends DAO implements Store<Invoice> {
     @Override
     public List<Invoice> findAllRecords() {
         return null;
