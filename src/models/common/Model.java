@@ -19,33 +19,37 @@ public abstract class Model {
         return this;
     }
 
+
     private boolean isNew() {
         return id == null;
     }
+
 
     private void createRecord() {
         Store<Model> store = getStore();
         store.storeRecord(this);
     }
 
+
     private void updateRecord() {
         Store<Model> store = getStore();
         store.updateRecord(this);
     }
+
 
     public void destroy() {
         Store<Model> store = getStore();
         store.destroyRecord(this);
     }
 
+
     private Store<Model> getStore() {
         StoreFactory storeFactory = getStoreFactory();
         return storeFactory.getStore(this.getClass());
     }
 
+
     private StoreFactory getStoreFactory() {
         return new DAOFactory();
     }
-
-
 }

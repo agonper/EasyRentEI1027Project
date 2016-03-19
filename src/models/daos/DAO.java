@@ -13,14 +13,13 @@ import java.util.logging.Logger;
  * Created by Alberto on 18/03/2016.
  */
 public abstract class DAO {
-
     protected static Logger log;
 
     public DAO(String className) {
         log = Logger.getLogger(className);
     }
 
-    protected Connection getConnection() throws ConnectException{
+    protected Connection getConnection() throws ConnectException {
         return ConnectionManager.getConnection();
     }
 

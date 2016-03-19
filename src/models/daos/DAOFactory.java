@@ -14,6 +14,12 @@ public class DAOFactory implements StoreFactory {
     private static final String STORE_SUFFIX = "DAO";
     private static Logger log = Logger.getLogger(DAOFactory.class.getName());
 
+    /**
+     * =====================
+     * === FUNCTIONALITY ===
+     * =====================
+     */
+
     @Override
     public Store<Model> getStore(Class modelClass) {
         String modelName = getModelName(modelClass);
@@ -22,6 +28,12 @@ public class DAOFactory implements StoreFactory {
         return getStoreInstanceFor(storeClass);
     }
 
+    /**
+     * =======================
+     * === SUPPORT METHODS ===
+     * =======================
+     */
+
     private String getModelName(Class modelClass) {
         String fullClassName = modelClass.getName();
         String[] nameParts = fullClassName.split(".");
@@ -29,6 +41,7 @@ public class DAOFactory implements StoreFactory {
         final int LAST_INDEX = nameParts.length - 1;
         return nameParts[LAST_INDEX];
     }
+
 
     private Class loadStoreClassFor(String modelName) {
         String packageName = getPackageName();
@@ -42,9 +55,11 @@ public class DAOFactory implements StoreFactory {
         return storeClass;
     }
 
+
     private String getPackageName() {
         return this.getClass().getPackage().getName();
     }
+
 
     private Store<Model> getStoreInstanceFor(Class storeClass) {
         Store<Model> store = null;

@@ -1,8 +1,8 @@
 CREATE TABLE services (
-  service_id      NUMERIC(8, 0)   NOT NULL,
+  service_id      UUID            NOT NULL,
   service_name    VARCHAR(20)     NOT NULL,
   service_value   VARCHAR(20)     NOT NULL,
-  user_id         VARCHAR(10)     ,
+  user_id         UUID            ,
   active          BOOLEAN         NOT NULL,
   creation_date   DATE            NOT NULL,
   active_since    DATE            NOT NULL,

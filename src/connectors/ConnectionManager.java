@@ -17,6 +17,12 @@ public class ConnectionManager {
     private static Connection connection;
     private final static String JDBC_PROPERTIES = "./jdbc.properties";
 
+    /**
+     * =====================
+     * === FUNCTIONALITY ===
+     * =====================
+     */
+
     public static Connection getConnection() throws ConnectException {
         try {
             return retrieveExistingConnectionOrCreateNewOne();
@@ -31,6 +37,12 @@ public class ConnectionManager {
         }
     }
 
+    /**
+     * =======================
+     * === SUPPORT METHODS ===
+     * =======================
+     */
+
     private static Connection retrieveExistingConnectionOrCreateNewOne() throws SQLException, ClassNotFoundException {
         if (isConnectionInitialized())
             return connection;
@@ -42,24 +54,34 @@ public class ConnectionManager {
         return connection;
     }
 
+
+
     private static ConnectException sendException(String errorMessage) {
         log.severe(errorMessage);
         return new ConnectException(errorMessage);
     }
 
+
+
     private static boolean isConnectionInitialized() throws SQLException {
         return connection != null && !connection.isClosed();
     }
+
+
 
     private static void retrieveDBDriver() throws ClassNotFoundException {
         Class.forName(DRIVER_NAME);
         log.fine("PostgreSQL JDBC Driver Registered!");
     }
 
+
+
     private static void initializeConnection() throws SQLException {
         Properties props = getProperties();
         connection = DriverManager.getConnection(URL, props);
     }
+
+
 
     private static void logConnectionStatus() throws SQLException {
         if (isConnectionInitialized()) {
@@ -68,6 +90,8 @@ public class ConnectionManager {
             log.severe("DB connection failed!");
         }
     }
+
+
 
     private static Properties getProperties() {
         Properties props = new Properties();
@@ -82,6 +106,8 @@ public class ConnectionManager {
         return props;
     }
 
+
+
     private static void loadPropertiesFromFile(Properties props, InputStream stream) {
         try {
             props.load(stream);
@@ -91,4 +117,6 @@ public class ConnectionManager {
             e.printStackTrace();
         }
     }
+
+
 }

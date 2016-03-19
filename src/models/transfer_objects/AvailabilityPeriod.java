@@ -12,6 +12,7 @@ public class AvailabilityPeriod extends Model {
     public Date startDate;
     public Date endDate;
 
+
     public Property getProperty() {
         // TODO: Implement
         return null;

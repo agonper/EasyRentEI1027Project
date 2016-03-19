@@ -1,0 +1,9 @@
+\i users.sql
+\i properties.sql
+\i photos.sql
+\i services.sql
+\i booking_proposals.sql
+\i invoices.sql
+\i availability_of_properties.sql
+\i properties_photos.sql
+\i properties_services.sql

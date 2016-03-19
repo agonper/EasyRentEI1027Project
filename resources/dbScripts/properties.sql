@@ -1,6 +1,6 @@
 CREATE TABLE properties (
-  property_id     NUMERIC(8, 0)   NOT NULL,
-  user_id         VARCHAR(10)     ,
+  property_id     UUID            NOT NULL,
+  user_id         UUID            ,
   title           VARCHAR(20)     NOT NULL,
   location        VARCHAR(15)     NOT NULL,
   rooms           NUMERIC(2, 0)   NOT NULL,
