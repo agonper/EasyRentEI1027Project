@@ -3,39 +3,38 @@ package models.daos;
 import models.common.Store;
 import models.transfer_objects.BookingProposal;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
 /**
  * Created by alberto on 17/03/16.
  */
-public class BookingProposalDAO extends DAO implements Store<BookingProposal> {
+public class BookingProposalDAO extends DAO<BookingProposal> {
     public BookingProposalDAO() {
         super(BookingProposalDAO.class.getName());
     }
 
     @Override
-    public Set<BookingProposal> findAllRecords() {
+    protected BookingProposal populateModelWith(ResultSet rs) throws SQLException {
         return null;
     }
 
     @Override
-    public BookingProposal findRecordByID(UUID id) {
+    protected void setStatementAttributes(BookingProposal record, PreparedStatement stmt, int initialPosition) throws SQLException {
+
+    }
+
+    @Override
+    protected String getSerializedTableColumns() {
         return null;
     }
 
     @Override
-    public BookingProposal storeRecord(BookingProposal record) {
+    protected String getTableName() {
         return null;
-    }
-
-    @Override
-    public BookingProposal updateRecord(BookingProposal record) {
-        return null;
-    }
-
-    @Override
-    public void destroyRecord(BookingProposal record) {
-
     }
 }

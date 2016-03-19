@@ -3,39 +3,38 @@ package models.daos;
 import models.common.Store;
 import models.transfer_objects.Invoice;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
 /**
  * Created by alberto on 17/03/16.
  */
-public class InvoiceDAO extends DAO implements Store<Invoice> {
+public class InvoiceDAO extends DAO<Invoice> {
     public InvoiceDAO() {
         super(InvoiceDAO.class.getName());
     }
 
     @Override
-    public Set<Invoice> findAllRecords() {
+    protected Invoice populateModelWith(ResultSet rs) throws SQLException {
         return null;
     }
 
     @Override
-    public Invoice findRecordByID(UUID id) {
+    protected void setStatementAttributes(Invoice record, PreparedStatement stmt, int initialPosition) throws SQLException {
+
+    }
+
+    @Override
+    protected String getSerializedTableColumns() {
         return null;
     }
 
     @Override
-    public Invoice storeRecord(Invoice record) {
+    protected String getTableName() {
         return null;
-    }
-
-    @Override
-    public Invoice updateRecord(Invoice record) {
-        return null;
-    }
-
-    @Override
-    public void destroyRecord(Invoice record) {
-
     }
 }

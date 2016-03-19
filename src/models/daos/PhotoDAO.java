@@ -3,39 +3,38 @@ package models.daos;
 import models.common.Store;
 import models.transfer_objects.Photo;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
 /**
  * Created by alberto on 17/03/16.
  */
-public class PhotoDAO extends DAO implements Store<Photo> {
+public class PhotoDAO extends DAO<Photo> {
     public PhotoDAO() {
         super(PhotoDAO.class.getName());
     }
 
     @Override
-    public Set<Photo> findAllRecords() {
+    protected Photo populateModelWith(ResultSet rs) throws SQLException {
         return null;
     }
 
     @Override
-    public Photo findRecordByID(UUID id) {
+    protected void setStatementAttributes(Photo record, PreparedStatement stmt, int initialPosition) throws SQLException {
+
+    }
+
+    @Override
+    protected String getSerializedTableColumns() {
         return null;
     }
 
     @Override
-    public Photo storeRecord(Photo record) {
+    protected String getTableName() {
         return null;
-    }
-
-    @Override
-    public Photo updateRecord(Photo record) {
-        return null;
-    }
-
-    @Override
-    public void destroyRecord(Photo record) {
-
     }
 }

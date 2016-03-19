@@ -3,39 +3,38 @@ package models.daos;
 import models.common.Store;
 import models.transfer_objects.AvailabilityPeriod;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
 /**
  * Created by alberto on 17/03/16.
  */
-public class AvailabilitiyPeriodDAO extends DAO implements Store<AvailabilityPeriod> {
+public class AvailabilitiyPeriodDAO extends DAO<AvailabilityPeriod> {
     public AvailabilitiyPeriodDAO() {
         super(AvailabilitiyPeriodDAO.class.getName());
     }
 
     @Override
-    public Set<AvailabilityPeriod> findAllRecords() {
+    protected AvailabilityPeriod populateModelWith(ResultSet rs) throws SQLException {
         return null;
     }
 
     @Override
-    public AvailabilityPeriod findRecordByID(UUID id) {
+    protected void setStatementAttributes(AvailabilityPeriod record, PreparedStatement stmt, int initialPosition) throws SQLException {
+
+    }
+
+    @Override
+    protected String getSerializedTableColumns() {
         return null;
     }
 
     @Override
-    public AvailabilityPeriod storeRecord(AvailabilityPeriod record) {
+    protected String getTableName() {
         return null;
-    }
-
-    @Override
-    public AvailabilityPeriod updateRecord(AvailabilityPeriod record) {
-        return null;
-    }
-
-    @Override
-    public void destroyRecord(AvailabilityPeriod record) {
-
     }
 }
