@@ -1,6 +1,6 @@
 package models.daos;
 
-import models.common.Model;
+import models.transfer_objects.Model;
 import models.common.Store;
 import models.common.StoreFactory;
 

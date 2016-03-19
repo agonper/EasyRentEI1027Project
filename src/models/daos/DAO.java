@@ -1,7 +1,7 @@
 package models.daos;
 
 import connectors.ConnectionManager;
-import models.common.Model;
+import models.transfer_objects.Model;
 import models.common.Store;
 
 import java.net.ConnectException;

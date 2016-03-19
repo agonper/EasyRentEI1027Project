@@ -1,5 +1,7 @@
 package models.common;
 
+import models.transfer_objects.Model;
+
 /**
  * Created by Alberto on 18/03/2016.
  */

@@ -1,5 +1,7 @@
 package models.common;
 
+import models.transfer_objects.Model;
+
 import java.util.Set;
 import java.util.UUID;
 

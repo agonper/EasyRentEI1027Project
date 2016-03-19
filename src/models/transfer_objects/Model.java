@@ -1,5 +1,7 @@
-package models.common;
+package models.transfer_objects;
 
+import models.common.Store;
+import models.common.StoreFactory;
 import models.daos.DAOFactory;
 
 import java.util.UUID;
@@ -10,6 +12,12 @@ import java.util.UUID;
 public abstract class Model {
     public UUID id = null;
 
+    /**
+     * =============
+     * FUNCTIONALITY
+     * =============
+     */
+
     public Model save() {
         if (isNew()) {
             createRecord();
@@ -19,6 +27,17 @@ public abstract class Model {
         return this;
     }
 
+
+    public void destroy() {
+        Store<Model> store = getStore();
+        store.destroyRecord(this);
+    }
+
+    /**
+     * ===============
+     * SUPPORT METHODS
+     * ===============
+     */
 
     private boolean isNew() {
         return id == null;
@@ -37,19 +56,12 @@ public abstract class Model {
     }
 
 
-    public void destroy() {
-        Store<Model> store = getStore();
-        store.destroyRecord(this);
-    }
-
-
     private Store<Model> getStore() {
         StoreFactory storeFactory = getStoreFactory();
         return storeFactory.getStore(this.getClass());
     }
 
-
-    private StoreFactory getStoreFactory() {
+    protected StoreFactory getStoreFactory() {
         return new DAOFactory();
     }
 }
