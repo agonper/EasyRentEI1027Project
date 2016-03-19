@@ -5,7 +5,7 @@ CREATE TABLE services (
   user_id         UUID            ,
   active          BOOLEAN         NOT NULL,
   creation_date   DATE            NOT NULL,
-  active_since    DATE            NOT NULL,
+  active_since    DATE            ,
 
   CONSTRAINT pk_services PRIMARY KEY (service_id),
   CONSTRAINT fk_s_username FOREIGN KEY (user_id)
