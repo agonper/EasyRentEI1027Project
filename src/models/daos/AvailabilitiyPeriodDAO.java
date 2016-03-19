@@ -3,19 +3,24 @@ package models.daos;
 import models.common.Store;
 import models.transfer_objects.AvailabilityPeriod;
 
-import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * Created by alberto on 17/03/16.
  */
 public class AvailabilitiyPeriodDAO extends DAO implements Store<AvailabilityPeriod> {
+    public AvailabilitiyPeriodDAO() {
+        super(AvailabilitiyPeriodDAO.class.getName());
+    }
+
     @Override
-    public List<AvailabilityPeriod> findAllRecords() {
+    public Set<AvailabilityPeriod> findAllRecords() {
         return null;
     }
 
     @Override
-    public AvailabilityPeriod findRecordByID(String id) {
+    public AvailabilityPeriod findRecordByID(UUID id) {
         return null;
     }
 

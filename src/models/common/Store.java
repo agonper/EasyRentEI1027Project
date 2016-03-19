@@ -1,13 +1,14 @@
 package models.common;
 
-import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * Created by Alberto on 18/03/2016.
  */
 public interface Store<T extends Model> {
-    public List<T> findAllRecords();
-    public T findRecordByID(String id);
+    public Set<T> findAllRecords();
+    public T findRecordByID(UUID id);
     public T storeRecord(T record);
     public T updateRecord(T record);
     public void destroyRecord(T record);

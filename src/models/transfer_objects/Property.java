@@ -3,7 +3,7 @@ package models.transfer_objects;
 import models.common.Model;
 
 import java.sql.Date;
-import java.util.List;
+import java.util.Set;
 
 public class Property extends Model {
     public String username;
@@ -24,22 +24,22 @@ public class Property extends Model {
         return null;
     }
 
-    public List<AvailabilityPeriod> getAvailabilityPeriods() {
+    public Set<AvailabilityPeriod> getAvailabilityPeriods() {
         // TODO: Implement
         return null;
     }
 
-    public List<BookingProposal> getBookingProposals() {
+    public Set<BookingProposal> getBookingProposals() {
         // TODO: Implement
         return null;
     }
 
-    public List<Photo> getPhotos() {
+    public Set<Photo> getPhotos() {
         // TODO: Implement
         return null;
     }
 
-    public List<Service> getServices() {
+    public Set<Service> getServices() {
         // TODO: Implement
         return null;
     }

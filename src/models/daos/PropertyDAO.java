@@ -3,19 +3,24 @@ package models.daos;
 import models.common.Store;
 import models.transfer_objects.Property;
 
-import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * Created by alberto on 17/03/16.
  */
 public class PropertyDAO extends DAO implements Store<Property> {
+    public PropertyDAO() {
+        super(PropertyDAO.class.getName());
+    }
+
     @Override
-    public List<Property> findAllRecords() {
+    public Set<Property> findAllRecords() {
         return null;
     }
 
     @Override
-    public Property findRecordByID(String id) {
+    public Property findRecordByID(UUID id) {
         return null;
     }
 
