@@ -19,7 +19,7 @@ import java.util.UUID;
  */
 public class UserDAO extends DAO implements Store<User> {
 
-    private final static String USER_COLUMNS = "id, username, national_document, role, password, " +
+    private final static String TABLE_COLUMNS = "id, username, national_document, role, password, " +
             "name, surnames, email, phone_number, country, post_address, post_code, " +
             "sign_up_date, active, deactivated_since";
 
@@ -50,7 +50,6 @@ public class UserDAO extends DAO implements Store<User> {
 
     @Override
     public User findRecordByID(UUID id) {
-
         try {
             Connection connection = getConnection();
             return retrieveUserByID(id, connection);
@@ -63,17 +62,38 @@ public class UserDAO extends DAO implements Store<User> {
 
     @Override
     public User storeRecord(User record) {
-        return null;
+        record.id = UUID.randomUUID();
+        try {
+            Connection connection = getConnection();
+            insertUserRecord(record, connection);
+        } catch (ConnectException e) {
+            log.severe("Connection error");
+            e.printStackTrace();
+        }
+        return record;
     }
 
     @Override
     public User updateRecord(User record) {
-        return null;
+        try {
+            Connection connection = getConnection();
+            updateUserEntry(record, connection);
+        } catch (ConnectException e) {
+            log.severe("Connection error");
+            e.printStackTrace();
+        }
+        return record;
     }
 
     @Override
     public void destroyRecord(User record) {
-
+        try {
+            Connection connection = getConnection();
+            removeUserRecord(record, connection);
+        } catch (ConnectException e) {
+            log.severe("Connection error");
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -87,7 +107,7 @@ public class UserDAO extends DAO implements Store<User> {
         ResultSet rs = null;
         try {
             String template = "SELECT %s FROM %s";
-            stmt = connection.prepareStatement(String.format(template, USER_COLUMNS, TABLE_NAME));
+            stmt = connection.prepareStatement(String.format(template, TABLE_COLUMNS, TABLE_NAME));
             rs = stmt.executeQuery();
 
             populateUsersSet(users, rs);
@@ -113,7 +133,7 @@ public class UserDAO extends DAO implements Store<User> {
         ResultSet rs = null;
         try {
             String template = "SELECT %s FROM %s WHERE id=?";
-            stmt = connection.prepareStatement(String.format(template, USER_COLUMNS, TABLE_NAME));
+            stmt = connection.prepareStatement(String.format(template, TABLE_COLUMNS, TABLE_NAME));
             stmt.setString(1, id.toString());
             rs = stmt.executeQuery();
 
@@ -155,5 +175,91 @@ public class UserDAO extends DAO implements Store<User> {
             e.printStackTrace();
         }
         return user;
+    }
+
+    private void insertUserRecord(User user, Connection connection) {
+        PreparedStatement stmt = null;
+        try {
+            String template = "INSERT INTO %s (%s) values (%s)";
+            String placeholders = getInsertValuesPlaceholdersFrom(TABLE_COLUMNS.split(", "));
+            stmt = connection.prepareStatement(String.format(template, TABLE_NAME, TABLE_COLUMNS, placeholders));
+            stmt.setObject(1, user.id);
+            final int INNITIAL_POSITION = 2;
+            setUserVariableAttributes(user, stmt, INNITIAL_POSITION);
+
+            stmt.execute();
+        } catch (SQLException e) {
+            log.severe("Error storing new user");
+            e.printStackTrace();
+        } finally {
+            cleanupResources(stmt, null);
+        }
+    }
+
+    private String getInsertValuesPlaceholdersFrom(String[] fields) {
+        StringBuilder placeholders = new StringBuilder();
+        placeholders.append("?");
+        for (int i = 1; i < fields.length; i++) {
+            placeholders.append(", ?");
+        }
+        return placeholders.toString();
+    }
+
+    private void setUserVariableAttributes(User user, PreparedStatement stmt, int p) throws SQLException {
+        stmt.setString(p++, user.username);
+        stmt.setString(p++, user.DNI);
+        stmt.setString(p++, user.role.toString());
+        stmt.setString(p++, user.password);
+        stmt.setString(p++, user.name);
+        stmt.setString(p++, user.surnames);
+        stmt.setString(p++, user.email);
+        stmt.setString(p++, user.phoneNumber);
+        stmt.setString(p++, user.country);
+        stmt.setString(p++, user.postalAddress);
+        stmt.setInt(p++, user.postCode);
+        stmt.setDate(p++, user.signUpDate);
+        stmt.setBoolean(p++, user.active);
+        stmt.setDate(p, user.deactivatedSince);
+    }
+
+    private void updateUserEntry(User user, Connection connection) {
+        PreparedStatement stmt = null;
+        try {
+            String template = "UPDATE %s SET %s WHERE id = ?";
+            String[] tableFields = TABLE_COLUMNS.split(", ");
+            String fieldsToUpdate = getUpdateFields(tableFields);
+
+            stmt = connection.prepareStatement(String.format(template, TABLE_NAME, fieldsToUpdate));
+            setUserVariableAttributes(user, stmt, 1);
+            stmt.setObject(tableFields.length-1, user.id);
+            stmt.execute();
+        } catch (SQLException e) {
+            log.severe("Couldn't update user with id: " + user.id);
+            e.printStackTrace();
+        } finally {
+            cleanupResources(stmt, null);
+        }
+    }
+
+    private String getUpdateFields(String[] fields) {
+        StringBuilder updateFields = new StringBuilder();
+        updateFields.append(fields[0] + " = ?");
+        for (int i = 1; i < fields.length; i++) {
+            updateFields.append(", " + fields[i] + " = ?");
+        }
+        return updateFields.toString();
+    }
+
+    private void removeUserRecord(User record, Connection connection) {
+        PreparedStatement stmt = null;
+        try {
+            String template = "DELETE FROM %s WHERE id = ?";
+            stmt = connection.prepareStatement(String.format(template, TABLE_NAME));
+            stmt.setObject(1, record.id);
+            stmt.execute();
+        } catch (SQLException e) {
+            log.severe("Error deleting user with id: " + record.id);
+            e.printStackTrace();
+        }
     }
 }
