@@ -10,6 +10,7 @@ public class AvailabilityPeriod {
     public Date startDate;
     public Date endDate;
 
+
     public Property getProperty() {
         // TODO: Implement
         return null;
