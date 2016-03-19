@@ -3,19 +3,24 @@ package models.daos;
 import models.common.Store;
 import models.transfer_objects.BookingProposal;
 
-import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * Created by alberto on 17/03/16.
  */
 public class BookingProposalDAO extends DAO implements Store<BookingProposal> {
+    public BookingProposalDAO() {
+        super(BookingProposalDAO.class.getName());
+    }
+
     @Override
-    public List<BookingProposal> findAllRecords() {
+    public Set<BookingProposal> findAllRecords() {
         return null;
     }
 
     @Override
-    public BookingProposal findRecordByID(String id) {
+    public BookingProposal findRecordByID(UUID id) {
         return null;
     }
 

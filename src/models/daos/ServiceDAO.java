@@ -3,19 +3,24 @@ package models.daos;
 import models.common.Store;
 import models.transfer_objects.Service;
 
-import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * Created by alberto on 17/03/16.
  */
 public class ServiceDAO extends DAO implements Store<Service> {
+    public ServiceDAO() {
+        super(ServiceDAO.class.getName());
+    }
+
     @Override
-    public List<Service> findAllRecords() {
+    public Set<Service> findAllRecords() {
         return null;
     }
 
     @Override
-    public Service findRecordByID(String id) {
+    public Service findRecordByID(UUID id) {
         return null;
     }
 

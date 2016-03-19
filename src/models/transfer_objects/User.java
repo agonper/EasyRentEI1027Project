@@ -3,7 +3,7 @@ package models.transfer_objects;
 import models.common.Model;
 
 import java.sql.Date;
-import java.util.List;
+import java.util.Set;
 
 /**
  * Created by alberto on 17/03/16.
@@ -14,7 +14,7 @@ public class User extends Model {
     public UserRole role;
     public String password;
     public String name;
-    public String surname;
+    public String surnames;
     public String email;
     public String phoneNumber;
     public String postalAddress;
@@ -24,12 +24,12 @@ public class User extends Model {
     public boolean active;
     public Date deactivatedSince;
 
-    public List<BookingProposal> getBookingProposals() {
+    public Set<BookingProposal> getBookingProposals() {
         // TODO: Implement
         return null;
     }
 
-    public List<Property> getProperties() {
+    public Set<Property> getProperties() {
         // TODO: Implement
         return null;
     }

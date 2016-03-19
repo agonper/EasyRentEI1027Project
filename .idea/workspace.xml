@@ -2,21 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="49f8602a-5f25-4a36-be7b-335badb29dbb" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/dbScripts/createDB" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/dbScripts/deleteDB" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/resources/dbScripts/booking_proposal.sql" afterPath="$PROJECT_DIR$/resources/dbScripts/booking_proposals.sql" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/resources/dbScripts/invoice.sql" afterPath="$PROJECT_DIR$/resources/dbScripts/invoices.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/dbScripts/availability_of_properties.sql" afterPath="$PROJECT_DIR$/resources/dbScripts/availability_of_properties.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/dbScripts/photos.sql" afterPath="$PROJECT_DIR$/resources/dbScripts/photos.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/dbScripts/properties.sql" afterPath="$PROJECT_DIR$/resources/dbScripts/properties.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/dbScripts/properties_photos.sql" afterPath="$PROJECT_DIR$/resources/dbScripts/properties_photos.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/dbScripts/properties_services.sql" afterPath="$PROJECT_DIR$/resources/dbScripts/properties_services.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/dbScripts/services.sql" afterPath="$PROJECT_DIR$/resources/dbScripts/services.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/dbScripts/users.sql" afterPath="$PROJECT_DIR$/resources/dbScripts/users.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/connectors/ConnectionManager.java" afterPath="$PROJECT_DIR$/src/connectors/ConnectionManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/models/common/Model.java" afterPath="$PROJECT_DIR$/src/models/common/Model.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/models/daos/DAOFactory.java" afterPath="$PROJECT_DIR$/src/models/daos/DAOFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/models/common/Store.java" afterPath="$PROJECT_DIR$/src/models/common/Store.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/models/daos/AvailabilitiyPeriodDAO.java" afterPath="$PROJECT_DIR$/src/models/daos/AvailabilitiyPeriodDAO.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/models/daos/BookingProposalDAO.java" afterPath="$PROJECT_DIR$/src/models/daos/BookingProposalDAO.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/models/daos/DAO.java" afterPath="$PROJECT_DIR$/src/models/daos/DAO.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/models/daos/InvoiceDAO.java" afterPath="$PROJECT_DIR$/src/models/daos/InvoiceDAO.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/models/daos/PhotoDAO.java" afterPath="$PROJECT_DIR$/src/models/daos/PhotoDAO.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/models/daos/PropertyDAO.java" afterPath="$PROJECT_DIR$/src/models/daos/PropertyDAO.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/models/daos/ServiceDAO.java" afterPath="$PROJECT_DIR$/src/models/daos/ServiceDAO.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/models/daos/UserDAO.java" afterPath="$PROJECT_DIR$/src/models/daos/UserDAO.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/models/transfer_objects/Property.java" afterPath="$PROJECT_DIR$/src/models/transfer_objects/Property.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/models/transfer_objects/User.java" afterPath="$PROJECT_DIR$/src/models/transfer_objects/User.java" />
     </list>
     <ignored path="EasyRentEI1027Project.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -37,18 +34,7 @@
     <favorites_list name="EasyRentEI1027Project" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="invoices.sql" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/resources/dbScripts/invoices.sql">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.26815644">
-              <caret line="8" column="50" selection-start-line="8" selection-start-column="50" selection-end-line="8" selection-end-column="50" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -93,7 +79,6 @@
         <option value="$PROJECT_DIR$/src/models/transfer_objects/BookingProposal.java" />
         <option value="$PROJECT_DIR$/src/models/transfer_objects/AvailabilityPeriod.java" />
         <option value="$PROJECT_DIR$/src/models/transfer_objects/ProposalStatus.java" />
-        <option value="$PROJECT_DIR$/src/models/daos/DAO.java" />
         <option value="$PROJECT_DIR$/src/connectors/ConnectionManager.java" />
         <option value="$PROJECT_DIR$/src/models/common/Model.java" />
         <option value="$PROJECT_DIR$/src/models/daos/DAOFactory.java" />
@@ -109,6 +94,7 @@
         <option value="$PROJECT_DIR$/resources/dbScripts/createDB" />
         <option value="$PROJECT_DIR$/resources/dbScripts/invoices.sql" />
         <option value="$PROJECT_DIR$/resources/dbScripts/deleteDB" />
+        <option value="$PROJECT_DIR$/src/models/daos/DAO.java" />
       </list>
     </option>
   </component>
@@ -222,7 +208,15 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="models" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="daos" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -237,10 +231,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dbScripts" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -745,7 +735,7 @@
       <workItem from="1458229812165" duration="4107000" />
       <workItem from="1458290933264" duration="1085000" />
       <workItem from="1458302574284" duration="3190000" />
-      <workItem from="1458387943388" duration="9370000" />
+      <workItem from="1458387943388" duration="9636000" />
     </task>
     <servers />
   </component>
@@ -782,11 +772,11 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="35297000" />
+    <option name="totallyTimeSpent" value="35563000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="27" width="1366" height="708" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -796,7 +786,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26783004" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26783004" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962063" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1023,10 +1013,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="51" column="5" selection-start-line="51" selection-start-column="5" selection-end-line="51" selection-end-column="5" />
-          <folding>
-            <element signature="e#931#932#0" expanded="false" />
-            <element signature="e#970#971#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1074,14 +1061,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.30726257">
           <caret line="5" column="12" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/models/daos/DAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.26815644">
-          <caret line="11" column="63" selection-start-line="11" selection-start-column="63" selection-end-line="11" selection-end-column="63" />
           <folding />
         </state>
       </provider>
@@ -1221,9 +1200,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/dbScripts/invoices.sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.26815644">
+        <state vertical-scroll-proportion="0.28458497">
           <caret line="8" column="50" selection-start-line="8" selection-start-column="50" selection-end-line="8" selection-end-column="50" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/models/daos/DAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.26256984">
+          <caret line="14" column="22" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -2,11 +2,13 @@ package models.common;
 
 import models.daos.DAOFactory;
 
+import java.util.UUID;
+
 /**
  * Created by Alberto on 18/03/2016.
  */
 public abstract class Model {
-    public String id = null;
+    public UUID id = null;
 
     public Model save() {
         if (isNew()) {
