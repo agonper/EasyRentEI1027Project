@@ -19,34 +19,7 @@ public class ConnectionManager {
 
     public static Connection getConnection() throws ConnectException {
         try {
-            if (connection != null && !connection.isClosed())
-                return connection;
-
-            Class.forName(DRIVER_NAME);
-            log.fine("PostgreSQL JDBC Driver Registered!");
-
-            Properties props = new Properties();
-            ClassLoader loader = Thread.currentThread().getContextClassLoader();
-            InputStream stream = loader.getResourceAsStream(JDBC_PROPERTIES);
-            if (stream == null)
-                log.severe("File " + JDBC_PROPERTIES + " not found");
-            else {
-                try {
-                    props.load(stream);
-                }
-                catch(IOException e) {
-                    log.severe("No read access for file " + JDBC_PROPERTIES + " " + e.getMessage());
-                    e.printStackTrace();
-                }
-            }
-            connection = DriverManager.getConnection(URL, props);
-
-            if (connection != null) {
-                log.fine("DB connection stabilised");
-            } else {
-                log.severe("DB connection failed!");
-            }
-            return connection;
+            return retrieveExistingConnectionOrCreateNewOne();
         } catch (SQLException e) {
             String errorMessage = "SQLException while connecting to the database";
             e.printStackTrace();
@@ -58,8 +31,64 @@ public class ConnectionManager {
         }
     }
 
+    private static Connection retrieveExistingConnectionOrCreateNewOne() throws SQLException, ClassNotFoundException {
+        if (isConnectionInitialized())
+            return connection;
+
+        retrieveDBDriver();
+        initializeConnection();
+        logConnectionStatus();
+
+        return connection;
+    }
+
     private static ConnectException sendException(String errorMessage) {
         log.severe(errorMessage);
         return new ConnectException(errorMessage);
+    }
+
+    private static boolean isConnectionInitialized() throws SQLException {
+        return connection != null && !connection.isClosed();
+    }
+
+    private static void retrieveDBDriver() throws ClassNotFoundException {
+        Class.forName(DRIVER_NAME);
+        log.fine("PostgreSQL JDBC Driver Registered!");
+    }
+
+    private static void initializeConnection() throws SQLException {
+        Properties props = getProperties();
+        connection = DriverManager.getConnection(URL, props);
+    }
+
+    private static void logConnectionStatus() throws SQLException {
+        if (isConnectionInitialized()) {
+            log.fine("DB connection stabilised");
+        } else {
+            log.severe("DB connection failed!");
+        }
+    }
+
+    private static Properties getProperties() {
+        Properties props = new Properties();
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        InputStream stream = loader.getResourceAsStream(JDBC_PROPERTIES);
+
+        if (stream == null)
+            log.severe("File " + JDBC_PROPERTIES + " not found");
+        else {
+            loadPropertiesFromFile(props, stream);
+        }
+        return props;
+    }
+
+    private static void loadPropertiesFromFile(Properties props, InputStream stream) {
+        try {
+            props.load(stream);
+        }
+        catch(IOException e) {
+            log.severe("No read access for file " + JDBC_PROPERTIES + " " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }
