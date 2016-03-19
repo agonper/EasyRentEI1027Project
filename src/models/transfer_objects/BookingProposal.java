@@ -1,12 +1,13 @@
 package models.transfer_objects;
 
+import models.common.Model;
+
 import java.sql.Date;
 
 /**
  * Created by daniel on 27/02/16.
  */
-public class BookingProposal {
-    public String proposalID;
+public class BookingProposal extends Model {
     public String propertyID;
     public String tenantID;
     public Date startDate;

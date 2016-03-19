@@ -1,12 +1,14 @@
 package models.transfer_objects;
 
+import models.common.Model;
+
 import java.sql.Date;
 import java.util.List;
 
 /**
  * Created by alberto on 17/03/16.
  */
-public class User {
+public class User extends Model {
     public String username;
     public String DNI;
     public UserRole role;
