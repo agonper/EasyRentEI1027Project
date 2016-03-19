@@ -50,7 +50,6 @@ public class UserDAO extends DAO implements Store<User> {
 
     @Override
     public User findRecordByID(UUID id) {
-
         try {
             Connection connection = getConnection();
             return retrieveUserByID(id, connection);
