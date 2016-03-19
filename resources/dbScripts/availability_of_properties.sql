@@ -1,5 +1,5 @@
 CREATE TABLE availability_of_properties (
-  property_id   NUMERIC(8)    NOT NULL,
+  property_id   UUID          NOT NULL,
   start_date    DATE          NOT NULL,
   end_date      DATE          ,
 

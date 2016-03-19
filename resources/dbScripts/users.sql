@@ -1,6 +1,6 @@
 CREATE TABLE users (
-  user_id             NUMERIC(8, 0) NOT NULL,
-  username            VARCHAR(10)   NOT NULL,
+  user_id             UUID          NOT NULL,
+  username            VARCHAR(20)   NOT NULL,
   national_document   VARCHAR(9)    NOT NULL,
   role                VARCHAR(6)    NOT NULL,
   password            VARCHAR(10)   NOT NULL,
