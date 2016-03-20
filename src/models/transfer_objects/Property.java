@@ -2,9 +2,10 @@ package models.transfer_objects;
 
 import java.sql.Date;
 import java.util.Set;
+import java.util.UUID;
 
 public class Property extends Model {
-    public String username;
+    public UUID ownerID;
     public String title;
     public String location;
     public int rooms;

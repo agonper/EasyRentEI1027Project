@@ -1,13 +1,14 @@
 package models.transfer_objects;
 
 import java.sql.Date;
+import java.util.UUID;
 
 /**
  * Created by daniel on 27/02/16.
  */
 public class BookingProposal extends Model {
-    public String propertyID;
-    public String tenantID;
+    public UUID propertyID;
+    public UUID tenantID;
     public Date startDate;
     public Date endDate;
     public ProposalStatus status;
