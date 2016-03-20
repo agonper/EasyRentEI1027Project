@@ -1,8 +1,8 @@
 CREATE TABLE properties (
   property_id     UUID            NOT NULL,
   user_id         UUID            ,
-  title           VARCHAR(20)     NOT NULL,
-  location        VARCHAR(15)     NOT NULL,
+  title           VARCHAR(50)     NOT NULL,
+  location        VARCHAR(40)     NOT NULL,
   rooms           NUMERIC(2, 0)   NOT NULL,
   capacity        NUMERIC(2, 0)   NOT NULL,
   beds            NUMERIC(2, 0)   NOT NULL,

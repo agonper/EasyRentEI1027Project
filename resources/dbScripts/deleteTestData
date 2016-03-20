@@ -1,0 +1,6 @@
+DELETE FROM properties;
+DELETE FROM booking_proposals;
+DELETE FROM invoices;
+DELETE FROM users;
+DELETE FROM services;
+DELETE FROM photos;
