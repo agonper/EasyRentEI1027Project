@@ -52,7 +52,16 @@ public class BookingProposalDAO extends DAO<BookingProposal> {
     protected void setStatementAttributes(BookingProposal record, PreparedStatement stmt, int initialPosition) throws SQLException {
         int position = initialPosition;
 
-        //TODO: Terminar
+        stmt.setObject(position++, record.propertyID);
+        stmt.setObject(position++, record.tenantID);
+        stmt.setDate(position++, record.startDate);
+        stmt.setDate(position++, record.endDate);
+        stmt.setObject(position++, record.status);
+        stmt.setString(position++, record.paymentReference);
+        stmt.setFloat(position++, record.totalAmount);
+        stmt.setInt(position++, record.numberOfTenants);
+        stmt.setDate(position++, record.dateOfCreation);
+        stmt.setDate(position++, record.dateOfAcceptation);
     }
 
     @Override

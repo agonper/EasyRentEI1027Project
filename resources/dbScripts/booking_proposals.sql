@@ -5,7 +5,7 @@ CREATE TABLE booking_proposals (
   start_date          DATE              NOT NULL,
   end_date            DATE              NOT NULL,
   status              VARCHAR(8)        NOT NULL,
-  payment_reference   NUMERIC(10, 0)    NOT NULL,
+  payment_reference   VARCHAR(50)       NOT NULL,
   total_amount        FLOAT(8)          NOT NULL,
   number_of_tenants   NUMERIC(2, 0)     NOT NULL,
   date_of_creation    DATE              NOT NULL,
