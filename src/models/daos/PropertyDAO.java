@@ -13,7 +13,7 @@ import java.util.UUID;
  */
 public class PropertyDAO extends DAO<Property> {
 
-    private final static String TABLE_COLUMNS = "property_id, user_id, title, location, " +
+    private final static String TABLE_COLUMNS = "property_id, owner_id, title, location, " +
             "rooms, capacity, beds, bathrooms, floor_space, price_per_day, creation_date, " +
             "type, description";
     private final static String TABLE_NAME = "properties";
@@ -27,7 +27,7 @@ public class PropertyDAO extends DAO<Property> {
         Property property = new Property();
         try {
             property.id = (UUID) rs.getObject("property_id");
-            property.ownerID = (UUID) rs.getObject("user_id");
+            property.ownerID = (UUID) rs.getObject("owner_id");
             property.title = rs.getString("title");
             property.location = rs.getString("location");
             property.rooms = rs.getInt("location");

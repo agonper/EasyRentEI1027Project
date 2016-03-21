@@ -12,7 +12,7 @@ import java.util.UUID;
  */
 public class PropertyServicesDAO extends DAO<PropertyServices> {
 
-    private final static String TABLE_COLUMNS = "id, property_id, service_id, offered_since";
+    private final static String TABLE_COLUMNS = "id, property_id, service_id";
 
     private final static String TABLE_NAME = "properties_services";
 
@@ -27,7 +27,6 @@ public class PropertyServicesDAO extends DAO<PropertyServices> {
         offered.id = (UUID) rs.getObject("id");
         offered.propertyID = (UUID) rs.getObject("property_id");
         offered.serviceID = (UUID) rs.getObject("service_id");
-        offered.offeredSince = rs.getDate("offered_since");
 
         return offered;
     }
@@ -38,7 +37,6 @@ public class PropertyServicesDAO extends DAO<PropertyServices> {
 
         stmt.setObject(position++, record.propertyID);
         stmt.setObject(position++, record.serviceID);
-        stmt.setDate(position++, record.offeredSince);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package models.transfer_objects;
 
-import java.sql.Date;
 import java.util.UUID;
 
 /**
@@ -9,5 +8,4 @@ import java.util.UUID;
 public class PropertyServices extends Model {
     public UUID propertyID;
     public UUID serviceID;
-    public Date offeredSince;
 }

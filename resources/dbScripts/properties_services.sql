@@ -2,7 +2,6 @@ CREATE TABLE properties_services (
   id               UUID   NOT NULL,
   property_id      UUID   NOT NULL,
   service_id       UUID   NOT NULL,
-  offered_since    DATE   NOT NULL,
 
   CONSTRAINT pk_property_services PRIMARY KEY (id),
 
