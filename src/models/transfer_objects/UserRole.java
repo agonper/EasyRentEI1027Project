@@ -29,8 +29,8 @@ public enum UserRole {
         return suitableRole;
     }
 
-    private UserRole getRoleIfSuitable(String serializerRole) {
-        if (isSuitableRole(serializerRole)) {
+    private UserRole getRoleIfSuitable(String serializedRole) {
+        if (isSuitableRole(serializedRole)) {
             return this;
         }
         return null;

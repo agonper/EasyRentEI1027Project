@@ -13,7 +13,7 @@ import java.util.UUID;
 public class ServiceDAO extends DAO<Service> {
 
     private final static String TABLE_COLUMNS = "id, service_name, service_value, user_id, active, " +
-            "creation_date, active_since";
+            "creation_date, active_since, service_proposals";
 
     private final static String TABLE_NAME = "services";
 
@@ -25,13 +25,13 @@ public class ServiceDAO extends DAO<Service> {
     protected Service populateModelWith(ResultSet rs) throws SQLException {
         Service service = new Service();
 
-        service.id = (UUID) rs.getObject("id");
         service.serviceName = rs.getString("service_name");
         service.serviceValue = rs.getString("service_value");
         service.user_id = (UUID) rs.getObject("user_id");
         service.active = rs.getBoolean("active");
         service.creationDate = rs.getDate("creation_date");
         service.activeSince = rs.getDate("active_since");
+        service.serviceProposals = rs.getInt("service_proposals");
 
         return service;
     }
@@ -46,9 +46,9 @@ public class ServiceDAO extends DAO<Service> {
         stmt.setBoolean(position++, record.active);
         stmt.setDate(position++, record.creationDate);
         stmt.setDate(position++, record.activeSince);
+        stmt.setInt(position, record.serviceProposals);
     }
 
-    //TODO: Estos dos métodos aparecen todos los DAO, quizás puedan abstraerse en DAO, dejando las variables vacías allí, y redefiniéndolas aquí
     @Override
     protected String getSerializedTableColumns() {
         return TABLE_NAME;

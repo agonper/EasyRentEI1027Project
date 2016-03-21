@@ -13,7 +13,7 @@ import java.util.UUID;
  */
 public class PropertyDAO extends DAO<Property> {
 
-    private final static String TABLE_COLUMNS = "property_id, owner_id, title, location, " +
+    private final static String TABLE_COLUMNS = "id, owner_id, title, location, " +
             "rooms, capacity, beds, bathrooms, floor_space, price_per_day, creation_date, " +
             "type, description";
     private final static String TABLE_NAME = "properties";
@@ -25,26 +25,20 @@ public class PropertyDAO extends DAO<Property> {
     @Override
     protected Property populateModelWith(ResultSet rs) throws SQLException {
         Property property = new Property();
-        try {
-            property.id = (UUID) rs.getObject("property_id");
-            property.ownerID = (UUID) rs.getObject("owner_id");
-            property.title = rs.getString("title");
-            property.location = rs.getString("location");
-            property.rooms = rs.getInt("location");
-            property.capacity = rs.getInt("capacity");
-            property.beds = rs.getInt("beds");
-            property.bathrooms = rs.getInt("bathrooms");
-            property.floorSpace = rs.getInt("floor_space");
-            property.pricePerDay = rs.getFloat("price_per_day");
-            property.creationDate = rs.getDate("creation_date");
-            property.type = (PropertyType) rs.getObject("type");
-            property.description = rs.getString("description");
-        }
-        //TODO: Concretar excepción
-        catch (Exception e) {
-            property = null;
-            e.printStackTrace();
-        }
+
+        property.ownerID = (UUID) rs.getObject("owner_id");
+        property.title = rs.getString("title");
+        property.location = rs.getString("location");
+        property.rooms = rs.getInt("location");
+        property.capacity = rs.getInt("capacity");
+        property.beds = rs.getInt("beds");
+        property.bathrooms = rs.getInt("bathrooms");
+        property.floorSpace = rs.getInt("floor_space");
+        property.pricePerDay = rs.getFloat("price_per_day");
+        property.creationDate = rs.getDate("creation_date");
+        property.type = (PropertyType) rs.getObject("type");
+        property.description = rs.getString("description");
+
         return property;
     }
 
@@ -52,9 +46,6 @@ public class PropertyDAO extends DAO<Property> {
     protected void setStatementAttributes(Property record, PreparedStatement stmt, int initialPosition) throws SQLException {
         int position = initialPosition;
 
-        //TODO: ¿Sobraría el id?
-        //TODO: ¿UUID como Object?
-        stmt.setObject(position++, record.id);
         stmt.setObject(position++, record.ownerID);
         stmt.setString(position++, record.title);
         stmt.setString(position++, record.location);
@@ -65,7 +56,7 @@ public class PropertyDAO extends DAO<Property> {
         stmt.setInt(position++, record.floorSpace);
         stmt.setFloat(position++, record.pricePerDay);
         stmt.setDate(position++, record.creationDate);
-        stmt.setString(position++, record.description);
+        stmt.setString(position, record.description);
     }
 
     @Override
