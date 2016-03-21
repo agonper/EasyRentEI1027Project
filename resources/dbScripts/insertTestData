@@ -10,19 +10,17 @@ INSERT INTO properties VALUES ('9a5f1b72-0af9-aa63-1cf5-b6cc731bd397', '3f02eb48
 INSERT INTO availability_of_properties VALUES ('d98c580a-3e1c-1ff3-9d43-48eafbe4bf32', 'd4b187b9-3c88-cc0e-84a5-cbfea9972998', '2016-01-05', '2017-01-01');
 INSERT INTO availability_of_properties VALUES ('532fe2a0-19a5-2409-e988-a0020c05c7ec', '9a5f1b72-0af9-aa63-1cf5-b6cc731bd397', '2016-02-01', NULL);
 
-INSERT INTO services VALUES ('61139a7c-138d-7504-315e-d4851343280d', 'wi-fi', 'Wi-Fi', '47846b9f-8cbc-4612-dbb1-542c5f0200b8', TRUE, '2015-01-05', '2016-01-01');
-INSERT INTO services VALUES ('e8203225-6803-46c2-d35e-7fa9bf6dea07', 'sauna', 'Sauna', '3f02eb48-68e1-e417-8e45-5a9ad695b3c8', FALSE, '2016-02-01', NULL);
+INSERT INTO services VALUES ('61139a7c-138d-7504-315e-d4851343280d', 'wi-fi', 'Wi-Fi', '47846b9f-8cbc-4612-dbb1-542c5f0200b8', TRUE, '2015-01-05', 200, '2016-01-01');
+INSERT INTO services VALUES ('e8203225-6803-46c2-d35e-7fa9bf6dea07', 'sauna', 'Sauna', '3f02eb48-68e1-e417-8e45-5a9ad695b3c8', FALSE, '2016-02-01', 1, NULL);
 
-INSERT INTO photos VALUES ('193c5287-0467-876e-8a81-897eeaf1ab10', '2016-03-10', 'casa1.jpg');
-INSERT INTO photos VALUES ('6dd4e5b9-d18d-5756-916a-22df11ab3494', '2015-05-01', 'adminPhoto.png');
+INSERT INTO photos VALUES ('193c5287-0467-876e-8a81-897eeaf1ab10', '2016-03-10', 'casa1.jpg', 'd4b187b9-3c88-cc0e-84a5-cbfea9972998', NULL);
+INSERT INTO photos VALUES ('6dd4e5b9-d18d-5756-916a-22df11ab3494', '2015-05-01', 'adminPhoto.png', NULL, '47846b9f-8cbc-4612-dbb1-542c5f0200b8');
 
 INSERT INTO booking_proposals VALUES ('9e8dfcb4-ba96-d428-d65b-beedbad916ff', 'd4b187b9-3c88-cc0e-84a5-cbfea9972998', '6a1ced8c-97d2-d45e-ae6c-84be46f8c5a8', '2016-03-10', '2016-03-12', 'pendent', '09889098', 50.2, 1, '2016-02-20', NULL);
 INSERT INTO booking_proposals VALUES ('14ab7162-bdb9-ba82-bd62-82c803344bdd', 'd4b187b9-3c88-cc0e-84a5-cbfea9972998', '3f02eb48-68e1-e417-8e45-5a9ad695b3c8', '2016-02-10', '2016-02-16', 'accepted', '09876543', 100.4, 2, '2016-01-20', '2016-01-22');
 
-INSERT INTO properties_services VALUES ('909606f6-1896-49b2-20ff-b8a4638c59ab', 'd4b187b9-3c88-cc0e-84a5-cbfea9972998', '61139a7c-138d-7504-315e-d4851343280d');
-INSERT INTO properties_services VALUES ('db4dbcf2-9030-dccf-2441-19399f7bb615', '9a5f1b72-0af9-aa63-1cf5-b6cc731bd397', '61139a7c-138d-7504-315e-d4851343280d');
-
-INSERT INTO properties_photos VALUES ('99905ef8-ef80-d89c-ae6a-20365aed68aa', '193c5287-0467-876e-8a81-897eeaf1ab10', 'd4b187b9-3c88-cc0e-84a5-cbfea9972998');
+INSERT INTO property_services VALUES ('909606f6-1896-49b2-20ff-b8a4638c59ab', 'd4b187b9-3c88-cc0e-84a5-cbfea9972998', '61139a7c-138d-7504-315e-d4851343280d');
+INSERT INTO property_services VALUES ('db4dbcf2-9030-dccf-2441-19399f7bb615', '9a5f1b72-0af9-aa63-1cf5-b6cc731bd397', '61139a7c-138d-7504-315e-d4851343280d');
 
 INSERT INTO invoices VALUES ('5b866a60-6637-2a7c-8bd4-245ccf7ee681', 1, '14ab7162-bdb9-ba82-bd62-82c803344bdd', 21, 'prueba', '2016-01-24');
 INSERT INTO invoices VALUES ('4687fc39-0aa5-7e3c-d2ef-aca8ec6b5c38', 2, '14ab7162-bdb9-ba82-bd62-82c803344bdd', 18, 'prueba2', '2016-01-25');
