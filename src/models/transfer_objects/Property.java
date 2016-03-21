@@ -1,6 +1,9 @@
 package models.transfer_objects;
 
+import models.daos.UserDAO;
+
 import java.sql.Date;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -17,10 +20,14 @@ public class Property extends Model {
     public PropertyType type;
     public String description;
     public Date creationDate;
+    //TODO: La línea de abajo es una propuesta de modificación
+    public List<UUID> photosUUIDs;
 
     public User getOwner() {
         // TODO: Implement
-        return null;
+        UserDAO toObtainUser = new UserDAO();
+        User ownerObtained = toObtainUser.findRecordByID(ownerID);
+        return ownerObtained;
     }
 
     public Set<AvailabilityPeriod> getAvailabilityPeriods() {

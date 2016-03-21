@@ -1,40 +1,67 @@
 package models.daos;
 
-import models.common.Store;
 import models.transfer_objects.BookingProposal;
+import models.transfer_objects.ProposalStatus;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
 /**
  * Created by alberto on 17/03/16.
  */
 public class BookingProposalDAO extends DAO<BookingProposal> {
+
+    private final static String TABLE_COLUMNS = "proposal_id, property_id, tenant_id, start_date, end_date, status, payment_reference, total_amount, number_of_tenants, date_of_creation, date_of_acceptation";
+
+    private final static String TABLE_NAME = "booking_proposals";
+
     public BookingProposalDAO() {
         super(BookingProposalDAO.class.getName());
     }
 
     @Override
     protected BookingProposal populateModelWith(ResultSet rs) throws SQLException {
-        return null;
+        BookingProposal bp = new BookingProposal();
+
+        try {
+            //TODO: ¿IDs bien?
+            bp.id = (UUID) rs.getObject("proposal_id");
+            bp.propertyID = (UUID) rs.getObject("property_id");
+            bp.tenantID = (UUID) rs.getObject("tenant_id");
+            bp.startDate = rs.getDate("start_date");
+            bp.endDate = rs.getDate("end_date");
+            bp.status = (ProposalStatus) rs.getObject("status");
+            bp.paymentReference = Integer.toString(rs.getInt("payment_reference"));
+            bp.totalAmount = rs.getFloat("total_amount");
+            bp.numberOfTenants = rs.getInt("number_of_tenants");
+            bp.dateOfCreation = rs.getDate("date_of_creation");
+            bp.dateOfAcceptation = rs.getDate("date_of_acceptation");
+        }
+        //TODO: Comprobar excepción
+        catch (Exception e) {
+            bp = null;
+            e.printStackTrace();
+        }
+
+        return bp;
     }
 
     @Override
     protected void setStatementAttributes(BookingProposal record, PreparedStatement stmt, int initialPosition) throws SQLException {
+        int position = initialPosition;
 
+        //TODO: Terminar
     }
 
     @Override
     protected String getSerializedTableColumns() {
-        return null;
+        return TABLE_COLUMNS;
     }
 
     @Override
     protected String getTableName() {
-        return null;
+        return TABLE_NAME;
     }
 }
