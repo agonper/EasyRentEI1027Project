@@ -7,3 +7,9 @@
 \i availability_of_properties.sql
 \i properties_photos.sql
 \i properties_services.sql
+
+GRANT ALL ON DATABASE easyRent_DAAL TO al286290;
+GRANT ALL ON DATABASE easyRent_DAAL TO al286292;
+
+GRANT ALL ON ALL TABLES IN SCHEMA public TO al286290;
+GRANT ALL ON ALL TABLES IN SCHEMA public TO al286292;
