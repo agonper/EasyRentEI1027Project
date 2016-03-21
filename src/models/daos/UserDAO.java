@@ -28,7 +28,6 @@ public class UserDAO extends DAO<User> {
     protected User populateModelWith(ResultSet rs) throws SQLException {
         User user = new User();
         try {
-            user.id = (UUID) rs.getObject("id");
             user.username = rs.getString("username");
             user.DNI = rs.getString("national_document");
             user.role = UserRole.obtainRoleFor(rs.getString("role"));
@@ -56,7 +55,6 @@ public class UserDAO extends DAO<User> {
     protected void setStatementAttributes(User user, PreparedStatement stmt, int initialPosition) throws SQLException {
         int position = initialPosition;
 
-        //TODO: ¿Faltaría el id?
         stmt.setString(position++, user.username);
         stmt.setString(position++, user.DNI);
         stmt.setString(position++, user.role.toString());

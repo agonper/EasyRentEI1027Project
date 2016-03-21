@@ -29,8 +29,8 @@ public enum ProposalStatus {
         return suitableStatus;
     }
 
-    private ProposalStatus getStatusIfSuitable(String serializerStatus) {
-        if (isSuitableStatus(serializerStatus)) {
+    private ProposalStatus getStatusIfSuitable(String serializedStatus) {
+        if (isSuitableStatus(serializedStatus)) {
             return this;
         }
         return null;

@@ -2,6 +2,7 @@ package models.daos;
 
 import models.transfer_objects.BookingProposal;
 import models.transfer_objects.ProposalStatus;
+import models.transfer_objects.StatusNotFoundException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +14,7 @@ import java.util.UUID;
  */
 public class BookingProposalDAO extends DAO<BookingProposal> {
 
-    private final static String TABLE_COLUMNS = "proposal_id, property_id, tenant_id, start_date, end_date, status, payment_reference, total_amount, number_of_tenants, date_of_creation, date_of_acceptation";
+    private final static String TABLE_COLUMNS = "id, property_id, tenant_id, start_date, end_date, status, payment_reference, total_amount, number_of_tenants, date_of_creation, date_of_acceptation";
 
     private final static String TABLE_NAME = "booking_proposals";
 
@@ -26,21 +27,18 @@ public class BookingProposalDAO extends DAO<BookingProposal> {
         BookingProposal bp = new BookingProposal();
 
         try {
-            //TODO: ¿IDs bien?
-            bp.id = (UUID) rs.getObject("proposal_id");
             bp.propertyID = (UUID) rs.getObject("property_id");
             bp.tenantID = (UUID) rs.getObject("tenant_id");
             bp.startDate = rs.getDate("start_date");
             bp.endDate = rs.getDate("end_date");
-            bp.status = (ProposalStatus) rs.getObject("status");
+            bp.status = ProposalStatus.obtainStatusFor(rs.getString("status"));
             bp.paymentReference = Integer.toString(rs.getInt("payment_reference"));
             bp.totalAmount = rs.getFloat("total_amount");
             bp.numberOfTenants = rs.getInt("number_of_tenants");
             bp.dateOfCreation = rs.getDate("date_of_creation");
             bp.dateOfAcceptation = rs.getDate("date_of_acceptation");
-        }
-        //TODO: Comprobar excepción
-        catch (Exception e) {
+        } catch (StatusNotFoundException e) {
+            log.warning("Booking proposal entry with id " + bp.id + " appears to have a status inconsistency problem");
             bp = null;
             e.printStackTrace();
         }
@@ -61,7 +59,7 @@ public class BookingProposalDAO extends DAO<BookingProposal> {
         stmt.setFloat(position++, record.totalAmount);
         stmt.setInt(position++, record.numberOfTenants);
         stmt.setDate(position++, record.dateOfCreation);
-        stmt.setDate(position++, record.dateOfAcceptation);
+        stmt.setDate(position, record.dateOfAcceptation);
     }
 
     @Override

@@ -133,6 +133,7 @@ public abstract class DAO<T extends Model> implements Store<T> {
 
             if (rs.next()) {
                 record = populateModelWith(rs);
+                record.id = (UUID) rs.getObject("id");
             }
 
         } catch (SQLException e) {
@@ -203,6 +204,7 @@ public abstract class DAO<T extends Model> implements Store<T> {
         while (rs.next()) {
             T record = populateModelWith(rs);
             if (record != null) {
+                record.id = (UUID) rs.getObject("id");
                 records.add(record);
             }
         }

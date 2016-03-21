@@ -12,7 +12,7 @@ import java.util.UUID;
  */
 public class InvoiceDAO extends DAO<Invoice> {
 
-    private final static String TABLE_COLUMNS = "invoide_id, invoice_number, proposal_id, actual_vat, address, invoice_date";
+    private final static String TABLE_COLUMNS = "id, invoice_number, proposal_id, actual_vat, address, invoice_date";
 
     private final static String TABLE_NAME = "invoices";
 
@@ -24,19 +24,11 @@ public class InvoiceDAO extends DAO<Invoice> {
     protected Invoice populateModelWith(ResultSet rs) throws SQLException {
         Invoice invoice = new Invoice();
 
-        try {
-            invoice.id = (UUID) rs.getObject("invoice_id");
-            invoice.number = rs.getInt("invoice_number");
-            invoice.proposalID = (UUID) rs.getObject("proposal_id");
-            invoice.vat = rs.getInt("actual_vat");
-            invoice.address = rs.getString("address");
-            invoice.expeditionDate = rs.getDate("invoice_date");
-        }
-        //TODO: Comprobar excepción
-        catch (Exception e) {
-            invoice = null;
-            e.printStackTrace();
-        }
+        invoice.number = rs.getInt("invoice_number");
+        invoice.proposalID = (UUID) rs.getObject("proposal_id");
+        invoice.vat = rs.getInt("actual_vat");
+        invoice.address = rs.getString("address");
+        invoice.expeditionDate = rs.getDate("invoice_date");
 
         return invoice;
     }
@@ -45,13 +37,11 @@ public class InvoiceDAO extends DAO<Invoice> {
     protected void setStatementAttributes(Invoice record, PreparedStatement stmt, int initialPosition) throws SQLException {
         int position = initialPosition;
 
-        //TODO: ¿id necesario?
-        stmt.setObject(position++, record.id);
         stmt.setInt(position++, record.number);
         stmt.setObject(position++, record.proposalID);
-        stmt.setInt(position++, record.vat);
+        stmt.setFloat(position++, record.vat);
         stmt.setString(position++, record.address);
-        stmt.setDate(position++, record.expeditionDate);
+        stmt.setDate(position, record.expeditionDate);
     }
 
     @Override

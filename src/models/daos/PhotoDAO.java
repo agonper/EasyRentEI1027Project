@@ -12,7 +12,7 @@ import java.util.UUID;
  */
 public class PhotoDAO extends DAO<Photo> {
 
-    private final static String TABLE_COLUMNS = "photo_id, upload_date, filename";
+    private final static String TABLE_COLUMNS = "id, upload_date, filename";
 
     private final static String TABLE_NAME = "photos";
 
@@ -22,30 +22,20 @@ public class PhotoDAO extends DAO<Photo> {
 
     @Override
     protected Photo populateModelWith(ResultSet rs) throws SQLException {
-        Photo loaded = new Photo();
+        Photo photo = new Photo();
 
-        try {
-            loaded.id = (UUID) rs.getObject("photo_id");
-            loaded.uploadDate = rs.getDate("upload_date");
-            loaded.filename = rs.getString("filename");
-        }
-        //TODO: Comprobar excepción
-        catch(Exception e) {
-            loaded = null;
-            e.printStackTrace();
-        }
+        photo.uploadDate = rs.getDate("upload_date");
+        photo.filename = rs.getString("filename");
 
-        return loaded;
+        return photo;
     }
 
     @Override
     protected void setStatementAttributes(Photo record, PreparedStatement stmt, int initialPosition) throws SQLException {
         int position = initialPosition;
 
-        //TODO: ¿Sobraría el id?
-        stmt.setObject(position++, record.id);
         stmt.setDate(position++, record.uploadDate);
-        stmt.setString(position++, record.filename);
+        stmt.setString(position, record.filename);
     }
 
     @Override

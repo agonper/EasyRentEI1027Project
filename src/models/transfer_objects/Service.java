@@ -13,7 +13,7 @@ public class Service extends Model {
     public boolean active;
     public Date creationDate;
     public Date activeSince;
-    public Date offeredSince;
+    public int serviceProposals;
 
     public Service activate() {
         //TODO: Validar implementación

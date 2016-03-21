@@ -24,7 +24,6 @@ public class AvailabilitiyPeriodDAO extends DAO<AvailabilityPeriod> {
     protected AvailabilityPeriod populateModelWith(ResultSet rs) throws SQLException {
         AvailabilityPeriod availabilityPeriod = new AvailabilityPeriod();
 
-        availabilityPeriod.id = (UUID) rs.getObject("id");
         availabilityPeriod.propertyID = (UUID) rs.getObject("property_id");
         availabilityPeriod.startDate = rs.getDate("start_date");
         availabilityPeriod.endDate = rs.getDate("end_date");
