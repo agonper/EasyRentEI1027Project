@@ -30,6 +30,9 @@ public enum PropertyType {
         PropertyType suitableType = null;
         for (PropertyType type : PropertyType.values()) {
             suitableType = type.getTypeIfSuitable(serializedType);
+            if (suitableType != null) {
+                break;
+            }
         }
         return suitableType;
     }

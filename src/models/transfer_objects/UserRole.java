@@ -25,6 +25,9 @@ public enum UserRole {
         UserRole suitableRole = null;
         for (UserRole role : UserRole.values()) {
             suitableRole = role.getRoleIfSuitable(serializedRole);
+            if (suitableRole != null) {
+                break;
+            }
         }
         return suitableRole;
     }

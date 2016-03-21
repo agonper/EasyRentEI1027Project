@@ -19,6 +19,7 @@ import java.util.logging.Logger;
  */
 public abstract class DAO<T extends Model> implements Store<T> {
     protected static Logger log;
+    private final static int INITIAL_STATEMENT_POSITION = 2;
 
     public DAO(String className) {
         if (log == null)
@@ -152,8 +153,7 @@ public abstract class DAO<T extends Model> implements Store<T> {
             String query = generateInsertQueryString(template);
             stmt = connection.prepareStatement(query);
             stmt.setObject(1, record.id);
-            final int INNITIAL_POSITION = 2;
-            setStatementAttributes(record, stmt, INNITIAL_POSITION);
+            setStatementAttributes(record, stmt, INITIAL_STATEMENT_POSITION);
 
             stmt.execute();
         } catch (SQLException e) {
@@ -171,9 +171,9 @@ public abstract class DAO<T extends Model> implements Store<T> {
             String[] tableFields = getTableFields();
             String query = generateUpdateQueryString(template);
             stmt = connection.prepareStatement(query);
-
-            setStatementAttributes(record, stmt, 1);
-            final int LAST_STATEMENT_PLACEHOLDER = tableFields.length - 1;
+            stmt.setObject(1, record.id);
+            setStatementAttributes(record, stmt, INITIAL_STATEMENT_POSITION);
+            final int LAST_STATEMENT_PLACEHOLDER = tableFields.length+1;
             stmt.setObject(LAST_STATEMENT_PLACEHOLDER, record.id);
             stmt.execute();
         } catch (SQLException e) {

@@ -25,6 +25,9 @@ public enum ProposalStatus {
         ProposalStatus suitableStatus = null;
         for (ProposalStatus status : ProposalStatus.values()) {
             suitableStatus = status.getStatusIfSuitable(serializedStatus);
+            if (suitableStatus != null) {
+                break;
+            }
         }
         return suitableStatus;
     }
