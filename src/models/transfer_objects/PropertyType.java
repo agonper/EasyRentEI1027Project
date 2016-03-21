@@ -4,9 +4,14 @@ package models.transfer_objects;
  * Created by Alberto on 17/03/2016.
  */
 public enum PropertyType {
-    PENDING,
-    ACCEPTED,
-    REJECTED;
+    FLAT,
+    STUDY,
+    PENTHOUSE,
+    HOUSE,
+    DETACHED_HOUSE,
+    COTTAGE,
+    CHALET,
+    APARTMENT;
 
     public String toString() {
         return this.name().toLowerCase();
