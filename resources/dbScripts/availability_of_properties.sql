@@ -1,11 +1,11 @@
 CREATE TABLE availability_of_properties (
-  property_id   UUID          NOT NULL,
+  id            UUID          NOT NULL,
   start_date    DATE          NOT NULL,
   end_date      DATE          ,
 
-  CONSTRAINT pk_availability_of_properties PRIMARY KEY (property_id),
-  CONSTRAINT fk_aop_property_id FOREIGN KEY (property_id)
-    REFERENCES properties(property_id)
+  CONSTRAINT pk_availability_of_properties PRIMARY KEY (id),
+  CONSTRAINT fk_aop_property_id FOREIGN KEY (id)
+    REFERENCES properties(id)
     ON UPDATE CASCADE
     ON DELETE CASCADE,
 

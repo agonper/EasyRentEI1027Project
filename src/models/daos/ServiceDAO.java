@@ -12,8 +12,7 @@ import java.util.UUID;
  */
 public class ServiceDAO extends DAO<Service> {
 
-    //TODO: ¿service_id o id como en la variable del DAO?
-    private final static String TABLE_COLUMNS = "service_id, service_name, service_value, user_id, active, " +
+    private final static String TABLE_COLUMNS = "id, service_name, service_value, user_id, active, " +
             "creation_date, active_since";
 
     private final static String TABLE_NAME = "services";
@@ -25,20 +24,15 @@ public class ServiceDAO extends DAO<Service> {
     @Override
     protected Service populateModelWith(ResultSet rs) throws SQLException {
         Service service = new Service();
-        try {
-            service.id = (UUID) rs.getObject("service_id");
-            service.serviceName = rs.getString("service_name");
-            service.serviceValue = rs.getString("service_value");
-            service.user_id = (UUID) rs.getObject("user_id");
-            service.active = rs.getBoolean("active");
-            service.creationDate = rs.getDate("creation_date");
-            service.activeSince = rs.getDate("active_since");
-        }
-        //TODO: Concretar excepción
-        catch (Exception e) {
-            service = null;
-            e.printStackTrace();
-        }
+
+        service.id = (UUID) rs.getObject("id");
+        service.serviceName = rs.getString("service_name");
+        service.serviceValue = rs.getString("service_value");
+        service.user_id = (UUID) rs.getObject("user_id");
+        service.active = rs.getBoolean("active");
+        service.creationDate = rs.getDate("creation_date");
+        service.activeSince = rs.getDate("active_since");
+
         return service;
     }
 
@@ -46,8 +40,6 @@ public class ServiceDAO extends DAO<Service> {
     protected void setStatementAttributes(Service record, PreparedStatement stmt, int initialPosition) throws SQLException {
         int position = initialPosition;
 
-        //TODO: ¿Sobra el id?
-        stmt.setObject(position++, record.id);
         stmt.setString(position++, record.serviceName);
         stmt.setString(position++, record.serviceValue);
         stmt.setObject(position++, record.user_id);

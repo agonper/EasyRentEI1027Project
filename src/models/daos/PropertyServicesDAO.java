@@ -12,7 +12,7 @@ import java.util.UUID;
  */
 public class PropertyServicesDAO extends DAO<PropertyServices> {
 
-    private final static String TABLE_COLUMNS = "property_id, service_id, offered_since";
+    private final static String TABLE_COLUMNS = "id, property_id, service_id, offered_since";
 
     private final static String TABLE_NAME = "properties_services";
 
@@ -24,16 +24,10 @@ public class PropertyServicesDAO extends DAO<PropertyServices> {
     protected PropertyServices populateModelWith(ResultSet rs) throws SQLException {
         PropertyServices offered = new PropertyServices();
 
-        try {
-            offered.propertyID = (UUID) rs.getObject("property_id");
-            offered.serviceID = (UUID) rs.getObject("service_id");
-            offered.offeredSince = rs.getDate("offered_since");
-        }
-        //TODO: Concretar excepción
-        catch (Exception e) {
-            offered = null;
-            e.printStackTrace();
-        }
+        offered.id = (UUID) rs.getObject("id");
+        offered.propertyID = (UUID) rs.getObject("property_id");
+        offered.serviceID = (UUID) rs.getObject("service_id");
+        offered.offeredSince = rs.getDate("offered_since");
 
         return offered;
     }

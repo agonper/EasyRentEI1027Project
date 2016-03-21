@@ -1,8 +1,8 @@
 CREATE TABLE properties (
-  property_id     UUID            NOT NULL,
+  id              UUID            NOT NULL,
   user_id         UUID            ,
   title           VARCHAR(50)     NOT NULL,
-  location        VARCHAR(40)     NOT NULL,
+  location        VARCHAR(50)     NOT NULL,
   rooms           NUMERIC(2, 0)   NOT NULL,
   capacity        NUMERIC(2, 0)   NOT NULL,
   beds            NUMERIC(2, 0)   NOT NULL,
@@ -13,9 +13,10 @@ CREATE TABLE properties (
   type            VARCHAR(20)     NOT NULL,
   description     VARCHAR(500)    NOT NULL,
 
-  CONSTRAINT pk_properties PRIMARY KEY (property_id),
+  CONSTRAINT pk_properties PRIMARY KEY (id),
+
   CONSTRAINT fk_pr_username FOREIGN KEY (user_id)
-    REFERENCES users(user_id)
+    REFERENCES users(id)
     ON UPDATE CASCADE
     ON DELETE SET NULL
 );
