@@ -11,7 +11,7 @@ CREATE TABLE invoices (
   CONSTRAINT ak_invoices UNIQUE (invoice_number),
 
   CONSTRAINT fk_i_tracking_number FOREIGN KEY (proposal_id)
-    REFERENCES booking_proposals(proposal_id)
+    REFERENCES booking_proposals(id)
     ON UPDATE CASCADE
     ON DELETE SET NULL
 );
