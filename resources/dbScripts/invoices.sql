@@ -2,7 +2,7 @@ CREATE TABLE invoices (
   id               UUID              NOT NULL,
   invoice_number   SERIAL            NOT NULL,
   proposal_id      UUID              NOT NULL,
-  actual_vat       NUMERIC(2, 0)     NOT NULL,
+  actual_vat       FLOAT(2)          NOT NULL,
   address          VARCHAR(50)       NOT NULL,
   invoice_date     DATE              NOT NULL,
 
@@ -14,4 +14,6 @@ CREATE TABLE invoices (
     REFERENCES booking_proposals(id)
     ON UPDATE CASCADE
     ON DELETE SET NULL
+
+
 );
