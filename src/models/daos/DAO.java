@@ -128,7 +128,7 @@ public abstract class DAO<T extends Model> implements Store<T> {
             String template = "SELECT %s FROM %s WHERE id=?";
             String query = generateSelectQueryString(template);
             stmt = connection.prepareStatement(query);
-            stmt.setString(1, id.toString());
+            stmt.setObject(1, id);
             rs = stmt.executeQuery();
 
             if (rs.next()) {
@@ -148,7 +148,7 @@ public abstract class DAO<T extends Model> implements Store<T> {
         PreparedStatement stmt = null;
         try {
             String template = "INSERT INTO %s (%s) values (%s)";
-            String query = generateInsertQuery(template);
+            String query = generateInsertQueryString(template);
             stmt = connection.prepareStatement(query);
             stmt.setObject(1, record.id);
             final int INNITIAL_POSITION = 2;
@@ -242,7 +242,7 @@ public abstract class DAO<T extends Model> implements Store<T> {
         return String.format(queryTemplate, getSerializedTableColumns(), getTableName());
     }
 
-    private String generateInsertQuery(String template) {
+    private String generateInsertQueryString(String template) {
         String placeholders = getInsertValuesPlaceholdersFrom(getTableFields());
         return String.format(template, getTableName(), getSerializedTableColumns(), placeholders);
     }
