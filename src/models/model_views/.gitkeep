@@ -1,6 +1,0 @@
-Classes here have the responsibility to be an interface between the models and the controllers/views.
-
-- They validate data input before model save.
-- They define the output format of the models.
-
-Responsibility is integrity.

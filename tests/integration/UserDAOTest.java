@@ -1,14 +1,13 @@
 package integration;
 
-import models.daos.UserDAO;
-import models.transfer_objects.User;
-import models.transfer_objects.UserRole;
+import es.uji.daal.easyrent.daos.UserDAO;
+import es.uji.daal.easyrent.models.User;
+import es.uji.daal.easyrent.models.UserRole;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.Date;
-import java.util.GregorianCalendar;
 import java.util.Set;
 import java.util.UUID;
 

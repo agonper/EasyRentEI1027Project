@@ -10,8 +10,8 @@ INSERT INTO properties VALUES ('9a5f1b72-0af9-aa63-1cf5-b6cc731bd397', '3f02eb48
 INSERT INTO availability_of_properties VALUES ('d98c580a-3e1c-1ff3-9d43-48eafbe4bf32', 'd4b187b9-3c88-cc0e-84a5-cbfea9972998', '2016-01-05', '2017-01-01');
 INSERT INTO availability_of_properties VALUES ('532fe2a0-19a5-2409-e988-a0020c05c7ec', '9a5f1b72-0af9-aa63-1cf5-b6cc731bd397', '2016-02-01', NULL);
 
-INSERT INTO services VALUES ('61139a7c-138d-7504-315e-d4851343280d', 'wi-fi', 'Wi-Fi', '47846b9f-8cbc-4612-dbb1-542c5f0200b8', TRUE, '2015-01-05', 200, '2016-01-01');
-INSERT INTO services VALUES ('e8203225-6803-46c2-d35e-7fa9bf6dea07', 'sauna', 'Sauna', '3f02eb48-68e1-e417-8e45-5a9ad695b3c8', FALSE, '2016-02-01', 1, NULL);
+INSERT INTO es.ei1027.daal.easyrent.services VALUES ('61139a7c-138d-7504-315e-d4851343280d', 'wi-fi', 'Wi-Fi', '47846b9f-8cbc-4612-dbb1-542c5f0200b8', TRUE, '2015-01-05', 200, '2016-01-01');
+INSERT INTO es.ei1027.daal.easyrent.services VALUES ('e8203225-6803-46c2-d35e-7fa9bf6dea07', 'sauna', 'Sauna', '3f02eb48-68e1-e417-8e45-5a9ad695b3c8', FALSE, '2016-02-01', 1, NULL);
 
 INSERT INTO photos VALUES ('193c5287-0467-876e-8a81-897eeaf1ab10', '2016-03-10', 'casa1.jpg', 'd4b187b9-3c88-cc0e-84a5-cbfea9972998', NULL);
 INSERT INTO photos VALUES ('6dd4e5b9-d18d-5756-916a-22df11ab3494', '2015-05-01', 'adminPhoto.png', NULL, '47846b9f-8cbc-4612-dbb1-542c5f0200b8');

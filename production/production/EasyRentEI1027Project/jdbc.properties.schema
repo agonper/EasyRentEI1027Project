@@ -1,6 +1,0 @@
-user = alXXXXX
-password = xxxxxxx
-db_host = db-aules.uji.es
-db_name = easyRent_DAAL
-ssl = true
-sslfactory = org.postgresql.ssl.NonValidatingFactory

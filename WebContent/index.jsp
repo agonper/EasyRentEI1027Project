@@ -1,13 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <title>EI1027</title>
+    <meta charset="UTF-8">
+    <title>EasyRent</title>
 </head>
 <body>
-<ul>
-    <li><a href="nadador/list.html">Gestio de Nadadors</a></li>
-    <li><a href="prova/list.html">Gestio de Proves</a></li>
-    <li><a href="classificacio/list.html">Gestio de Classificacions</a></li>
-</ul>
+    <h1>Home page for EasyRent project</h1>
 </body>
+</html>

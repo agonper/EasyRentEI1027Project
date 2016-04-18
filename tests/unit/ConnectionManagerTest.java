@@ -1,6 +1,6 @@
 package unit;
 
-import connectors.ConnectionManager;
+import es.uji.daal.easyrent.connectors.ConnectionManager;
 import org.junit.Test;
 
 import java.sql.Connection;
