@@ -25,12 +25,15 @@ public enum ProposalStatus {
         ProposalStatus suitableStatus = null;
         for (ProposalStatus status : ProposalStatus.values()) {
             suitableStatus = status.getStatusIfSuitable(serializedStatus);
+            if (suitableStatus != null) {
+                break;
+            }
         }
         return suitableStatus;
     }
 
-    private ProposalStatus getStatusIfSuitable(String serializerStatus) {
-        if (isSuitableStatus(serializerStatus)) {
+    private ProposalStatus getStatusIfSuitable(String serializedStatus) {
+        if (isSuitableStatus(serializedStatus)) {
             return this;
         }
         return null;

@@ -8,6 +8,7 @@ import java.util.UUID;
  */
 public class Photo extends Model {
     public UUID propertyID;
+    public UUID userID;
     public String filename;
     public Date uploadDate;
 }

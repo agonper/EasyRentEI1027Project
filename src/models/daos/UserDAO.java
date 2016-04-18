@@ -28,7 +28,6 @@ public class UserDAO extends DAO<User> {
     protected User populateModelWith(ResultSet rs) throws SQLException {
         User user = new User();
         try {
-            user.id = (UUID) rs.getObject("id");
             user.username = rs.getString("username");
             user.DNI = rs.getString("national_document");
             user.role = UserRole.obtainRoleFor(rs.getString("role"));
@@ -54,22 +53,22 @@ public class UserDAO extends DAO<User> {
 
     @Override
     protected void setStatementAttributes(User user, PreparedStatement stmt, int initialPosition) throws SQLException {
-        int p = initialPosition;
+        int position = initialPosition;
 
-        stmt.setString(p++, user.username);
-        stmt.setString(p++, user.DNI);
-        stmt.setString(p++, user.role.toString());
-        stmt.setString(p++, user.password);
-        stmt.setString(p++, user.name);
-        stmt.setString(p++, user.surnames);
-        stmt.setString(p++, user.email);
-        stmt.setString(p++, user.phoneNumber);
-        stmt.setString(p++, user.country);
-        stmt.setString(p++, user.postalAddress);
-        stmt.setInt(p++, user.postCode);
-        stmt.setDate(p++, user.signUpDate);
-        stmt.setBoolean(p++, user.active);
-        stmt.setDate(p, user.deactivatedSince);
+        stmt.setString(position++, user.username);
+        stmt.setString(position++, user.DNI);
+        stmt.setString(position++, user.role.toString());
+        stmt.setString(position++, user.password);
+        stmt.setString(position++, user.name);
+        stmt.setString(position++, user.surnames);
+        stmt.setString(position++, user.email);
+        stmt.setString(position++, user.phoneNumber);
+        stmt.setString(position++, user.country);
+        stmt.setString(position++, user.postalAddress);
+        stmt.setInt(position++, user.postCode);
+        stmt.setDate(position++, user.signUpDate);
+        stmt.setBoolean(position++, user.active);
+        stmt.setDate(position, user.deactivatedSince);
     }
 
     @Override

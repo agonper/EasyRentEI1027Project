@@ -25,12 +25,15 @@ public enum UserRole {
         UserRole suitableRole = null;
         for (UserRole role : UserRole.values()) {
             suitableRole = role.getRoleIfSuitable(serializedRole);
+            if (suitableRole != null) {
+                break;
+            }
         }
         return suitableRole;
     }
 
-    private UserRole getRoleIfSuitable(String serializerRole) {
-        if (isSuitableRole(serializerRole)) {
+    private UserRole getRoleIfSuitable(String serializedRole) {
+        if (isSuitableRole(serializedRole)) {
             return this;
         }
         return null;

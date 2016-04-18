@@ -8,11 +8,12 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 import java.util.logging.Logger;
+import java.util.logging.StreamHandler;
 
 public class ConnectionManager {
     private static Logger log = Logger.getLogger(ConnectionManager.class.getName());
 
-    private final static String URL = "jdbc:postgresql://db-aules.uji.es/al286290";
+    private final static String PROTOCOL = "jdbc:postgresql://";
     private final static String DRIVER_NAME = "org.postgresql.Driver";
     private static Connection connection;
     private final static String JDBC_PROPERTIES = "./jdbc.properties";
@@ -70,7 +71,10 @@ public class ConnectionManager {
 
     private static void initializeConnection() throws SQLException {
         Properties props = getProperties();
-        connection = DriverManager.getConnection(URL, props);
+        String dbHost = props.getProperty("db_host");
+        String dbName = props.getProperty("db_name");
+        final String URL = PROTOCOL + dbHost + "/" + dbName;
+        connection = DriverManager.getConnection(URL , props);
     }
 
     private static void logConnectionStatus() throws SQLException {
