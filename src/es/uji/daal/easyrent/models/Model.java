@@ -10,7 +10,15 @@ import java.util.UUID;
  * Created by Alberto on 18/03/2016.
  */
 public abstract class Model {
-    public UUID id = null;
+    private UUID id = null;
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
 
     /**
      * =============

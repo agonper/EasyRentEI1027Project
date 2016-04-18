@@ -24,11 +24,11 @@ public class InvoiceDAO extends DAO<Invoice> {
     protected Invoice populateModelWith(ResultSet rs) throws SQLException {
         Invoice invoice = new Invoice();
 
-        invoice.number = rs.getInt("invoice_number");
-        invoice.proposalID = (UUID) rs.getObject("proposal_id");
-        invoice.vat = rs.getInt("actual_vat");
-        invoice.address = rs.getString("address");
-        invoice.expeditionDate = rs.getDate("invoice_date");
+        invoice.setNumber(rs.getInt("invoice_number"));
+        invoice.setProposalID((UUID) rs.getObject("proposal_id"));
+        invoice.setVat(rs.getInt("actual_vat"));
+        invoice.setAddress(rs.getString("address"));
+        invoice.setExpeditionDate(rs.getDate("invoice_date"));
 
         return invoice;
     }
@@ -37,11 +37,11 @@ public class InvoiceDAO extends DAO<Invoice> {
     protected void setStatementAttributes(Invoice record, PreparedStatement stmt, int initialPosition) throws SQLException {
         int position = initialPosition;
 
-        stmt.setInt(position++, record.number);
-        stmt.setObject(position++, record.proposalID);
-        stmt.setFloat(position++, record.vat);
-        stmt.setString(position++, record.address);
-        stmt.setDate(position, record.expeditionDate);
+        stmt.setInt(position++, record.getNumber());
+        stmt.setObject(position++, record.getProposalID());
+        stmt.setFloat(position++, record.getVat());
+        stmt.setString(position++, record.getAddress());
+        stmt.setDate(position, record.getExpeditionDate());
     }
 
     @Override

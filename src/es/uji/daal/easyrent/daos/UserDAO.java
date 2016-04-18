@@ -3,7 +3,6 @@ package es.uji.daal.easyrent.daos;
 import es.uji.daal.easyrent.models.RoleNotFoundException;
 import es.uji.daal.easyrent.models.User;
 import es.uji.daal.easyrent.models.UserRole;
-import es.uji.daal.easyrent.models.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,23 +27,23 @@ public class UserDAO extends DAO<User> {
     protected User populateModelWith(ResultSet rs) throws SQLException {
         User user = new User();
         try {
-            user.username = rs.getString("username");
-            user.DNI = rs.getString("national_document");
-            user.role = UserRole.obtainRoleFor(rs.getString("role"));
-            user.password = rs.getString("password");
-            user.name = rs.getString("name");
-            user.surnames = rs.getString("surnames");
-            user.email = rs.getString("email");
-            user.phoneNumber = rs.getString("phone_number");
-            user.country = rs.getString("country");
-            user.postalAddress = rs.getString("post_address");
-            user.postCode = rs.getInt("post_code");
-            user.signUpDate = rs.getDate("sign_up_date");
-            user.active = rs.getBoolean("active");
-            user.deactivatedSince = rs.getDate("deactivated_since");
+            user.setUsername(rs.getString("username"));
+            user.setDNI(rs.getString("national_document"));
+            user.setRole(UserRole.obtainRoleFor(rs.getString("role")));
+            user.setPassword(rs.getString("password"));
+            user.setName(rs.getString("name"));
+            user.setSurnames(rs.getString("surnames"));
+            user.setEmail(rs.getString("email"));
+            user.setPhoneNumber(rs.getString("phone_number"));
+            user.setCountry(rs.getString("country"));
+            user.setPostalAddress(rs.getString("post_address"));
+            user.setPostCode(rs.getInt("post_code"));
+            user.setSignUpDate(rs.getDate("sign_up_date"));
+            user.setActive(rs.getBoolean("active"));
+            user.setDeactivatedSince(rs.getDate("deactivated_since"));
 
         } catch (RoleNotFoundException e) {
-            log.warning("User entry with id " + user.id + " appears to have a role inconsistency problem");
+            log.warning("User entry with id " + user.getId() + " appears to have a role inconsistency problem");
             user = null;
             e.printStackTrace();
         }
@@ -55,20 +54,20 @@ public class UserDAO extends DAO<User> {
     protected void setStatementAttributes(User user, PreparedStatement stmt, int initialPosition) throws SQLException {
         int position = initialPosition;
 
-        stmt.setString(position++, user.username);
-        stmt.setString(position++, user.DNI);
-        stmt.setString(position++, user.role.toString());
-        stmt.setString(position++, user.password);
-        stmt.setString(position++, user.name);
-        stmt.setString(position++, user.surnames);
-        stmt.setString(position++, user.email);
-        stmt.setString(position++, user.phoneNumber);
-        stmt.setString(position++, user.country);
-        stmt.setString(position++, user.postalAddress);
-        stmt.setInt(position++, user.postCode);
-        stmt.setDate(position++, user.signUpDate);
-        stmt.setBoolean(position++, user.active);
-        stmt.setDate(position, user.deactivatedSince);
+        stmt.setString(position++, user.getUsername());
+        stmt.setString(position++, user.getDNI());
+        stmt.setString(position++, user.getRole().toString());
+        stmt.setString(position++, user.getPassword());
+        stmt.setString(position++, user.getName());
+        stmt.setString(position++, user.getSurnames());
+        stmt.setString(position++, user.getEmail());
+        stmt.setString(position++, user.getPhoneNumber());
+        stmt.setString(position++, user.getCountry());
+        stmt.setString(position++, user.getPostalAddress());
+        stmt.setInt(position++, user.getPostCode());
+        stmt.setDate(position++, user.getSignUpDate());
+        stmt.setBoolean(position++, user.getActive());
+        stmt.setDate(position, user.getDeactivatedSince());
     }
 
     @Override

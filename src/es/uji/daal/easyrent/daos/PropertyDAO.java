@@ -27,18 +27,18 @@ public class PropertyDAO extends DAO<Property> {
     protected Property populateModelWith(ResultSet rs) throws SQLException {
         Property property = new Property();
 
-        property.ownerID = (UUID) rs.getObject("owner_id");
-        property.title = rs.getString("title");
-        property.location = rs.getString("location");
-        property.rooms = rs.getInt("location");
-        property.capacity = rs.getInt("capacity");
-        property.beds = rs.getInt("beds");
-        property.bathrooms = rs.getInt("bathrooms");
-        property.floorSpace = rs.getInt("floor_space");
-        property.pricePerDay = rs.getFloat("price_per_day");
-        property.creationDate = rs.getDate("creation_date");
-        property.type = (PropertyType) rs.getObject("type");
-        property.description = rs.getString("description");
+        property.setOwnerID((UUID) rs.getObject("owner_id"));
+        property.setTitle(rs.getString("title"));
+        property.setLocation(rs.getString("location"));
+        property.setRooms(rs.getInt("rooms"));
+        property.setCapacity(rs.getInt("capacity"));
+        property.setBeds(rs.getInt("beds"));
+        property.setBathrooms(rs.getInt("bathrooms"));
+        property.setFloorSpace(rs.getInt("floor_space"));
+        property.setPricePerDay(rs.getFloat("price_per_day"));
+        property.setCreationDate(rs.getDate("creation_date"));
+        property.setType((PropertyType) rs.getObject("type"));
+        property.setDescription(rs.getString("description"));
 
         return property;
     }
@@ -47,17 +47,18 @@ public class PropertyDAO extends DAO<Property> {
     protected void setStatementAttributes(Property record, PreparedStatement stmt, int initialPosition) throws SQLException {
         int position = initialPosition;
 
-        stmt.setObject(position++, record.ownerID);
-        stmt.setString(position++, record.title);
-        stmt.setString(position++, record.location);
-        stmt.setInt(position++, record.rooms);
-        stmt.setInt(position++, record.capacity);
-        stmt.setInt(position++, record.beds);
-        stmt.setInt(position++, record.bathrooms);
-        stmt.setInt(position++, record.floorSpace);
-        stmt.setFloat(position++, record.pricePerDay);
-        stmt.setDate(position++, record.creationDate);
-        stmt.setString(position, record.description);
+        stmt.setObject(position++, record.getOwnerID());
+        stmt.setString(position++, record.getTitle());
+        stmt.setString(position++, record.getLocation());
+        stmt.setInt(position++, record.getRooms());
+        stmt.setInt(position++, record.getCapacity());
+        stmt.setInt(position++, record.getBeds());
+        stmt.setInt(position++, record.getBathrooms());
+        stmt.setInt(position++, record.getFloorSpace());
+        stmt.setFloat(position++, record.getPricePerDay());
+        stmt.setDate(position++, record.getCreationDate());
+        stmt.setString(position++, record.getType().toString());
+        stmt.setString(position, record.getDescription());
     }
 
     @Override

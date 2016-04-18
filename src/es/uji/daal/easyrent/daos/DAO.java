@@ -60,7 +60,7 @@ public abstract class DAO<T extends Model> implements Store<T> {
 
     @Override
     public T storeRecord(T record) {
-        record.id = UUID.randomUUID();
+        record.setId(UUID.randomUUID());
         try {
             Connection connection = getConnection();
             insertRecordIntoDB(record, connection);
@@ -137,7 +137,7 @@ public abstract class DAO<T extends Model> implements Store<T> {
 
             if (rs.next()) {
                 record = populateModelWith(rs);
-                record.id = (UUID) rs.getObject("id");
+                record.setId((UUID) rs.getObject("id"));
             }
 
         } catch (SQLException e) {
@@ -155,7 +155,7 @@ public abstract class DAO<T extends Model> implements Store<T> {
             String template = "INSERT INTO %s (%s) values (%s)";
             String query = generateInsertQueryString(template);
             stmt = connection.prepareStatement(query);
-            stmt.setObject(1, record.id);
+            stmt.setObject(1, record.getId());
             setStatementAttributes(record, stmt, INITIAL_STATEMENT_POSITION);
 
             stmt.execute();
@@ -174,13 +174,13 @@ public abstract class DAO<T extends Model> implements Store<T> {
             String[] tableFields = getTableFields();
             String query = generateUpdateQueryString(template);
             stmt = connection.prepareStatement(query);
-            stmt.setObject(1, record.id);
+            stmt.setObject(1, record.getId());
             setStatementAttributes(record, stmt, INITIAL_STATEMENT_POSITION);
             final int LAST_STATEMENT_PLACEHOLDER = tableFields.length+1;
-            stmt.setObject(LAST_STATEMENT_PLACEHOLDER, record.id);
+            stmt.setObject(LAST_STATEMENT_PLACEHOLDER, record.getId());
             stmt.execute();
         } catch (SQLException e) {
-            log.severe("Couldn't update record from class " + record.getClass().getName() + " with id: " + record.id);
+            log.severe("Couldn't update record from class " + record.getClass().getName() + " with id: " + record.getId());
             e.printStackTrace();
         } finally {
             cleanupResources(stmt, null);
@@ -193,10 +193,10 @@ public abstract class DAO<T extends Model> implements Store<T> {
             String template = "DELETE FROM %s WHERE id = ?";
             String query = generateDeleteQueryString(template);
             stmt = connection.prepareStatement(query);
-            stmt.setObject(1, record.id);
+            stmt.setObject(1, record.getId());
             stmt.execute();
         } catch (SQLException e) {
-            log.severe("Error deleting from class " + record.getClass().getName() + " with id: " + record.id);
+            log.severe("Error deleting from class " + record.getClass().getName() + " with id: " + record.getId());
             e.printStackTrace();
         } finally {
             cleanupResources(stmt, null);
@@ -207,7 +207,7 @@ public abstract class DAO<T extends Model> implements Store<T> {
         while (rs.next()) {
             T record = populateModelWith(rs);
             if (record != null) {
-                record.id = (UUID) rs.getObject("id");
+                record.setId((UUID) rs.getObject("id"));
                 records.add(record);
             }
         }

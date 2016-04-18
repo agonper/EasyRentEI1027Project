@@ -27,18 +27,18 @@ public class BookingProposalDAO extends DAO<BookingProposal> {
         BookingProposal bp = new BookingProposal();
 
         try {
-            bp.propertyID = (UUID) rs.getObject("property_id");
-            bp.tenantID = (UUID) rs.getObject("tenant_id");
-            bp.startDate = rs.getDate("start_date");
-            bp.endDate = rs.getDate("end_date");
-            bp.status = ProposalStatus.obtainStatusFor(rs.getString("status"));
-            bp.paymentReference = Integer.toString(rs.getInt("payment_reference"));
-            bp.totalAmount = rs.getFloat("total_amount");
-            bp.numberOfTenants = rs.getInt("number_of_tenants");
-            bp.dateOfCreation = rs.getDate("date_of_creation");
-            bp.dateOfAcceptation = rs.getDate("date_of_acceptation");
+            bp.setPropertyID((UUID) rs.getObject("property_id"));
+            bp.setTenantID((UUID) rs.getObject("tenant_id"));
+            bp.setStartDate(rs.getDate("start_date"));
+            bp.setEndDate(rs.getDate("end_date"));
+            bp.setStatus(ProposalStatus.obtainStatusFor(rs.getString("status")));
+            bp.setPaymentReference(Integer.toString(rs.getInt("payment_reference")));
+            bp.setTotalAmount(rs.getFloat("total_amount"));
+            bp.setNumberOfTenants(rs.getInt("number_of_tenants"));
+            bp.setDateOfCreation(rs.getDate("date_of_creation"));
+            bp.setDateOfAcceptation(rs.getDate("date_of_acceptation"));
         } catch (StatusNotFoundException e) {
-            log.warning("Booking proposal entry with id " + bp.id + " appears to have a status inconsistency problem");
+            log.warning("Booking proposal entry with id " + bp.getId() + " appears to have a status inconsistency problem");
             bp = null;
             e.printStackTrace();
         }
@@ -50,16 +50,16 @@ public class BookingProposalDAO extends DAO<BookingProposal> {
     protected void setStatementAttributes(BookingProposal record, PreparedStatement stmt, int initialPosition) throws SQLException {
         int position = initialPosition;
 
-        stmt.setObject(position++, record.propertyID);
-        stmt.setObject(position++, record.tenantID);
-        stmt.setDate(position++, record.startDate);
-        stmt.setDate(position++, record.endDate);
-        stmt.setObject(position++, record.status);
-        stmt.setString(position++, record.paymentReference);
-        stmt.setFloat(position++, record.totalAmount);
-        stmt.setInt(position++, record.numberOfTenants);
-        stmt.setDate(position++, record.dateOfCreation);
-        stmt.setDate(position, record.dateOfAcceptation);
+        stmt.setObject(position++, record.getPropertyID());
+        stmt.setObject(position++, record.getTenantID());
+        stmt.setDate(position++, record.getStartDate());
+        stmt.setDate(position++, record.getEndDate());
+        stmt.setString(position++, record.getStatus().toString());
+        stmt.setString(position++, record.getPaymentReference());
+        stmt.setFloat(position++, record.getTotalAmount());
+        stmt.setInt(position++, record.getNumberOfTenants());
+        stmt.setDate(position++, record.getDateOfCreation());
+        stmt.setDate(position, record.getDateOfAcceptation());
     }
 
     @Override

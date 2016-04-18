@@ -25,8 +25,8 @@ public class PropertyServicesDAO extends DAO<PropertyServices> {
     protected PropertyServices populateModelWith(ResultSet rs) throws SQLException {
         PropertyServices offered = new PropertyServices();
 
-        offered.propertyID = (UUID) rs.getObject("property_id");
-        offered.serviceID = (UUID) rs.getObject("service_id");
+        offered.setPropertyID((UUID) rs.getObject("property_id"));
+        offered.setServiceID((UUID) rs.getObject("service_id"));
 
         return offered;
     }
@@ -35,8 +35,8 @@ public class PropertyServicesDAO extends DAO<PropertyServices> {
     protected void setStatementAttributes(PropertyServices record, PreparedStatement stmt, int initialPosition) throws SQLException {
         int position = initialPosition;
 
-        stmt.setObject(position++, record.propertyID);
-        stmt.setObject(position, record.serviceID);
+        stmt.setObject(position++, record.getPropertyID());
+        stmt.setObject(position, record.getServiceID());
     }
 
     @Override

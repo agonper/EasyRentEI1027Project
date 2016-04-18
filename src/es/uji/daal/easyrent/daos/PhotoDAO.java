@@ -25,10 +25,10 @@ public class PhotoDAO extends DAO<Photo> {
     protected Photo populateModelWith(ResultSet rs) throws SQLException {
         Photo photo = new Photo();
 
-        photo.propertyID = (UUID) rs.getObject("property_id");
-        photo.userID = (UUID) rs.getObject("user_id");
-        photo.uploadDate = rs.getDate("upload_date");
-        photo.filename = rs.getString("filename");
+        photo.setPropertyID((UUID) rs.getObject("property_id"));
+        photo.setUserID((UUID) rs.getObject("user_id"));
+        photo.setUploadDate(rs.getDate("upload_date"));
+        photo.setFilename(rs.getString("filename"));
 
         return photo;
     }
@@ -37,10 +37,10 @@ public class PhotoDAO extends DAO<Photo> {
     protected void setStatementAttributes(Photo record, PreparedStatement stmt, int initialPosition) throws SQLException {
         int position = initialPosition;
 
-        stmt.setObject(position++, record.propertyID);
-        stmt.setObject(position++, record.userID);
-        stmt.setDate(position++, record.uploadDate);
-        stmt.setString(position, record.filename);
+        stmt.setObject(position++, record.getPropertyID());
+        stmt.setObject(position++, record.getUserID());
+        stmt.setDate(position++, record.getUploadDate());
+        stmt.setString(position, record.getFilename());
     }
 
     @Override
