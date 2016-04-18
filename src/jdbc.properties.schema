@@ -1,0 +1,6 @@
+jdbc.driverClassName=org.postgresql.Driver
+jdbc.url=jdbc:postgresql://db-aules.uji.es:5432/ei102714XXXXXX
+jdbc.username=alXXXXXX
+jdbc.password=XXXXXX
+jdbc.ssl=true
+jdbc.sslfactory=org.postgresql.ssl.NonValidatingFactory
