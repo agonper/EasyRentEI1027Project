@@ -35,6 +35,7 @@ gradle-app.setting
 # Gradle:
 .idea/gradle.xml
 .idea/libraries
+.idea/lib
 
 # Mongo Explorer plugin:
 .idea/mongoSettings.xml
