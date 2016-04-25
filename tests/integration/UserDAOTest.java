@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.Date;
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.Assert.*;
@@ -27,7 +27,7 @@ public class UserDAOTest {
 
     @Test
     public void testFindAllRecords() throws Exception {
-        final Set<User> users = userDAO.findAllRecords();
+        final List<User> users = userDAO.findAll();
         assertFalse(users.isEmpty());
     }
 
@@ -56,18 +56,18 @@ public class UserDAOTest {
         assertNotNull(userID);
 
         // Find user
-        final User dbUser = userDAO.findRecordByID(userID);
+        final User dbUser = userDAO.findOneByID(userID);
         assertEquals(user.getName(), dbUser.getName());
 
         // Update user
         final String newAddress = "Fake street, 456";
         user.setPostalAddress(newAddress);
-        user = userDAO.updateRecord(user);
+        userDAO.updateRecord(user);
         assertEquals(user.getPostalAddress(), newAddress);
 
         // Destroy user
         userDAO.destroyRecord(user);
-        user = userDAO.findRecordByID(userID);
+        user = userDAO.findOneByID(userID);
         assertNull(user);
     }
 

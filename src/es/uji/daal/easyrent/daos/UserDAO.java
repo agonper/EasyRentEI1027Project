@@ -3,19 +3,17 @@ package es.uji.daal.easyrent.daos;
 import es.uji.daal.easyrent.models.RoleNotFoundException;
 import es.uji.daal.easyrent.models.User;
 import es.uji.daal.easyrent.models.UserRole;
+import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 
 /**
  * Created by alberto on 17/03/16.
  */
 public class UserDAO extends DAO<User> {
-
-    private final static String TABLE_COLUMNS = "id, username, national_document, role, password, " +
-            "name, surnames, email, phone_number, country, post_address, post_code, " +
-            "sign_up_date, active, deactivated_since";
 
     private final static String TABLE_NAME = "users";
 
@@ -23,51 +21,77 @@ public class UserDAO extends DAO<User> {
         super(UserDAO.class.getName());
     }
 
-    @Override
-    protected User populateModelWith(ResultSet rs) throws SQLException {
-        User user = new User();
-        try {
-            user.setUsername(rs.getString("username"));
-            user.setDNI(rs.getString("national_document"));
-            user.setRole(UserRole.obtainRoleFor(rs.getString("role")));
-            user.setPassword(rs.getString("password"));
-            user.setName(rs.getString("name"));
-            user.setSurnames(rs.getString("surnames"));
-            user.setEmail(rs.getString("email"));
-            user.setPhoneNumber(rs.getString("phone_number"));
-            user.setCountry(rs.getString("country"));
-            user.setPostalAddress(rs.getString("post_address"));
-            user.setPostCode(rs.getInt("post_code"));
-            user.setSignUpDate(rs.getDate("sign_up_date"));
-            user.setActive(rs.getBoolean("active"));
-            user.setDeactivatedSince(rs.getDate("deactivated_since"));
+    private static final class UserMapper implements RowMapper<User> {
 
-        } catch (RoleNotFoundException e) {
-            log.warning("User entry with id " + user.getId() + " appears to have a role inconsistency problem");
-            user = null;
-            e.printStackTrace();
+        @Override
+        public User mapRow(ResultSet rs, int i) throws SQLException {
+            User user = new User();
+            try {
+                user.setId((UUID) rs.getObject("id"));
+                user.setUsername(rs.getString("username"));
+                user.setDNI(rs.getString("national_document"));
+                user.setRole(UserRole.obtainRoleFor(rs.getString("role")));
+                user.setPassword(rs.getString("password"));
+                user.setName(rs.getString("name"));
+                user.setSurnames(rs.getString("surnames"));
+                user.setEmail(rs.getString("email"));
+                user.setPhoneNumber(rs.getString("phone_number"));
+                user.setCountry(rs.getString("country"));
+                user.setPostalAddress(rs.getString("post_address"));
+                user.setPostCode(rs.getInt("post_code"));
+                user.setSignUpDate(rs.getDate("sign_up_date"));
+                user.setActive(rs.getBoolean("active"));
+                user.setDeactivatedSince(rs.getDate("deactivated_since"));
+
+            } catch (RoleNotFoundException e) {
+                log.warning("User entry with id " + user.getId() + " appears to have a role inconsistency problem");
+                user = null;
+                e.printStackTrace();
+            }
+            return user;
         }
-        return user;
     }
 
     @Override
-    protected void setStatementAttributes(User user, PreparedStatement stmt, int initialPosition) throws SQLException {
-        int position = initialPosition;
+    protected String[] getTableColumns() {
+        return new String[] {
+                "id",
+                "username",
+                "national_document",
+                "role",
+                "password",
+                "name",
+                "surnames",
+                "email",
+                "phone_number",
+                "country",
+                "post_address",
+                "post_code",
+                "sign_up_date",
+                "active",
+                "deactivated_since"
+        };
+    }
 
-        stmt.setString(position++, user.getUsername());
-        stmt.setString(position++, user.getDNI());
-        stmt.setString(position++, user.getRole().toString());
-        stmt.setString(position++, user.getPassword());
-        stmt.setString(position++, user.getName());
-        stmt.setString(position++, user.getSurnames());
-        stmt.setString(position++, user.getEmail());
-        stmt.setString(position++, user.getPhoneNumber());
-        stmt.setString(position++, user.getCountry());
-        stmt.setString(position++, user.getPostalAddress());
-        stmt.setInt(position++, user.getPostCode());
-        stmt.setDate(position++, user.getSignUpDate());
-        stmt.setBoolean(position++, user.getActive());
-        stmt.setDate(position, user.getDeactivatedSince());
+    @Override
+    protected Object[] getValues(User user) {
+        return new Object[] {
+                user.getId(),
+                user.getUsername(),
+                user.getDNI(),
+                user.getRole().toString(),
+                user.getPassword(),
+                user.getName(),
+                user.getSurnames(),
+                user.getEmail(),
+                user.getPhoneNumber(),
+                user.getCountry(),
+                user.getPostalAddress(),
+                user.getPostCode(),
+                user.getSignUpDate(),
+                user.getActive(),
+                user.getDeactivatedSince()
+        };
     }
 
     @Override
@@ -76,7 +100,7 @@ public class UserDAO extends DAO<User> {
     }
 
     @Override
-    protected String getSerializedTableColumns() {
-        return TABLE_COLUMNS;
+    protected RowMapper<User> createModelMapper() {
+        return new UserMapper();
     }
 }

@@ -1,9 +1,8 @@
 package es.uji.daal.easyrent.daos;
 
 import es.uji.daal.easyrent.models.Photo;
-import es.uji.daal.easyrent.models.Photo;
+import org.springframework.jdbc.core.RowMapper;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
@@ -13,43 +12,57 @@ import java.util.UUID;
  */
 public class PhotoDAO extends DAO<Photo> {
 
-    private final static String TABLE_COLUMNS = "id, upload_date, filename, property_id, user_id";
-
     private final static String TABLE_NAME = "photos";
 
     public PhotoDAO() {
         super(PhotoDAO.class.getName());
     }
 
-    @Override
-    protected Photo populateModelWith(ResultSet rs) throws SQLException {
-        Photo photo = new Photo();
+    private static final class PhotoMapper implements RowMapper<Photo> {
 
-        photo.setPropertyID((UUID) rs.getObject("property_id"));
-        photo.setUserID((UUID) rs.getObject("user_id"));
-        photo.setUploadDate(rs.getDate("upload_date"));
-        photo.setFilename(rs.getString("filename"));
+        @Override
+        public Photo mapRow(ResultSet rs, int i) throws SQLException {
+            Photo photo = new Photo();
 
-        return photo;
-    }
+            photo.setId((UUID) rs.getObject("id"));
+            photo.setPropertyID((UUID) rs.getObject("property_id"));
+            photo.setUserID((UUID) rs.getObject("user_id"));
+            photo.setUploadDate(rs.getDate("upload_date"));
+            photo.setFilename(rs.getString("filename"));
 
-    @Override
-    protected void setStatementAttributes(Photo record, PreparedStatement stmt, int initialPosition) throws SQLException {
-        int position = initialPosition;
-
-        stmt.setObject(position++, record.getPropertyID());
-        stmt.setObject(position++, record.getUserID());
-        stmt.setDate(position++, record.getUploadDate());
-        stmt.setString(position, record.getFilename());
-    }
-
-    @Override
-    protected String getSerializedTableColumns() {
-        return TABLE_COLUMNS;
+            return photo;
+        }
     }
 
     @Override
     protected String getTableName() {
         return TABLE_NAME;
+    }
+
+    @Override
+    protected RowMapper<Photo> createModelMapper() {
+        return new PhotoMapper();
+    }
+
+    @Override
+    protected String[] getTableColumns() {
+        return new String[] {
+                "id",
+                "upload_date",
+                "filename",
+                "property_id",
+                "user_id"
+        };
+    }
+
+    @Override
+    protected Object[] getValues(Photo photo) {
+        return new Object[] {
+                photo.getId(),
+                photo.getPropertyID(),
+                photo.getUserID(),
+                photo.getUploadDate(),
+                photo.getFilename()
+        };
     }
 }
