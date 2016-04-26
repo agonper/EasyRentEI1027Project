@@ -1,7 +1,6 @@
 package es.uji.daal.easyrent.daos;
 
 import es.uji.daal.easyrent.models.AvailabilityPeriod;
-import es.uji.daal.easyrent.models.AvailabilityPeriod;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,14 +10,14 @@ import java.util.UUID;
 /**
  * Created by alberto on 17/03/16.
  */
-public class AvailabilitiyPeriodDAO extends DAO<AvailabilityPeriod> {
+public class AvailabilityPeriodDAO extends DAO<AvailabilityPeriod> {
 
     private final static String TABLE_COLUMNS = "id, property_id, start_date, end_date";
 
     private final static String TABLE_NAME = "availability_of_properties";
 
-    public AvailabilitiyPeriodDAO() {
-        super(AvailabilitiyPeriodDAO.class.getName());
+    public AvailabilityPeriodDAO() {
+        super(AvailabilityPeriodDAO.class.getName());
     }
 
     @Override
