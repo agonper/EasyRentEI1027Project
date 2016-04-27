@@ -1,7 +1,6 @@
 package es.uji.daal.easyrent.models;
 
 import es.uji.daal.easyrent.daos.UserDAO;
-import es.uji.daal.easyrent.daos.UserDAO;
 
 import java.sql.Date;
 import java.util.List;
@@ -133,7 +132,7 @@ public class Property extends Model {
     public User getOwner() {
         // TODO: Implement
         UserDAO toObtainUser = new UserDAO();
-        User ownerObtained = toObtainUser.findRecordByID(ownerID);
+        User ownerObtained = toObtainUser.findOneByID(ownerID);
         return ownerObtained;
     }
 
