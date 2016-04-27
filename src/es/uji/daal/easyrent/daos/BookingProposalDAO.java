@@ -4,6 +4,7 @@ import es.uji.daal.easyrent.models.BookingProposal;
 import es.uji.daal.easyrent.models.ProposalStatus;
 import es.uji.daal.easyrent.models.StatusNotFoundException;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +14,7 @@ import java.util.UUID;
 /**
  * Created by alberto on 17/03/16.
  */
+@Repository
 public class BookingProposalDAO extends DAO<BookingProposal> {
 
     private final static String TABLE_NAME = "booking_proposals";

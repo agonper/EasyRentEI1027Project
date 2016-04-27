@@ -2,6 +2,7 @@ package es.uji.daal.easyrent.daos;
 
 import es.uji.daal.easyrent.models.Service;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,6 +12,7 @@ import java.util.UUID;
 /**
  * Created by alberto on 17/03/16.
  */
+@Repository
 public class ServiceDAO extends DAO<Service> {
 
     private final static String TABLE_NAME = "services";

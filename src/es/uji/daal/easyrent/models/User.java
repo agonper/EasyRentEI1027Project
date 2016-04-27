@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * Created by alberto on 17/03/16.
  */
-public class User extends Model {
+public class User extends DomainModel {
     private String username;
     private String DNI;
     private UserRole role;

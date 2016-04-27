@@ -2,6 +2,7 @@ package es.uji.daal.easyrent.daos;
 
 import es.uji.daal.easyrent.models.Photo;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,6 +11,7 @@ import java.util.UUID;
 /**
  * Created by alberto on 17/03/16.
  */
+@Repository
 public class PhotoDAO extends DAO<Photo> {
 
     private final static String TABLE_NAME = "photos";

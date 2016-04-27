@@ -6,7 +6,7 @@ import java.util.UUID;
 /**
  * Created by daniel on 27/02/16.
  */
-public class Invoice extends Model {
+public class Invoice extends DomainModel {
     private int number;
     private UUID proposalID;
     private float vat;

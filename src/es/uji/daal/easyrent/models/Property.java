@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-public class Property extends Model {
+public class Property extends DomainModel {
     private UUID ownerID;
     private String title;
     private String location;

@@ -6,7 +6,7 @@ import java.util.UUID;
 /**
  * Created by alberto on 17/03/16.
  */
-public class Photo extends Model {
+public class Photo extends DomainModel {
     private UUID propertyID;
     private UUID userID;
     private String filename;
