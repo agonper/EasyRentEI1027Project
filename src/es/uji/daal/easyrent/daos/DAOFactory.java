@@ -1,9 +1,6 @@
 package es.uji.daal.easyrent.daos;
 
-import es.uji.daal.easyrent.models.Model;
-import es.uji.daal.easyrent.services.Store;
-import es.uji.daal.easyrent.services.StoreFactory;
-import es.uji.daal.easyrent.models.Model;
+import es.uji.daal.easyrent.models.DomainModel;
 import es.uji.daal.easyrent.services.Store;
 import es.uji.daal.easyrent.services.StoreFactory;
 
@@ -24,7 +21,7 @@ public class DAOFactory implements StoreFactory {
      */
 
     @Override
-    public Store<Model> getStore(Class modelClass) {
+    public Store<DomainModel> getStore(Class modelClass) {
         String modelName = getModelName(modelClass);
         Class storeClass = loadStoreClassFor(modelName);
 
@@ -64,10 +61,10 @@ public class DAOFactory implements StoreFactory {
     }
 
 
-    private Store<Model> getStoreInstanceFor(Class storeClass) {
-        Store<Model> store = null;
+    private Store<DomainModel> getStoreInstanceFor(Class storeClass) {
+        Store<DomainModel> store = null;
         try {
-            store = (Store<Model>) storeClass.newInstance();
+            store = (Store<DomainModel>) storeClass.newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
             log.severe("Could not create an store instance for class: " + storeClass.getName());
             e.printStackTrace();

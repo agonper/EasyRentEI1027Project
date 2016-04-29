@@ -9,7 +9,7 @@ import java.util.UUID;
 /**
  * Created by Alberto on 18/03/2016.
  */
-public abstract class Model {
+public abstract class DomainModel {
     private UUID id = null;
 
     public UUID getId() {
@@ -26,7 +26,7 @@ public abstract class Model {
      * =============
      */
 
-    public Model save() {
+    public DomainModel save() {
         if (isNew()) {
             createRecord();
         } else {
@@ -37,7 +37,7 @@ public abstract class Model {
 
 
     public void destroy() {
-        Store<Model> store = getStore();
+        Store<DomainModel> store = getStore();
         store.destroyRecord(this);
     }
 
@@ -53,18 +53,18 @@ public abstract class Model {
 
 
     private void createRecord() {
-        Store<Model> store = getStore();
+        Store<DomainModel> store = getStore();
         store.storeRecord(this);
     }
 
 
     private void updateRecord() {
-        Store<Model> store = getStore();
+        Store<DomainModel> store = getStore();
         store.updateRecord(this);
     }
 
 
-    private Store<Model> getStore() {
+    private Store<DomainModel> getStore() {
         StoreFactory storeFactory = getStoreFactory();
         return storeFactory.getStore(this.getClass());
     }

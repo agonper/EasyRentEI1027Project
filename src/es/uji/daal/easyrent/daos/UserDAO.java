@@ -4,6 +4,7 @@ import es.uji.daal.easyrent.models.RoleNotFoundException;
 import es.uji.daal.easyrent.models.User;
 import es.uji.daal.easyrent.models.UserRole;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +14,7 @@ import java.util.UUID;
 /**
  * Created by alberto on 17/03/16.
  */
+@Repository
 public class UserDAO extends DAO<User> {
 
     private final static String TABLE_NAME = "users";

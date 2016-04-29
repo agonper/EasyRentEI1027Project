@@ -1,6 +1,5 @@
 package es.uji.daal.easyrent.controllers;
 
-import es.uji.daal.easyrent.daos.DAO;
 import es.uji.daal.easyrent.daos.PropertyDAO;
 import es.uji.daal.easyrent.models.Property;
 
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -23,23 +23,18 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/property")
 public class PropertyController {
-
-    private PropertyDAO propertyDAO;
-
-    //TODO: Revisar si la conversión es necesaria
     @Autowired
-    public void setPropertyDAO(DAO propertyDAO) {
-        this.propertyDAO = (PropertyDAO)propertyDAO;
-    }
+    PropertyDAO propertyDAO;
 
     @RequestMapping("/list")
-    public String listProperties(Model model) {
-        model.addAttribute("properties", propertyDAO.findAll());
+    public String list(Model model) {
+        List<Property> properties = propertyDAO.findAll();
+        model.addAttribute("properties", properties);
         return "property/list";
     }
 
-    @RequestMapping("/add")
-    public String addProperty(Model model) {
+    @RequestMapping(value = "/add")
+    public String add(Model model) {
         model.addAttribute("property", new Property());
         return "property/add";
     }
@@ -58,7 +53,7 @@ public class PropertyController {
 
     //TODO: Revisar el nombre de 'update' a posteriori
     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
-    public String editProperty(Model model, @PathVariable(value = "id") String id) {
+    public String update(Model model, @PathVariable(value = "id") String id) {
         model.addAttribute("property", propertyDAO.findOneByID(UUID.fromString(id)));
         return "property/update";
     }

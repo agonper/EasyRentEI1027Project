@@ -1,4 +1,4 @@
-package integration;
+package es.uji.daal.easyrent.integration;
 
 import es.uji.daal.easyrent.daos.UserDAO;
 import es.uji.daal.easyrent.models.User;

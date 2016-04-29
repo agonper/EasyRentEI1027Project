@@ -4,6 +4,7 @@ import es.uji.daal.easyrent.models.Property;
 import es.uji.daal.easyrent.models.PropertyType;
 import es.uji.daal.easyrent.models.TypeNotFoundException;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,6 +13,7 @@ import java.util.UUID;
 /**
  * Created by alberto on 17/03/16.
  */
+@Repository
 public class PropertyDAO extends DAO<Property> {
 
     private final static String TABLE_NAME = "properties";

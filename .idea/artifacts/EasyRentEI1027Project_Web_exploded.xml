@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="EasyRentEI1027Project:war exploded">
-    <output-path>out/artifacts/EasyRentEI1027Project_war_exploded</output-path>
+  <artifact type="exploded-war" name="EasyRentEI1027Project:Web exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/EasyRentEI1027Project_Web_exploded</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
@@ -37,9 +37,12 @@
           <element id="file-copy" path="$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-web-3.2.3.RELEASE.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-webmvc-3.2.13.RELEASE.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/WebContent/WEB-INF/lib/standard.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/WebContent/WEB-INF/lib/icu4j-3.4.4.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/WebContent/WEB-INF/lib/jasypt-1.9.0.jar" />
         </element>
+        <element id="file-copy" path="$PROJECT_DIR$/WebContent/web.xml" />
       </element>
-      <element id="javaee-facet-resources" facet="EasyRentEI1027Project/web/Web" />
+      <element id="dir-copy" path="$PROJECT_DIR$/WebContent" />
     </root>
   </artifact>
 </component>

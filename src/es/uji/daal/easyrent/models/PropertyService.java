@@ -5,7 +5,7 @@ import java.util.UUID;
 /**
  * Created by Alberto on 20/03/2016.
  */
-public class PropertyService extends Model {
+public class PropertyService extends DomainModel {
     private UUID propertyID;
     private UUID serviceID;
 

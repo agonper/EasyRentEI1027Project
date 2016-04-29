@@ -6,7 +6,7 @@ import java.util.UUID;
 /**
  * Created by alberto on 17/03/16.
  */
-public class AvailabilityPeriod extends Model {
+public class AvailabilityPeriod extends DomainModel {
     private UUID propertyID;
     private Date startDate;
     private Date endDate;

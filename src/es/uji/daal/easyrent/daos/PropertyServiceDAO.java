@@ -2,6 +2,7 @@ package es.uji.daal.easyrent.daos;
 
 import es.uji.daal.easyrent.models.PropertyService;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,6 +11,7 @@ import java.util.UUID;
 /**
  * Created by Alberto on 20/03/2016.
  */
+@Repository
 public class PropertyServiceDAO extends DAO<PropertyService> {
 
     private final static String TABLE_NAME = "properties_services";

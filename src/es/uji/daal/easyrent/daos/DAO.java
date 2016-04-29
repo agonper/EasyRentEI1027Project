@@ -1,6 +1,6 @@
 package es.uji.daal.easyrent.daos;
 
-import es.uji.daal.easyrent.models.Model;
+import es.uji.daal.easyrent.models.DomainModel;
 import es.uji.daal.easyrent.services.Store;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  * Created by Alberto on 18/03/2016.
  */
 @Repository
-public abstract class DAO<T extends Model> implements Store<T> {
+public abstract class DAO<T extends DomainModel> implements Store<T> {
 
     protected static Logger log;
     private final DAOUtils daoUtils;

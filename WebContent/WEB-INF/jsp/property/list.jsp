@@ -1,47 +1,50 @@
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib prefix="tag" tagdir="/WEB-INF/tags"%>
 <%@taglib prefix="coreActions" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<tag:skeleton title="List properties">
+<tag:paginabasica title="List properties">
     <jsp:body>
         <h1>List of properties</h1>
-        <table class="">
-            <tr>
-                <td>id</td>
-                <td>Owner id</td>
-                <td>Title</td>
-                <td>Location</td>
-                <td>Rooms</td>
-                <td>Capacity</td>
-                <td>Beds</td>
-                <td>Bathrooms</td>
-                <td>Floor space</td>
-                <td>Price per day</td>
-                <td>Creation date</td>
-                <td>Type</td>
-                <td>Description</td>
-            </tr>
-            <coreActions:forEach items="${properties}" var="property">
+        <a class="btn btn-primary" href="${pageContext.request.contextPath}/property/add.html">
+            <span class="glyphicon glyphicon-plus"></span> Add property
+        </a>
+        <div class="table-responsive">
+            <table class="table">
                 <tr>
-                    <td>${property.id}</td>
-                    <td>${property.ownerID}</td>
-                    <td>${property.title}</td>
-                    <td>${property.location}</td>
-                    <td>${property.rooms}</td>
-                    <td>${property.capacity}</td>
-                    <td>${property.beds}</td>
-                    <td>${property.bathrooms}</td>
-                    <td>${property.floorSpace}</td>
-                    <td>${property.pricePerDay}</td>
-                    <td>${property.creationDate}</td>
-                    <td>${property.type}</td>
-                    <td>${property.description}</td>
-                    <td><a href="update/${property.id}.html" class="">Update data</a></td>
-                    <td><a href="delete/${property.id}.html" class="">Delete property</a></td>
+                    <th>ID</th>
+                    <th>Owner id</th>
+                    <th>Title</th>
+                    <th>Location</th>
+                    <th>Rooms</th>
+                    <th>Capacity</th>
+                    <th>Beds</th>
+                    <th>Bathrooms</th>
+                    <th>Floor space</th>
+                    <th>Price per day</th>
+                    <th>Creation date</th>
+                    <th>Type</th>
+                    <th>Description</th>
                 </tr>
-            </coreActions:forEach>
-        </table>
-
+                <coreActions:forEach var="property" items="${properties}">
+                    <tr>
+                        <td>${property.id}</td>
+                        <td>${property.ownerID}</td>
+                        <td>${property.title}</td>
+                        <td>${property.location}</td>
+                        <td>${property.rooms}</td>
+                        <td>${property.capacity}</td>
+                        <td>${property.beds}</td>
+                        <td>${property.bathrooms}</td>
+                        <td>${property.floorSpace}</td>
+                        <td>${property.pricePerDay}</td>
+                        <td>${property.creationDate}</td>
+                        <td>${property.type.toString()}</td>
+                        <td>${property.description}</td>
+                        <td><a href="${pageContext.request.contextPath}/property/update/${property.id}.html" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span></a></td>
+                        <td><a href="${pageContext.request.contextPath}/property/delete/${property.id}.html" class="btn btn-primary"><span class="glyphicon glyphicon-remove"></span></a></td>
+                    </tr>
+                </coreActions:forEach>
+            </table>
+        </div>
         <a href="../index.jsp">Go back to the index page</a>
     </jsp:body>
-</tag:skeleton>
+</tag:paginabasica>

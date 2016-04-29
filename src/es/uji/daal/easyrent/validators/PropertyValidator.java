@@ -56,7 +56,7 @@ public class PropertyValidator implements Validator {
         }
 
         //TODO: Tipo no seleccionado
-        if (property.getType().toString().equals("")) {
+        if (property.getType() == null || property.getType().name().equals("")) {
 
         }
     }

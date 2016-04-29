@@ -6,7 +6,7 @@ import java.util.UUID;
 /**
  * Created by daniel on 27/02/16.
  */
-public class BookingProposal extends Model {
+public class BookingProposal extends DomainModel {
     private UUID propertyID;
     private UUID tenantID;
     private Date startDate;

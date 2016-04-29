@@ -6,7 +6,7 @@ import java.util.UUID;
 /**
  * Created by alberto on 17/03/16.
  */
-public class Service extends Model {
+public class Service extends DomainModel {
     private String name;
     private String value;
     private UUID userId;

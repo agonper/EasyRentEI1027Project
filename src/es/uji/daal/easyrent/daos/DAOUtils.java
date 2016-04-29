@@ -39,7 +39,7 @@ public class DAOUtils {
         for (String column : columns) {
             selectFields.add(column);
         }
-        this.selectFields = (String[]) selectFields.toArray();
+        this.selectFields = (String[]) selectFields.toArray(new String[selectFields.size()]);
     }
 
     public String getInsertWildcards() {
@@ -54,6 +54,6 @@ public class DAOUtils {
             String placeholder = String.format("%s = ?", field);
             placeholders.add(placeholder);
         }
-        return arrayFieldsToString((String[]) placeholders.toArray());
+        return arrayFieldsToString((String[]) placeholders.toArray(new String[placeholders.size()]));
     }
 }
