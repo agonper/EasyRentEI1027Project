@@ -1,5 +1,6 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <t:paginabasica title="Añadir usuario">
     <jsp:body>
         <h1>Añadir usuario</h1>
