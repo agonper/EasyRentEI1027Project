@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.sql.Date;
 import java.util.List;
@@ -43,14 +44,16 @@ public class PropertyController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String processAddSubmit(@ModelAttribute("property") Property property,
-                                   BindingResult bindingResult, User loggedUser) {
+                                   BindingResult bindingResult) {
 
         PropertyValidator validator = new PropertyValidator();
         validator.validate(property, bindingResult);
         if (bindingResult.hasErrors())
             return "property/add";
         property.setCreationDate(new Date(System.currentTimeMillis()));
-        property.setOwnerID(loggedUser.getId());
+        //String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        //property.setOwnerID(user.getId());
         propertyDAO.storeRecord(property);
         return "redirect:list.html";
     }

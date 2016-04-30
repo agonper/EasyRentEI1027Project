@@ -37,7 +37,7 @@ public class LoginController {
             return "login";
         }
 
-        user = userDao.findByUserAndPassword(user.getUsername(), user.getPassword());
+        user = userDao.findByUsername(user.getUsername());
         if (user == null) {
             bindingResult.rejectValue("password", "badpw", "Bad password");
             return "login";

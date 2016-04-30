@@ -3,6 +3,7 @@
 <%@ taglib prefix="coreActions" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="s" uri="http://java.sun.com/jsp/jstl/sql" %>
+<%@ taglib prefix="input" tagdir="/WEB-INF/tags" %>
 
 <tag:paginabasica title="EasyRent - Add a property">
 
@@ -11,48 +12,31 @@
         <h1>New property</h1>
         <form:form method="post" modelAttribute="property" cssClass="form-group">
 
-            <form:label path="title" cssClass="">Name of the property</form:label>
-            <form:input path="title" cssClass="form-control"></form:input>
-            <form:errors path="title" cssClass="error"/>
-            
-            <form:label path="location" cssClass="">Location</form:label>
-            <form:input path="location" cssClass="form-control"></form:input>
-            <form:errors path="location" cssClass=""/>
-            
-            <form:label path="rooms" cssClass="">Rooms</form:label>
-            <form:input path="rooms" cssClass="form-control"></form:input>
-            <form:errors path="rooms" cssClass=""/>
+            <tag:input path="title" label="Name of the property" type="text"/>
 
-            <form:label path="capacity" cssClass="">Capacity</form:label>
-            <form:input path="capacity" cssClass="form-control"></form:input>
-            <form:errors path="capacity" cssClass=""/>
+            <tag:input path="location" label="Location" type="text"/>
 
-            <form:label path="beds" cssClass="">Number of beds</form:label>
-            <form:input path="beds" cssClass="form-control"></form:input>
-            <form:errors path="beds" cssClass=""/>
+            <tag:input path="location" label="Rooms" type="text"/>
 
-            <form:label path="bathrooms" cssClass="">Bathrooms</form:label>
-            <form:input path="bathrooms" cssClass="form-control"></form:input>
-            <form:errors path="bathrooms" cssClass=""/>
+            <tag:input path="capacity" label="Capacity" type="text"/>
 
-            <form:label path="floorSpace" cssClass="">Floor space</form:label>
-            <form:input path="floorSpace" cssClass="form-control"></form:input>
-            <form:errors path="floorSpace" cssClass=""/>
+            <tag:input path="beds" label="Number of beds" type="text"/>
 
-            <form:label path="pricePerDay" cssClass="">Initial price per day</form:label>
-            <form:input path="pricePerDay" cssClass="form-control"></form:input>
-            <form:errors path="pricePerDay" cssClass=""></form:errors>
-            
-            <form:label path="type" cssClass="">Type of property</form:label>
-            <form:select path="type" cssClass="form-control">
-                <form:options items="${propertyTypes}" itemValue="lowerName" itemLabel="name"/>
-            </form:select>
-            <form:errors path="type" cssClass=""/>
+            <tag:input path="bathrooms" label="Bathrooms" type="text"/>
 
-            <form:label path="description" cssClass="">Description</form:label>
-            <form:textarea path="description" cssClass="form-control"></form:textarea>
-            <form:errors path="description" cssClass=""/>
+            <tag:input path="floorSpace" label="Floor space" type="text"/>
 
+            <tag:input path="pricePerDay" label="Initial price per day" type="text"/>
+
+            <form:label path="type" cssClass="control-label col-sm-2">Type of property</form:label>
+            <div class="col-sm-10">
+                <form:select path="type" cssClass="form-control">
+                    <form:options items="${propertyTypes}" itemValue="lowerName" itemLabel="name"/>
+                </form:select>
+                <form:errors path="type" cssClass=""/>
+            </div>
+
+            <tag:input path="description" label="Description" type="textarea"/>
             <input type="submit" value="Add the property" class="btn btn-default"/>
         </form:form>
 

@@ -106,8 +106,8 @@ public class UserDAO extends DAO<User> {
         return new UserMapper();
     }
 
-    public User findByUserAndPassword(String username, String password) {
-        String query = String.format("SELECT * FROM users WHERE username=? AND password=?", username, password);
-        return jdbcTemplate.queryForObject(query, new Object[] {username, password}, createModelMapper());
+    public User findByUsername(String username) {
+        String query = String.format("SELECT * FROM users WHERE username=?", username);
+        return jdbcTemplate.queryForObject(query, new Object[] {username}, createModelMapper());
     }
 }
