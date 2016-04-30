@@ -1,8 +1,8 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<t:paginabasica>
+<t:paginabasica title="Listado de usuarios">
     <jsp:body>
-        <h1>Listado de usuarios</h1>
+        <span class="h1">Listado de usuarios</span>
         <a class="btn btn-primary" href="${pageContext.request.contextPath}/user/add.html">
             <span class="glyphicon glyphicon-plus"></span> Add user
         </a>
@@ -44,8 +44,8 @@
                         <td>${user.signUpDate}</td>
                         <td>${user.active}</td>
                         <td>${user.deactivatedSince}</td>
-                        <td><a href="${pageContext.request.contextPath}/user/update.html" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span></a></td>
-                        <td><a href="${pageContext.request.contextPath}/user/delete.html" class="btn btn-primary"><span class="glyphicon glyphicon-remove"></span></a></td>
+                        <td><a href="${pageContext.request.contextPath}/user/update/${user.id}.html" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span></a></td>
+                        <td><a href="${pageContext.request.contextPath}/user/delete/${user.id}.html" class="btn btn-primary"><span class="glyphicon glyphicon-remove"></span></a></td>
                     </tr>
                 </c:forEach>
             </table>

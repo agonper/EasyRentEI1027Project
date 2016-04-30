@@ -1,8 +1,6 @@
 package es.uji.daal.easyrent.daos;
 
 import es.uji.daal.easyrent.models.Property;
-import es.uji.daal.easyrent.models.PropertyType;
-import es.uji.daal.easyrent.models.TypeNotFoundException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -28,7 +26,7 @@ public class PropertyDAO extends DAO<Property> {
         public Property mapRow(ResultSet rs, int i) throws SQLException {
             Property property = new Property();
 
-            try {
+            //try {
                 property.setId((UUID) rs.getObject("id"));
                 property.setOwnerID((UUID) rs.getObject("owner_id"));
                 property.setTitle(rs.getString("title"));
@@ -40,13 +38,13 @@ public class PropertyDAO extends DAO<Property> {
                 property.setFloorSpace(rs.getInt("floor_space"));
                 property.setPricePerDay(rs.getFloat("price_per_day"));
                 property.setCreationDate(rs.getDate("creation_date"));
-                property.setType(PropertyType.obtainTypeFor(rs.getString("type")));
+                property.setType(rs.getString("type"));
                 property.setDescription(rs.getString("description"));
-            } catch (TypeNotFoundException e) {
-                log.warning("Property entry with id " + property.getId() + " appears to have a role inconsistency problem");
-                property = null;
-                e.printStackTrace();
-            }
+            //} catch (TypeNotFoundException e) {
+             //   log.warning("Property entry with id " + property.getId() + " appears to have a role inconsistency problem");
+             //   property = null;
+             //   e.printStackTrace();
+            //}
 
             return property;
         }

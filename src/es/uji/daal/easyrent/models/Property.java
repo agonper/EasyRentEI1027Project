@@ -103,8 +103,14 @@ public class Property extends DomainModel {
         return type;
     }
 
-    public void setType(PropertyType type) {
-        this.type = type;
+    //TODO: Prueba
+    public void setType(String type) {
+        try {
+            this.type = PropertyType.obtainTypeFor(type);
+        }
+        catch (TypeNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getDescription() {

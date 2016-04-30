@@ -3,6 +3,7 @@ package es.uji.daal.easyrent.controllers;
 import es.uji.daal.easyrent.daos.PropertyDAO;
 import es.uji.daal.easyrent.models.Property;
 
+import es.uji.daal.easyrent.models.User;
 import es.uji.daal.easyrent.validators.PropertyValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -41,12 +43,14 @@ public class PropertyController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String processAddSubmit(@ModelAttribute("property") Property property,
-                                   BindingResult bindingResult) {
+                                   BindingResult bindingResult, User loggedUser) {
 
         PropertyValidator validator = new PropertyValidator();
         validator.validate(property, bindingResult);
         if (bindingResult.hasErrors())
             return "property/add";
+        property.setCreationDate(new Date(System.currentTimeMillis()));
+        property.setOwnerID(loggedUser.getId());
         propertyDAO.storeRecord(property);
         return "redirect:list.html";
     }
