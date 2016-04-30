@@ -20,7 +20,7 @@ public abstract class DAO<T extends DomainModel> implements Store<T> {
 
     protected static Logger log;
     private final DAOUtils daoUtils;
-    private JdbcTemplate jdbcTemplate;
+    protected JdbcTemplate jdbcTemplate;
 
     @Autowired
     public void setDataSource(DataSource dataSource) {
