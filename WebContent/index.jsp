@@ -13,6 +13,7 @@
             <div class="col-md-4"><a href="${pageContext.request.contextPath}/property/list.html">Listar propiedades</a></div>
             <div class="col-md-4"><a href="${pageContext.request.contextPath}/property/add.html">Introducir propiedad</a></div>
             <div class="col-md-4"><a href="${pageContext.request.contextPath}/photo/add.html">Introducir foto</a></div>
+            <div class="col-md-4"><a href="${pageContext.request.contextPath}/property/listOwnProperties.html">Listar propias propiedades</a></div>
         </div>
         <div class="well">
             <p>Esta feo! Arreglar!</p>

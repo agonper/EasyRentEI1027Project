@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 public abstract class DAO<T extends DomainModel> implements Store<T> {
 
     protected static Logger log;
-    private final DAOUtils daoUtils;
+    protected final DAOUtils daoUtils;
     protected JdbcTemplate jdbcTemplate;
 
     @Autowired

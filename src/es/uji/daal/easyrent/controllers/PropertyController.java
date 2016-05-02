@@ -33,6 +33,19 @@ public class PropertyController {
         return "property/list";
     }
 
+    @RequestMapping("/listOwnProperties")
+    public String listOwnProperties(Model model, HttpSession session) {
+        User loggedUser = (User) session.getAttribute("user");
+        if (loggedUser != null) {
+            UUID userID = loggedUser.getId();
+            List<Property> userProperties = propertyDAO.findByUserID(userID);
+            model.addAttribute("userProperties", userProperties);
+            return "property/listOwnProperties";
+        }
+        else
+            return "redirect:../login.html";
+    }
+
     @RequestMapping(value = "/add")
     public String add(Model model) {
         model.addAttribute("property", new Property());
@@ -49,7 +62,7 @@ public class PropertyController {
 
         if (bindingResult.hasErrors() || loggedUser == null)
             return "property/add";
-        
+
         property.setCreationDate(new Date(System.currentTimeMillis()));
         property.setOwnerID(loggedUser.getId());
         propertyDAO.storeRecord(property);

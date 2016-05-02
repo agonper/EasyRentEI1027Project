@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -96,5 +97,10 @@ public class PropertyDAO extends DAO<Property> {
                 property.getType().toString(),
                 property.getDescription()
         };
+    }
+
+    public List<Property> findByUserID(UUID userID) {
+        String query = "SELECT * FROM properties WHERE owner_id=?";
+        return this.jdbcTemplate.query(query, new Object[]{userID}, createModelMapper());
     }
 }
