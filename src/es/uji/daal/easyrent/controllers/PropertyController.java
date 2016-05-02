@@ -9,12 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.sql.Date;
 import java.util.List;
 import java.util.UUID;
@@ -44,16 +41,17 @@ public class PropertyController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String processAddSubmit(@ModelAttribute("property") Property property,
-                                   BindingResult bindingResult) {
+                                   BindingResult bindingResult, HttpSession session) {
 
         PropertyValidator validator = new PropertyValidator();
         validator.validate(property, bindingResult);
-        if (bindingResult.hasErrors())
-            return "property/add";
-        property.setCreationDate(new Date(System.currentTimeMillis()));
-        //String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User loggedUser = (User) session.getAttribute("user");
 
-        //property.setOwnerID(user.getId());
+        if (bindingResult.hasErrors() || loggedUser == null)
+            return "property/add";
+        
+        property.setCreationDate(new Date(System.currentTimeMillis()));
+        property.setOwnerID(loggedUser.getId());
         propertyDAO.storeRecord(property);
         return "redirect:list.html";
     }

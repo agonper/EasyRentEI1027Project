@@ -358,6 +358,5 @@
     </orderEntry>
     <orderEntry type="library" name="jquery" level="application" />
     <orderEntry type="library" name="tomcatLibs" level="project" />
-    <orderEntry type="library" name="org.springframework.security:spring-security-core:4.0.0.RELEASE" level="project" />
   </component>
 </module>
