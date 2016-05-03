@@ -69,7 +69,6 @@ public class PropertyController {
         return "redirect:list.html";
     }
 
-    //TODO: Revisar el nombre de 'update' a posteriori
     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
     public String update(Model model, @PathVariable(value = "id") String id) {
         model.addAttribute("property", propertyDAO.findOneByID(UUID.fromString(id)));
@@ -78,13 +77,13 @@ public class PropertyController {
 
     //TODO: Revisar validez del ID
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
-    public String processUpdateSubmit(//@PathVariable(value = "id") String id,
-                                      @ModelAttribute("property") Property property, BindingResult bindingResult) {
-
+    public String processUpdateSubmit(@ModelAttribute("property") Property property, BindingResult bindingResult) {
         PropertyValidator validator = new PropertyValidator();
         validator.validate(property, bindingResult);
+
         if (bindingResult.hasErrors())
             return "property/update";
+
         propertyDAO.updateRecord(property);
         return "redirect:../list.html";
     }
