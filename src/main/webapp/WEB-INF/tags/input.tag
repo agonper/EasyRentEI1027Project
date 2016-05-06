@@ -16,7 +16,7 @@
 </c:if>
 <spring:bind path="${path}">
     <div class="form-group ${status.error ? 'has-error' : ''}">
-        <form:label path="${path}" cssClass="control-label col-sm-2">${label}<c:if test="${required}">*</c:if></form:label>
+        <form:label path="${path}" cssClass="control-label col-sm-2">${label}<c:if test="${required}"><span class="text-info">*</span></c:if></form:label>
         <div class="col-sm-10">
             <c:if test='${type.equals("text")}'><form:input path="${path}" cssClass="form-control" /></c:if>
             <c:if test='${type.equals("password")}'><form:password path="${path}" cssClass="form-control" /></c:if>

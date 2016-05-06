@@ -3,6 +3,8 @@ package es.uji.daal.easyrent.dao;
 import es.uji.daal.easyrent.model.DomainModel;
 import es.uji.daal.easyrent.services.Store;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -46,7 +48,11 @@ public abstract class DAO<T extends DomainModel> implements Store<T> {
     @Override
     public T findOneByID(UUID id) {
         String query = String.format("SELECT %s FROM %s WHERE id=?", daoUtils.getFieldNames(), getTableName());
-        return this.jdbcTemplate.queryForObject(query, new Object[] {id}, createModelMapper());
+        try {
+            return this.jdbcTemplate.queryForObject(query, new Object[] {id}, createModelMapper());
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Override
@@ -62,7 +68,7 @@ public abstract class DAO<T extends DomainModel> implements Store<T> {
     @Override
     public void updateRecord(T record) {
         String query = String.format("UPDATE %s SET %s WHERE id=?", getTableName(), daoUtils.getUpdatePlaceholders());
-        this.jdbcTemplate.update(query, getValues(record), record.getId());
+        this.jdbcTemplate.update(query, daoUtils.addElement(getValues(record), record.getId()));
     }
 
     @Override

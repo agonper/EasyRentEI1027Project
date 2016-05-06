@@ -1,11 +1,16 @@
 package es.uji.daal.easyrent.integration;
 
+import es.uji.daal.easyrent.Application;
 import es.uji.daal.easyrent.dao.UserDAO;
 import es.uji.daal.easyrent.model.User;
 import es.uji.daal.easyrent.model.UserRole;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.Date;
 import java.util.List;
@@ -16,14 +21,13 @@ import static org.junit.Assert.*;
 /**
  * Created by alberto on 21/03/16.
  */
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(classes = Application.class)
 public class UserDAOTest {
 
-    public UserDAO userDAO;
-
-    @Before
-    public void setUp() throws Exception {
-        userDAO = new UserDAO();
-    }
+    @Autowired
+    private UserDAO userDAO;
 
     @Test
     public void testFindAllRecords() throws Exception {

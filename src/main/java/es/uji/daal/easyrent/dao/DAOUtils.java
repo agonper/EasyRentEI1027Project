@@ -1,5 +1,7 @@
 package es.uji.daal.easyrent.dao;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -55,5 +57,11 @@ public class DAOUtils {
             placeholders.add(placeholder);
         }
         return arrayFieldsToString((String[]) placeholders.toArray(new String[placeholders.size()]));
+    }
+
+    public Object[] addElement(Object[] objects, Object object) {
+        ArrayList<Object> tmp = new ArrayList<>(Arrays.asList(objects));
+        tmp.add(object);
+        return tmp.toArray();
     }
 }
