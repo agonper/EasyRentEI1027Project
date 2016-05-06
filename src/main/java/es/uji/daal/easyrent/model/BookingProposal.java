@@ -1,37 +1,57 @@
 package es.uji.daal.easyrent.model;
 
+import javax.persistence.*;
 import java.sql.Date;
 import java.util.UUID;
 
 /**
  * Created by daniel on 27/02/16.
  */
+
+@Entity
+@Table(name = "booking_proposals")
 public class BookingProposal extends DomainModel {
-    private UUID propertyID;
-    private UUID tenantID;
+
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    private Property property;
+
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    private User tenant;
+
+    @Column(nullable = false)
     private Date startDate;
+
+    @Column(nullable = false)
     private Date endDate;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private ProposalStatus status;
+
     private String paymentReference;
+
+    @Column(nullable = false)
     private float totalAmount;
+
+    @Column(nullable = false)
     private int numberOfTenants;
+
+    @Column(nullable = false)
     private Date dateOfCreation;
-    private Date dateOfAcceptation;
 
-    public UUID getPropertyID() {
-        return propertyID;
-    }
+    private Date dateOfUpdate;
 
-    public void setPropertyID(UUID propertyID) {
-        this.propertyID = propertyID;
-    }
+    @OneToOne(mappedBy = "proposal")
+    @JoinColumn(name = "proposal_id")
+    private Invoice invoice;
 
-    public UUID getTenantID() {
-        return tenantID;
-    }
+    /**
+     * ======
+     * Methods
+     * ======
+     */
 
-    public void setTenantID(UUID tenantID) {
-        this.tenantID = tenantID;
+    protected BookingProposal() {
     }
 
     public Date getStartDate() {
@@ -90,12 +110,12 @@ public class BookingProposal extends DomainModel {
         this.dateOfCreation = dateOfCreation;
     }
 
-    public Date getDateOfAcceptation() {
-        return dateOfAcceptation;
+    public Date getDateOfUpdate() {
+        return dateOfUpdate;
     }
 
-    public void setDateOfAcceptation(Date dateOfAcceptation) {
-        this.dateOfAcceptation = dateOfAcceptation;
+    public void setDateOfUpdate(Date dateOfUpdate) {
+        this.dateOfUpdate = dateOfUpdate;
     }
 
     /**
@@ -105,22 +125,38 @@ public class BookingProposal extends DomainModel {
      */
 
     public Property getProperty() {
-        // TODO: Implement
-        return null;
+        return property;
+    }
+
+    public void setProperty(Property property) {
+        this.property = property;
     }
 
     public User getTenant() {
-        // TODO: Implement
-        return null;
+        return tenant;
+    }
+
+    public void setTenant(User tenant) {
+        this.tenant = tenant;
+    }
+
+    public Invoice getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
     }
 
     public BookingProposal accept() {
-        // TODO: Implement
+        status = ProposalStatus.ACCEPTED;
+        dateOfUpdate = new Date(new java.util.Date().getTime());
         return this;
     }
 
     public BookingProposal reject() {
-        // TODO: Implement
+        status = ProposalStatus.REJECTED;
+        dateOfUpdate = new Date(new java.util.Date().getTime());
         return this;
     }
 }

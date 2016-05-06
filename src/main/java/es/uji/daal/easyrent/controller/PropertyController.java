@@ -64,7 +64,7 @@ public class PropertyController {
             return "property/add";
 
         property.setCreationDate(new Date(System.currentTimeMillis()));
-        property.setOwnerID(loggedUser.getId());
+        property.setOwnerId(loggedUser.getId());
         propertyDAO.storeRecord(property);
         return "redirect:list.html";
     }

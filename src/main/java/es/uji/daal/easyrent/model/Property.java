@@ -1,38 +1,74 @@
 package es.uji.daal.easyrent.model;
 
-import es.uji.daal.easyrent.dao.UserDAO;
-
+import javax.persistence.*;
 import java.sql.Date;
-import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
+@Entity
+@Table(name = "properties")
 public class Property extends DomainModel {
-    private UUID ownerID;
+
+    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
+    private User owner;
+
+    @Column(nullable = false)
     private String title;
+
+    @Column(nullable = false)
     private String location;
+
+    @Column(nullable = false)
     private int rooms;
+
+    @Column(nullable = false)
     private int capacity;
+
+    @Column(nullable = false)
     private int beds;
+
+    @Column(nullable = false)
     private int bathrooms;
+
+    @Column(nullable = false)
     private int floorSpace;
+
+    @Column(nullable = false)
     private float pricePerDay;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private PropertyType type;
+
     private String description;
+
+    @Column(nullable = false)
     private Date creationDate;
-    //TODO: La línea de abajo es una propuesta de modificación
-    /*
-    Alberto: Creo que no sería conveniente, quizá lo mejor es poner dos métodos en el DAO de Photos, obtenerlas por
-                Usuario o Propiedad
+
+    @OneToMany(mappedBy = "property")
+    @JoinColumn(name = "property_id")
+    private Set<AvailabilityPeriod> availabilityPeriods;
+
+    @OneToMany(mappedBy = "property")
+    @JoinColumn(name = "property_id")
+    private Set<BookingProposal> bookingProposals;
+
+    @OneToMany(mappedBy = "property")
+    @JoinColumn(name = "property_id")
+    private Set<Photo> photos;
+
+    @ManyToMany
+    @JoinTable(name = "property_services",
+        joinColumns = @JoinColumn(name = "property_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "service_id", referencedColumnName = "id"))
+    private Set<Service> services;
+
+    /**
+     * ======
+     * Methods
+     * ======
      */
-    public List<UUID> photosUUIDs;
 
-    public UUID getOwnerID() {
-        return ownerID;
-    }
-
-    public void setOwnerID(UUID ownerID) {
-        this.ownerID = ownerID;
+    protected Property() {
     }
 
     public String getTitle() {
@@ -103,14 +139,8 @@ public class Property extends DomainModel {
         return type;
     }
 
-    //TODO: Prueba
-    public void setType(String type) {
-        try {
-            this.type = PropertyType.obtainTypeFor(type);
-        }
-        catch (TypeNotFoundException e) {
-            e.printStackTrace();
-        }
+    public void setType(PropertyType type) {
+        this.type = type;
     }
 
     public String getDescription() {
@@ -136,29 +166,22 @@ public class Property extends DomainModel {
      */
 
     public User getOwner() {
-        // TODO: Implement
-        UserDAO toObtainUser = new UserDAO();
-        User ownerObtained = toObtainUser.findOneByID(ownerID);
-        return ownerObtained;
+        return owner;
     }
 
     public Set<AvailabilityPeriod> getAvailabilityPeriods() {
-        // TODO: Implement
-        return null;
+        return availabilityPeriods;
     }
 
     public Set<BookingProposal> getBookingProposals() {
-        // TODO: Implement
-        return null;
+        return bookingProposals;
     }
 
     public Set<Photo> getPhotos() {
-        // TODO: Implement
-        return null;
+        return photos;
     }
 
     public Set<Service> getServices() {
-        // TODO: Implement
-        return null;
+        return services;
     }
 }

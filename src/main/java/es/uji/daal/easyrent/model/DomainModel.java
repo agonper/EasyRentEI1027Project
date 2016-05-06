@@ -3,13 +3,24 @@ package es.uji.daal.easyrent.model;
 import es.uji.daal.easyrent.services.Store;
 import es.uji.daal.easyrent.services.StoreFactory;
 import es.uji.daal.easyrent.dao.DAOFactory;
+import org.hibernate.annotations.GeneratorType;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import java.util.UUID;
 
 /**
  * Created by Alberto on 18/03/2016.
  */
+@MappedSuperclass
 public abstract class DomainModel {
+    @Id
+    @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
+    @GeneratedValue(generator = "uuid-gen")
+    @Type(type = "pg-uuid")
     private UUID id = null;
 
     public UUID getId() {
@@ -20,56 +31,37 @@ public abstract class DomainModel {
         this.id = id;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (isNew() || isNull(obj)|| !equalsClass(obj)) {
+            return false;
+        }
+
+        return this.id.equals(((DomainModel) obj).id);
+    }
+
+    @Override
+    public int hashCode() {
+        return isNew() ? 0 : id.hashCode();
+    }
+
     /**
      * =============
      * FUNCTIONALITY
      * =============
      */
 
-    public DomainModel save() {
-        if (isNew()) {
-            createRecord();
-        } else {
-            updateRecord();
-        }
-        return this;
-    }
-
-
-    public void destroy() {
-        Store<DomainModel> store = getStore();
-        store.destroyRecord(this);
-    }
-
-    /**
-     * ===============
-     * SUPPORT METHODS
-     * ===============
-     */
 
     private boolean isNew() {
-        return id == null;
+        return isNull(id);
     }
-
-
-    private void createRecord() {
-        Store<DomainModel> store = getStore();
-        store.storeRecord(this);
+    private boolean isNull(Object obj) {
+        return obj == null;
     }
-
-
-    private void updateRecord() {
-        Store<DomainModel> store = getStore();
-        store.updateRecord(this);
-    }
-
-
-    private Store<DomainModel> getStore() {
-        StoreFactory storeFactory = getStoreFactory();
-        return storeFactory.getStore(this.getClass());
-    }
-
-    protected StoreFactory getStoreFactory() {
-        return new DAOFactory();
+    private boolean equalsClass(Object obj) {
+        return this.getClass().equals(obj.getClass());
     }
 }

@@ -5,7 +5,6 @@ import es.uji.daal.easyrent.dao.UserDAO;
 import es.uji.daal.easyrent.model.User;
 import es.uji.daal.easyrent.model.UserRole;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +39,7 @@ public class UserDAOTest {
         // Test case
         User user = new User();
         user.setUsername("user1");
-        user.setDNI("11111111X");
+        user.setDni("11111111X");
         user.setRole(UserRole.OWNER);
         user.setPassword("XXXXXXXXX");
         user.setName("User");

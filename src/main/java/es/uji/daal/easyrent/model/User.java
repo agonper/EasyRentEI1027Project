@@ -1,26 +1,72 @@
 package es.uji.daal.easyrent.model;
 
+import javax.persistence.*;
 import java.sql.Date;
 import java.util.Set;
 
 /**
  * Created by alberto on 17/03/16.
  */
+
+@Entity
+@Table(name = "users")
 public class User extends DomainModel {
+    @Column(unique = true, nullable = false)
     private String username;
-    private String DNI;
+
+    @Column(unique = true, nullable = false)
+    private String Dni;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private UserRole role;
+
+    @Column(nullable = false)
     private String password;
+
     private String name;
+
     private String surnames;
+
+    @Column(unique = true, nullable = false)
     private String email;
+
     private String phoneNumber;
+
     private String postalAddress;
+
     private String country;
+
     private int postCode;
+
+    @Column(nullable = false)
     private Date signUpDate;
+
+    @Column(nullable = false)
     private boolean active;
+
     private Date deactivatedSince;
+
+    @OneToMany(mappedBy = "owner")
+    @JoinColumn(name = "owner_id")
+    private Set<Property> properties;
+
+    @OneToMany(mappedBy = "tenant")
+    @JoinColumn(name = "tenant_id")
+    private Set<BookingProposal> bookingProposals;
+
+    @OneToOne(mappedBy = "user")
+    @JoinColumn(name = "user_id")
+    private Photo photo;
+
+    protected User() {
+    }
+
+    /**
+     * ======
+     * Methods
+     * ======
+     */
 
     public String getUsername() {
         return username;
@@ -30,12 +76,12 @@ public class User extends DomainModel {
         this.username = username;
     }
 
-    public String getDNI() {
-        return DNI;
+    public String getDni() {
+        return Dni;
     }
 
-    public void setDNI(String DNI) {
-        this.DNI = DNI;
+    public void setDni(String DNI) {
+        this.Dni = DNI;
     }
 
     public UserRole getRole() {
@@ -140,23 +186,27 @@ public class User extends DomainModel {
      * ======
      */
 
-    public Set<BookingProposal> getBookingProposals() {
-        // TODO: Implement
-        return null;
+    public Set<Property> getProperties() {
+        return properties;
     }
 
-    public Set<Property> getProperties() {
-        // TODO: Implement
-        return null;
+    public Set<BookingProposal> getBookingProposals() {
+        return bookingProposals;
+    }
+
+    public Photo getPhoto() {
+        return photo;
     }
 
     public User activate() {
-        // TODO: Implement
+        this.active = true;
+        this.deactivatedSince = null;
         return this;
     }
 
     public User deactivate() {
-        // TODO: Implement
+        this.active = false;
+        this.deactivatedSince = new Date(new java.util.Date().getTime());
         return this;
     }
 }

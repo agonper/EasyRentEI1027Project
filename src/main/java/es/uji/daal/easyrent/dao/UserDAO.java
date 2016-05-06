@@ -30,7 +30,7 @@ public class UserDAO extends DAO<User> {
             try {
                 user.setId((UUID) rs.getObject("id"));
                 user.setUsername(rs.getString("username"));
-                user.setDNI(rs.getString("national_document"));
+                user.setDni(rs.getString("national_document"));
                 user.setRole(UserRole.obtainRoleFor(rs.getString("role")));
                 user.setPassword(rs.getString("password"));
                 user.setName(rs.getString("name"));
@@ -79,7 +79,7 @@ public class UserDAO extends DAO<User> {
         return new Object[] {
                 user.getId(),
                 user.getUsername(),
-                user.getDNI(),
+                user.getDni(),
                 user.getRole().toString(),
                 user.getPassword(),
                 user.getName(),

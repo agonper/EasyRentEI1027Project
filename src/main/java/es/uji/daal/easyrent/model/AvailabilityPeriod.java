@@ -1,22 +1,31 @@
 package es.uji.daal.easyrent.model;
 
+import javax.persistence.*;
 import java.sql.Date;
 import java.util.UUID;
 
 /**
  * Created by alberto on 17/03/16.
  */
+@Entity
+@Table(name = "availability_periods")
 public class AvailabilityPeriod extends DomainModel {
-    private UUID propertyID;
+
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    private Property property;
+
+    @Column(nullable = false)
     private Date startDate;
+
     private Date endDate;
 
-    public UUID getPropertyID() {
-        return propertyID;
-    }
+    /**
+     * ======
+     * Methods
+     * ======
+     */
 
-    public void setPropertyID(UUID propertyID) {
-        this.propertyID = propertyID;
+    protected AvailabilityPeriod() {
     }
 
     public Date getStartDate() {
@@ -42,7 +51,10 @@ public class AvailabilityPeriod extends DomainModel {
      */
 
     public Property getProperty() {
-        // TODO: Implement
-        return null;
+        return property;
+    }
+
+    public void setProperty(Property property) {
+        this.property = property;
     }
 }

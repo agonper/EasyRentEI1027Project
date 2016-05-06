@@ -1,17 +1,39 @@
 package es.uji.daal.easyrent.model;
 
+import javax.persistence.*;
 import java.sql.Date;
-import java.util.UUID;
 
 /**
  * Created by daniel on 27/02/16.
  */
+@Entity
+@Table(name = "invoices")
 public class Invoice extends DomainModel {
+
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int number;
-    private UUID proposalID;
+
+    @OneToOne(mappedBy = "invoice", optional = false)
+    @JoinColumn(name = "invoice_id")
+    private BookingProposal proposal;
+
+    @Column(nullable = false)
     private float vat;
+
+    @Column(nullable = false)
     private String address;
+
+    @Column(nullable = false)
     private Date expeditionDate;
+
+    /**
+     * ======
+     * Methods
+     * ======
+     */
+
+    protected Invoice() {
+    }
 
     public int getNumber() {
         return number;
@@ -19,14 +41,6 @@ public class Invoice extends DomainModel {
 
     public void setNumber(int number) {
         this.number = number;
-    }
-
-    public UUID getProposalID() {
-        return proposalID;
-    }
-
-    public void setProposalID(UUID proposalID) {
-        this.proposalID = proposalID;
     }
 
     public float getVat() {
@@ -59,8 +73,11 @@ public class Invoice extends DomainModel {
      * ======
      */
 
-    public BookingProposal getBookingProposal() {
-        // TODO: Implement
-        return null;
+    public BookingProposal getProposal() {
+        return proposal;
+    }
+
+    public void setProposal(BookingProposal proposal) {
+        this.proposal = proposal;
     }
 }

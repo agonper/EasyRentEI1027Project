@@ -1,19 +1,47 @@
 package es.uji.daal.easyrent.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.sql.Date;
 import java.util.UUID;
 
 /**
  * Created by alberto on 17/03/16.
  */
+@Entity
+@Table(name = "services")
 public class Service extends DomainModel {
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false, unique = true)
     private String value;
-    private UUID userId;
+
+    @ManyToOne
+    private User user;
+
+    @Column(nullable = false)
     private boolean active;
+
+    @Column(nullable = false)
     private Date creationDate;
+
     private Date activeSince;
+
+    @Column(nullable = false)
     private int serviceProposals;
+
+    /**
+     * ======
+     * Methods
+     * ======
+     */
+
+    protected Service() {
+    }
 
     public String getName() {
         return name;
@@ -29,14 +57,6 @@ public class Service extends DomainModel {
 
     public void setValue(String value) {
         this.value = value;
-    }
-
-    public UUID getUserId() {
-        return userId;
-    }
-
-    public void setUserId(UUID user_id) {
-        this.userId = user_id;
     }
 
     public boolean getActive() {
@@ -77,9 +97,17 @@ public class Service extends DomainModel {
      * ======
      */
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Service activate() {
-        //TODO: Validar implementación
         active = true;
+        activeSince = new Date(new java.util.Date().getTime());
         return this;
     }
 }

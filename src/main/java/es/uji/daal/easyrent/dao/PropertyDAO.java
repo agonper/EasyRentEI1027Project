@@ -29,7 +29,7 @@ public class PropertyDAO extends DAO<Property> {
 
             //try {
                 property.setId((UUID) rs.getObject("id"));
-                property.setOwnerID((UUID) rs.getObject("owner_id"));
+                property.setOwnerId((UUID) rs.getObject("owner_id"));
                 property.setTitle(rs.getString("title"));
                 property.setLocation(rs.getString("location"));
                 property.setRooms(rs.getInt("rooms"));
@@ -84,7 +84,7 @@ public class PropertyDAO extends DAO<Property> {
     protected Object[] getValues(Property property) {
         return new Object[] {
                 property.getId(),
-                property.getOwnerID(),
+                property.getOwnerId(),
                 property.getTitle(),
                 property.getLocation(),
                 property.getRooms(),
