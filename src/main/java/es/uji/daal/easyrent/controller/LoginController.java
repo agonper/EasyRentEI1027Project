@@ -1,9 +1,9 @@
 package es.uji.daal.easyrent.controller;
 
-import es.uji.daal.easyrent.dao.UserDAO;
 import javax.servlet.http.HttpSession;
 
 import es.uji.daal.easyrent.model.User;
+import es.uji.daal.easyrent.repository.UserRepository;
 import es.uji.daal.easyrent.validators.LoginUserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class LoginController {
     @Autowired
-    private UserDAO userDao;
+    private UserRepository repository;
 
     @RequestMapping("/login")
     public String login(Model model) {
@@ -37,7 +37,7 @@ public class LoginController {
             return "login";
         }
 
-        user = userDao.findByUsername(user.getUsername());
+        user = repository.findByUsername(user.getUsername());
         if (user == null) {
             bindingResult.rejectValue("password", "badpw", "Bad password");
             return "login";
@@ -51,12 +51,12 @@ public class LoginController {
             session.setAttribute("nextUrl", null);
             return "redirect:" + next;
         }
-        return "redirect:index.jsp";
+        return "redirect:index.html";
     }
 
     @RequestMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
-        return "redirect:index.jsp";
+        return "redirect:index.html";
     }
 }

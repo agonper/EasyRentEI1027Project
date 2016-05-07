@@ -29,6 +29,11 @@
     color: #fff !important;
 }
 
+#logout-nav-btn a:hover {
+    background-color: #7f8c8d !important;
+    color: #000 !important;
+}
+
 .text-white {
     color: #fff !important;
 }

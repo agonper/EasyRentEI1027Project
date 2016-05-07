@@ -1,8 +1,8 @@
 package es.uji.daal.easyrent.controller;
 
-import es.uji.daal.easyrent.dao.UserDAO;
 import es.uji.daal.easyrent.model.User;
 import es.uji.daal.easyrent.model.UserRole;
+import es.uji.daal.easyrent.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,11 +24,11 @@ import java.util.UUID;
 @RequestMapping("/user")
 public class UserController {
     @Autowired
-    UserDAO userDAO;
+    UserRepository repository;
 
     @RequestMapping("/list")
     public String list(Model model) {
-        List<User> users = userDAO.findAll();
+        List<User> users = (List<User>) repository.findAll();
         model.addAttribute("users", users);
         return "user/list";
     }
@@ -48,15 +48,15 @@ public class UserController {
         user.setRole(UserRole.TENANT);
         user.setSignUpDate(new java.sql.Date(new Date().getTime()));
         user.setActive(false);
-        userDAO.storeRecord(user);
+        repository.save(user);
         return "redirect:list.html";
     }
 
     @RequestMapping(value = "/delete/{id}")
     public String delete(Model model, @PathVariable String id) {
-        User user = userDAO.findOneByID(UUID.fromString(id));
-        if (user != null) {
-            userDAO.destroyRecord(user);
+        UUID userId = UUID.fromString(id);
+        if (repository.exists(userId)) {
+            repository.delete(userId);
         }
         return "redirect:../list.html";
     }

@@ -1,9 +1,9 @@
 package es.uji.daal.easyrent.controller;
 
-import es.uji.daal.easyrent.dao.PropertyDAO;
 import es.uji.daal.easyrent.model.Property;
 
 import es.uji.daal.easyrent.model.User;
+import es.uji.daal.easyrent.repository.PropertyRepository;
 import es.uji.daal.easyrent.validators.PropertyValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,11 +24,11 @@ import java.util.UUID;
 @RequestMapping("/property")
 public class PropertyController {
     @Autowired
-    PropertyDAO propertyDAO;
+    PropertyRepository repository;
 
     @RequestMapping("/list")
     public String list(Model model) {
-        List<Property> properties = propertyDAO.findAll();
+        List<Property> properties = (List<Property>) repository.findAll();
         model.addAttribute("properties", properties);
         return "property/list";
     }
@@ -38,17 +38,20 @@ public class PropertyController {
         User loggedUser = (User) session.getAttribute("user");
         if (loggedUser != null) {
             UUID userID = loggedUser.getId();
-            List<Property> userProperties = propertyDAO.findByUserID(userID);
+            List<Property> userProperties = repository.findByOwner_Id(userID);
             model.addAttribute("userProperties", userProperties);
             return "property/listOwnProperties";
         }
-        else
-            return "redirect:../login.html";
+        return "redirect:../login.html";
     }
 
     @RequestMapping(value = "/add")
-    public String add(Model model) {
-        model.addAttribute("property", new Property());
+    public String add(Model model, HttpSession session) {
+        User loggedUser = (User) session.getAttribute("user");
+        if (loggedUser == null) {
+            return "redirect:../login.html";
+        }
+        model.addAttribute("property", new Property(loggedUser));
         return "property/add";
     }
 
@@ -64,14 +67,13 @@ public class PropertyController {
             return "property/add";
 
         property.setCreationDate(new Date(System.currentTimeMillis()));
-        property.setOwnerId(loggedUser.getId());
-        propertyDAO.storeRecord(property);
+        repository.save(property);
         return "redirect:list.html";
     }
 
     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
     public String update(Model model, @PathVariable(value = "id") String id) {
-        model.addAttribute("property", propertyDAO.findOneByID(UUID.fromString(id)));
+        model.addAttribute("property", repository.findOne(UUID.fromString(id)));
         return "property/update";
     }
 
@@ -84,13 +86,17 @@ public class PropertyController {
         if (bindingResult.hasErrors())
             return "property/update";
 
-        propertyDAO.updateRecord(property);
+        repository.save(property);
         return "redirect:../list.html";
     }
 
     @RequestMapping(value = "/delete/{id}")
     public String processDelete(@PathVariable(value = "id") String id) {
-        propertyDAO.destroyRecord(propertyDAO.findOneByID(UUID.fromString(id)));
+
+        UUID propertyId = UUID.fromString(id);
+        if (repository.exists(propertyId)) {
+            repository.delete(propertyId);
+        }
         return "redirect:../list.html";
     }
 }

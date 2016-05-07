@@ -1,7 +1,7 @@
 package es.uji.daal.easyrent.controller;
 
-import es.uji.daal.easyrent.dao.AvailabilityPeriodDAO;
 import es.uji.daal.easyrent.model.AvailabilityPeriod;
+import es.uji.daal.easyrent.repository.AvailabilityPeriodRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,11 +16,11 @@ import java.util.List;
 @RequestMapping("/property/availabilityPeriod")
 public class AvailabilityPeriodController {
     @Autowired
-    AvailabilityPeriodDAO availabilityPeriodDAO;
+    AvailabilityPeriodRepository repository;
 
     @RequestMapping("/listAll")
     public String listAvailabilityPeriods(Model model) {
-        List<AvailabilityPeriod> availabilityPeriods = availabilityPeriodDAO.findAll();
+        List<AvailabilityPeriod> availabilityPeriods = (List<AvailabilityPeriod>) repository.findAll();
         model.addAttribute("availabilityPeriods", availabilityPeriods);
         return "property/availabilityPeriod/listAll";
     }

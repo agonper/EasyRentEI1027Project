@@ -1,3 +1,4 @@
+<%@ page pageEncoding="UTF-8" %>
 <%@taglib prefix="tag" tagdir="/WEB-INF/tags"%>
 <%@taglib prefix="coreActions" uri="http://java.sun.com/jsp/jstl/core"%>
 
@@ -22,6 +23,6 @@
                 </coreActions:forEach>
             </table>
         </div>
-        <a href="../index.jsp">Go back to the index page</a>
+        <a href="../../index.html">Go back to the index page</a>
     </jsp:body>
 </tag:paginabasica>

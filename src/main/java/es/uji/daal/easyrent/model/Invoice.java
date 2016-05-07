@@ -14,7 +14,6 @@ public class Invoice extends DomainModel {
     private int number;
 
     @OneToOne(mappedBy = "invoice", optional = false)
-    @JoinColumn(name = "invoice_id")
     private BookingProposal proposal;
 
     @Column(nullable = false)
@@ -33,6 +32,11 @@ public class Invoice extends DomainModel {
      */
 
     protected Invoice() {
+    }
+
+    public Invoice(BookingProposal proposal) {
+        this.proposal = proposal;
+        expeditionDate = new Date(new java.util.Date().getTime());
     }
 
     public int getNumber() {

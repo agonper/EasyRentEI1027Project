@@ -1,9 +1,9 @@
 package es.uji.daal.easyrent.integration;
 
 import es.uji.daal.easyrent.Application;
-import es.uji.daal.easyrent.dao.UserDAO;
 import es.uji.daal.easyrent.model.User;
 import es.uji.daal.easyrent.model.UserRole;
+import es.uji.daal.easyrent.repository.UserRepository;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,12 +26,12 @@ import static org.junit.Assert.*;
 public class UserDAOTest {
 
     @Autowired
-    private UserDAO userDAO;
+    private UserRepository repository;
 
     @Test
     public void testFindAllRecords() throws Exception {
-        final List<User> users = userDAO.findAll();
-        assertFalse(users.isEmpty());
+        final List<User> users = (List<User>) repository.findAll();
+        assertTrue(users.isEmpty());
     }
 
     @Test
@@ -54,28 +54,28 @@ public class UserDAOTest {
         user.setDeactivatedSince(null);
 
         // Store user
-        user = userDAO.storeRecord(user);
+        user = repository.save(user);
         final UUID userID = user.getId();
         assertNotNull(userID);
 
         // Find user
-        final User dbUser = userDAO.findOneByID(userID);
+        final User dbUser = repository.findOne(userID);
         assertEquals(user.getName(), dbUser.getName());
 
         // Update user
         final String newAddress = "Fake street, 456";
         user.setPostalAddress(newAddress);
-        userDAO.updateRecord(user);
+        repository.save(user);
         assertEquals(user.getPostalAddress(), newAddress);
 
         // Destroy user
-        userDAO.destroyRecord(user);
-        user = userDAO.findOneByID(userID);
-        assertNull(user);
+        repository.delete(user);
+        boolean exists = repository.exists(userID);
+        assertFalse(exists);
     }
 
     @After
     public void tearDown() throws Exception {
-        userDAO = null;
+        repository = null;
     }
 }

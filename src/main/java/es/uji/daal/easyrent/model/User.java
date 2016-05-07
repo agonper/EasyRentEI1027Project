@@ -48,18 +48,18 @@ public class User extends DomainModel {
     private Date deactivatedSince;
 
     @OneToMany(mappedBy = "owner")
-    @JoinColumn(name = "owner_id")
     private Set<Property> properties;
 
     @OneToMany(mappedBy = "tenant")
-    @JoinColumn(name = "tenant_id")
     private Set<BookingProposal> bookingProposals;
 
     @OneToOne(mappedBy = "user")
-    @JoinColumn(name = "user_id")
     private Photo photo;
 
-    protected User() {
+    public User() {
+        role = UserRole.TENANT;
+        signUpDate = new Date(new java.util.Date().getTime());
+        active = false;
     }
 
     /**

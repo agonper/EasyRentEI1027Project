@@ -10,7 +10,7 @@
             <a class="navbar-brand" href="${pageContext.request.contextPath}/"><span class="glyphicon glyphicon-home"></span></a>
         </div>
         <c:choose>
-            <c:when test="${user == null}">
+            <c:when test="${user == null || user.id == null}">
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="${pageContext.request.contextPath}/login.html">ENTRAR</a></li>
@@ -21,8 +21,8 @@
             <c:otherwise>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav navbar-right">
-                        <li>Logged in as ${user.username}
-                            <a href="${pageContext.request.contextPath}/logout.html">Exit</a></li>
+                        <li><a href="#">Logged in as ${user.username}</a></li>
+                        <li id="logout-nav-btn" class="bg-cloud text-white"><a href="${pageContext.request.contextPath}/logout.html">Exit</a></li>
                     </ul>
                 </div>
             </c:otherwise>

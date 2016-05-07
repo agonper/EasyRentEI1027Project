@@ -33,6 +33,18 @@ public class Photo extends DomainModel {
     protected Photo() {
     }
 
+    public Photo(String filename, Property property) {
+        this.filename = filename;
+        this.property = property;
+        uploadDate = new Date(new java.util.Date().getTime());
+    }
+
+    public Photo(String filename, User user) {
+        this.filename = filename;
+        this.user = user;
+        uploadDate = new Date(new java.util.Date().getTime());
+    }
+
     public String getFilename() {
         return filename;
     }

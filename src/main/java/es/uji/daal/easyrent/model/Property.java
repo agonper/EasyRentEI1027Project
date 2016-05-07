@@ -45,15 +45,12 @@ public class Property extends DomainModel {
     private Date creationDate;
 
     @OneToMany(mappedBy = "property")
-    @JoinColumn(name = "property_id")
     private Set<AvailabilityPeriod> availabilityPeriods;
 
     @OneToMany(mappedBy = "property")
-    @JoinColumn(name = "property_id")
     private Set<BookingProposal> bookingProposals;
 
     @OneToMany(mappedBy = "property")
-    @JoinColumn(name = "property_id")
     private Set<Photo> photos;
 
     @ManyToMany
@@ -69,6 +66,11 @@ public class Property extends DomainModel {
      */
 
     protected Property() {
+    }
+
+    public Property(User owner) {
+        this.owner = owner;
+        creationDate = new Date(new java.util.Date().getTime());
     }
 
     public String getTitle() {

@@ -1,10 +1,8 @@
 package es.uji.daal.easyrent.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -34,6 +32,9 @@ public class Service extends DomainModel {
     @Column(nullable = false)
     private int serviceProposals;
 
+    @ManyToMany(mappedBy = "services")
+    private List<Property> properties;
+
     /**
      * ======
      * Methods
@@ -41,6 +42,13 @@ public class Service extends DomainModel {
      */
 
     protected Service() {
+    }
+
+    public Service(User user) {
+        this.user = user;
+        creationDate = new Date(new java.util.Date().getTime());
+        active = false;
+        serviceProposals = 1;
     }
 
     public String getName() {
@@ -109,5 +117,9 @@ public class Service extends DomainModel {
         active = true;
         activeSince = new Date(new java.util.Date().getTime());
         return this;
+    }
+
+    public List<Property> getProperties() {
+        return properties;
     }
 }

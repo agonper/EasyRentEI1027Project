@@ -1,3 +1,4 @@
+<%@ page pageEncoding="UTF-8" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <t:paginabasica title="Listado de usuarios">
@@ -31,7 +32,7 @@
                     <tr>
                         <td>${user.id}</td>
                         <td>${user.username}</td>
-                        <td>${user.DNI}</td>
+                        <td>${user.dni}</td>
                         <td>${user.role}</td>
                         <td>${user.password}</td>
                         <td>${user.name}</td>

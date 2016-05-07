@@ -41,8 +41,7 @@ public class BookingProposal extends DomainModel {
 
     private Date dateOfUpdate;
 
-    @OneToOne(mappedBy = "proposal")
-    @JoinColumn(name = "proposal_id")
+    @OneToOne
     private Invoice invoice;
 
     /**
@@ -52,6 +51,13 @@ public class BookingProposal extends DomainModel {
      */
 
     protected BookingProposal() {
+    }
+
+    public BookingProposal(Property property, User tenant) {
+        this.property = property;
+        this.tenant = tenant;
+        status = ProposalStatus.PENDING;
+        dateOfCreation = new Date(new java.util.Date().getTime());
     }
 
     public Date getStartDate() {

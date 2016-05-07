@@ -1,9 +1,5 @@
 package es.uji.daal.easyrent.model;
 
-import es.uji.daal.easyrent.services.Store;
-import es.uji.daal.easyrent.services.StoreFactory;
-import es.uji.daal.easyrent.dao.DAOFactory;
-import org.hibernate.annotations.GeneratorType;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 

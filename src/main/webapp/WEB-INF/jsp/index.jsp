@@ -1,3 +1,4 @@
+<%@ page pageEncoding="UTF-8" %>
 <%@ taglib prefix="tag" tagdir="/WEB-INF/tags" %>
 <tag:paginabasica title="EasyRent">
     <jsp:body>
@@ -17,7 +18,7 @@
             <div class="col-md-4"><a href="${pageContext.request.contextPath}/property/availabilityPeriod/listAll.html">Listar todos los periodos de disponibilidad</a> </div>
         </div>
         <div class="well">
-            <p>Esta feo! Arreglar!</p>
+            <p>Está feo! Arreglar!</p>
         </div>
     </jsp:body>
 </tag:paginabasica>
