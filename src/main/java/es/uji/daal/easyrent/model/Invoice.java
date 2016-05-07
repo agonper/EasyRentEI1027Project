@@ -10,7 +10,7 @@ import java.sql.Date;
 @Table(name = "invoices")
 public class Invoice extends DomainModel {
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(columnDefinition = "serial")
     private int number;
 
     @OneToOne(mappedBy = "invoice", optional = false)
