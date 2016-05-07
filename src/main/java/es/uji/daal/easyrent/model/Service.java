@@ -32,7 +32,7 @@ public class Service extends DomainModel {
     @Column(nullable = false)
     private int serviceProposals;
 
-    @ManyToMany(mappedBy = "services")
+    @ManyToMany(mappedBy = "services", cascade = CascadeType.ALL)
     private List<Property> properties;
 
     /**

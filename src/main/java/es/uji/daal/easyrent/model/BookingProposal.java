@@ -12,10 +12,10 @@ import java.util.UUID;
 @Table(name = "booking_proposals")
 public class BookingProposal extends DomainModel {
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     private Property property;
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     private User tenant;
 
     @Column(nullable = false)
@@ -41,7 +41,7 @@ public class BookingProposal extends DomainModel {
 
     private Date dateOfUpdate;
 
-    @OneToOne
+    @OneToOne(mappedBy = "proposal", cascade = CascadeType.ALL)
     private Invoice invoice;
 
     /**

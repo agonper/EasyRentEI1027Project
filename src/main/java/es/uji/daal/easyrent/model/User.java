@@ -47,13 +47,13 @@ public class User extends DomainModel {
 
     private Date deactivatedSince;
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private Set<Property> properties;
 
-    @OneToMany(mappedBy = "tenant")
+    @OneToMany(mappedBy = "tenant", cascade = CascadeType.ALL)
     private Set<BookingProposal> bookingProposals;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Photo photo;
 
     public User() {

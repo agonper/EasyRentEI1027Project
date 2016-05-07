@@ -13,7 +13,7 @@ public class Invoice extends DomainModel {
     @Column(columnDefinition = "serial")
     private int number;
 
-    @OneToOne(mappedBy = "invoice", optional = false)
+    @OneToOne(optional = false)
     private BookingProposal proposal;
 
     @Column(nullable = false)

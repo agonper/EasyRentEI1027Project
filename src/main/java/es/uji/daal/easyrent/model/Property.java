@@ -8,7 +8,7 @@ import java.util.Set;
 @Table(name = "properties")
 public class Property extends DomainModel {
 
-    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
+    @ManyToOne(optional = false)
     private User owner;
 
     @Column(nullable = false)
@@ -44,13 +44,13 @@ public class Property extends DomainModel {
     @Column(nullable = false)
     private Date creationDate;
 
-    @OneToMany(mappedBy = "property")
+    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<AvailabilityPeriod> availabilityPeriods;
 
-    @OneToMany(mappedBy = "property")
+    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
     private Set<BookingProposal> bookingProposals;
 
-    @OneToMany(mappedBy = "property")
+    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Photo> photos;
 
     @ManyToMany

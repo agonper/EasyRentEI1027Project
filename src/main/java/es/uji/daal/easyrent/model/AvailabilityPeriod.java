@@ -11,7 +11,7 @@ import java.util.UUID;
 @Table(name = "availability_periods")
 public class AvailabilityPeriod extends DomainModel {
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     private Property property;
 
     @Column(nullable = false)
