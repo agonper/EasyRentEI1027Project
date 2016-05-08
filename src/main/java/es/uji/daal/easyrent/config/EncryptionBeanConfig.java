@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
  */
 
 @Configuration
-public class CustomBeanConfig {
+public class EncryptionBeanConfig {
 
     @Bean
     public PasswordEncryptor passwordEncryptor() {

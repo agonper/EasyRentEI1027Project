@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="user" scope="request" value="${sessionScope.user}"/>
 <nav class="navbar navbar-default">
     <div class="container">
         <div class="navbar-header">
@@ -10,7 +11,7 @@
             <a class="navbar-brand" href="${pageContext.request.contextPath}/"><span class="glyphicon glyphicon-home"></span></a>
         </div>
         <c:choose>
-            <c:when test="${user == null || user.id == null}">
+            <c:when test="${user == null}">
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="${pageContext.request.contextPath}/login.html">ENTRAR</a></li>

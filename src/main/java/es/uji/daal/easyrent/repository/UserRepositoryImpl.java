@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -22,8 +23,12 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
     @Transactional(readOnly = true)
     @Override
     public boolean authenticate(String username, String password) {
-        User user = (User) em.createQuery("select u from User u where u.username = :username", User.class)
-                .setParameter("username", username).getSingleResult();
-        return passwordEncryptor.validatePassword(password, user.getPassword());
+        try {
+            User user = (User) em.createQuery("select u from User u where u.username = :username", User.class)
+                    .setParameter("username", username).getSingleResult();
+            return passwordEncryptor.validatePassword(password, user.getPassword());
+        } catch (NoResultException e) {
+            return false;
+        }
     }
 }

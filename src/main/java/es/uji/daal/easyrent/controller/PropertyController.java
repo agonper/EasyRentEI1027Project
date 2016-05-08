@@ -48,11 +48,11 @@ public class PropertyController {
     @RequestMapping(value = "/add")
     public String add(Model model, HttpSession session) {
         User loggedUser = (User) session.getAttribute("user");
-        if (loggedUser == null) {
-            return "redirect:../login.html";
+        if (loggedUser != null) {
+            model.addAttribute("property", new Property(loggedUser));
+            return "property/add";
         }
-        model.addAttribute("property", new Property(loggedUser));
-        return "property/add";
+        return "redirect:../login.html";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
