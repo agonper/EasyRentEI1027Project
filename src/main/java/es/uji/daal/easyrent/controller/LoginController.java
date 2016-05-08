@@ -37,8 +37,7 @@ public class LoginController {
             return "login";
         }
 
-        user = repository.findByUsername(user.getUsername());
-        if (user == null) {
+        if (!repository.authenticate(user.getUsername(), user.getPassword())) {
             bindingResult.rejectValue("password", "badpw", "Bad password");
             return "login";
         }

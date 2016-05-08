@@ -8,7 +8,7 @@ import java.util.UUID;
 /**
  * Created by Alberto on 07/05/2016.
  */
-public interface UserRepository extends CrudRepository<User, UUID> {
+public interface UserRepository extends CrudRepository<User, UUID>, UserRepositoryCustom {
 
     User findByUsername(String username);
 }

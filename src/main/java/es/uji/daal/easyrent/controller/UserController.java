@@ -3,6 +3,7 @@ package es.uji.daal.easyrent.controller;
 import es.uji.daal.easyrent.model.User;
 import es.uji.daal.easyrent.model.UserRole;
 import es.uji.daal.easyrent.repository.UserRepository;
+import es.uji.daal.easyrent.utils.PasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +27,9 @@ public class UserController {
     @Autowired
     UserRepository repository;
 
+    @Autowired
+    PasswordEncryptor passwordEncryptor;
+
     @RequestMapping("/list")
     public String list(Model model) {
         List<User> users = (List<User>) repository.findAll();
@@ -45,9 +49,7 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "user/add";
         }
-        user.setRole(UserRole.TENANT);
-        user.setSignUpDate(new java.sql.Date(new Date().getTime()));
-        user.setActive(false);
+        user.setPassword(passwordEncryptor.generateHash(user.getPassword()));
         repository.save(user);
         return "redirect:list.html";
     }
