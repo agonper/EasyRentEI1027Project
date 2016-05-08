@@ -2,6 +2,7 @@ package es.uji.daal.easyrent.model;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -48,7 +49,7 @@ public class Service extends DomainModel {
         this.user = user;
         creationDate = new Date(new java.util.Date().getTime());
         active = false;
-        serviceProposals = 1;
+        serviceProposals = 0;
     }
 
     public String getName() {
@@ -121,5 +122,21 @@ public class Service extends DomainModel {
 
     public List<Property> getProperties() {
         return properties;
+    }
+
+    public void addProperty(Property property) {
+        properties.add(property);
+    }
+
+    public void addProperties(Collection<Property> properties) {
+        this.properties.addAll(properties);
+    }
+
+    public void removeProperty(Property property) {
+        properties.remove(property);
+    }
+
+    public void removeProperties(Collection<Property> properties) {
+        this.properties.removeAll(properties);
     }
 }

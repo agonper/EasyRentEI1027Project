@@ -2,6 +2,7 @@ package es.uji.daal.easyrent.model;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Collection;
 import java.util.Set;
 
 @Entity
@@ -171,19 +172,120 @@ public class Property extends DomainModel {
         return owner;
     }
 
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
     public Set<AvailabilityPeriod> getAvailabilityPeriods() {
         return availabilityPeriods;
+    }
+
+    public void addAvailiabilityPerdiod(AvailabilityPeriod period) {
+        availabilityPeriods.add(period);
+        period.setProperty(this);
+    }
+
+    public void addAvailiabilityPerdiods(Collection<AvailabilityPeriod> periods) {
+        availabilityPeriods.addAll(periods);
+        for (AvailabilityPeriod period : periods) {
+            period.setProperty(this);
+        }
+    }
+
+    public void removeAvailabilityPeriod(AvailabilityPeriod period) {
+        availabilityPeriods.remove(period);
+        period.setProperty(null);
+    }
+
+    public void removeAvailabilityPeriods(Collection<AvailabilityPeriod> periods) {
+        availabilityPeriods.removeAll(periods);
+        for (AvailabilityPeriod period : periods) {
+            period.setProperty(null);
+        }
     }
 
     public Set<BookingProposal> getBookingProposals() {
         return bookingProposals;
     }
 
+    public void addBookingProposal(BookingProposal proposal) {
+        bookingProposals.add(proposal);
+        proposal.setProperty(this);
+    }
+
+    public void addBookingProposals(Collection<BookingProposal> proposals) {
+        bookingProposals.addAll(proposals);
+        for (BookingProposal proposal: proposals) {
+            proposal.setProperty(this);
+        }
+    }
+
+    public void removeBookingProposal(BookingProposal proposal) {
+        bookingProposals.remove(proposal);
+        proposal.setProperty(null);
+    }
+
+    public void removeBookingProposals(Collection<BookingProposal> proposals) {
+        bookingProposals.removeAll(proposals);
+        for (BookingProposal proposal : proposals) {
+            proposal.setProperty(null);
+        }
+    }
+
     public Set<Photo> getPhotos() {
         return photos;
+    }
+
+    public void addPhoto(Photo photo) {
+        photos.add(photo);
+        photo.setProperty(this);
+    }
+
+    public void addPhotos(Collection<Photo> photos) {
+        this.photos.addAll(photos);
+        for (Photo photo : photos) {
+            photo.setProperty(this);
+        }
+    }
+
+    public void removePhoto(Photo photo) {
+        photos.remove(photo);
+        photo.setProperty(null);
+    }
+
+    public void removePhotos(Collection<Photo> photos) {
+        this.photos.removeAll(photos);
+        for (Photo photo : photos) {
+            photo.setProperty(null);
+        }
     }
 
     public Set<Service> getServices() {
         return services;
     }
+
+    public void addService(Service service) {
+        services.add(service);
+        service.addProperty(this);
+    }
+
+    public void addServices(Collection<Service> services) {
+        this.services.addAll(services);
+        for (Service service : services) {
+            service.addProperty(this);
+        }
+    }
+
+    public void removeService(Service service) {
+        services.remove(service);
+        service.removeProperty(this);
+    }
+
+    public void removeServices(Collection<Service> services) {
+        this.services.removeAll(services);
+        for (Service service : services) {
+            service.removeProperty(this);
+        }
+    }
+
 }

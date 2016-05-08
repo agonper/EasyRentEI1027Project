@@ -2,6 +2,7 @@ package es.uji.daal.easyrent.model;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Collection;
 import java.util.Set;
 
 /**
@@ -190,12 +191,65 @@ public class User extends DomainModel {
         return properties;
     }
 
+    public void addProperty(Property property) {
+        properties.add(property);
+        property.setOwner(this);
+    }
+
+    public void addProperties(Collection<Property> properties) {
+        this.properties.addAll(properties);
+        for (Property property : properties) {
+            property.setOwner(this);
+        }
+    }
+
+    public void removeProperty(Property property) {
+        properties.remove(property);
+        property.setOwner(null);
+    }
+
+    public void removeProperties(Collection<Property> properties) {
+        this.properties.removeAll(properties);
+        for (Property property : properties) {
+            property.setOwner(null);
+        }
+    }
+
     public Set<BookingProposal> getBookingProposals() {
         return bookingProposals;
     }
 
+    public void addBookingProposal(BookingProposal proposal) {
+        bookingProposals.add(proposal);
+        proposal.setTenant(this);
+    }
+
+    public void addBookingProposals(Collection<BookingProposal> proposals) {
+        this.bookingProposals.addAll(proposals);
+        for (BookingProposal proposal : proposals) {
+            proposal.setTenant(this);
+        }
+    }
+
+    public void removeBookingProposal(BookingProposal proposal) {
+        bookingProposals.remove(proposal);
+        proposal.setTenant(null);
+    }
+
+    public void removeBookingProposals(Collection<BookingProposal> proposals) {
+        this.bookingProposals.removeAll(proposals);
+        for (BookingProposal proposal : proposals) {
+            proposal.setTenant(null);
+        }
+    }
+
     public Photo getPhoto() {
         return photo;
+    }
+
+    public void setPhoto(Photo photo) {
+        this.photo = photo;
+        photo.setUser(this);
     }
 
     public User activate() {

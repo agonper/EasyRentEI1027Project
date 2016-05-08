@@ -152,6 +152,7 @@ public class BookingProposal extends DomainModel {
 
     public void setInvoice(Invoice invoice) {
         this.invoice = invoice;
+        invoice.setProposal(this);
     }
 
     public BookingProposal accept() {
