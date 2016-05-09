@@ -3,18 +3,18 @@
 
 <tag:paginabasica title="List all availability periods">
     <jsp:body>
-        <h1>List of availability periods</h1>
+        <h1>List of own availability periods</h1>
 
         <div class="table-responsive">
             <table class="table">
                 <tr>
-                    <th>Property ID</th>
+                    <th>ID</th>
                     <th>Start date</th>
                     <th>End date</th>
                 </tr>
-                <coreActions:forEach var="availabilityPeriod" items="${availabilityPeriods}">
+                <coreActions:forEach var="availabilityPeriod" items="${ownAvailabilityPeriods}">
                     <tr>
-                        <td>${availabilityPeriod.propertyID}</td>
+                        <td>${availabilityPeriod.id}</td>
                         <td>${availabilityPeriod.startDate}</td>
                         <td>${availabilityPeriod.endDate}</td>
                         <td><a href="${pageContext.request.contextPath}#" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span></a></td>
@@ -22,6 +22,6 @@
                 </coreActions:forEach>
             </table>
         </div>
-        <a href="../../index.jsp">Go back to the index page</a>
+        <a href="../index.jsp">Go back to the index page</a>
     </jsp:body>
 </tag:paginabasica>

@@ -65,4 +65,9 @@ public class AvailabilityPeriodDAO extends DAO<AvailabilityPeriod> {
                 ap.getEndDate()
         };
     }
+
+    public AvailabilityPeriod getByPropertyID(UUID propertyID) {
+        String query = String.format("SELECT * FROM availability_of_properties WHERE property_id=?", propertyID);
+        return jdbcTemplate.queryForObject(query, new Object[] {propertyID}, createModelMapper());
+    }
 }
