@@ -1,5 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="user" scope="request" value="${sessionScope.user}"/>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:authorize access="isAuthenticated()">
+    <sec:authentication var="user" property="principal" />
+</sec:authorize>
 <nav class="navbar navbar-default">
     <div class="container">
         <div class="navbar-header">
@@ -11,7 +14,7 @@
             <a class="navbar-brand" href="${pageContext.request.contextPath}/"><span class="glyphicon glyphicon-home"></span></a>
         </div>
         <c:choose>
-            <c:when test="${user == null}">
+            <c:when test="${user == null || user.id == null}">
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="${pageContext.request.contextPath}/login.html">ENTRAR</a></li>
@@ -23,7 +26,7 @@
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="#">Logged in as ${user.username}</a></li>
-                        <li id="logout-nav-btn" class="bg-cloud text-white"><a href="${pageContext.request.contextPath}/logout.html">Exit</a></li>
+                        <li id="logout-nav-btn" class="bg-cloud text-white"><a href="<c:url value="/logout.html" />">Exit</a></li>
                     </ul>
                 </div>
             </c:otherwise>

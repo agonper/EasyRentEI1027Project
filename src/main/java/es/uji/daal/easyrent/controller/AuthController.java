@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 
 @Controller
-public class LoginController {
+public class AuthController {
     @Autowired
     private UserRepository repository;
 
@@ -26,31 +26,6 @@ public class LoginController {
     public String login(Model model) {
         model.addAttribute("user", new User());
         return "login";
-    }
-
-    @RequestMapping(value="/login", method= RequestMethod.POST)
-    public String checkLogin(@ModelAttribute("user") User user,
-                             BindingResult bindingResult, HttpSession session) {
-        LoginUserValidator loginUserValidator = new LoginUserValidator();
-        loginUserValidator.validate(user, bindingResult);
-        if (bindingResult.hasErrors()) {
-            return "login";
-        }
-
-        if (!repository.authenticate(user.getUsername(), user.getPassword())) {
-            bindingResult.rejectValue("password", "badpw", "Bad password");
-            return "login";
-        }
-
-        session.setAttribute("user", user);
-
-        String next = (String)session.getAttribute("nextUrl");
-
-        if (next != null) {
-            session.setAttribute("nextUrl", null);
-            return "redirect:" + next;
-        }
-        return "redirect:index.html";
     }
 
     @RequestMapping("/logout")
