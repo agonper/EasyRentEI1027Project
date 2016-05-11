@@ -60,7 +60,7 @@ public class User extends DomainModel {
     public User() {
         role = UserRole.TENANT;
         signUpDate = new Date(new java.util.Date().getTime());
-        active = false;
+        active = true; //TODO:For testing
     }
 
     /**
