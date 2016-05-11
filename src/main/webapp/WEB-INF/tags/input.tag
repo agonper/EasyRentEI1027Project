@@ -22,6 +22,7 @@
             <c:if test='${type.equals("email")}'><div class="input-group"><span class="input-group-addon">@</span><form:input path="${path}" cssClass="form-control" /></div></c:if>
             <c:if test='${type.equals("password")}'><form:password path="${path}" cssClass="form-control" /></c:if>
             <c:if test='${type.equals("textarea")}'><form:textarea path="${path}" cssClass="form-control" /></c:if>
+            <c:if test='${type.equals("checkbox")}'><form:checkbox path="${path}" cssClass="form-control" value="${false}"/></c:if>
             <c:if test="${status.error}">
                 <span class="help-block">${status.errorMessage}</span>
             </c:if>

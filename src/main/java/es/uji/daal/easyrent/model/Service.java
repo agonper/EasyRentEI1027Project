@@ -42,14 +42,37 @@ public class Service extends DomainModel {
      * ======
      */
 
+
+    public Service(User user) {
+        initService(user);
+        active = false;
+    }
+
+    public Service(User user, boolean active) {
+        initService(user);
+        this.active = active;
+        if (active)
+            this.activeSince = new Date(new java.util.Date().getTime());
+    }
+
+    private void initService(User user) {
+        this.user = user;
+        creationDate = new Date(System.currentTimeMillis());
+        serviceProposals = 1;
+    }
+
     protected Service() {
     }
 
-    public Service(User user) {
-        this.user = user;
-        creationDate = new Date(new java.util.Date().getTime());
-        active = false;
-        serviceProposals = 0;
+    public Service(Service service) {
+        name = service.getName();
+        value = service.getValue();
+        setId(service.getId());
+        user = service.getUser();
+        active = service.getActive();
+        creationDate = service.getCreationDate();
+        activeSince = service.getActiveSince();
+        serviceProposals = service.getServiceProposals();
     }
 
     public String getName() {
