@@ -1,22 +1,33 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
-<t:paginabasica title="Añadir usuario">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:message key="add-user.title" var="title" bundle="${lang}"/>
+<t:paginabasica title="${title}">
     <jsp:body>
-        <h1>Añadir usuario</h1>
+        <h1>${title}</h1>
         <form:form cssClass="form-horizontal" method="post" modelAttribute="user">
-            <t:input path="username" required="true"/>
-            <t:input path="dni" label="DNI"/>
-            <t:input path="password" type="password" required="true"/>
-            <t:input path="name" required="true"/>
-            <t:input path="surnames" required="true"/>
-            <t:input path="email" required="true"/>
-            <t:input path="phoneNumber" label="Phone number"/>
-            <t:input path="postalAddress" label="Address"/>
-            <t:input path="country" />
-            <t:input path="postCode" label="Post code"/>
-            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Añadir</button>
+            <fmt:message key="user.username" var="username" bundle="${lang}"/>
+            <t:input path="username" required="true" label="${username}"/>
+            <fmt:message key="user.dni" var="dni" bundle="${lang}"/>
+            <t:input path="dni" label="${dni}"/>
+            <fmt:message key="user.password" var="password" bundle="${lang}"/>
+            <t:input path="password" type="password" required="true" label="${password}"/>
+            <fmt:message key="user.name" var="name" bundle="${lang}"/>
+            <t:input path="name" required="true" label="${name}"/>
+            <fmt:message key="user.surnames" var="surnames" bundle="${lang}"/>
+            <t:input path="surnames" required="true" label="${surnames}"/>
+            <fmt:message key="user.email" var="email" bundle="${lang}"/>
+            <t:input path="email" required="true" label="${email}"/>
+            <fmt:message key="user.phone-number" var="phoneNumber" bundle="${lang}"/>
+            <t:input path="phoneNumber" label="${phoneNumber}"/>
+            <fmt:message key="user.address" var="addres" bundle="${lang}"/>
+            <t:input path="postalAddress" label="${addres}"/>
+            <fmt:message key="user.country" var="country" bundle="${lang}"/>
+            <t:input path="country" label="${country}" />
+            <fmt:message key="user.post-code" var="postCode" bundle="${lang}"/>
+            <t:input path="postCode" label="${postCode}"/>
+            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> <fmt:message key="general.add" bundle="${lang}"/></button>
         </form:form>
     </jsp:body>
 </t:paginabasica>

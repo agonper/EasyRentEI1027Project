@@ -6,6 +6,7 @@ import es.uji.daal.easyrent.model.User;
 import es.uji.daal.easyrent.repository.PropertyRepository;
 import es.uji.daal.easyrent.validators.PropertyValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,8 +35,8 @@ public class PropertyController {
     }
 
     @RequestMapping("/listOwnProperties")
-    public String listOwnProperties(Model model, HttpSession session) {
-        User loggedUser = (User) session.getAttribute("user");
+    public String listOwnProperties(Model model) {
+        User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (loggedUser != null) {
             UUID userID = loggedUser.getId();
             List<Property> userProperties = repository.findByOwner_Id(userID);
@@ -46,8 +47,8 @@ public class PropertyController {
     }
 
     @RequestMapping(value = "/add")
-    public String add(Model model, HttpSession session) {
-        User loggedUser = (User) session.getAttribute("user");
+    public String add(Model model) {
+        User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (loggedUser != null) {
             model.addAttribute("property", new Property(loggedUser));
             return "property/add";
@@ -57,11 +58,11 @@ public class PropertyController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String processAddSubmit(@ModelAttribute("property") Property property,
-                                   BindingResult bindingResult, HttpSession session) {
+                                   BindingResult bindingResult) {
 
         PropertyValidator validator = new PropertyValidator();
         validator.validate(property, bindingResult);
-        User loggedUser = (User) session.getAttribute("user");
+        User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (bindingResult.hasErrors() || loggedUser == null)
             return "property/add";
