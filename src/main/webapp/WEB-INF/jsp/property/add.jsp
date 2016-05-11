@@ -11,6 +11,7 @@
     <jsp:body>
 
         <h1>New property</h1>
+        <hr>
         <form:form method="post" modelAttribute="property" cssClass="form-group">
 
             <tag:input path="title" label="Name of the property"/>

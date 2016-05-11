@@ -37,6 +37,13 @@ public class UserController {
         return "user/list";
     }
 
+    @RequestMapping("/profile/{id}")
+    public String show(Model model, @PathVariable String id) {
+        User user = repository.findOne(UUID.fromString(id));
+        model.addAttribute("user", user);
+        return "user/profile";
+    }
+
     @RequestMapping("/add")
     public String add(Model model) {
         User user = new User();

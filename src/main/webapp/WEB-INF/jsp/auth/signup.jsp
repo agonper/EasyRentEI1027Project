@@ -6,7 +6,7 @@
 <t:paginabasica title="${title}">
     <jsp:body>
         <h1>${title}</h1>
-        ${message}
+        <hr>
         <form:form cssClass="form-horizontal" method="post" modelAttribute="form">
             <fmt:message key="user.username" var="username" bundle="${lang}"/>
             <t:input path="username" label="${username}"/>

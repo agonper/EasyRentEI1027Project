@@ -5,6 +5,7 @@
 <tag:paginabasica title="List properties">
     <jsp:body>
         <h1>List of properties</h1>
+        <hr>
         <a class="btn btn-warning" href="${pageContext.request.contextPath}/property/add.html">
             <span class="glyphicon glyphicon-plus"></span> Add property
         </a>

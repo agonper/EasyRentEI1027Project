@@ -5,7 +5,7 @@
 <tag:paginabasica title="List all availability periods">
     <jsp:body>
         <h1>List of availability periods</h1>
-
+        <hr>
         <div class="table-responsive">
             <table class="table">
                 <tr>

@@ -10,6 +10,7 @@
 <fmt:message key="login.title" var="title" bundle="${lang}"/>
 <t:paginabasica title="${title}" >
     <h1>${title}</h1>
+    <hr>
     <form:form method="post" action="${loginUrl}" cssClass="form-horizontal">
         <c:if test="${param.error != null}">
             <p class="alert alert-danger">

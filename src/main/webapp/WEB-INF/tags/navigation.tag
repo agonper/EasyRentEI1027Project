@@ -36,12 +36,12 @@
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="#">
+                            <a href="${pageContext.request.contextPath}/user/profile/${user.id}.html">
                                 <span class="glyphicon glyphicon-user"></span> ${user.username.toUpperCase()}
                             </a>
                         </li>
                         <li id="logout-nav-btn" class="bg-cloud text-white">
-                            <a href="<c:url value="/logout.html" />">
+                            <a href="<c:url value="/logout.html" />" class="bg-cloud text-white">
                                 <span class="glyphicon glyphicon-log-out"></span> <fmt:message key="navigation.logout" bundle="${lang}"/>
                             </a>
                         </li>

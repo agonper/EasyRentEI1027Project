@@ -11,6 +11,7 @@
     <jsp:body>
 
         <h1>Add a photo to the property with id ${property.id}</h1>
+        <hr>
         <form:form method="post" modelAttribute="property" cssClass="form-group">
 
             <form:label path="photo">Upload the photo</form:label>

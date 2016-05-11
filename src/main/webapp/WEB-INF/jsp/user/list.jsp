@@ -9,6 +9,7 @@
         <a class="btn btn-warning" href="${pageContext.request.contextPath}/user/add.html">
             <span class="glyphicon glyphicon-plus"></span> <fmt:message key="add-user.title" bundle="${lang}"/>
         </a>
+        <hr>
         <div class="table-responsive">
             <table class="table">
                 <tr>
@@ -16,8 +17,8 @@
                     <th><fmt:message key="user.username" bundle="${lang}"/></th>
                     <th><fmt:message key="user.dni" bundle="${lang}"/></th>
                     <th><fmt:message key="user.role" bundle="${lang}"/></th>
-                    <th><fmt:message key="user.name" bundle="${lang}"/></th>
                     <th><fmt:message key="user.password" bundle="${lang}"/></th>
+                    <th><fmt:message key="user.name" bundle="${lang}"/></th>
                     <th><fmt:message key="user.surnames" bundle="${lang}"/></th>
                     <th><fmt:message key="user.email" bundle="${lang}"/></th>
                     <th><fmt:message key="user.phone-number" bundle="${lang}"/></th>
