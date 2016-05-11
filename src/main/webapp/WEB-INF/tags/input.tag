@@ -19,6 +19,7 @@
         <form:label path="${path}" cssClass="control-label col-sm-2">${label}<c:if test="${required}"><span class="text-info">*</span></c:if></form:label>
         <div class="col-sm-10">
             <c:if test='${type.equals("text")}'><form:input path="${path}" cssClass="form-control" /></c:if>
+            <c:if test='${type.equals("email")}'><div class="input-group"><span class="input-group-addon">@</span><form:input path="${path}" cssClass="form-control" /></div></c:if>
             <c:if test='${type.equals("password")}'><form:password path="${path}" cssClass="form-control" /></c:if>
             <c:if test='${type.equals("textarea")}'><form:textarea path="${path}" cssClass="form-control" /></c:if>
             <c:if test="${status.error}">

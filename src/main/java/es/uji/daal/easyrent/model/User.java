@@ -165,7 +165,7 @@ public class User extends DomainModel {
         this.signUpDate = signUpDate;
     }
 
-    public boolean getActive() {
+    public boolean isActive() {
         return active;
     }
 

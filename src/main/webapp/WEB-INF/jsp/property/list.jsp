@@ -5,7 +5,7 @@
 <tag:paginabasica title="List properties">
     <jsp:body>
         <h1>List of properties</h1>
-        <a class="btn btn-primary" href="${pageContext.request.contextPath}/property/add.html">
+        <a class="btn btn-warning" href="${pageContext.request.contextPath}/property/add.html">
             <span class="glyphicon glyphicon-plus"></span> Add property
         </a>
         <div class="table-responsive">
@@ -40,8 +40,8 @@
                         <td>${property.creationDate}</td>
                         <td>${property.type.toString()}</td>
                         <td>${property.description}</td>
-                        <td><a href="${pageContext.request.contextPath}/property/update/${property.id}.html" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span></a></td>
-                        <td><a href="${pageContext.request.contextPath}/property/delete/${property.id}.html" class="btn btn-primary"><span class="glyphicon glyphicon-remove"></span></a></td>
+                        <td><a href="${pageContext.request.contextPath}/property/update/${property.id}.html" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span></a></td>
+                        <td><a href="${pageContext.request.contextPath}/property/delete/${property.id}.html" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span></a></td>
                     </tr>
                 </coreActions:forEach>
             </table>

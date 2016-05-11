@@ -18,7 +18,7 @@
                         <td>${availabilityPeriod.id}</td>
                         <td>${availabilityPeriod.startDate}</td>
                         <td>${availabilityPeriod.endDate}</td>
-                        <td><a href="${pageContext.request.contextPath}#" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span></a></td>
+                        <td><a href="${pageContext.request.contextPath}#" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span></a></td>
                     </tr>
                 </coreActions:forEach>
             </table>

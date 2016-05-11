@@ -6,7 +6,7 @@
 <t:paginabasica title="${title}">
     <jsp:body>
         <span class="h1">${title}</span>
-        <a class="btn btn-primary" href="${pageContext.request.contextPath}/user/add.html">
+        <a class="btn btn-warning" href="${pageContext.request.contextPath}/user/add.html">
             <span class="glyphicon glyphicon-plus"></span> <fmt:message key="add-user.title" bundle="${lang}"/>
         </a>
         <div class="table-responsive">
@@ -47,8 +47,8 @@
                         <td>${user.signUpDate}</td>
                         <td>${user.active}</td>
                         <td>${user.deactivatedSince}</td>
-                        <td><a href="${pageContext.request.contextPath}/user/update/${user.id}.html" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span></a></td>
-                        <td><a href="${pageContext.request.contextPath}/user/delete/${user.id}.html" class="btn btn-primary"><span class="glyphicon glyphicon-remove"></span></a></td>
+                        <td><a href="${pageContext.request.contextPath}/user/update/${user.id}.html" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span></a></td>
+                        <td><a href="${pageContext.request.contextPath}/user/delete/${user.id}.html" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span></a></td>
                     </tr>
                 </c:forEach>
             </table>

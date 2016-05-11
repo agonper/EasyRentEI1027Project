@@ -13,7 +13,7 @@
     <form:form method="post" action="${loginUrl}" cssClass="form-horizontal">
         <c:if test="${param.error != null}">
             <p class="alert alert-danger">
-                <span class="glyphicon glyphicon-exclamation-sign"></span> <fmt:message key="login.invalid-credentials" bundle="${lang}"/>
+                <span class="glyphicon glyphicon-exclamation-sign"></span> <fmt:message key="login.${SPRING_SECURITY_LAST_EXCEPTION.message}" bundle="${lang}"/>
             </p>
         </c:if>
 
@@ -40,7 +40,7 @@
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default"><fmt:message key="login.login" bundle="${lang}"/></button>
+                <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-log-in"></span> <fmt:message key="login.login" bundle="${lang}"/></button>
             </div>
         </div>
     </form:form>

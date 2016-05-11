@@ -18,7 +18,7 @@
             <fmt:message key="user.surnames" var="surnames" bundle="${lang}"/>
             <t:input path="surnames" required="true" label="${surnames}"/>
             <fmt:message key="user.email" var="email" bundle="${lang}"/>
-            <t:input path="email" required="true" label="${email}"/>
+            <t:input path="email" type="email" required="true" label="${email}"/>
             <fmt:message key="user.phone-number" var="phoneNumber" bundle="${lang}"/>
             <t:input path="phoneNumber" label="${phoneNumber}"/>
             <fmt:message key="user.address" var="addres" bundle="${lang}"/>
@@ -27,7 +27,7 @@
             <t:input path="country" label="${country}" />
             <fmt:message key="user.post-code" var="postCode" bundle="${lang}"/>
             <t:input path="postCode" label="${postCode}"/>
-            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> <fmt:message key="general.add" bundle="${lang}"/></button>
+            <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-plus"></span> <fmt:message key="general.add" bundle="${lang}"/></button>
         </form:form>
     </jsp:body>
 </t:paginabasica>

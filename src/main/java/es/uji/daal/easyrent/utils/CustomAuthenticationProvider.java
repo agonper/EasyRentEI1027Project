@@ -26,14 +26,22 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String password = (String) authentication.getCredentials();
 
         if (!userRepository.existsByUsername(username)) {
-            throw new BadCredentialsException("Wrong username");
+            throw new BadCredentialsException("wrong-username");
         }
 
         if (!userRepository.authenticate(username, password)) {
-            throw new BadCredentialsException("Wrong password");
+            throw new BadCredentialsException("wrong-password");
         }
 
         User user = userRepository.findByUsername(username);
+
+        if (!user.isActive() && user.getDeactivatedSince() == null) {
+            throw new BadCredentialsException("unconfirmed-account");
+        }
+
+        if (!user.isActive() && user.getDeactivatedSince() != null) {
+            throw new BadCredentialsException("banned-account");
+        }
 
         ArrayList<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new GrantedAuthorityImpl(user.getRole().toString()));

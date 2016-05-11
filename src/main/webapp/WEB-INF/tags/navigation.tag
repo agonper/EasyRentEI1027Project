@@ -19,16 +19,32 @@
             <c:when test="${user == null || user.id == null}">
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="${pageContext.request.contextPath}/login.html"><fmt:message key="navigation.login" bundle="${lang}"/></a></li>
-                        <li id="signup-nav-btn" class="bg-cloud text-white"><a class="text-white" href="${pageContext.request.contextPath}/signup.html"><fmt:message key="navigation.signup" bundle="${lang}"/></a></li>
+                        <li>
+                            <a href="${pageContext.request.contextPath}/login.html">
+                                <span class="glyphicon glyphicon-log-in"></span> <fmt:message key="navigation.login" bundle="${lang}"/>
+                            </a>
+                        </li>
+                        <li id="signup-nav-btn" class="bg-cloud text-white">
+                            <a class="text-white" href="${pageContext.request.contextPath}/signup.html">
+                                <fmt:message key="navigation.signup" bundle="${lang}"/>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </c:when>
             <c:otherwise>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#"><fmt:message key="navigation.logged-in" bundle="${lang}"/> ${user.username}</a></li>
-                        <li id="logout-nav-btn" class="bg-cloud text-white"><a href="<c:url value="/logout.html" />"><fmt:message key="navigation.logout" bundle="${lang}"/></a></li>
+                        <li>
+                            <a href="#">
+                                <span class="glyphicon glyphicon-user"></span> ${user.username.toUpperCase()}
+                            </a>
+                        </li>
+                        <li id="logout-nav-btn" class="bg-cloud text-white">
+                            <a href="<c:url value="/logout.html" />">
+                                <span class="glyphicon glyphicon-log-out"></span> <fmt:message key="navigation.logout" bundle="${lang}"/>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </c:otherwise>

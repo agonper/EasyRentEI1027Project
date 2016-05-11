@@ -50,7 +50,7 @@
 </div>
 <footer class="container-fluid container-padded bg-cloud">
     <hr>
-    <p class="text-primary text-center">
+    <p class="text-white text-center">
         &copy;<er:year-tag/> - <fmt:message key="easyrent.project" bundle="${lang}"/>
     </p>
 </footer>
