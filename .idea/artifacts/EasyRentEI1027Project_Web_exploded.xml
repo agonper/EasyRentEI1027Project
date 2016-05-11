@@ -39,10 +39,12 @@
           <element id="file-copy" path="$PROJECT_DIR$/WebContent/WEB-INF/lib/standard.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/WebContent/WEB-INF/lib/icu4j-3.4.4.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/WebContent/WEB-INF/lib/jasypt-1.9.0.jar" />
+          <element id="library" level="project" name="libs" />
+          <element id="library" level="project" name="JPA 2.0-JPA 2.0" />
         </element>
         <element id="file-copy" path="$PROJECT_DIR$/WebContent/web.xml" />
       </element>
-      <element id="dir-copy" path="$PROJECT_DIR$/WebContent" />
+      <element id="javaee-facet-resources" facet="EasyRentEI1027Project/web/Web" />
     </root>
   </artifact>
 </component>
