@@ -20,7 +20,7 @@
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="${pageContext.request.contextPath}/login.html"><fmt:message key="navigation.login" bundle="${lang}"/></a></li>
-                        <li id="signup-nav-btn" class="bg-cloud text-white"><a class="text-white" href="#"><fmt:message key="navigation.signup" bundle="${lang}"/></a></li>
+                        <li id="signup-nav-btn" class="bg-cloud text-white"><a class="text-white" href="${pageContext.request.contextPath}/signup.html"><fmt:message key="navigation.signup" bundle="${lang}"/></a></li>
                     </ul>
                 </div>
             </c:when>

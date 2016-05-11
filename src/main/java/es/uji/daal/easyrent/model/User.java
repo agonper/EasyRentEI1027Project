@@ -15,7 +15,7 @@ public class User extends DomainModel {
     @Column(unique = true, nullable = false)
     private String username;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String Dni;
 
     @Column(nullable = false)
