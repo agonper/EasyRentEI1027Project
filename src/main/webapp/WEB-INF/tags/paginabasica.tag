@@ -4,7 +4,10 @@
         pageEncoding="UTF-8"%>
 <%@ attribute name="title" required="false"%>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="er" uri="/WEB-INF/easy-rent.tld" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,10 +31,19 @@
             rel="stylesheet">
 </head>
 <body>
+<c:set var="locale" value="en"/>
+<sec:authorize access="isAuthenticated()">
+    <sec:authentication var="user" property="principal" />
+    <%-- TODO Set user prefered languaje --%>
+    <c:set var="locale" value="en"/>
+</sec:authorize>
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="locale" var="lang" scope="application"/>
+
 <t:navigation/>
 <header class="jumbotron text-center">
     <h1>EasyRent</h1>
-    <p>Alquiler de viviendas por días</p>
+    <p><fmt:message key="easyrent.slogan" bundle="${lang}" /></p>
 </header>
 <div class="container container-padded">
     <jsp:doBody />
@@ -39,12 +51,7 @@
 <footer class="container-fluid container-padded bg-cloud">
     <hr>
     <p class="text-primary text-center">
-        <%
-            SimpleDateFormat sdf = new SimpleDateFormat("YYYY");
-            Date date = new Date();
-            String year = sdf.format(date);
-        %>
-        &copy;<%= year%> - Proyecto EasyRent
+        &copy;<er:year-tag/> - <fmt:message key="easyrent.project" bundle="${lang}"/>
     </p>
 </footer>
 </body>

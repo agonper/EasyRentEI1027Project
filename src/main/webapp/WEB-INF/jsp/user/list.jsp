@@ -1,32 +1,34 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<t:paginabasica title="Listado de usuarios">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:message key="list-user.title" var="title" bundle="${lang}"/>
+<t:paginabasica title="${title}">
     <jsp:body>
-        <span class="h1">Listado de usuarios</span>
+        <span class="h1">${title}</span>
         <a class="btn btn-primary" href="${pageContext.request.contextPath}/user/add.html">
-            <span class="glyphicon glyphicon-plus"></span> Add user
+            <span class="glyphicon glyphicon-plus"></span> <fmt:message key="add-user.title" bundle="${lang}"/>
         </a>
         <div class="table-responsive">
             <table class="table">
                 <tr>
                     <th>ID</th>
-                    <th>Username</th>
-                    <th>DNI</th>
-                    <th>Role</th>
-                    <th>Password</th>
-                    <th>Name</th>
-                    <th>Surnames</th>
-                    <th>Email</th>
-                    <th>Phone number</th>
-                    <th>Postal address</th>
-                    <th>Country</th>
-                    <th>Post code</th>
-                    <th>Sign up date</th>
-                    <th>Active</th>
-                    <th>Deactivated since</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
+                    <th><fmt:message key="user.username" bundle="${lang}"/></th>
+                    <th><fmt:message key="user.dni" bundle="${lang}"/></th>
+                    <th><fmt:message key="user.role" bundle="${lang}"/></th>
+                    <th><fmt:message key="user.name" bundle="${lang}"/></th>
+                    <th><fmt:message key="user.password" bundle="${lang}"/></th>
+                    <th><fmt:message key="user.surnames" bundle="${lang}"/></th>
+                    <th><fmt:message key="user.email" bundle="${lang}"/></th>
+                    <th><fmt:message key="user.phone-number" bundle="${lang}"/></th>
+                    <th><fmt:message key="user.address" bundle="${lang}"/></th>
+                    <th><fmt:message key="user.country" bundle="${lang}"/></th>
+                    <th><fmt:message key="user.post-code" bundle="${lang}"/></th>
+                    <th><fmt:message key="user.signup-date" bundle="${lang}"/></th>
+                    <th><fmt:message key="user.active" bundle="${lang}"/></th>
+                    <th><fmt:message key="user.deactivated-since" bundle="${lang}"/></th>
+                    <th><fmt:message key="general.edit" bundle="${lang}"/></th>
+                    <th><fmt:message key="general.delete" bundle="${lang}"/></th>
                 </tr>
                 <c:forEach var="user" items="${users}">
                     <tr>
