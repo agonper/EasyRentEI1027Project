@@ -263,4 +263,6 @@ public class User extends DomainModel {
         this.deactivatedSince = new Date(new java.util.Date().getTime());
         return this;
     }
+
+
 }
