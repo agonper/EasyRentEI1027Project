@@ -9,6 +9,11 @@
         <a href="${pageContext.request.contextPath}/user/update/${user.id}.html" class="btn btn-warning">
             <span class="glyphicon glyphicon-edit">Edit</span>
         </a>
+        <c:if test="${user.role == UserRole.ADMINISTRATOR}">
+            <a href="${pageContext.request.contextPath}/user/profile/${user.id}.html" class="btn bg-warning">
+                <span class="glyphicon glyphicon-ban-circle">Change state</span>
+            </a>
+        </c:if>
         <hr>
         <div class="row">
             <div class="col-md-4">
