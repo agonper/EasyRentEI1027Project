@@ -6,6 +6,6 @@
     </h4>
     <p class="list-group-item-text">
         <jsp:doBody var="body"/>
-        ${(body.equals("") or body.equals("0")) ? "---" : body}
+        ${(body.equals("") or body.equals("0") or body.equals("")) ? "---" : body}
     </p>
 </li>
