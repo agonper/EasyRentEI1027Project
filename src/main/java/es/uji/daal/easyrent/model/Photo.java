@@ -72,6 +72,9 @@ public class Photo extends DomainModel {
     }
 
     public void setProperty(Property property) {
+        if (user != null) {
+            throw new IllegalStateException("A photo can only belong to a property or a user at once");
+        }
         this.property = property;
     }
 
@@ -80,6 +83,9 @@ public class Photo extends DomainModel {
     }
 
     public void setUser(User user) {
+        if (property != null) {
+            throw new IllegalStateException("A photo can only belong to a property or a user at once");
+        }
         this.user = user;
     }
 }
