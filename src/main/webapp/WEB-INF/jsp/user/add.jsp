@@ -28,7 +28,11 @@
             <t:input path="country" label="${country}" />
             <fmt:message key="user.post-code" var="postCode" bundle="${lang}"/>
             <t:input path="postCode" label="${postCode}"/>
-            <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-plus"></span> <fmt:message key="general.add" bundle="${lang}"/></button>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-plus"></span> <fmt:message key="general.add" bundle="${lang}"/></button>
+                </div>
+            </div>
         </form:form>
     </jsp:body>
 </t:paginabasica>

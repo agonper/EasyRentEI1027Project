@@ -19,7 +19,11 @@
             <t:input path="countryPrefix" label="${countryPrefix}"/>
             <fmt:message key="user.phone-number" var="phoneNumber" bundle="${lang}"/>
             <t:input path="phoneNumber" label="${phoneNumber}"/>
-            <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-save"></span> <fmt:message key="general.save" bundle="${lang}"/></button>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-save"></span> <fmt:message key="general.save" bundle="${lang}"/></button>
+                </div>
+            </div>
         </form:form>
     </jsp:body>
 </t:paginabasica>

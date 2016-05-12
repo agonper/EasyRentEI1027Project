@@ -13,7 +13,11 @@
             <t:input path="username" label="${username}"/>
             <fmt:message key="user.email" var="email" bundle="${lang}"/>
             <t:input path="email" type="email" label="${email}"/>
-            <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-save"></span> <fmt:message key="general.save" bundle="${lang}"/></button>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-save"></span> <fmt:message key="general.save" bundle="${lang}"/></button>
+                </div>
+            </div>
         </form:form>
     </jsp:body>
 </t:paginabasica>

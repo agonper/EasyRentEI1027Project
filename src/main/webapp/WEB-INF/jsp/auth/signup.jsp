@@ -18,7 +18,11 @@
             <t:input path="email" type="email" label="${email}"/>
             <fmt:message key="signup.repeat-email" var="repeatEmail" bundle="${lang}"/>
             <t:input path="repeatEmail" type="email" label="${repeatEmail}"/>
-            <button type="submit" class="btn btn-warning"><fmt:message key="signup.title" bundle="${lang}"/></button>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-warning"><fmt:message key="signup.title" bundle="${lang}"/></button>
+                </div>
+            </div>
         </form:form>
     </jsp:body>
 </t:paginabasica>
