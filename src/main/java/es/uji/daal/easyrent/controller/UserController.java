@@ -5,6 +5,7 @@ import es.uji.daal.easyrent.model.UserRole;
 import es.uji.daal.easyrent.repository.UserRepository;
 import es.uji.daal.easyrent.utils.PasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -42,6 +43,21 @@ public class UserController {
         User user = repository.findOne(UUID.fromString(id));
         model.addAttribute("user", user);
         return "user/profile";
+    }
+
+    @RequestMapping("/profile/{id}/changeState")
+    public String changeState(@PathVariable String id) {
+        User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (loggedUser.getRole() == UserRole.ADMINISTRATOR) {
+            User user = repository.findOne(UUID.fromString(id));
+            if (!user.getId().equals(loggedUser.getId())) {
+                if (user.isActive())
+                    user.setActive(false);
+                else
+                    user.setActive(true);
+            }
+        }
+        return "/user/profile";
     }
 
     @RequestMapping("/add")

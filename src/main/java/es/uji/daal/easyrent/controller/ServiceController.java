@@ -5,7 +5,6 @@ import es.uji.daal.easyrent.model.User;
 import es.uji.daal.easyrent.repository.ServiceRepository;
 import es.uji.daal.easyrent.validators.ServiceValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
