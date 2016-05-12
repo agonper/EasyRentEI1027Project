@@ -12,10 +12,10 @@ import java.util.UUID;
 @Table(name = "photos")
 public class Photo extends DomainModel {
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Property property;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private User user;
 
     @Column(nullable = false)
@@ -33,15 +33,8 @@ public class Photo extends DomainModel {
     protected Photo() {
     }
 
-    public Photo(String filename, Property property) {
+    public Photo(String filename) {
         this.filename = filename;
-        this.property = property;
-        uploadDate = new Date(new java.util.Date().getTime());
-    }
-
-    public Photo(String filename, User user) {
-        this.filename = filename;
-        this.user = user;
         uploadDate = new Date(new java.util.Date().getTime());
     }
 
@@ -87,5 +80,11 @@ public class Photo extends DomainModel {
             throw new IllegalStateException("A photo can only belong to a property or a user at once");
         }
         this.user = user;
+    }
+
+    @PreRemove
+    void preRemove() {
+        setUser(null);
+        setProperty(null);
     }
 }

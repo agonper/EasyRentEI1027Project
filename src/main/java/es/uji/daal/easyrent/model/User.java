@@ -264,5 +264,13 @@ public class User extends DomainModel {
         return this;
     }
 
-
+    @PreRemove
+    void preRemove() {
+        if (!getProperties().isEmpty()) {
+            throw new IllegalStateException("An owner needs to be without properties before removing it!");
+        }
+        for (BookingProposal proposal : bookingProposals) {
+            proposal.setTenant(null);
+        }
+    }
 }

@@ -48,7 +48,7 @@ public class Property extends DomainModel {
     @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<AvailabilityPeriod> availabilityPeriods;
 
-    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "property")
     private Set<BookingProposal> bookingProposals;
 
     @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -288,4 +288,10 @@ public class Property extends DomainModel {
         }
     }
 
+    @PreRemove
+    void preRemove() {
+        for (BookingProposal proposal : bookingProposals) {
+            proposal.setProperty(null);
+        }
+    }
 }

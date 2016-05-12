@@ -18,6 +18,7 @@ import java.nio.file.Files;
 
 @Controller
 @RequestMapping("/uploads")
+// FIXME Una vez hablemos sobre esto, renombrar a singular
 public class PhotosController {
 
     @Autowired
