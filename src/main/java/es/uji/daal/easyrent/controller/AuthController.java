@@ -44,6 +44,9 @@ public class AuthController {
     public String processSignup(@ModelAttribute("form") SignupForm form,
                                 BindingResult bindingResult) {
         new SignupValidator().validate(form, bindingResult);
+        if (repository.existsByUsername(form.getUsername())) {
+            bindingResult.rejectValue("username", "exists", "That username already exists");
+        }
         if (bindingResult.hasErrors()) {
             return "auth/signup";
         }

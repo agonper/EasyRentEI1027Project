@@ -24,7 +24,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
     @Override
     public boolean authenticate(String username, String password) {
         try {
-            User user = (User) em.createQuery("select u from User u where u.username = :username", User.class)
+            User user = (User) em.createQuery("select u from User u where lower(u.username) = lower(:username)", User.class)
                     .setParameter("username", username).getSingleResult();
             return passwordEncryptor.validatePassword(password, user.getPassword());
         } catch (NoResultException e) {

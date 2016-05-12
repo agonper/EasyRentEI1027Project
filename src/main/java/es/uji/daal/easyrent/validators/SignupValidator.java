@@ -11,7 +11,7 @@ import org.springframework.validation.Validator;
 public class SignupValidator implements Validator {
     @Override
     public boolean supports(Class<?> cls) {
-        return User.class.isAssignableFrom(cls);
+        return SignupForm.class.isAssignableFrom(cls);
     }
     @Override
     public void validate(Object obj, Errors errors) {

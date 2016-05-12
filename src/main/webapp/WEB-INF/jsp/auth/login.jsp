@@ -41,7 +41,7 @@
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-log-in"></span> <fmt:message key="login.login" bundle="${lang}"/></button>
+                <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-log-in"></span> <fmt:message key="login.title" bundle="${lang}"/></button>
             </div>
         </div>
     </form:form>

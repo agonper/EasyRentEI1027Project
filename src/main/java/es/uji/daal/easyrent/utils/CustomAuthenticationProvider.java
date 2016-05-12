@@ -33,7 +33,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             throw new BadCredentialsException("wrong-password");
         }
 
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByUsernameIgnoreCase(username);
 
         if (!user.isActive() && user.getDeactivatedSince() == null) {
             throw new BadCredentialsException("unconfirmed-account");

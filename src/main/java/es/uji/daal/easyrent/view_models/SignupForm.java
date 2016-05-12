@@ -56,7 +56,7 @@ public class SignupForm implements ViewModel<User>{
     }
 
     @Override
-    public User update(User model) throws IllegalArgumentException {
+    public User update(User model) {
         model.setUsername(getUsername());
         model.setPassword(getPassword());
         model.setEmail(getEmail());

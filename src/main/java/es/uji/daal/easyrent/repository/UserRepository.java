@@ -13,8 +13,8 @@ import java.util.UUID;
  */
 public interface UserRepository extends CrudRepository<User, UUID>, UserRepositoryCustom {
 
-    User findByUsername(String username);
+    User findByUsernameIgnoreCase(String username);
 
-    @Query("select count(e)>0 from User e where e.username = :username")
+    @Query("select count(e)>0 from User e where lower(e.username) = lower(:username)")
     boolean existsByUsername(@Param("username") String username);
 }

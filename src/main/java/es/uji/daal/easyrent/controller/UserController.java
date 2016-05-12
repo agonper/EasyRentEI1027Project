@@ -45,6 +45,7 @@ public class UserController {
         return "user/profile";
     }
 
+    // FIXME Esto a la ruta de administracion
     @RequestMapping("/profile/{id}/changeState")
     public String changeState(@PathVariable String id) {
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -56,6 +57,7 @@ public class UserController {
                 else
                     user.setActive(true);
             }
+            repository.save(user);
         }
         return "/user/profile";
     }
