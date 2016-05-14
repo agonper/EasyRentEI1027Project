@@ -32,7 +32,7 @@
                                         <form:form cssClass="form-horizontal" method="post" action="/searchUsers" modelAttribute="user">
                                             <div class="form-group">
                                                 <input type="text">
-                                                
+
                                                 <button type="submit" class="btn btn-warning">
                                                     <fmt:message key="general.search" bundle="${lang}"/>
                                                 </button>

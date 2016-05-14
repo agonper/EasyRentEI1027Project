@@ -4,39 +4,21 @@ package es.uji.daal.easyrent.model;
  * Created by Alberto on 17/03/2016.
  */
 public enum PropertyType {
-    FLAT("Flat", "flat", "FLAT"),
-    STUDY("Study", "study", "STUDY"),
-    PENTHOUSE("Penthouse", "penthouse", "PENTHOUSE"),
-    HOUSE("House", "house", "HOUSE"),
-    DETACHED_HOUSE("Detached house", "detached house", "DETACHED HOUSE"),
-    COTTAGE("Cottage", "cottage", "COTTAGE"),
-    CHALET("Chalet", "chalet", "CHALET"),
-    APARTMENT("Apartment", "apartment", "APARTMENT");
+    FLAT,
+    STUDY,
+    PENTHOUSE,
+    HOUSE,
+    DETACHED_HOUSE,
+    COTTAGE,
+    CHALET,
+    APARTMENT;
 
-    private final String name;
-    private final String lowerName;
-    private final String upperName;
-
-    private PropertyType(String name, String lowerName, String upperName) {
-        this.name = name;
-        this.lowerName = lowerName;
-        this.upperName = upperName;
+    public String getLabel() {
+        return this.toString().substring(0,1) + this.toString().substring(1).toLowerCase();
     }
 
-    public String toString() {
-        return this.lowerName;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public String getLowerName() {
-        return this.lowerName;
-    }
-
-    public String getUpperName() {
-        return this.upperName;
+    public String getValue() {
+        return this.toString();
     }
 
     public static PropertyType obtainTypeFor(String serializedType) throws TypeNotFoundException {

@@ -2,6 +2,7 @@ package es.uji.daal.easyrent.controller;
 
 import es.uji.daal.easyrent.model.Property;
 
+import es.uji.daal.easyrent.model.PropertyType;
 import es.uji.daal.easyrent.model.User;
 import es.uji.daal.easyrent.repository.PropertyRepository;
 import es.uji.daal.easyrent.validators.PropertyValidator;
@@ -50,6 +51,7 @@ public class PropertyController {
     public String add(Model model) {
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (loggedUser != null) {
+            model.addAttribute("propertyTypes", PropertyType.values());
             model.addAttribute("property", new Property(loggedUser));
             return "property/add";
         }
@@ -68,6 +70,7 @@ public class PropertyController {
             return "property/add";
 
         property.setCreationDate(new Date(System.currentTimeMillis()));
+        property.setOwner(loggedUser);
         repository.save(property);
         return "redirect:list.html";
     }
