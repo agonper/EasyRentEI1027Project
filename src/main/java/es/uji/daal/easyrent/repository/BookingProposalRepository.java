@@ -11,4 +11,5 @@ import java.util.UUID;
  */
 public interface BookingProposalRepository extends CrudRepository<BookingProposal, UUID> {
     List<BookingProposal> findByTenant_Id(UUID tenantID);
+    List<BookingProposal> findByProperty_Owner_IdOrderByDateOfCreationDesc(UUID owner);
 }

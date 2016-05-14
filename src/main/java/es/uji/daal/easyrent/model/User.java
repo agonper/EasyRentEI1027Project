@@ -49,6 +49,7 @@ public class User extends DomainModel {
     private Date deactivatedSince;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    @OrderBy("creationDate desc ")
     private Set<Property> properties;
 
     @OneToMany(mappedBy = "tenant", cascade = CascadeType.ALL)

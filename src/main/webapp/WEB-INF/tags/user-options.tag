@@ -10,13 +10,13 @@
 </sec:authorize>
 
 <c:if test="${user.equals(loggedUser)}">
-    <ul class="nav nav-tabs nav-justified">
-        <li role="presentation" class="${location.equals("profile") ? 'active' : ''}"><a href="#"><fmt:message key="profile.title" bundle="${lang}"/></a></li>
+    <ul class="nav nav-tabs nav-justified" id="user-options">
+        <li role="presentation" class="${location.equals("profile") ? 'active' : ''}"><a href="${pageContext.request.contextPath}/user/profile/${user.id}.html#user-options"><fmt:message key="profile.title" bundle="${lang}"/></a></li>
         <c:if test="${user.role == 'TENANT'}">
-            <li role="presentation" class="${location.equals("owner") ? 'active' : ''}"><a href="#"><fmt:message key="owner.title" bundle="${lang}"/></a></li>
+            <li role="presentation" class="${location.equals("owner") ? 'active' : ''}"><a href="${pageContext.request.contextPath}/user/owner/${user.id}.html#user-options"><fmt:message key="owner.title" bundle="${lang}"/></a></li>
         </c:if>
-        <li role="presentation" class="${location.equals("tenant") ? 'active' : ''}"><a href="#"><fmt:message key="tenant.title" bundle="${lang}"/></a></li>
-        <li role="presentation" class="${location.equals("notifications") ? 'active' : ''}"><a href="#"><fmt:message key="notifications.title" bundle="${lang}"/> <span class="badge">0</span></a></li>
+        <li role="presentation" class="${location.equals("tenant") ? 'active' : ''}"><a href="${pageContext.request.contextPath}/user/tenant/${user.id}.html#user-options"><fmt:message key="tenant.title" bundle="${lang}"/></a></li>
+        <li role="presentation" class="${location.equals("notifications") ? 'active' : ''}"><a href="${pageContext.request.contextPath}/user/notifications/${user.id}.html#user-options"><fmt:message key="notifications.title" bundle="${lang}"/> <span class="badge">0</span></a></li>
     </ul>
     <br>
 </c:if>

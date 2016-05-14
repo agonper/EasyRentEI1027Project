@@ -15,27 +15,27 @@
         <hr>
         <t:user-options user="${user}" location="profile"/>
         <div class="row">
-            <div class="col-md-4">
-                <div class="panel panel-warning" id="menu">
+            <div class="col-md-3">
+                <div class="panel panel-warning" id="sub-menu">
                     <div class="panel-heading">
                         <fmt:message key="profile.sections" bundle="${lang}"/>
                     </div>
                     <div class="list-group">
-                        <a class="list-group-item ${(param.size() == 0 or param.accountInfo != null) ? 'active' : ''}" href="?accountInfo#menu">
+                        <a class="list-group-item ${(param.size() == 0 or param.accountInfo != null) ? 'active' : ''}" href="?accountInfo#sub-menu">
                             <fmt:message key="profile.account-info" bundle="${lang}"/>
                         </a>
                         <c:if test="${user.equals(loggedUser)}">
-                            <a class="list-group-item ${(param.personalData != null) ? 'active' : ''} ${user.equals(loggedUser) ? '' : 'disabled'}" href="?personalData#menu">
+                            <a class="list-group-item ${(param.personalData != null) ? 'active' : ''} ${user.equals(loggedUser) ? '' : 'disabled'}" href="?personalData#sub-menu">
                                 <fmt:message key="profile.personal-data" bundle="${lang}"/>
                             </a>
-                            <a class="list-group-item ${(param.addressInfo != null) ? 'active' : ''} ${user.equals(loggedUser) ? '' : 'disabled'}" href="?addressInfo#menu">
+                            <a class="list-group-item ${(param.addressInfo != null) ? 'active' : ''} ${user.equals(loggedUser) ? '' : 'disabled'}" href="?addressInfo#sub-menu">
                                 <fmt:message key="profile.address-info" bundle="${lang}"/>
                             </a>
                         </c:if>
                     </div>
                 </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <div class="panel panel-warning">
                     <c:if test="${param.size() == 0 or param.accountInfo != null}">
                         <div class="panel-heading">
@@ -123,6 +123,5 @@
                 </div>
             </div>
         </div>
-
     </jsp:body>
 </t:paginabasica>

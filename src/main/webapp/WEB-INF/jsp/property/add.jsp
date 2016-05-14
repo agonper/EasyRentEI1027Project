@@ -33,7 +33,7 @@
             <form:label path="type" cssClass="control-label col-sm-2">Type of property</form:label>
             <div class="col-sm-10">
                 <form:select path="type" cssClass="form-control">
-                    <form:options items="${propertyTypes}" itemValue="lowerName" itemLabel="name"/>
+                    <form:options items="${propertyTypes}" itemValue="value" itemLabel="label"/>
                 </form:select>
                 <form:errors path="type" cssClass=""/>
             </div>

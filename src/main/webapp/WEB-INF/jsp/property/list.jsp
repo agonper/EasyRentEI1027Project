@@ -29,7 +29,7 @@
                 <coreActions:forEach var="property" items="${properties}">
                     <tr>
                         <td>${property.id}</td>
-                        <td>${property.ownerID}</td>
+                        <td>${property.owner.id}</td>
                         <td>${property.title}</td>
                         <td>${property.location}</td>
                         <td>${property.rooms}</td>
@@ -39,7 +39,7 @@
                         <td>${property.floorSpace}</td>
                         <td>${property.pricePerDay}</td>
                         <td>${property.creationDate}</td>
-                        <td>${property.type.toString()}</td>
+                        <td>${property.type.label}</td>
                         <td>${property.description}</td>
                         <td><a href="${pageContext.request.contextPath}/property/update/${property.id}.html" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span></a></td>
                         <td><a href="${pageContext.request.contextPath}/property/delete/${property.id}.html" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span></a></td>

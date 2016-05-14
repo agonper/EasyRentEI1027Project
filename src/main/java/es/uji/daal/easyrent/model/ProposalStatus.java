@@ -8,8 +8,12 @@ public enum ProposalStatus {
     ACCEPTED,
     REJECTED;
 
-    public String toString() {
-        return this.name().toLowerCase();
+    public String getValue() {
+        return this.toString();
+    }
+
+    public String getLabel() {
+        return this.toString().substring(0, 1) + this.toString().substring(1).toLowerCase();
     }
 
     public static ProposalStatus obtainStatusFor(String serializedStatus) throws StatusNotFoundException {
