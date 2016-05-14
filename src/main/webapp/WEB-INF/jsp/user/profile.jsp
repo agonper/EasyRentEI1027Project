@@ -12,18 +12,13 @@
 <t:paginabasica title="${title}: ${user.username}">
     <jsp:body>
         <span class="h1">${title}: ${user.username}</span>
-        <%-- FIXME Y esto?--%>
-        <c:if test="${loggedUser.role == UserRole.ADMINISTRATOR}">
-            <a href="${pageContext.request.contextPath}/user/profile/${user.id}.html" class="btn bg-warning">
-                <span class="glyphicon glyphicon-ban-circle">Change state</span>
-            </a>
-        </c:if>
         <hr>
+        <t:user-options user="${user}" location="profile"/>
         <div class="row">
             <div class="col-md-4">
                 <div class="panel panel-warning" id="menu">
                     <div class="panel-heading">
-                        Profile options
+                        <fmt:message key="profile.sections" bundle="${lang}"/>
                     </div>
                     <div class="list-group">
                         <a class="list-group-item ${(param.size() == 0 or param.accountInfo != null) ? 'active' : ''}" href="?accountInfo#menu">
