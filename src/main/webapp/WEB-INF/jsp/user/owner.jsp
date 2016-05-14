@@ -50,7 +50,7 @@
                                 <tr>
                                     <td><a href="${pageContext.request.contextPath}/property/show/${property.id}.html">${loop.index+1}</a></td>
                                     <td>${property.title}</td>
-                                    <td>${property.pricePerDay} €</td>
+                                    <td><fmt:formatNumber currencySymbol="€" type="currency" value="${property.pricePerDay}" pattern="####.00 ¤"/></td>
                                     <td>${property.type.label}</td>
                                     <td>${property.creationDate}</td>
                                     <td><a class="btn btn-warning" href="${pageContext.request.contextPath}/property/edit/${property.id}.html"><span class="glyphicon glyphicon-edit"></span></a></td>
@@ -85,7 +85,7 @@
                                     <td><a href="${pageContext.request.contextPath}/property/show/${bookingProposal.property.id}.html"><fmt:message key="general.link" bundle="${lang}"/> <span class="glyphicon glyphicon-new-window"></span> </a></td>
                                     <td><a href="${pageContext.request.contextPath}/user/profile/${bookingProposal.tenant.id}.html"><fmt:message key="general.link" bundle="${lang}"/> <span class="glyphicon glyphicon-new-window"></a></td>
                                     <td>${bookingProposal.startDate}</td>
-                                    <td>${bookingProposal.endDate} €</td>
+                                    <td>${bookingProposal.endDate}</td>
                                     <td>${bookingProposal.status.label}</td>
                                     <td>${bookingProposal.dateOfCreation}</td>
                                     <td>${bookingProposal.dateOfUpdate}</td>
