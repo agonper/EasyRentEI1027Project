@@ -29,9 +29,9 @@
                     </tr>
                 </c:forEach>
             </table>
-            Page: ${currentPage}
-            Count: ${totalPages}
         </div>
+        <tag:paginator currentPage="${currentPage}" totalPages="${totalPages}" baseUri="search"/>
+
     </jsp:body>
 </tag:paginabasica>
 

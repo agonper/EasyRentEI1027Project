@@ -45,7 +45,7 @@
     <form class="form-inline" method="get" action="${pageContext.request.contextPath}/search.html">
         <div class="input-group">
             <fmt:message key="home.search" bundle="${lang}" var="search"/>
-            <input class="form-control" name="q" placeholder="${search}" size="50">
+            <input class="form-control" name="q" placeholder="${search}" value="${param.q != null ? param.q : ''}" size="50">
             <div class="input-group-btn">
                 <button type="submit" class="btn btn-default"><fmt:message key="home.search-btn" bundle="${lang}"/> </button>
             </div>

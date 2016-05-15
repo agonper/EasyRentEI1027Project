@@ -5,16 +5,24 @@ import java.sql.Date;
 import java.util.Collection;
 import java.util.Set;
 
+import org.apache.lucene.analysis.es.SpanishAnalyzer;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+
 @Entity
+@Indexed
 @Table(name = "properties")
 public class Property extends DomainModel {
 
     @ManyToOne(optional = false)
     private User owner;
 
+    @Field(analyzer = @Analyzer(impl = SpanishAnalyzer.class))
     @Column(nullable = false)
     private String title;
 
+    @Field(analyzer = @Analyzer(impl = SpanishAnalyzer.class))
     @Column(nullable = false)
     private String location;
 
@@ -36,10 +44,12 @@ public class Property extends DomainModel {
     @Column(nullable = false)
     private float pricePerDay;
 
+    @Field
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private PropertyType type;
 
+    @Field(analyzer = @Analyzer(impl = SpanishAnalyzer.class))
     private String description;
 
     @Column(nullable = false)

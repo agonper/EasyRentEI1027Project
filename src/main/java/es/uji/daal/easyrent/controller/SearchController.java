@@ -27,9 +27,6 @@ public class SearchController {
     @RequestMapping("/search")
     public String search(Model model, Pageable pageable,
                          @RequestParam("q") String query) {
-        if (pageable.getPageNumber() == 0) {
-            pageable = pageable.next();
-        }
         String[] searchParameters = query.split("[\b,;:]");
         List<String> parametersList = Arrays.asList(searchParameters);
         Page<Property> properties = repository.searchBy(query, pageable);
