@@ -14,49 +14,60 @@
     <jsp:body>
         <span class="h1">${title}</span>
         <div class="container">
+            <hr>
+            <t:administration-options location="properties"/>
             <div class="row">
-                <hr>
                 <div class="col-md-12">
-                    <ul class="nav nav-tabs">
-                        <li><a data-toggle="tab" href="${pageContext.request.contextPath}/administration/users">Users management</a></li>
-                        <li class="active"><a data-toggle="tab" href="${pageContext.request.contextPath}/administration/properties">Properties management</a></li>
-                        <li><a data-toggle="tab" href="${pageContext.request.contextPath}/administration/booking_proposals">Booking proposals management</a></li>
-                        <li><a data-toggle="tab" href="${pageContext.request.contextPath}/administration/invoices">Invoices control</a></li>
-                    </ul>
+                    <div class="panel panel-warning top-padding">
+                        <div class="panel-heading">Search for properties</div>
+                        <div class="panel-body">
+                            <form:form cssClass="form-horizontal" method="post" action="/searchProperties" modelAttribute="property">
+                                <input type="text">
+                                <select/>
+                                <input type="submit" class="btn btn-warning"/>
+                            </form:form>
+                        </div>
 
-                    <div class="tab-content">
-                        <div id="users" class="tab-pane fade in active">
-                            <div class="panel panel-warning top-padding">
-                                <div class="panel-heading">Search for properties</div>
-                                <div class="panel-body">
-                                    <form:form cssClass="form-horizontal" method="post" action="/searchUsers" modelAttribute="user">
-                                        <div class="form-group">
-                                            <input type="text">
-
-                                            <button type="submit" class="btn btn-warning">
-                                                <fmt:message key="general.search" bundle="${lang}"/>
-                                            </button>
-                                        </div>
-                                    </form:form>
-                                </div>
-                                <div class="panel-heading">List of searched properties</div>
-                                <div class="panel-body">
-                                    <div class="table-responsive">
-                                        <table class="table">
-
-                                        </table>
-                                    </div>
-                                </div>
+                        <div class="panel-heading">List of searched properties</div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Owner id</th>
+                                        <th>Title</th>
+                                        <th>Location</th>
+                                        <th>Rooms</th>
+                                        <th>Capacity</th>
+                                        <th>Beds</th>
+                                        <th>Bathrooms</th>
+                                        <th>Floor space</th>
+                                        <th>Price per day</th>
+                                        <th>Creation date</th>
+                                        <th>Type</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <c:forEach var="property" items="${properties}">
+                                        <tr>
+                                            <td>${property.id}</td>
+                                            <td>${property.owner.id}</td>
+                                            <td>${property.title}</td>
+                                            <td>${property.location}</td>
+                                            <td>${property.rooms}</td>
+                                            <td>${property.capacity}</td>
+                                            <td>${property.beds}</td>
+                                            <td>${property.bathrooms}</td>
+                                            <td>${property.floorSpace}</td>
+                                            <td>${property.pricePerDay}</td>
+                                            <td>${property.creationDate}</td>
+                                            <td>${property.type.label}</td>
+                                            <td>${property.description}</td>
+                                            <td><a href="${pageContext.request.contextPath}/property/update/${property.id}.html" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span></a></td>
+                                            <td><a href="${pageContext.request.contextPath}/property/delete/${property.id}.html" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                        </tr>
+                                    </c:forEach>
+                                </table>
                             </div>
-                        </div>
-                        <div id="properties" class="tab-pane fade">
-
-                        </div>
-                        <div id="booking_proposals" class="tab-pane fade">
-
-                        </div>
-                        <div id="invoices" class="tab-pane fade">
-
                         </div>
                     </div>
                 </div>
