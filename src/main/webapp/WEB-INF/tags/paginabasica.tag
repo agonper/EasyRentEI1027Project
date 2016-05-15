@@ -42,6 +42,15 @@
 <header class="jumbotron text-center">
     <h1>EasyRent</h1>
     <p><fmt:message key="easyrent.slogan" bundle="${lang}" /></p>
+    <form class="form-inline" method="get" action="${pageContext.request.contextPath}/search.html">
+        <div class="input-group">
+            <fmt:message key="home.search" bundle="${lang}" var="search"/>
+            <input class="form-control" name="q" placeholder="${search}" size="50">
+            <div class="input-group-btn">
+                <button type="submit" class="btn btn-default"><fmt:message key="home.search-btn" bundle="${lang}"/> </button>
+            </div>
+        </div>
+    </form>
 </header>
 <div class="container container-padded">
     <jsp:doBody />
