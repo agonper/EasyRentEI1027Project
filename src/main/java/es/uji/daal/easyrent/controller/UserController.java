@@ -2,6 +2,7 @@ package es.uji.daal.easyrent.controller;
 
 import es.uji.daal.easyrent.model.User;
 import es.uji.daal.easyrent.repository.BookingProposalRepository;
+import es.uji.daal.easyrent.repository.InvoiceRepository;
 import es.uji.daal.easyrent.repository.UserRepository;
 import es.uji.daal.easyrent.utils.PasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class UserController {
 
     @Autowired
     BookingProposalRepository proposalRepository;
+
+    @Autowired
+    InvoiceRepository invoiceRepository;
 
     @Autowired
     PasswordEncryptor passwordEncryptor;
@@ -67,6 +71,7 @@ public class UserController {
             return "redirect:index.html";
         }
         model.addAttribute("user", user);
+        model.addAttribute("invoices", invoiceRepository.findByProposal_Tenant_IdOrderByExpeditionDateDesc(user.getId()));
         return "user/tenant";
     }
 

@@ -39,7 +39,7 @@
                         <div class="table-responsive">
                             <table class="table table-striped table-hover">
                                 <tr>
-                                    <th><fmt:message key="property.number" bundle="${lang}"/> </th>
+                                    <th><fmt:message key="general.number" bundle="${lang}"/> </th>
                                     <th><fmt:message key="property.title" bundle="${lang}"/> </th>
                                     <th><fmt:message key="property.price-per-day" bundle="${lang}"/></th>
                                     <th><fmt:message key="property.type" bundle="${lang}"/></th>
@@ -51,7 +51,7 @@
                                     <tr>
                                         <td><a href="${pageContext.request.contextPath}/property/show/${property.id}.html">${loop.index+1}</a></td>
                                         <td>${property.title}</td>
-                                        <td><fmt:formatNumber currencySymbol="€" type="currency" value="${property.pricePerDay}" pattern="####.00 ¤"/></td>
+                                        <td><t:show-price amount="${property.pricePerDay}"/></td>
                                         <td>${property.type.label}</td>
                                         <td>${property.creationDate}</td>
                                         <td><a class="btn btn-warning" href="${pageContext.request.contextPath}/property/edit/${property.id}.html"><span class="glyphicon glyphicon-edit"></span></a></td>
@@ -72,7 +72,7 @@
                         <div class="table-responsive">
                             <table class="table table-striped table-hover">
                                 <tr>
-                                    <th><fmt:message key="proposal.number" bundle="${lang}"/> </th>
+                                    <th><fmt:message key="general.number" bundle="${lang}"/> </th>
                                     <th><fmt:message key="proposal.property" bundle="${lang}"/> </th>
                                     <th><fmt:message key="proposal.tenant" bundle="${lang}"/> </th>
                                     <th><fmt:message key="proposal.start-date" bundle="${lang}"/></th>
@@ -80,21 +80,19 @@
                                     <th><fmt:message key="proposal.status" bundle="${lang}"/></th>
                                     <th><fmt:message key="proposal.created-at" bundle="${lang}"/></th>
                                     <th><fmt:message key="proposal.last-updated" bundle="${lang}"/></th>
-                                    <th><fmt:message key="proposal.accept" bundle="${lang}"/></th>
-                                    <th><fmt:message key="proposal.reject" bundle="${lang}"/></th>
+                                    <th><fmt:message key="general.delete" bundle="${lang}"/></th>
                                 </tr>
                                 <c:forEach var="bookingProposal" items="${bookingProposals}" varStatus="loop">
                                     <tr>
                                         <td><a href="${pageContext.request.contextPath}/booking-proposals/show/${bookingProposal.id}.html">${loop.index+1}</a></td>
-                                        <td><a href="${pageContext.request.contextPath}/property/show/${bookingProposal.property.id}.html"><fmt:message key="general.link" bundle="${lang}"/> <span class="glyphicon glyphicon-new-window"></span> </a></td>
-                                        <td><a href="${pageContext.request.contextPath}/user/profile/${bookingProposal.tenant.id}.html"><fmt:message key="general.link" bundle="${lang}"/> <span class="glyphicon glyphicon-new-window"></a></td>
+                                        <td><a href="${pageContext.request.contextPath}/property/show/${bookingProposal.property.id}.html"><fmt:message key="general.link" bundle="${lang}"/> <span class="glyphicon glyphicon-new-window"></span></a></td>
+                                        <td><a href="${pageContext.request.contextPath}/user/profile/${bookingProposal.tenant.id}.html"><fmt:message key="general.link" bundle="${lang}"/> <span class="glyphicon glyphicon-new-window"></span></a></td>
                                         <td>${bookingProposal.startDate}</td>
                                         <td>${bookingProposal.endDate}</td>
                                         <td>${bookingProposal.status.label}</td>
                                         <td>${bookingProposal.dateOfCreation}</td>
                                         <td>${bookingProposal.dateOfUpdate}</td>
-                                        <td><a class="btn btn-warning" href="${pageContext.request.contextPath}/booking-proposal/accept/${bookingProposal.id}.html"><span class="glyphicon glyphicon-check"></span></a></td>
-                                        <td><a class="btn btn-warning" href="${pageContext.request.contextPath}/property/reject/${bookingProposal.id}.html"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                        <td><a class="btn btn-warning" href="${pageContext.request.contextPath}/booking-proposal/delete/${bookingProposal.id}.html"><span class="glyphicon glyphicon-remove"></span></a></td>
                                     </tr>
                                 </c:forEach>
                             </table>

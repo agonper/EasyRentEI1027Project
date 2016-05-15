@@ -1,5 +1,3 @@
-<%@ tag import="java.text.SimpleDateFormat" %>
-<%@ tag import="java.util.Date" %>
 <%@ tag description="EasyRent boilerplate"
         pageEncoding="UTF-8"%>
 <%@ attribute name="title" required="false"%>
