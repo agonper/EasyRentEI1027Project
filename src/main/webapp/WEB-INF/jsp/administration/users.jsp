@@ -3,98 +3,83 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<fmt:message key="owner.title" var="title" bundle="${lang}"/>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<fmt:message key="administration.title" var="title" bundle="${lang}"/>
 
 <sec:authorize access="isAuthenticated()">
     <sec:authentication var="loggedUser" property="principal" />
 </sec:authorize>
 
-<t:paginabasica title="${title}: ${user.username}">
+<t:paginabasica title="${title}">
     <jsp:body>
-        <span class="h1">${title}: ${user.username}</span>
-        <hr>
-        <t:user-options user="${user}" location="owner"/>
-        <div class="row">
-            <div class="col-md-3">
-                <div class="panel panel-warning" id="sub-menu">
-                    <div class="panel-heading">
-                        <fmt:message key="owner.sections" bundle="${lang}"/>
+        <span class="h1">${title}</span>
+        <div class="container">
+            <hr>
+            <t:administration-options location="users"/>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-warning top-padding">
+                        <div class="panel-heading">Search for users</div>
+                        <div class="panel-body">
+                            <form:form cssClass="form-horizontal" method="post" action="/searchUsers" modelAttribute="user">
+                                <div class="form-group">
+                                    <input type="text">
+                                    <button type="submit" class="btn btn-warning">
+                                        <fmt:message key="general.search" bundle="${lang}"/>
+                                    </button>
+                                </div>
+                            </form:form>
+                        </div>
+
+                        <div class="panel-heading">List of searched users</div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th><fmt:message key="user.username" bundle="${lang}"/></th>
+                                        <th><fmt:message key="user.dni" bundle="${lang}"/></th>
+                                        <th><fmt:message key="user.role" bundle="${lang}"/></th>
+                                        <th><fmt:message key="user.password" bundle="${lang}"/></th>
+                                        <th><fmt:message key="user.name" bundle="${lang}"/></th>
+                                        <th><fmt:message key="user.surnames" bundle="${lang}"/></th>
+                                        <th><fmt:message key="user.email" bundle="${lang}"/></th>
+                                        <th><fmt:message key="user.phone-number" bundle="${lang}"/></th>
+                                        <th><fmt:message key="user.address" bundle="${lang}"/></th>
+                                        <th><fmt:message key="user.country" bundle="${lang}"/></th>
+                                        <th><fmt:message key="user.post-code" bundle="${lang}"/></th>
+                                        <th><fmt:message key="user.signup-date" bundle="${lang}"/></th>
+                                        <th><fmt:message key="user.active" bundle="${lang}"/></th>
+                                        <th><fmt:message key="user.deactivated-since" bundle="${lang}"/></th>
+                                        <th><fmt:message key="general.edit" bundle="${lang}"/></th>
+                                        <th><fmt:message key="general.delete" bundle="${lang}"/></th>
+                                    </tr>
+
+                                    <c:forEach var="user" items="${users}">
+                                        <tr>
+                                            <td>${user.id}</td>
+                                            <td>${user.username}</td>
+                                            <td>${user.dni}</td>
+                                            <td>${user.role}</td>
+                                            <td>${user.password}</td>
+                                            <td>${user.name}</td>
+                                            <td>${user.surnames}</td>
+                                            <td>${user.email}</td>
+                                            <td>${user.phoneNumber}</td>
+                                            <td>${user.postalAddress}</td>
+                                            <td>${user.country}</td>
+                                            <td>${user.postCode}</td>
+                                            <td>${user.signUpDate}</td>
+                                            <td>${user.active}</td>
+                                            <td>${user.deactivatedSince}</td>
+                                            <td><a href="${pageContext.request.contextPath}/user/update/${user.id}.html" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span></a></td>
+                                            <td><a href="${pageContext.request.contextPath}/user/delete/${user.id}.html" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                        </tr>
+                                    </c:forEach>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                    <div class="list-group">
-                        <a class="list-group-item ${(param.size() == 0 or param.properties != null) ? 'active' : ''}" href="?properties#sub-menu">
-                            <fmt:message key="owner.properties" bundle="${lang}"/> <span class="badge">${user.properties.size()}</span>
-                        </a>
-                        <a class="list-group-item ${(param.proposals != null) ? 'active' : ''}" href="?proposals#sub-menu">
-                            <fmt:message key="owner.received-proposals" bundle="${lang}"/> <span class="badge">${bookingProposals.size()}</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-9">
-                <div class="panel panel-warning">
-                    <c:if test="${param.size() == 0 or param.properties != null}">
-                        <div class="panel-heading">
-                            <fmt:message key="owner.properties" bundle="${lang}"/>
-                        </div>
-                        <table class="table table-responsive table-striped table-hover">
-                            <tr>
-                                <th><fmt:message key="property.number" bundle="${lang}"/> </th>
-                                <th><fmt:message key="property.title" bundle="${lang}"/> </th>
-                                <th><fmt:message key="property.price-per-day" bundle="${lang}"/></th>
-                                <th><fmt:message key="property.type" bundle="${lang}"/></th>
-                                <th><fmt:message key="property.creation-date" bundle="${lang}"/></th>
-                                <th><fmt:message key="general.edit" bundle="${lang}"/></th>
-                                <th><fmt:message key="general.delete" bundle="${lang}"/></th>
-                            </tr>
-                            <c:forEach var="property" items="${user.properties}" varStatus="loop">
-                                <tr>
-                                    <td><a href="${pageContext.request.contextPath}/property/show/${property.id}.html">${loop.index+1}</a></td>
-                                    <td>${property.title}</td>
-                                    <td>${property.pricePerDay} €</td>
-                                    <td>${property.type.label}</td>
-                                    <td>${property.creationDate}</td>
-                                    <td><a class="btn btn-warning" href="${pageContext.request.contextPath}/property/edit/${property.id}.html"><span class="glyphicon glyphicon-edit"></span></a></td>
-                                    <td><a class="btn btn-warning" href="${pageContext.request.contextPath}/property/delete/${property.id}.html"><span class="glyphicon glyphicon-remove"></span></a></td>
-                                </tr>
-                            </c:forEach>
-                        </table>
-                        <div class="panel-footer">
-                            <td><a class="btn btn-warning" href="${pageContext.request.contextPath}/property/add.html"><span class="glyphicon glyphicon-plus"></span> <fmt:message key="general.add" bundle="${lang}"/></a></td>
-                        </div>
-                    </c:if>
-                    <c:if test="${param.proposals != null}">
-                        <div class="panel-heading">
-                            <fmt:message key="owner.received-proposals" bundle="${lang}"/>
-                        </div>
-                        <table class="table table-responsive table-striped table-hover">
-                            <tr>
-                                <th><fmt:message key="proposal.number" bundle="${lang}"/> </th>
-                                <th><fmt:message key="proposal.property" bundle="${lang}"/> </th>
-                                <th><fmt:message key="proposal.tenant" bundle="${lang}"/> </th>
-                                <th><fmt:message key="proposal.start-date" bundle="${lang}"/></th>
-                                <th><fmt:message key="proposal.end-date" bundle="${lang}"/></th>
-                                <th><fmt:message key="proposal.status" bundle="${lang}"/></th>
-                                <th><fmt:message key="proposal.created-at" bundle="${lang}"/></th>
-                                <th><fmt:message key="proposal.last-updated" bundle="${lang}"/></th>
-                                <th><fmt:message key="proposal.accept" bundle="${lang}"/></th>
-                                <th><fmt:message key="proposal.reject" bundle="${lang}"/></th>
-                            </tr>
-                            <c:forEach var="bookingProposal" items="${bookingProposals}" varStatus="loop">
-                                <tr>
-                                    <td><a href="${pageContext.request.contextPath}/booking-proposals/show/${bookingProposal.id}.html">${loop.index+1}</a></td>
-                                    <td><a href="${pageContext.request.contextPath}/property/show/${bookingProposal.property.id}.html"><fmt:message key="general.link" bundle="${lang}"/> <span class="glyphicon glyphicon-new-window"></span> </a></td>
-                                    <td><a href="${pageContext.request.contextPath}/user/profile/${bookingProposal.tenant.id}.html"><fmt:message key="general.link" bundle="${lang}"/> <span class="glyphicon glyphicon-new-window"></a></td>
-                                    <td>${bookingProposal.startDate}</td>
-                                    <td>${bookingProposal.endDate} €</td>
-                                    <td>${bookingProposal.status.label}</td>
-                                    <td>${bookingProposal.dateOfCreation}</td>
-                                    <td>${bookingProposal.dateOfUpdate}</td>
-                                    <td><a class="btn btn-warning" href="${pageContext.request.contextPath}/booking-proposal/accept/${bookingProposal.id}.html"><span class="glyphicon glyphicon-check"></span></a></td>
-                                    <td><a class="btn btn-warning" href="${pageContext.request.contextPath}/property/reject/${bookingProposal.id}.html"><span class="glyphicon glyphicon-remove"></span></a></td>
-                                </tr>
-                            </c:forEach>
-                        </table>
-                    </c:if>
                 </div>
             </div>
         </div>
