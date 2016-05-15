@@ -9,8 +9,9 @@
 <c:url value="/login.html" var="loginUrl"/>
 <fmt:message key="login.title" var="title" bundle="${lang}"/>
 <t:paginabasica title="${title}" >
-    <h1>${title}</h1>
-    <hr>
+    <div class="page-header">
+        <h1>${title}</h1>
+    </div>
     <form:form method="post" action="${loginUrl}" cssClass="form-horizontal">
         <c:if test="${param.error != null}">
             <p class="alert alert-danger">

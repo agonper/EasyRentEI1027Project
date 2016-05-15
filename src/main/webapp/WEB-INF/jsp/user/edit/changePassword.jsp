@@ -6,10 +6,11 @@
 <fmt:message key="general.edit" var="edit" bundle="${lang}"/>
 <fmt:message key="profile.change-password" var="title" bundle="${lang}"/>
 <sec:authentication var="loggedUser" property="principal" />
-<t:paginabasica title="${edit} ${title.toLowerCase()}">
+<t:paginabasica title="${title}">
     <jsp:body>
-        <h1>${edit} ${title.toLowerCase()}</h1>
-        <hr>
+        <div class="page-header">
+            <h1>${title}</h1>
+        </div>
         <form:form cssClass="form-horizontal" method="post" modelAttribute="changePasswordForm">
             <fmt:message key="user.old-password" var="oldPassword" bundle="${lang}"/>
             <t:input path="oldPassword" type="password" label="${oldPassword}"/>

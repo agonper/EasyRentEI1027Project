@@ -23,10 +23,14 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <!-- Estils propis -->
+    <!-- Custom styles -->
     <link
             href="${pageContext.request.contextPath}/css/easyrent.css"
             rel="stylesheet">
+
+    <!-- Third-party libraries -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jasny-bootstrap.min.css">
+    <script src="${pageContext.request.contextPath}/js/jasny-bootstrap.min.js"></script>
 </head>
 <body>
 <c:set var="locale" value="en"/>

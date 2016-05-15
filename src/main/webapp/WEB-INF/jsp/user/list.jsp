@@ -5,11 +5,12 @@
 <fmt:message key="list-user.title" var="title" bundle="${lang}"/>
 <t:paginabasica title="${title}">
     <jsp:body>
-        <span class="h1">${title}</span>
-        <a class="btn btn-warning" href="${pageContext.request.contextPath}/user/add.html">
-            <span class="glyphicon glyphicon-plus"></span> <fmt:message key="add-user.title" bundle="${lang}"/>
-        </a>
-        <hr>
+        <div class="page-header">
+            <span class="h1">${title}</span>
+            <a class="btn btn-warning" href="${pageContext.request.contextPath}/user/add.html">
+                <span class="glyphicon glyphicon-plus"></span> <fmt:message key="add-user.title" bundle="${lang}"/>
+            </a>
+        </div>
         <div class="table-responsive">
             <table class="table">
                 <tr>

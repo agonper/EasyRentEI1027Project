@@ -5,29 +5,33 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <tag:paginabasica title="EasyRent">
     <jsp:body>
-        <h1><fmt:message key="search.title" bundle="${lang}"/></h1>
-        <hr>
+        <div class="page-header">
+            <h1><fmt:message key="search.title" bundle="${lang}"/></h1>
+        </div>
         <div class="table-responsive">
             <table class="table table-striped table-hover">
-                <tr>
-                    <th><fmt:message key="property.title" bundle="${lang}"/> </th>
-                    <th><fmt:message key="property.location" bundle="${lang}"/> <span class="glyphicon glyphicon-map-marker"></span> </th>
-                    <th><fmt:message key="property.price-per-day" bundle="${lang}"/></th>
-                    <th><fmt:message key="property.type" bundle="${lang}"/></th>
-                    <th><fmt:message key="property.capacity" bundle="${lang}"/> (<span class="glyphicon glyphicon-user"></span> )</th>
-                    <th><fmt:message key="property.floor-space" bundle="${lang}"/></th>
-
-                </tr>
-                <c:forEach var="property" items="${properties}" varStatus="loop">
+                <thead>
                     <tr>
-                        <td>${property.title}</td>
-                        <td>${property.location}</td>
-                        <td><t:show-price amount="${property.pricePerDay}"/></td>
-                        <td>${property.type.label}</td>
-                        <td>${property.capacity}</td>
-                        <td>${property.floorSpace}</td>
+                        <th><fmt:message key="property.title" bundle="${lang}"/> </th>
+                        <th><fmt:message key="property.location" bundle="${lang}"/> <span class="glyphicon glyphicon-map-marker"></span> </th>
+                        <th><fmt:message key="property.price-per-day" bundle="${lang}"/></th>
+                        <th><fmt:message key="property.type" bundle="${lang}"/></th>
+                        <th><fmt:message key="property.capacity" bundle="${lang}"/> (<span class="glyphicon glyphicon-user"></span> )</th>
+                        <th><fmt:message key="property.floor-space" bundle="${lang}"/></th>
                     </tr>
-                </c:forEach>
+                </thead>
+                <tbody data-link="row" class="rowlink">
+                    <c:forEach var="property" items="${properties}" varStatus="loop">
+                        <tr>
+                            <td><a href="${pageContext.request.contextPath}/property/show/${property.id}.html">${property.title}</a></td>
+                            <td>${property.location}</td>
+                            <td><t:show-price amount="${property.pricePerDay}"/></td>
+                            <td>${property.type.label}</td>
+                            <td>${property.capacity}</td>
+                            <td>${property.floorSpace}</td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
             </table>
         </div>
         <tag:paginator currentPage="${currentPage}" totalPages="${totalPages}" baseUri="search"/>

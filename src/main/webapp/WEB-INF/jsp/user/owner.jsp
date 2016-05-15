@@ -11,8 +11,9 @@
 
 <t:paginabasica title="${title}: ${user.username}">
     <jsp:body>
-        <span class="h1">${title}: ${user.username}</span>
-        <hr>
+        <div class="page-header">
+            <span class="h1">${title}: ${user.username}</span>
+        </div>
         <t:user-options user="${user}" location="owner"/>
         <div class="row">
             <div class="col-md-3">
@@ -38,30 +39,34 @@
                         </div>
                         <div class="table-responsive">
                             <table class="table table-striped table-hover">
-                                <tr>
-                                    <th><fmt:message key="general.number" bundle="${lang}"/> </th>
-                                    <th><fmt:message key="property.title" bundle="${lang}"/> </th>
-                                    <th><fmt:message key="property.price-per-day" bundle="${lang}"/></th>
-                                    <th><fmt:message key="property.type" bundle="${lang}"/></th>
-                                    <th><fmt:message key="property.creation-date" bundle="${lang}"/></th>
-                                    <th><fmt:message key="general.edit" bundle="${lang}"/></th>
-                                    <th><fmt:message key="general.delete" bundle="${lang}"/></th>
-                                </tr>
-                                <c:forEach var="property" items="${user.properties}" varStatus="loop">
+                                <thead>
                                     <tr>
-                                        <td><a href="${pageContext.request.contextPath}/property/show/${property.id}.html">${loop.index+1}</a></td>
-                                        <td>${property.title}</td>
-                                        <td><t:show-price amount="${property.pricePerDay}"/></td>
-                                        <td>${property.type.label}</td>
-                                        <td>${property.creationDate}</td>
-                                        <td><a class="btn btn-warning" href="${pageContext.request.contextPath}/property/edit/${property.id}.html"><span class="glyphicon glyphicon-edit"></span></a></td>
-                                        <td><a class="btn btn-warning" href="${pageContext.request.contextPath}/property/delete/${property.id}.html"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                        <th><fmt:message key="general.number" bundle="${lang}"/> </th>
+                                        <th><fmt:message key="property.title" bundle="${lang}"/> </th>
+                                        <th><fmt:message key="property.price-per-day" bundle="${lang}"/></th>
+                                        <th><fmt:message key="property.type" bundle="${lang}"/></th>
+                                        <th><fmt:message key="property.creation-date" bundle="${lang}"/></th>
+                                        <th><fmt:message key="general.edit" bundle="${lang}"/></th>
+                                        <th><fmt:message key="general.delete" bundle="${lang}"/></th>
                                     </tr>
-                                </c:forEach>
+                                </thead>
+                                <tbody data-link="row" class="rowlink">
+                                    <c:forEach var="property" items="${user.properties}" varStatus="loop">
+                                        <tr>
+                                            <td><a href="${pageContext.request.contextPath}/property/show/${property.id}.html">${loop.index+1}</a></td>
+                                            <td>${property.title}</td>
+                                            <td><t:show-price amount="${property.pricePerDay}"/></td>
+                                            <td>${property.type.label}</td>
+                                            <td>${property.creationDate}</td>
+                                            <td class="rowlink-skip"><a class="btn btn-warning" href="${pageContext.request.contextPath}/property/edit/${property.id}.html"><span class="glyphicon glyphicon-edit"></span></a></td>
+                                            <td class="rowlink-skip"><a class="btn btn-warning" href="${pageContext.request.contextPath}/property/delete/${property.id}.html"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
                             </table>
                         </div>
                         <div class="panel-footer">
-                            <td><a class="btn btn-warning" href="${pageContext.request.contextPath}/property/add.html"><span class="glyphicon glyphicon-plus"></span> <fmt:message key="general.add" bundle="${lang}"/></a></td>
+                            <td><a class="btn btn-warning" href="${pageContext.request.contextPath}/property/add.html"><span class="glyphicon glyphicon-plus"></span> <fmt:message key="add-property.add" bundle="${lang}"/></a></td>
                         </div>
                     </c:if>
                     <c:if test="${param.proposals != null}">
@@ -71,30 +76,34 @@
 
                         <div class="table-responsive">
                             <table class="table table-striped table-hover">
-                                <tr>
-                                    <th><fmt:message key="general.number" bundle="${lang}"/> </th>
-                                    <th><fmt:message key="proposal.property" bundle="${lang}"/> </th>
-                                    <th><fmt:message key="proposal.tenant" bundle="${lang}"/> </th>
-                                    <th><fmt:message key="proposal.start-date" bundle="${lang}"/></th>
-                                    <th><fmt:message key="proposal.end-date" bundle="${lang}"/></th>
-                                    <th><fmt:message key="proposal.status" bundle="${lang}"/></th>
-                                    <th><fmt:message key="proposal.created-at" bundle="${lang}"/></th>
-                                    <th><fmt:message key="proposal.last-updated" bundle="${lang}"/></th>
-                                    <th><fmt:message key="general.delete" bundle="${lang}"/></th>
-                                </tr>
-                                <c:forEach var="bookingProposal" items="${bookingProposals}" varStatus="loop">
+                                <thead>
                                     <tr>
-                                        <td><a href="${pageContext.request.contextPath}/booking-proposals/show/${bookingProposal.id}.html">${loop.index+1}</a></td>
-                                        <td><a href="${pageContext.request.contextPath}/property/show/${bookingProposal.property.id}.html"><fmt:message key="general.link" bundle="${lang}"/> <span class="glyphicon glyphicon-new-window"></span></a></td>
-                                        <td><a href="${pageContext.request.contextPath}/user/profile/${bookingProposal.tenant.id}.html"><fmt:message key="general.link" bundle="${lang}"/> <span class="glyphicon glyphicon-new-window"></span></a></td>
-                                        <td>${bookingProposal.startDate}</td>
-                                        <td>${bookingProposal.endDate}</td>
-                                        <td>${bookingProposal.status.label}</td>
-                                        <td>${bookingProposal.dateOfCreation}</td>
-                                        <td>${bookingProposal.dateOfUpdate}</td>
-                                        <td><a class="btn btn-warning" href="${pageContext.request.contextPath}/booking-proposal/delete/${bookingProposal.id}.html"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                        <th><fmt:message key="general.number" bundle="${lang}"/> </th>
+                                        <th><fmt:message key="proposal.property" bundle="${lang}"/> </th>
+                                        <th><fmt:message key="proposal.tenant" bundle="${lang}"/> </th>
+                                        <th><fmt:message key="proposal.start-date" bundle="${lang}"/></th>
+                                        <th><fmt:message key="proposal.end-date" bundle="${lang}"/></th>
+                                        <th><fmt:message key="proposal.status" bundle="${lang}"/></th>
+                                        <th><fmt:message key="proposal.created-at" bundle="${lang}"/></th>
+                                        <th><fmt:message key="proposal.last-updated" bundle="${lang}"/></th>
+                                        <th><fmt:message key="general.delete" bundle="${lang}"/></th>
                                     </tr>
-                                </c:forEach>
+                                </thead>
+                                <tbody data-link="row" class="rowlink">
+                                    <c:forEach var="bookingProposal" items="${bookingProposals}" varStatus="loop">
+                                        <tr>
+                                            <td><a href="${pageContext.request.contextPath}/booking-proposals/show/${bookingProposal.id}.html">${loop.index+1}</a></td>
+                                            <td class="rowlink-skip"><a href="${pageContext.request.contextPath}/property/show/${bookingProposal.property.id}.html"><fmt:message key="general.link" bundle="${lang}"/> <span class="glyphicon glyphicon-new-window"></span></a></td>
+                                            <td class="rowlink-skip"><a href="${pageContext.request.contextPath}/user/profile/${bookingProposal.tenant.id}.html"><fmt:message key="general.link" bundle="${lang}"/> <span class="glyphicon glyphicon-new-window"></span></a></td>
+                                            <td>${bookingProposal.startDate}</td>
+                                            <td>${bookingProposal.endDate}</td>
+                                            <td>${bookingProposal.status.label}</td>
+                                            <td>${bookingProposal.dateOfCreation}</td>
+                                            <td>${bookingProposal.dateOfUpdate}</td>
+                                            <td class="rowlink-skip"><a class="btn btn-warning" href="${pageContext.request.contextPath}/booking-proposal/delete/${bookingProposal.id}.html"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
                             </table>
                         </div>
                     </c:if>

@@ -72,7 +72,7 @@ public class PropertyController {
         property.setCreationDate(new Date(System.currentTimeMillis()));
         property.setOwner(loggedUser);
         repository.save(property);
-        return "redirect:list.html";
+        return "redirect:../user/owner/"+ loggedUser.getId() +".html";
     }
 
     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)

@@ -11,8 +11,9 @@
 
 <t:paginabasica title="${title}: ${user.username}">
     <jsp:body>
-        <span class="h1">${title}: ${user.username}</span>
-        <hr>
+        <div class="page-header">
+            <span class="h1">${title}: ${user.username}</span>
+        </div>
         <t:user-options user="${user}" location="profile"/>
         <div class="row">
             <div class="col-md-3">

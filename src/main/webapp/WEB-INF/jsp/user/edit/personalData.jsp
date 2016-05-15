@@ -8,8 +8,9 @@
 <sec:authentication var="loggedUser" property="principal" />
 <t:paginabasica title="${edit} ${title.toLowerCase()}">
     <jsp:body>
-        <h1>${edit} ${title.toLowerCase()}</h1>
-        <hr>
+        <div class="page-header">
+            <h1>${edit} ${title.toLowerCase()}</h1>
+        </div>
         <form:form cssClass="form-horizontal" method="post" modelAttribute="personalDataForm">
             <fmt:message key="user.name" var="name" bundle="${lang}"/>
             <t:input path="name" label="${name}"/>

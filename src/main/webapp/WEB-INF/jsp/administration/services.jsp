@@ -12,7 +12,9 @@
 
 <t:paginabasica title="${title}">
     <jsp:body>
-        <span class="h1">${title}</span>
+        <div class="page-header">
+            <span class="h1">${title}</span>
+        </div>
         <div class="container">
             <hr>
             <t:administration-options location="services"/>

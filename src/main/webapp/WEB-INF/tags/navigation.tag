@@ -5,7 +5,7 @@
 <sec:authorize access="isAuthenticated()">
     <sec:authentication var="user" property="principal" />
 </sec:authorize>
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -35,6 +35,19 @@
             <c:otherwise>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <fmt:message key="add-property.add" bundle="${lang}" var="addPropertyBtn"/>
+                            <a href="${pageContext.request.contextPath}/property/add.html" title="${addPropertyBtn}">
+                                <span class="glyphicon glyphicon-plus"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <fmt:message key="notifications.title" bundle="${lang}" var="notificationsBtn"/>
+                            <a href="${pageContext.request.contextPath}/user/notifications/${user.id}.html" title="${notificationsBtn}">
+                                <span class="glyphicon glyphicon-bell"></span> <span class="badge">0</span>
+                            </a>
+                        </li>
+                        <li class="divider-vertical"></li>
                         <li>
                             <a href="${pageContext.request.contextPath}/user/profile/${user.id}.html">
                                 <span class="glyphicon glyphicon-user"></span> ${user.username.toUpperCase()}
