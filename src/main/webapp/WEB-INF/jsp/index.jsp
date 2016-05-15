@@ -21,6 +21,7 @@
             <div class="col-md-4"><a href="${pageContext.request.contextPath}/service/list.html">Listar todos los servicios</a></div>
             <div class="col-md-4"><a href="${pageContext.request.contextPath}/service/add.html">Añadir nuevo servicio</a></div>
             <div class="col-md-4"><a href="${pageContext.request.contextPath}/user/bookingProposal/list.html">Listar bkProposals propias (si se es admin todas)</a></div>
+            <div class="col-md-4"><a href="${pageContext.request.contextPath}/administration">Entrar en el panel de administración</a></div>
         </div>
         <div class="well">
             <p>Está feo! Arreglar!</p>
