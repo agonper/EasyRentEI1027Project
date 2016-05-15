@@ -22,12 +22,9 @@
                         <div class="panel-heading">Search for users</div>
                         <div class="panel-body">
                             <form:form cssClass="form-horizontal" method="post" action="/searchUsers" modelAttribute="user">
-                                <div class="form-group">
-                                    <input type="text">
-                                    <button type="submit" class="btn btn-warning">
-                                        <fmt:message key="general.search" bundle="${lang}"/>
-                                    </button>
-                                </div>
+                                <input type="text">
+                                <select/>
+                                <input type="submit" class="btn btn-warning"/>
                             </form:form>
                         </div>
 

@@ -1,0 +1,63 @@
+<%@ page pageEncoding="UTF-8" %>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<fmt:message key="administration.title" var="title" bundle="${lang}"/>
+
+<sec:authorize access="isAuthenticated()">
+    <sec:authentication var="loggedUser" property="principal" />
+</sec:authorize>
+
+<t:paginabasica title="${title}">
+    <jsp:body>
+        <span class="h1">${title}</span>
+        <div class="container">
+            <hr>
+            <t:administration-options location="invoices"/>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-warning top-padding">
+                        <div class="panel-heading">Search for invoices</div>
+                        <div class="panel-body">
+                            <form:form cssClass="form-horizontal" method="post" action="/searchInvoices" modelAttribute="invoices">
+                                <input type="text">
+                                <select/>
+                                <input type="submit" class="btn btn-warning"/>
+                            </form:form>
+                        </div>
+
+                        <div class="panel-heading">List of searched invoices</div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th><fmt:message key="invoice.booking" bundle="${lang}"/></th>
+                                        <th><fmt:message key="invoice.number" bundle="${lang}"/></th>
+                                        <th><fmt:message key="invoice.vat" bundle="${lang}"/></th>
+                                        <th><fmt:message key="invoice.address" bundle="${lang}"/></th>
+                                        <th><fmt:message key="invoice.expedition-date" bundle="${lang}"/></th>
+                                        <th><fmt:message key="invoice.total-amount" bundle="${lang}"/></th>
+                                    </tr>
+                                    <c:forEach var="invoice" items="${invoices}">
+                                        <tr>
+                                            <td>${invoice.id}</td>
+                                            <td>${invoice.proposal.id}</td>
+                                            <td>${invoice.number}</td>
+                                            <td>${invoice.vat}</td>
+                                            <td>${invoice.address}</td>
+                                            <td>${invoice.expeditionDate}</td>
+                                            <td>${invoice.proposal.totalAmount}</td>
+                                        </tr>
+                                    </c:forEach>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </jsp:body>
+</t:paginabasica>

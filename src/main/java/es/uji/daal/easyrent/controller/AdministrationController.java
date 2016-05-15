@@ -30,4 +30,9 @@ public class AdministrationController {
     public String invoices() {
         return "administration/invoices";
     }
+
+    @RequestMapping("/services")
+    public String services() {
+        return "administration/services";
+    }
 }
