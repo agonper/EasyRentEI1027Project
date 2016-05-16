@@ -35,7 +35,7 @@
 <body>
 <c:set var="locale" value="en"/>
 <sec:authorize access="isAuthenticated()">
-    <sec:authentication var="user" property="principal" />
+    <sec:authentication var="loggedUser" property="principal" />
     <%-- TODO Set user prefered languaje --%>
     <c:set var="locale" value="en"/>
 </sec:authorize>

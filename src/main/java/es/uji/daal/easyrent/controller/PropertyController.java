@@ -47,6 +47,13 @@ public class PropertyController {
         return "redirect:../login.html";
     }
 
+    @RequestMapping("/show/{id}")
+    public String show(Model model, @PathVariable("id") String id) {
+        Property property = repository.findOne(UUID.fromString(id));
+        model.addAttribute("property", property);
+        return "property/show";
+    }
+
     @RequestMapping(value = "/add")
     public String add(Model model) {
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
