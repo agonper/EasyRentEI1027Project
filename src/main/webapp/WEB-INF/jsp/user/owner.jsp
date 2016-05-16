@@ -86,7 +86,8 @@
                                         <th><fmt:message key="proposal.status" bundle="${lang}"/></th>
                                         <th><fmt:message key="proposal.created-at" bundle="${lang}"/></th>
                                         <th><fmt:message key="proposal.last-updated" bundle="${lang}"/></th>
-                                        <th><fmt:message key="general.delete" bundle="${lang}"/></th>
+                                        <th><fmt:message key="proposal.accept" bundle="${lang}"/></th>
+                                        <th><fmt:message key="proposal.reject" bundle="${lang}"/></th>
                                     </tr>
                                 </thead>
                                 <tbody data-link="row" class="rowlink">
@@ -100,7 +101,8 @@
                                             <td>${bookingProposal.status.label}</td>
                                             <td>${bookingProposal.dateOfCreation}</td>
                                             <td>${bookingProposal.dateOfUpdate}</td>
-                                            <td class="rowlink-skip"><a class="btn btn-warning" href="${pageContext.request.contextPath}/booking-proposal/delete/${bookingProposal.id}.html"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                            <td class="rowlink-skip"><a class="btn btn-warning" href="${pageContext.request.contextPath}/booking-proposal/accept/${bookingProposal.id}.html"><span class="glyphicon glyphicon-ok"></span></a></td>
+                                            <td class="rowlink-skip"><a class="btn btn-warning" href="${pageContext.request.contextPath}/booking-proposal/reject/${bookingProposal.id}.html"><span class="glyphicon glyphicon-remove"></span></a></td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>

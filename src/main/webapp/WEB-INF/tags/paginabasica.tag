@@ -31,6 +31,10 @@
     <!-- Third-party libraries -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jasny-bootstrap.min.css">
     <script src="${pageContext.request.contextPath}/js/jasny-bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap-datepicker.min.css">
+    <script src="${pageContext.request.contextPath}/js/bootstrap-datepicker.min.js"></script>
+
 </head>
 <body>
 <c:set var="locale" value="en"/>

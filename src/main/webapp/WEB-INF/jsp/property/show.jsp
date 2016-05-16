@@ -12,7 +12,22 @@
 <t:paginabasica title="${property.title}">
     <jsp:body>
         <div class="page-header">
-            <span class="h1">${property.title}  <small>${by} <a href="${pageContext.request.contextPath}/user/profile/${property.owner.id}.html">${property.owner.username}</a></small></span>
+            <div class="row">
+                <div class="col-md-11">
+                    <span class="h1">${property.title}  <small>${by} <a href="${pageContext.request.contextPath}/user/profile/${property.owner.id}.html">${property.owner.username}</a></small></span>
+                </div>
+                <br class="hidden-mg">
+                <div class="col-md-1">
+                    <c:choose>
+                        <c:when test="${property.owner.equals(loggedUser)}">
+                            <a class="btn btn-warning" href="${pageContext.request.contextPath}/property/edit/${property.id}.html"><span class="glyphicon glyphicon-edit"></span> <fmt:message key="general.edit" bundle="${lang}"/></a>
+                        </c:when>
+                        <c:otherwise>
+                            <a class="btn btn-warning" href="${pageContext.request.contextPath}/property/booking-proposal/${property.id}.html"><span class="glyphicon glyphicon-ok"></span> <fmt:message key="proposal.book" bundle="${lang}"/> </a>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-sm-4">
@@ -81,7 +96,7 @@
         <br>
         <div class="panel panel-warning">
             <div class="panel-heading">
-                <fmt:message key="property.charateristics" bundle="${lang}"/>
+                <fmt:message key="property.characteristics" bundle="${lang}"/>
             </div>
             <div class="table-responsive">
                 <table class="table table-striped">

@@ -6,6 +6,7 @@ import es.uji.daal.easyrent.model.PropertyType;
 import es.uji.daal.easyrent.model.User;
 import es.uji.daal.easyrent.repository.PropertyRepository;
 import es.uji.daal.easyrent.validators.PropertyValidator;
+import es.uji.daal.easyrent.view_models.BookingForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -103,11 +104,22 @@ public class PropertyController {
 
     @RequestMapping(value = "/delete/{id}")
     public String processDelete(@PathVariable(value = "id") String id) {
-
         UUID propertyId = UUID.fromString(id);
         if (repository.exists(propertyId)) {
             repository.delete(propertyId);
         }
         return "redirect:../list.html";
+    }
+
+    @RequestMapping(value = "/booking-proposal/{id}")
+    public String bookingProposal(Model model, @PathVariable("id") String id) {
+        User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Property property = repository.findOne(UUID.fromString(id));
+        if (property.getOwner().equals(loggedUser)) {
+            return "redirect:../show/"+id+".html";
+        }
+        model.addAttribute("property", property);
+        model.addAttribute("bookingForm", new BookingForm());
+        return "bookingProposal/add";
     }
 }
