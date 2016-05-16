@@ -56,7 +56,7 @@ public class UserController {
         User user = repository.findOne(UUID.fromString(id));
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (!loggedUser.equals(user)) {
-            return "redirect:index.html";
+            return "redirect:../../index.html";
         }
         model.addAttribute("user", user);
         model.addAttribute("bookingProposals", proposalRepository.findByProperty_Owner_IdOrderByDateOfCreationDesc(user.getId()));
@@ -68,7 +68,7 @@ public class UserController {
         User user = repository.findOne(UUID.fromString(id));
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (!loggedUser.equals(user)) {
-            return "redirect:index.html";
+            return "redirect:../../index.html";
         }
         model.addAttribute("user", user);
         model.addAttribute("invoices", invoiceRepository.findByProposal_Tenant_IdOrderByExpeditionDateDesc(user.getId()));

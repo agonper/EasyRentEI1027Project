@@ -31,11 +31,7 @@ public class Invoice extends DomainModel {
      * ======
      */
 
-    protected Invoice() {
-    }
-
-    public Invoice(BookingProposal proposal) {
-        this.proposal = proposal;
+    public Invoice() {
         expeditionDate = new Date(new java.util.Date().getTime());
     }
 

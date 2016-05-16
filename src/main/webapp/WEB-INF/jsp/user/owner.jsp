@@ -93,7 +93,7 @@
                                 <tbody data-link="row" class="rowlink">
                                     <c:forEach var="bookingProposal" items="${bookingProposals}" varStatus="loop">
                                         <tr>
-                                            <td><a href="${pageContext.request.contextPath}/booking-proposals/show/${bookingProposal.id}.html">${loop.index+1}</a></td>
+                                            <td><a href="${pageContext.request.contextPath}/booking-proposal/show/${bookingProposal.id}.html">${loop.index+1}</a></td>
                                             <td class="rowlink-skip"><a href="${pageContext.request.contextPath}/property/show/${bookingProposal.property.id}.html"><fmt:message key="general.link" bundle="${lang}"/> <span class="glyphicon glyphicon-new-window"></span></a></td>
                                             <td class="rowlink-skip"><a href="${pageContext.request.contextPath}/user/profile/${bookingProposal.tenant.id}.html"><fmt:message key="general.link" bundle="${lang}"/> <span class="glyphicon glyphicon-new-window"></span></a></td>
                                             <td>${bookingProposal.startDate}</td>
@@ -101,8 +101,14 @@
                                             <td>${bookingProposal.status.label}</td>
                                             <td>${bookingProposal.dateOfCreation}</td>
                                             <td>${bookingProposal.dateOfUpdate}</td>
-                                            <td class="rowlink-skip"><a class="btn btn-warning" href="${pageContext.request.contextPath}/booking-proposal/accept/${bookingProposal.id}.html"><span class="glyphicon glyphicon-ok"></span></a></td>
-                                            <td class="rowlink-skip"><a class="btn btn-warning" href="${pageContext.request.contextPath}/booking-proposal/reject/${bookingProposal.id}.html"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                            <c:set var="acceptLink" value="${pageContext.request.contextPath}/booking-proposal/accept/${bookingProposal.id}.html"/>
+                                            <c:set var="rejectLink" value="${pageContext.request.contextPath}/booking-proposal/reject/${bookingProposal.id}.html"/>
+                                            <c:if test="${bookingProposal.status != 'PENDING'}">
+                                                <c:set var="acceptLink" value="#"/>
+                                                <c:set var="rejectLink" value="#"/>
+                                            </c:if>
+                                            <td class="rowlink-skip"><a class="btn btn-warning ${bookingProposal.status != 'PENDING' ? 'disabled' : ''}" href="${acceptLink}"><span class="glyphicon glyphicon-ok"></span></a></td>
+                                            <td class="rowlink-skip"><a class="btn btn-warning ${bookingProposal.status != 'PENDING' ? 'disabled' : ''}" href="${rejectLink}"><span class="glyphicon glyphicon-remove"></span></a></td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>

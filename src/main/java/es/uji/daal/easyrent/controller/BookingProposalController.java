@@ -21,7 +21,7 @@ import java.util.UUID;
 @RequestMapping("/user/bookingProposal")
 public class BookingProposalController {
     @Autowired
-    BookingProposalRepository repository;
+    private BookingProposalRepository repository;
 
     @RequestMapping("/list")
     public String list(Model model) {

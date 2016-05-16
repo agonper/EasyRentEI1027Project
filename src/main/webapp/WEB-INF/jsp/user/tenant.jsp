@@ -54,7 +54,7 @@
                                 <tbody data-link="row" class="rowlink">
                                     <c:forEach var="bookingProposal" items="${user.bookingProposals}" varStatus="loop">
                                         <tr>
-                                            <td><a href="${pageContext.request.contextPath}/booking-proposals/show/${bookingProposal.id}.html">${loop.index+1}</a></td>
+                                            <td><a href="${pageContext.request.contextPath}/booking-proposal/show/${bookingProposal.id}.html">${loop.index+1}</a></td>
                                             <td class="rowlink-skip"><a href="${pageContext.request.contextPath}/property/show/${bookingProposal.property.id}.html"><fmt:message key="general.link" bundle="${lang}"/> <span class="glyphicon glyphicon-new-window"></span> </a></td>
                                             <td>${bookingProposal.startDate}</td>
                                             <td>${bookingProposal.endDate}</td>

@@ -5,10 +5,6 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<sec:authorize access="isAuthenticated()">
-    <sec:authentication var="loggedUser" property="principal" />
-</sec:authorize>
-
 <fmt:message key="proposal.title" bundle="${lang}" var="title"/>
 <t:paginabasica title="${title}">
     <jsp:body>
@@ -83,7 +79,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <form:label path="numberOfTenants"><fmt:message key="proposal.number-of-tenatns" bundle="${lang}"/> </form:label>
+                        <form:label path="numberOfTenants"><fmt:message key="proposal.number-of-tenants" bundle="${lang}"/> </form:label>
                         <form:select path="numberOfTenants" cssClass="form-control">
                             <c:forEach begin="1" end="${property.capacity}" var="count">
                                 <form:option value="${count}" label="${count}"/>

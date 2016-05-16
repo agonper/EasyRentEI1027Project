@@ -1,10 +1,15 @@
 package es.uji.daal.easyrent.controller;
 
+import es.uji.daal.easyrent.model.BookingProposal;
 import es.uji.daal.easyrent.model.Property;
 
 import es.uji.daal.easyrent.model.PropertyType;
 import es.uji.daal.easyrent.model.User;
+import es.uji.daal.easyrent.repository.BookingProposalRepository;
 import es.uji.daal.easyrent.repository.PropertyRepository;
+import es.uji.daal.easyrent.repository.UserRepository;
+import es.uji.daal.easyrent.utils.DateUtils;
+import es.uji.daal.easyrent.validators.BookingValidator;
 import es.uji.daal.easyrent.validators.PropertyValidator;
 import es.uji.daal.easyrent.view_models.BookingForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.sql.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,7 +33,10 @@ import java.util.UUID;
 @RequestMapping("/property")
 public class PropertyController {
     @Autowired
-    PropertyRepository repository;
+    private PropertyRepository repository;
+
+    @Autowired
+    private BookingProposalRepository proposalRepository;
 
     @RequestMapping("/list")
     public String list(Model model) {
@@ -121,5 +130,27 @@ public class PropertyController {
         model.addAttribute("property", property);
         model.addAttribute("bookingForm", new BookingForm());
         return "bookingProposal/add";
+    }
+
+    @RequestMapping(value = "/booking-proposal/{id}", method = RequestMethod.POST)
+    public String processBookingProposal(@ModelAttribute BookingForm bookingForm,
+                                         @PathVariable("id") String id,
+                                         BindingResult bindingResult) {
+        User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Property property = repository.findOne(UUID.fromString(id));
+        if (property.getOwner().equals(loggedUser)) {
+            return "redirect:../show/"+id+".html";
+        }
+        // TODO improve form checking
+        new BookingValidator().validate(bookingForm, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "bookingProposal/add";
+        }
+        BookingProposal proposal = bookingForm.update(new BookingProposal(property, loggedUser));
+        proposal.setTotalAmount(bookingForm.getNumberOfTenants() *
+                property.getPricePerDay() *
+                DateUtils.daysBetweenDates(bookingForm.getEndDate(), bookingForm.getStartDate()));
+        proposalRepository.save(proposal);
+        return "redirect:../../user/tenant/"+loggedUser.getId()+".html";
     }
 }
