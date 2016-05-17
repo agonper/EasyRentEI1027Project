@@ -176,10 +176,12 @@ public class UserEditController {
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (loggedUser.equals(user)) {
             String filename = fileUploader.upload("profile-pics", file);
-
-            Photo photo = new Photo(filename);
-            user.setPhoto(photo);
-            repository.save(user);
+            // TODO Show error message
+            if (filename != null) {
+                Photo photo = new Photo(filename);
+                user.setPhoto(photo);
+                repository.save(user);
+            }
         }
         return "redirect:../../profile/"+ id + ".html";
     }
