@@ -29,7 +29,7 @@
             <fmt:message key="user.username" bundle="${lang}" var="username"/>
             <label for="username" class="col-sm-2 control-label">${username}</label>
             <div class="col-sm-10">
-                <input class="form-control" id="username" name="username" placeholder="${username}">
+                <input class="form-control" id="username" name="username" autofocus placeholder="${username}">
             </div>
         </div>
         <div class="form-group">
