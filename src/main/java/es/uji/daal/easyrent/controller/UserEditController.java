@@ -2,7 +2,6 @@ package es.uji.daal.easyrent.controller;
 
 import es.uji.daal.easyrent.model.Photo;
 import es.uji.daal.easyrent.model.User;
-import es.uji.daal.easyrent.repository.PhotoRepository;
 import es.uji.daal.easyrent.repository.UserRepository;
 import es.uji.daal.easyrent.utils.FileUploader;
 import es.uji.daal.easyrent.utils.PasswordEncryptor;
@@ -32,13 +31,13 @@ import java.util.UUID;
 @RequestMapping("/user/edit")
 public class UserEditController {
     @Autowired
-    UserRepository repository;
+    private UserRepository repository;
 
     @Autowired
-    PasswordEncryptor passwordEncryptor;
+    private PasswordEncryptor passwordEncryptor;
 
     @Autowired
-    FileUploader fileUploader;
+    private FileUploader fileUploader;
 
     @RequestMapping("/{id}/account-info")
     public String accountInfo(Model model, @PathVariable String id) {
@@ -61,7 +60,7 @@ public class UserEditController {
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (loggedUser.equals(user)) {
             new AccountInfoValidator().validate(accountInfoForm, bindingResult);
-            if (!user.getUsername().toLowerCase().equals(accountInfoForm.getUsername().toLowerCase()) &&
+            if (!user.getUsername().equalsIgnoreCase(accountInfoForm.getUsername()) &&
                     repository.existsByUsername(accountInfoForm.getUsername())) {
                 bindingResult.rejectValue("username", "invalid", "Username already exits");
             }
