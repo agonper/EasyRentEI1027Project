@@ -17,7 +17,7 @@
                     <div class="col-md-9">
                         <span class="h1">${title} <fmt:message key="general.for" bundle="${lang}"/>: <a href="${pageContext.request.contextPath}/property/show/${bookingProposal.property.id}.html">${bookingProposal.property.title}</a></span>
                     </div>
-                    <br class="hidden-mg">
+                    <br class="hidden-md hidden-lg">
                     <c:choose>
                         <c:when test="${bookingProposal.tenant.equals(loggedUser)}">
                             <div class="col-md-offset-2 col-md-1">
@@ -26,8 +26,10 @@
                         </c:when>
                         <c:otherwise>
                             <div class="col-md-3">
-                                <a class="btn btn-warning" href="${pageContext.request.contextPath}/booking-proposal/accept/${bookingProposal.id}.html"><span class="glyphicon glyphicon-ok"></span> <fmt:message key="proposal.accept" bundle="${lang}"/></a>
-                                <a class="btn btn-warning" href="${pageContext.request.contextPath}/booking-proposal/reject/${bookingProposal.id}.html"><span class="glyphicon glyphicon-remove"></span> <fmt:message key="proposal.reject" bundle="${lang}"/></a>
+                                <c:if test="${bookingProposal.status == 'PENDING'}">
+                                    <a class="btn btn-warning" href="${pageContext.request.contextPath}/booking-proposal/accept/${bookingProposal.id}.html"><span class="glyphicon glyphicon-ok"></span> <fmt:message key="proposal.accept" bundle="${lang}"/></a>
+                                    <a class="btn btn-warning" href="${pageContext.request.contextPath}/booking-proposal/reject/${bookingProposal.id}.html"><span class="glyphicon glyphicon-remove"></span> <fmt:message key="proposal.reject" bundle="${lang}"/></a>
+                                </c:if>
                             </div>
                         </c:otherwise>
                     </c:choose>

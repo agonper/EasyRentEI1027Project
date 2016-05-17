@@ -32,9 +32,7 @@
         <div class="row">
             <div class="col-md-8">
                 <%-- TODO Move this to a tag once we can upload images--%>
-                <div class="img-responsive">
-                    <img src="${pageContext.request.contextPath}/img/neighborhood1.jpg" width="720" height="480">
-                </div>
+                <img class="img-responsive" src="${pageContext.request.contextPath}/img/neighborhood1.jpg" width="720" height="480">
             </div>
             <div class="col-md-4">
                 <div class="panel panel-warning">

@@ -16,7 +16,7 @@
                 <div class="col-md-11">
                     <span class="h1">${property.title}  <small>${by} <a href="${pageContext.request.contextPath}/user/profile/${property.owner.id}.html">${property.owner.username}</a></small></span>
                 </div>
-                <br class="hidden-mg">
+                <br class="hidden-md hidden-lg">
                 <div class="col-md-1">
                     <c:choose>
                         <c:when test="${property.owner.equals(loggedUser)}">

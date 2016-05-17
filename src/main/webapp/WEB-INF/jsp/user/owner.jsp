@@ -59,7 +59,7 @@
                                             <td>${property.type.label}</td>
                                             <td>${property.creationDate}</td>
                                             <td class="rowlink-skip"><a class="btn btn-warning" href="${pageContext.request.contextPath}/property/edit/${property.id}.html"><span class="glyphicon glyphicon-edit"></span></a></td>
-                                            <td class="rowlink-skip"><a class="btn btn-warning" href="${pageContext.request.contextPath}/property/delete/${property.id}.html"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                            <td class="rowlink-skip"><a class="btn btn-danger" href="${pageContext.request.contextPath}/property/delete/${property.id}.html"><span class="glyphicon glyphicon-remove"></span></a></td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>
@@ -107,8 +107,8 @@
                                                 <c:set var="acceptLink" value="#"/>
                                                 <c:set var="rejectLink" value="#"/>
                                             </c:if>
-                                            <td class="rowlink-skip"><a class="btn btn-warning ${bookingProposal.status != 'PENDING' ? 'disabled' : ''}" href="${acceptLink}"><span class="glyphicon glyphicon-ok"></span></a></td>
-                                            <td class="rowlink-skip"><a class="btn btn-warning ${bookingProposal.status != 'PENDING' ? 'disabled' : ''}" href="${rejectLink}"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                            <td class="rowlink-skip"><a class="btn btn-success ${bookingProposal.status != 'PENDING' ? 'disabled' : ''}" href="${acceptLink}"><span class="glyphicon glyphicon-ok"></span></a></td>
+                                            <td class="rowlink-skip"><a class="btn btn-danger ${bookingProposal.status != 'PENDING' ? 'disabled' : ''}" href="${rejectLink}"><span class="glyphicon glyphicon-remove"></span></a></td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>
