@@ -30,7 +30,6 @@ public class Service extends DomainModel {
 
     private Date activeSince;
 
-    @Column(nullable = false)
     private int serviceProposals;
 
     @ManyToMany(mappedBy = "services", cascade = CascadeType.ALL)
@@ -58,7 +57,6 @@ public class Service extends DomainModel {
     private void initService(User user) {
         this.user = user;
         creationDate = new Date(System.currentTimeMillis());
-        serviceProposals = 1;
     }
 
     protected Service() {
