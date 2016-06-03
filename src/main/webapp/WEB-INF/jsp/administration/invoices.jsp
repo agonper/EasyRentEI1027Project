@@ -20,14 +20,27 @@
             <t:administration-options location="invoices"/>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="panel panel-warning top-padding">
+                    <div class="panel panel-warning top-padding30px">
                         <div class="panel-heading">Search for invoices</div>
                         <div class="panel-body">
-                            <form:form cssClass="form-horizontal" method="post" action="/searchInvoices" modelAttribute="invoices">
-                                <input type="text">
-                                <select/>
-                                <input type="submit" class="btn btn-warning"/>
-                            </form:form>
+
+                            <form class="form-inline" method="get" action="/searchInvoices">
+                                <div class="input-group">
+                                    <input class="form-control" name="invoiceAttribute" placeholder="Search for invoices" value="" size="80">
+                                    <div class="input-group-btn">
+                                        <button type="submit" class="btn btn-warning">Search </button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="selectServiceAttribute" class="left-padding30px">
+                                        <fmt:message key="search.by-attribute" bundle="${lang}"/>
+                                    </label>
+                                    <select id="selectServiceAttribute" class="form-control">
+                                        <option>-</option>
+                                    </select>
+                                </div>
+                            </form>
+
                         </div>
 
                         <div class="panel-heading">List of searched invoices</div>
