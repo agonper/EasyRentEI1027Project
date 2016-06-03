@@ -5,6 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="s" uri="http://java.sun.com/jsp/jstl/sql" %>
 <%@ taglib prefix="input" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="navs" tagdir="/WEB-INF/tags/navs" %>
 
 <fmt:message key="add-property.title" bundle="${lang}" var="title"/>
 <tag:paginabasica title="${title}">
@@ -13,43 +14,7 @@
             <h1>${title} 3</h1>
         </div>
 
-        <div class="row bs-wizard" style="border-bottom:0;">
-
-            <div class="col-xs-offset-1 col-xs-2 bs-wizard-step complete">
-                <div class="text-center bs-wizard-stepnum"><span class="glyphicon glyphicon-user"></span></div>
-                <div class="progress"><div class="progress-bar"></div></div>
-                <a href="#" class="bs-wizard-dot"></a>
-                <div class="bs-wizard-info text-center">Personal data</div>
-            </div>
-
-            <div class="col-xs-2 bs-wizard-step complete">
-                <div class="text-center bs-wizard-stepnum"><span class="glyphicon glyphicon-pencil"></span></div>
-                <div class="progress"><div class="progress-bar"></div></div>
-                <a href="#" class="bs-wizard-dot"></a>
-                <div class="bs-wizard-info text-center">Address info</div>
-            </div>
-
-            <div class="col-xs-2 bs-wizard-step active">
-                <div class="text-center bs-wizard-stepnum"><span class="glyphicon glyphicon-home"></span></div>
-                <div class="progress"><div class="progress-bar"></div></div>
-                <a href="#" class="bs-wizard-dot"></a>
-                <div class="bs-wizard-info text-center">Property info</div>
-            </div>
-
-            <div class="col-xs-2 bs-wizard-step disabled">
-                <div class="text-center bs-wizard-stepnum"><span class="glyphicon glyphicon-calendar"></span></div>
-                <div class="progress"><div class="progress-bar"></div></div>
-                <a href="#" class="bs-wizard-dot"></a>
-                <div class="bs-wizard-info text-center">Availability dates</div>
-            </div>
-
-            <div class="col-xs-2 bs-wizard-step disabled">
-                <div class="text-center bs-wizard-stepnum"><span class="glyphicon glyphicon-picture"></span></div>
-                <div class="progress"><div class="progress-bar"></div></div>
-                <a href="#" class="bs-wizard-dot"></a>
-                <div class="bs-wizard-info text-center">Photos</div>
-            </div>
-        </div>
+        <navs:add-property step="${pageContext.session.getAttribute('addPropertyMap').step.ordinal()}" steps="${steps}" path="/property/add"/>
 
         <form:form method="post" modelAttribute="property" cssClass="form-horizontal">
             <fmt:message key="property.title" bundle="${lang}" var="name"/>
