@@ -15,6 +15,6 @@ public interface ServiceRepository extends CrudRepository<Service, UUID> {
 
     @Modifying
     @Transactional
-    @Query("update Service s set s.serviceProposals = s.serviceProposals+1")
+    @Query("update Service s set s.serviceProposals = coalesce(s.serviceProposals, 0)+1")
     void incrementServiceProposalsByOne();
 }

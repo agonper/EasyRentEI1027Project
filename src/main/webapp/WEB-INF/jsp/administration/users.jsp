@@ -67,25 +67,25 @@
                                         <th><fmt:message key="general.delete" bundle="${lang}"/></th>
                                     </tr>
 
-                                    <c:forEach var="user" items="${users}">
+                                    <c:forEach var="loggedUser" items="${users}">
                                         <tr>
-                                            <td>${user.id}</td>
-                                            <td>${user.username}</td>
-                                            <td>${user.dni}</td>
-                                            <td>${user.role}</td>
-                                            <td>${user.password}</td>
-                                            <td>${user.name}</td>
-                                            <td>${user.surnames}</td>
-                                            <td>${user.email}</td>
-                                            <td>${user.phoneNumber}</td>
-                                            <td>${user.postalAddress}</td>
-                                            <td>${user.country}</td>
-                                            <td>${user.postCode}</td>
-                                            <td>${user.signUpDate}</td>
-                                            <td>${user.active}</td>
-                                            <td>${user.deactivatedSince}</td>
-                                            <td><a href="${pageContext.request.contextPath}/user/update/${user.id}.html" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span></a></td>
-                                            <td><a href="${pageContext.request.contextPath}/user/delete/${user.id}.html" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                            <td>${loggedUser.id}</td>
+                                            <td>${loggedUser.username}</td>
+                                            <td>${loggedUser.dni}</td>
+                                            <td>${loggedUser.role}</td>
+                                            <td>${loggedUser.password}</td>
+                                            <td>${loggedUser.name}</td>
+                                            <td>${loggedUser.surnames}</td>
+                                            <td>${loggedUser.email}</td>
+                                            <td>${loggedUser.phoneNumber}</td>
+                                            <td>${loggedUser.postalAddress}</td>
+                                            <td>${loggedUser.country}</td>
+                                            <td>${loggedUser.postCode}</td>
+                                            <td>${loggedUser.signUpDate}</td>
+                                            <td>${loggedUser.active}</td>
+                                            <td>${loggedUser.deactivatedSince}</td>
+                                            <td><a href="${pageContext.request.contextPath}/user/update/${loggedUser.id}.html" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span></a></td>
+                                            <td><a href="${pageContext.request.contextPath}/user/delete/${loggedUser.id}.html" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span></a></td>
                                         </tr>
                                     </c:forEach>
                                 </table>

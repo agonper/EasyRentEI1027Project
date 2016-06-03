@@ -44,7 +44,6 @@ public class Property extends DomainModel {
     @Column(nullable = false)
     private float pricePerDay;
 
-    @Field
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private PropertyType type;

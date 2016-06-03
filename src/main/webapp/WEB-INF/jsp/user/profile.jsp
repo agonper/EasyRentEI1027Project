@@ -75,7 +75,9 @@
                                 </div>
                             </t:li-hb>
                             <t:li-hb stringKey="user.username">${user.username}</t:li-hb>
-                            <t:li-hb stringKey="user.email">${user.email}</t:li-hb>
+                            <c:if test="${loggedUser != null}">
+                                <t:li-hb stringKey="user.email">${user.email}</t:li-hb>
+                            </c:if>
                             <t:li-hb stringKey="user.user-type">${user.role.toString().substring(0,1).toUpperCase()}${user.role.toString().substring(1)}</t:li-hb>
                             <t:li-hb stringKey="user.signup-date">${user.signUpDate}</t:li-hb>
                         </ul>

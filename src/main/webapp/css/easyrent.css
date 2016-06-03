@@ -65,6 +65,20 @@
     margin-top: 30px;
 }
 
+<<<<<<< HEAD
 .left-padding30px {
     margin-left: 30px;
+=======
+.carousel-control.right, .carousel-control.left {
+    background-image: none;
+    color: #f39c12;
+}
+
+.carousel-indicators li {
+    border-color: #f39c12;
+}
+
+.carousel-indicators li.active {
+    background-color: #e67e22;
+>>>>>>> 42a4c5e71aa38f16affc11bf15faa04e82218fef
 }
