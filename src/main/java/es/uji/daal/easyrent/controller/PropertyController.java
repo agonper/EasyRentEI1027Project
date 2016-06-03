@@ -11,7 +11,9 @@ import es.uji.daal.easyrent.repository.UserRepository;
 import es.uji.daal.easyrent.utils.DateUtils;
 import es.uji.daal.easyrent.validators.BookingValidator;
 import es.uji.daal.easyrent.validators.PropertyValidator;
+import es.uji.daal.easyrent.view_models.AddressInfoForm;
 import es.uji.daal.easyrent.view_models.BookingForm;
+import es.uji.daal.easyrent.view_models.PersonalDataForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -65,26 +67,28 @@ public class PropertyController {
     }
 
     @RequestMapping(value = "/add")
-    public String add(Model model) {
+    public String add(Model model, @RequestParam(name = "step", defaultValue = "0") String step, HttpSession session) {
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (loggedUser != null) {
+        if ("0".equals(step)) {
+            model.addAttribute("personalDataForm", new PersonalDataForm());
+        } else if ("1".equals(step)) {
+            model.addAttribute("addressInfoForm", new AddressInfoForm());
+        } else {
             model.addAttribute("propertyTypes", PropertyType.values());
             model.addAttribute("property", new Property(loggedUser));
-            return "property/add";
         }
-        return "redirect:../login.html";
+        return "property/add/"+step;
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String processAddSubmit(@ModelAttribute("property") Property property,
                                    BindingResult bindingResult) {
-
         PropertyValidator validator = new PropertyValidator();
         validator.validate(property, bindingResult);
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (bindingResult.hasErrors() || loggedUser == null)
-            return "property/add";
+            return "property/add/0";
 
         property.setCreationDate(new Date(System.currentTimeMillis()));
         property.setOwner(loggedUser);

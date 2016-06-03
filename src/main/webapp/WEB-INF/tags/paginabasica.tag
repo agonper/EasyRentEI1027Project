@@ -27,6 +27,9 @@
     <link
             href="${pageContext.request.contextPath}/css/easyrent.css"
             rel="stylesheet">
+    <link
+            href="${pageContext.request.contextPath}/css/wizard.css"
+            rel="stylesheet">
 
     <!-- Third-party libraries -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jasny-bootstrap.min.css">
