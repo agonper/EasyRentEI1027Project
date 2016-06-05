@@ -11,7 +11,7 @@
 <tag:paginabasica title="${title}">
     <jsp:body>
         <div class="page-header">
-            <h1>${title} 3</h1>
+            <h1>${title}</h1>
         </div>
 
         <navs:add-property step="${pageContext.session.getAttribute('addPropertyMap').step.ordinal()}" steps="${steps}" path="/property/add"/>

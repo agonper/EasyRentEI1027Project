@@ -24,7 +24,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.lang.reflect.Array;
 import java.sql.Date;
 import java.util.*;
 
@@ -99,7 +98,7 @@ public class PropertyController {
             case PERSONAL_DATA:
                 PersonalDataForm personalDataForm = new PersonalDataForm();
                 personalDataForm.fillUp(loggedUser);
-                if (addProperty.get("personalDataForm") != null) {
+                if (addProperty.containsKey("personalDataForm")) {
                     personalDataForm = (PersonalDataForm) addProperty.get("personalDataForm");
                 }
                 model.addAttribute("personalDataForm", personalDataForm);
@@ -107,13 +106,15 @@ public class PropertyController {
             case ADDRESS_INFO:
                 AddressInfoForm addressInfoForm = new AddressInfoForm();
                 addressInfoForm.fillUp(loggedUser);
-                if (addProperty.get("addressInfoForm") != null) {
+                if (addProperty.containsKey("addressInfoForm")) {
                     addressInfoForm = (AddressInfoForm) addProperty.get("addressInfoForm");
                 }
                 model.addAttribute("addressInfoForm", addressInfoForm);
                 break;
             case PROPERTY_INFO:
-                model.addAttribute("property", new Property(loggedUser));
+                Property property = addProperty.containsKey("property") ?
+                        (Property) addProperty.get("property") :new Property(loggedUser);
+                model.addAttribute("property", property);
                 break;
             case AVAILABILITY_DATES:
                 model.addAttribute("property", new Property(loggedUser));
@@ -187,20 +188,24 @@ public class PropertyController {
         return "redirect:?step=2";
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/add/2", method = RequestMethod.POST)
     public String processAddSubmit(@ModelAttribute("property") Property property,
-                                   BindingResult bindingResult) {
+                                   BindingResult bindingResult,
+                                   HttpSession session) {
         PropertyValidator validator = new PropertyValidator();
         validator.validate(property, bindingResult);
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        if (bindingResult.hasErrors() || loggedUser == null)
-            return "property/add/0";
+        if (bindingResult.hasErrors())
+            return "property/add/2";
 
-        property.setCreationDate(new Date(System.currentTimeMillis()));
+        property.setCreationDate(new Date(new java.util.Date().getTime()));
         property.setOwner(loggedUser);
-        repository.save(property);
-        return "redirect:../user/owner/"+ loggedUser.getId() +".html";
+        Map<String, Object> addProperty = (Map<String, Object>) session.getAttribute("addPropertyMap");
+        addProperty.put("property", property);
+        addProperty.replace("step", AddStep.PROPERTY_INFO, AddStep.AVAILABILITY_DATES);
+//      redirect:../user/owner/"+ loggedUser.getId() +".html"
+        return "redirect:?step=3";
     }
 
     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
