@@ -1,7 +1,7 @@
 package es.uji.daal.easyrent.model;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 import java.util.UUID;
 
 /**

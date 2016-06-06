@@ -44,7 +44,6 @@ public class User extends DomainModel {
     private int postCode;
 
     @Column(nullable = false)
-    @DateTimeFormat(pattern = ApplicationConfig.DATE_FORMAT)
     private Date signUpDate;
 
     @Column(nullable = false)
@@ -57,6 +56,7 @@ public class User extends DomainModel {
     private Set<Property> properties;
 
     @OneToMany(mappedBy = "tenant")
+    @OrderBy("dateOfCreation desc ")
     private Set<BookingProposal> bookingProposals;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)

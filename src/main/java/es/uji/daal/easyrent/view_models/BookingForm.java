@@ -2,7 +2,7 @@ package es.uji.daal.easyrent.view_models;
 
 import es.uji.daal.easyrent.model.BookingProposal;
 
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * Created by Alberto on 16/05/2016.

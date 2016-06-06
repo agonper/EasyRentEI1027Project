@@ -252,13 +252,16 @@ public class PropertyController {
     public String processBookingProposal(@ModelAttribute BookingForm bookingForm,
                                          @PathVariable("id") String id,
                                          BindingResult bindingResult) {
+        System.out.println("Got it!");
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Property property = repository.findOne(UUID.fromString(id));
         if (property.getOwner().equals(loggedUser)) {
             return "redirect:../show/"+id+".html";
         }
         // TODO improve form checking
+        System.out.println("Validating...");
         new BookingValidator().validate(bookingForm, bindingResult);
+        System.out.println("Validated");
         if (bindingResult.hasErrors()) {
             return "bookingProposal/add";
         }

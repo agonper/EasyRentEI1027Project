@@ -2,6 +2,7 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <fmt:message key="list-user.title" var="title" bundle="${lang}"/>
 <t:paginabasica title="${title}">
     <jsp:body>
@@ -46,7 +47,7 @@
                         <td>${loggedUser.postalAddress}</td>
                         <td>${loggedUser.country}</td>
                         <td>${loggedUser.postCode}</td>
-                        <td><t:format-date value="${loggedUser.signUpDate}"/></td>
+                        <td><spring:eval expression="loggedUser.signUpDate"/></td>
                         <td>${loggedUser.active}</td>
                         <td>${loggedUser.deactivatedSince}</td>
                         <td><a href="${pageContext.request.contextPath}/user/update/${loggedUser.id}.html" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span></a></td>

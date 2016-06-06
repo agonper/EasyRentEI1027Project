@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <fmt:message key="owner.title" var="title" bundle="${lang}"/>
 
 <sec:authorize access="isAuthenticated()">
@@ -55,9 +56,9 @@
                                         <tr>
                                             <td><a href="${pageContext.request.contextPath}/property/show/${property.id}.html">${loop.index+1}</a></td>
                                             <td>${property.title}</td>
-                                            <td><t:show-price amount="${property.pricePerDay}"/></td>
+                                            <td><spring:eval expression="property.pricePerDay"/></td>
                                             <td>${property.type.label}</td>
-                                            <td><t:format-date value="${property.creationDate}"/></td>
+                                            <td><spring:eval expression="property.creationDate"/></td>
                                             <td class="rowlink-skip"><a class="btn btn-warning" href="${pageContext.request.contextPath}/property/edit/${property.id}.html"><span class="glyphicon glyphicon-edit"></span></a></td>
                                             <td class="rowlink-skip"><a class="btn btn-danger" href="${pageContext.request.contextPath}/property/delete/${property.id}.html"><span class="glyphicon glyphicon-remove"></span></a></td>
                                         </tr>
@@ -96,11 +97,11 @@
                                             <td><a href="${pageContext.request.contextPath}/booking-proposal/show/${bookingProposal.id}.html">${loop.index+1}</a></td>
                                             <td class="rowlink-skip"><a href="${pageContext.request.contextPath}/property/show/${bookingProposal.property.id}.html"><fmt:message key="general.link" bundle="${lang}"/> <span class="glyphicon glyphicon-new-window"></span></a></td>
                                             <td class="rowlink-skip"><a href="${pageContext.request.contextPath}/user/profile/${bookingProposal.tenant.id}.html"><fmt:message key="general.link" bundle="${lang}"/> <span class="glyphicon glyphicon-new-window"></span></a></td>
-                                            <td><t:format-date value="${bookingProposal.startDate}"/></td>
-                                            <td><t:format-date value="${bookingProposal.endDate}"/></td>
+                                            <td><spring:eval expression="bookingProposal.startDate"/></td>
+                                            <td><spring:eval expression="bookingProposal.endDate"/></td>
                                             <td>${bookingProposal.status.label}</td>
-                                            <td><t:format-date value="${bookingProposal.dateOfCreation}"/></td>
-                                            <td><t:format-date value="${bookingProposal.dateOfUpdate}"/></td>
+                                            <td><spring:eval expression="bookingProposal.dateOfCreation"/></td>
+                                            <td><spring:eval expression="bookingProposal.dateOfUpdate"/></td>
                                             <c:set var="acceptLink" value="${pageContext.request.contextPath}/booking-proposal/accept/${bookingProposal.id}.html"/>
                                             <c:set var="rejectLink" value="${pageContext.request.contextPath}/booking-proposal/reject/${bookingProposal.id}.html"/>
                                             <c:if test="${bookingProposal.status != 'PENDING'}">

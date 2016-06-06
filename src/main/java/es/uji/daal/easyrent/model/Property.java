@@ -54,7 +54,6 @@ public class Property extends DomainModel {
     private String description;
 
     @Column(nullable = false)
-    @DateTimeFormat(pattern = ApplicationConfig.DATE_FORMAT)
     private Date creationDate;
 
     @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)

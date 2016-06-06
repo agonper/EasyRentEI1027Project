@@ -1,7 +1,7 @@
 package es.uji.daal.easyrent.model;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * Created by daniel on 27/02/16.
@@ -32,7 +32,7 @@ public class Invoice extends DomainModel {
      */
 
     public Invoice() {
-        expeditionDate = new Date(new java.util.Date().getTime());
+        expeditionDate = new Date();
     }
 
     public int getNumber() {

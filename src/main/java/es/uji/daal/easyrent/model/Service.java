@@ -1,7 +1,7 @@
 package es.uji.daal.easyrent.model;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -51,12 +51,12 @@ public class Service extends DomainModel {
         initService(user);
         this.active = active;
         if (active)
-            this.activeSince = new Date(new java.util.Date().getTime());
+            this.activeSince = new Date();
     }
 
     private void initService(User user) {
         this.user = user;
-        creationDate = new Date(System.currentTimeMillis());
+        creationDate = new Date();
     }
 
     protected Service() {
@@ -137,7 +137,7 @@ public class Service extends DomainModel {
 
     public Service activate() {
         active = true;
-        activeSince = new Date(new java.util.Date().getTime());
+        activeSince = new Date();
         return this;
     }
 

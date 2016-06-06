@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <fmt:message key="profile.title" var="title" bundle="${lang}"/>
 
 <sec:authorize access="isAuthenticated()">
@@ -79,7 +80,7 @@
                                 <t:li-hb stringKey="user.email">${user.email}</t:li-hb>
                             </c:if>
                             <t:li-hb stringKey="user.user-type">${user.role.toString().substring(0,1).toUpperCase()}${user.role.toString().substring(1)}</t:li-hb>
-                            <t:li-hb stringKey="user.signup-date"><t:format-date value="${user.signUpDate}"/></t:li-hb>
+                            <t:li-hb stringKey="user.signup-date"><spring:eval expression="user.signUpDate"/></t:li-hb>
                         </ul>
                         <c:if test="${user.equals(loggedUser)}">
                             <div class="panel-footer">

@@ -94,7 +94,7 @@
         </div>
         <script>
             $('#datepicker-container').find('.input-daterange').datepicker({
-                format: "yyyy-mm-dd"
+                format: "dd/mm/yyyy"
             });
         </script>
     </jsp:body>
