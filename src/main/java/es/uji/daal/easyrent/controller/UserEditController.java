@@ -64,6 +64,9 @@ public class UserEditController {
                     repository.existsByUsername(accountInfoForm.getUsername())) {
                 bindingResult.rejectValue("username", "invalid", "Username already exits");
             }
+            if (repository.existsByEmail(accountInfoForm.getEmail())) {
+                bindingResult.rejectValue("email", "exists", "There is an account with that email");
+            }
             if (bindingResult.hasErrors()) {
                 return "user/edit/accountInfo";
             }
@@ -177,8 +180,7 @@ public class UserEditController {
             String filename = fileUploader.upload("profile-pics", file);
             // TODO Show error message
             if (filename != null) {
-                Photo photo = new Photo(filename);
-                user.setPhoto(photo);
+                user.createPhoto(filename);
                 repository.save(user);
             }
         }

@@ -1,7 +1,10 @@
 package es.uji.daal.easyrent.model;
 
+import es.uji.daal.easyrent.config.ApplicationConfig;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 import java.util.Collection;
 import java.util.Set;
 
@@ -41,6 +44,7 @@ public class User extends DomainModel {
     private int postCode;
 
     @Column(nullable = false)
+    @DateTimeFormat(pattern = ApplicationConfig.DATE_FORMAT)
     private Date signUpDate;
 
     @Column(nullable = false)
@@ -52,7 +56,7 @@ public class User extends DomainModel {
     @OrderBy("creationDate desc ")
     private Set<Property> properties;
 
-    @OneToMany(mappedBy = "tenant", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "tenant")
     private Set<BookingProposal> bookingProposals;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -60,8 +64,8 @@ public class User extends DomainModel {
 
     public User() {
         role = UserRole.TENANT;
-        signUpDate = new Date(new java.util.Date().getTime());
-        active = true; //TODO:For testing
+        signUpDate = new Date();
+        active = true; //FIXME: For testing
     }
 
     /**
@@ -192,56 +196,12 @@ public class User extends DomainModel {
         return properties;
     }
 
-    public void addProperty(Property property) {
-        properties.add(property);
-        property.setOwner(this);
-    }
-
-    public void addProperties(Collection<Property> properties) {
-        this.properties.addAll(properties);
-        for (Property property : properties) {
-            property.setOwner(this);
-        }
-    }
-
-    public void removeProperty(Property property) {
-        properties.remove(property);
-        property.setOwner(null);
-    }
-
-    public void removeProperties(Collection<Property> properties) {
-        this.properties.removeAll(properties);
-        for (Property property : properties) {
-            property.setOwner(null);
-        }
+    public Property createProperty() {
+        return new Property(this);
     }
 
     public Set<BookingProposal> getBookingProposals() {
         return bookingProposals;
-    }
-
-    public void addBookingProposal(BookingProposal proposal) {
-        bookingProposals.add(proposal);
-        proposal.setTenant(this);
-    }
-
-    public void addBookingProposals(Collection<BookingProposal> proposals) {
-        this.bookingProposals.addAll(proposals);
-        for (BookingProposal proposal : proposals) {
-            proposal.setTenant(this);
-        }
-    }
-
-    public void removeBookingProposal(BookingProposal proposal) {
-        bookingProposals.remove(proposal);
-        proposal.setTenant(null);
-    }
-
-    public void removeBookingProposals(Collection<BookingProposal> proposals) {
-        this.bookingProposals.removeAll(proposals);
-        for (BookingProposal proposal : proposals) {
-            proposal.setTenant(null);
-        }
     }
 
     public Photo getPhoto() {
@@ -250,7 +210,10 @@ public class User extends DomainModel {
 
     public void setPhoto(Photo photo) {
         this.photo = photo;
-        photo.setUser(this);
+    }
+
+    public Photo createPhoto(String filename) {
+        return new Photo(this, filename);
     }
 
     public User activate() {

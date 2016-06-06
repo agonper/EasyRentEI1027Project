@@ -15,6 +15,9 @@ public interface UserRepository extends CrudRepository<User, UUID>, UserReposito
 
     User findByUsernameIgnoreCase(String username);
 
+    @Query("select count(e)>0 from User e where lower(e.email) = lower(:email)")
+    boolean existsByEmail(@Param("email") String email);
+
     @Query("select count(e)>0 from User e where lower(e.username) = lower(:username)")
     boolean existsByUsername(@Param("username") String username);
 }
