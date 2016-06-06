@@ -1,14 +1,16 @@
 package es.uji.daal.easyrent.model;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 import java.util.Collection;
 import java.util.Set;
 
+import es.uji.daal.easyrent.config.ApplicationConfig;
 import org.apache.lucene.analysis.es.SpanishAnalyzer;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Indexed
@@ -52,6 +54,7 @@ public class Property extends DomainModel {
     private String description;
 
     @Column(nullable = false)
+    @DateTimeFormat(pattern = ApplicationConfig.DATE_FORMAT)
     private Date creationDate;
 
     @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -80,7 +83,7 @@ public class Property extends DomainModel {
 
     public Property(User owner) {
         this.owner = owner;
-        creationDate = new Date(new java.util.Date().getTime());
+        creationDate = new Date();
     }
 
     public String getTitle() {
@@ -189,84 +192,24 @@ public class Property extends DomainModel {
         return availabilityPeriods;
     }
 
-    public void addAvailiabilityPerdiod(AvailabilityPeriod period) {
-        availabilityPeriods.add(period);
-        period.setProperty(this);
-    }
-
-    public void addAvailiabilityPerdiods(Collection<AvailabilityPeriod> periods) {
-        availabilityPeriods.addAll(periods);
-        for (AvailabilityPeriod period : periods) {
-            period.setProperty(this);
-        }
-    }
-
-    public void removeAvailabilityPeriod(AvailabilityPeriod period) {
-        availabilityPeriods.remove(period);
-        period.setProperty(null);
-    }
-
-    public void removeAvailabilityPeriods(Collection<AvailabilityPeriod> periods) {
-        availabilityPeriods.removeAll(periods);
-        for (AvailabilityPeriod period : periods) {
-            period.setProperty(null);
-        }
+    public AvailabilityPeriod createAvailabilityPeriod() {
+        return new AvailabilityPeriod(this);
     }
 
     public Set<BookingProposal> getBookingProposals() {
         return bookingProposals;
     }
 
-    public void addBookingProposal(BookingProposal proposal) {
-        bookingProposals.add(proposal);
-        proposal.setProperty(this);
-    }
-
-    public void addBookingProposals(Collection<BookingProposal> proposals) {
-        bookingProposals.addAll(proposals);
-        for (BookingProposal proposal: proposals) {
-            proposal.setProperty(this);
-        }
-    }
-
-    public void removeBookingProposal(BookingProposal proposal) {
-        bookingProposals.remove(proposal);
-        proposal.setProperty(null);
-    }
-
-    public void removeBookingProposals(Collection<BookingProposal> proposals) {
-        bookingProposals.removeAll(proposals);
-        for (BookingProposal proposal : proposals) {
-            proposal.setProperty(null);
-        }
+    public BookingProposal createBookingProposal(User user) {
+        return new BookingProposal(this, user);
     }
 
     public Set<Photo> getPhotos() {
         return photos;
     }
 
-    public void addPhoto(Photo photo) {
-        photos.add(photo);
-        photo.setProperty(this);
-    }
-
-    public void addPhotos(Collection<Photo> photos) {
-        this.photos.addAll(photos);
-        for (Photo photo : photos) {
-            photo.setProperty(this);
-        }
-    }
-
-    public void removePhoto(Photo photo) {
-        photos.remove(photo);
-        photo.setProperty(null);
-    }
-
-    public void removePhotos(Collection<Photo> photos) {
-        this.photos.removeAll(photos);
-        for (Photo photo : photos) {
-            photo.setProperty(null);
-        }
+    public Photo createPhoto(String filename) {
+        return new Photo(this, filename);
     }
 
     public Set<Service> getServices() {
@@ -274,27 +217,8 @@ public class Property extends DomainModel {
     }
 
     public void addService(Service service) {
-        services.add(service);
+        getServices().add(service);
         service.addProperty(this);
-    }
-
-    public void addServices(Collection<Service> services) {
-        this.services.addAll(services);
-        for (Service service : services) {
-            service.addProperty(this);
-        }
-    }
-
-    public void removeService(Service service) {
-        services.remove(service);
-        service.removeProperty(this);
-    }
-
-    public void removeServices(Collection<Service> services) {
-        this.services.removeAll(services);
-        for (Service service : services) {
-            service.removeProperty(this);
-        }
     }
 
     @PreRemove

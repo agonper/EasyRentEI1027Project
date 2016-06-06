@@ -30,7 +30,6 @@ public class AvailabilityPeriod extends DomainModel {
 
     public AvailabilityPeriod(Property property) {
         this.property = property;
-        this.startDate = startDate;
     }
 
     public Date getStartDate() {

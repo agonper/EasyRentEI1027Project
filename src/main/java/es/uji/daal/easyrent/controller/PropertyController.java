@@ -262,7 +262,7 @@ public class PropertyController {
         if (bindingResult.hasErrors()) {
             return "bookingProposal/add";
         }
-        BookingProposal proposal = bookingForm.update(new BookingProposal(property, loggedUser));
+        BookingProposal proposal = bookingForm.update(property.createBookingProposal(loggedUser));
         proposal.setTotalAmount(bookingForm.getNumberOfTenants() *
                 property.getPricePerDay() *
                 DateUtils.daysBetweenDates(bookingForm.getEndDate(), bookingForm.getStartDate()));
