@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -14,6 +15,8 @@ import java.util.UUID;
 public interface UserRepository extends CrudRepository<User, UUID>, UserRepositoryCustom {
 
     User findByUsernameIgnoreCase(String username);
+
+
 
     @Query("select count(e)>0 from User e where lower(e.username) = lower(:username)")
     boolean existsByUsername(@Param("username") String username);

@@ -13,40 +13,40 @@ import java.util.Set;
 @Table(name = "users")
 public class User extends DomainModel {
     @Column(unique = true, nullable = false)
-    private String username;
+    public String username;
 
     @Column(unique = true)
-    private String Dni;
+    public String Dni;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private UserRole role;
+    public UserRole role;
 
     @Column(nullable = false)
-    private String password;
+    public String password;
 
-    private String name;
+    public String name;
 
-    private String surnames;
+    public String surnames;
 
     @Column(unique = true, nullable = false)
-    private String email;
+    public String email;
 
-    private String phoneNumber;
+    public String phoneNumber;
 
-    private String postalAddress;
+    public String postalAddress;
 
-    private String country;
+    public String country;
 
-    private int postCode;
-
-    @Column(nullable = false)
-    private Date signUpDate;
+    public int postCode;
 
     @Column(nullable = false)
-    private boolean active;
+    public Date signUpDate;
 
-    private Date deactivatedSince;
+    @Column(nullable = false)
+    public boolean active;
+
+    public Date deactivatedSince;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     @OrderBy("creationDate desc ")

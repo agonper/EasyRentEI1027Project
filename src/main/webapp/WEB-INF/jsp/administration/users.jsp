@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fm" tagdir="/WEB-INF/tags/forms" %>
 <fmt:message key="administration.title" var="title" bundle="${lang}"/>
 
 <sec:authorize access="isAuthenticated()">
@@ -24,19 +25,20 @@
                         <div class="panel-heading">Search for users</div>
                         <div class="panel-body">
 
-                            <form class="form-inline" method="get" action="/searchUsers">
+                            <form class="form-inline" method="get" action="/administration/users/searchFor">
                                 <div class="input-group">
-                                    <input class="form-control" name="userAttribute" placeholder="Search for users" value="" size="80">
+                                    <input class="form-control" id="searchedFor" name="searchedFor" placeholder="Search for users" value="" size="80">
                                     <div class="input-group-btn">
                                         <button type="submit" class="btn btn-warning">Search </button>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="selectServiceAttribute" class="left-padding30px">
+                                    <label for="selectedUserAttribute" class="left-padding30px">
                                         <fmt:message key="search.by-attribute" bundle="${lang}"/>
                                     </label>
-                                    <select id="selectServiceAttribute" class="form-control">
-                                        <option>-</option>
+
+                                    <select id="selectedUserAttribute" name="selectedUserAttribute" class="form-control">
+                                        <option id="userAttribute" value="-">-</option>
                                     </select>
                                 </div>
                             </form>
@@ -67,25 +69,25 @@
                                         <th><fmt:message key="general.delete" bundle="${lang}"/></th>
                                     </tr>
 
-                                    <c:forEach var="loggedUser" items="${users}">
+                                    <c:forEach var="user" items="${users}">
                                         <tr>
-                                            <td>${loggedUser.id}</td>
-                                            <td>${loggedUser.username}</td>
-                                            <td>${loggedUser.dni}</td>
-                                            <td>${loggedUser.role}</td>
-                                            <td>${loggedUser.password}</td>
-                                            <td>${loggedUser.name}</td>
-                                            <td>${loggedUser.surnames}</td>
-                                            <td>${loggedUser.email}</td>
-                                            <td>${loggedUser.phoneNumber}</td>
-                                            <td>${loggedUser.postalAddress}</td>
-                                            <td>${loggedUser.country}</td>
-                                            <td>${loggedUser.postCode}</td>
-                                            <td>${loggedUser.signUpDate}</td>
-                                            <td>${loggedUser.active}</td>
-                                            <td>${loggedUser.deactivatedSince}</td>
-                                            <td><a href="${pageContext.request.contextPath}/user/update/${loggedUser.id}.html" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span></a></td>
-                                            <td><a href="${pageContext.request.contextPath}/user/delete/${loggedUser.id}.html" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                            <td>${user.id}</td>
+                                            <td>${user.username}</td>
+                                            <td>${user.dni}</td>
+                                            <td>${user.role}</td>
+                                            <td>${user.password}</td>
+                                            <td>${user.name}</td>
+                                            <td>${user.surnames}</td>
+                                            <td>${user.email}</td>
+                                            <td>${user.phoneNumber}</td>
+                                            <td>${user.postalAddress}</td>
+                                            <td>${user.country}</td>
+                                            <td>${user.postCode}</td>
+                                            <td>${user.signUpDate}</td>
+                                            <td>${user.active}</td>
+                                            <td>${user.deactivatedSince}</td>
+                                            <td><a href="${pageContext.request.contextPath}/user/update/${user.id}.html" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span></a></td>
+                                            <td><a href="${pageContext.request.contextPath}/user/delete/${user.id}.html" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span></a></td>
                                         </tr>
                                     </c:forEach>
                                 </table>
