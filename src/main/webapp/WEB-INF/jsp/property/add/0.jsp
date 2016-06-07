@@ -6,17 +6,18 @@
 <%@ taglib prefix="navs" tagdir="/WEB-INF/tags/navs" %>
 
 <fmt:message key="add-property.title" bundle="${lang}" var="title"/>
-<t:paginabasica title="${title}">
+<fmt:message key="profile.personal-data" bundle="${lang}" var="subtitle"/>
+<t:paginabasica title="${title}: ${subtitle}">
     <jsp:body>
         <div class="page-header">
-            <h1>${title}</h1>
+            <h1>${title} <small>${subtitle}</small></h1>
         </div>
 
         <navs:add-property step="${pageContext.session.getAttribute('addPropertyMap').step.ordinal()}" steps="${steps}" path="/property/add"/>
 
         <div class="panel panel-warning">
             <div class="panel-heading">
-                <fmt:message key="profile.personal-data" bundle="${lang}"/>
+                ${subtitle}
             </div>
             <div class="panel-body">
                 <form:form cssClass="form-horizontal" action="${pageContext.request.contextPath}/property/add/0" method="post" modelAttribute="personalDataForm">

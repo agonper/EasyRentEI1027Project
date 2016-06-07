@@ -24,7 +24,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.sql.Date;
+import java.util.Date;
 import java.util.*;
 
 /**
@@ -94,6 +94,8 @@ public class PropertyController {
         Map<String, Object> addProperty = (Map<String, Object>) session.getAttribute("addPropertyMap");
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
+        addStep = fixstepIfNeeded(addProperty, addStep);
+
         switch (addStep) {
             case PERSONAL_DATA:
                 PersonalDataForm personalDataForm = new PersonalDataForm();
@@ -113,18 +115,17 @@ public class PropertyController {
                 break;
             case PROPERTY_INFO:
                 Property property = addProperty.containsKey("property") ?
-                        (Property) addProperty.get("property") :new Property(loggedUser);
+                        (Property) addProperty.get("property") : loggedUser.createProperty();
                 model.addAttribute("property", property);
                 break;
             case AVAILABILITY_DATES:
-                model.addAttribute("property", new Property(loggedUser));
                 break;
             case PHOTOS:
-                model.addAttribute("property", new Property(loggedUser));
                 break;
             case CHECK:
-                model.addAttribute("property", new Property(loggedUser));
-                break;default:
+                model.addAttribute("property", addProperty.get("property"));
+                break;
+            default:
 
         }
         return "property/add/"+addStep.ordinal();
@@ -148,8 +149,16 @@ public class PropertyController {
         }
     }
 
+    private AddStep fixstepIfNeeded(Map<String, Object> addProperty, AddStep requested) {
+        AddStep sessionStep = (AddStep) addProperty.get("step");
+        if (requested.ordinal() > sessionStep.ordinal()) {
+            return sessionStep;
+        }
+        return requested;
+    }
+
     @RequestMapping(value = "/add/0", method = RequestMethod.POST)
-    public String processAddZeroSubmit(@ModelAttribute("personalDataForm") PersonalDataForm personalDataForm,
+    public String processAddSubmit(@ModelAttribute("personalDataForm") PersonalDataForm personalDataForm,
                                    BindingResult bindingResult,
                                    HttpSession session) {
         PersonalDataValidator validator = new PersonalDataValidator();
@@ -169,7 +178,7 @@ public class PropertyController {
     }
 
     @RequestMapping(value = "/add/1", method = RequestMethod.POST)
-    public String processAddOneSubmit(@ModelAttribute("addressInfoForm") AddressInfoForm addressInfoForm,
+    public String processAddSubmit(@ModelAttribute("addressInfoForm") AddressInfoForm addressInfoForm,
                                    BindingResult bindingResult,
                                    HttpSession session) {
         AddressInfoValidator validator = new AddressInfoValidator();
@@ -199,13 +208,45 @@ public class PropertyController {
         if (bindingResult.hasErrors())
             return "property/add/2";
 
-        property.setCreationDate(new Date(new java.util.Date().getTime()));
+        property.setCreationDate(new Date());
         property.setOwner(loggedUser);
         Map<String, Object> addProperty = (Map<String, Object>) session.getAttribute("addPropertyMap");
         addProperty.put("property", property);
         addProperty.replace("step", AddStep.PROPERTY_INFO, AddStep.AVAILABILITY_DATES);
-//      redirect:../user/owner/"+ loggedUser.getId() +".html"
         return "redirect:?step=3";
+    }
+
+    @RequestMapping(value = "/add/3", method = RequestMethod.POST)
+    public String processAddSubmit(HttpSession session) {
+        Map<String, Object> addProperty = (Map<String, Object>) session.getAttribute("addPropertyMap");
+        addProperty.replace("step", AddStep.AVAILABILITY_DATES, AddStep.PHOTOS);
+        return "redirect:?step=4";
+    }
+
+    @RequestMapping(value = "/add/4", method = RequestMethod.POST)
+    public String processAddPhotosSubmit(HttpSession session) {
+        Map<String, Object> addProperty = (Map<String, Object>) session.getAttribute("addPropertyMap");
+        addProperty.replace("step", AddStep.PHOTOS, AddStep.CHECK);
+        return "redirect:?step=5";
+    }
+
+    @RequestMapping(value = "/add/5", method = RequestMethod.POST)
+    public String processAddCheckSubmit(HttpSession session) {
+        User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Map<String, Object> addProperty = (Map<String, Object>) session.getAttribute("addPropertyMap");
+
+        PersonalDataForm personalDataForm = (PersonalDataForm) addProperty.get("personalDataForm");
+        AddressInfoForm addressInfoForm = (AddressInfoForm) addProperty.get("addressInfoForm");
+        personalDataForm.update(loggedUser);
+        addressInfoForm.update(loggedUser);
+        userRepository.save(loggedUser);
+
+        Property property = (Property) addProperty.get("property");
+        repository.save(property);
+
+        session.removeAttribute("addPropertyMap");
+
+        return "redirect:../../user/owner/"+ loggedUser.getId() +".html";
     }
 
     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
