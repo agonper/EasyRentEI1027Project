@@ -1,10 +1,8 @@
 package es.uji.daal.easyrent.controller;
 
-import es.uji.daal.easyrent.model.BookingProposal;
-import es.uji.daal.easyrent.model.Property;
+import es.uji.daal.easyrent.model.*;
 
-import es.uji.daal.easyrent.model.PropertyType;
-import es.uji.daal.easyrent.model.User;
+import es.uji.daal.easyrent.repository.AvailabilityPeriodRepository;
 import es.uji.daal.easyrent.repository.BookingProposalRepository;
 import es.uji.daal.easyrent.repository.PropertyRepository;
 import es.uji.daal.easyrent.repository.UserRepository;
@@ -14,6 +12,7 @@ import es.uji.daal.easyrent.validators.BookingValidator;
 import es.uji.daal.easyrent.validators.PersonalDataValidator;
 import es.uji.daal.easyrent.validators.PropertyValidator;
 import es.uji.daal.easyrent.view_models.AddressInfoForm;
+import es.uji.daal.easyrent.view_models.AvailabilityForm;
 import es.uji.daal.easyrent.view_models.BookingForm;
 import es.uji.daal.easyrent.view_models.PersonalDataForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by daniel on 23/04/16.
@@ -42,6 +42,9 @@ public class PropertyController {
 
     @Autowired
     private BookingProposalRepository proposalRepository;
+
+    @Autowired
+    private AvailabilityPeriodRepository availabilityRepository;
 
     @RequestMapping("/list")
     public String list(Model model) {
@@ -119,10 +122,18 @@ public class PropertyController {
                 model.addAttribute("property", property);
                 break;
             case AVAILABILITY_DATES:
+                if (!addProperty.containsKey("availabilityPeriods")) {
+                    addProperty.put("availabilityPeriods", new ArrayList<AvailabilityForm>());
+                }
+                List<AvailabilityForm> availabilityPeriods = (List<AvailabilityForm>) addProperty.get("availabilityPeriods");
+                model.addAttribute("availabilityPeriods", availabilityPeriods);
+                model.addAttribute("availabilityForm", new AvailabilityForm());
                 break;
             case PHOTOS:
                 break;
             case CHECK:
+                List<AvailabilityForm> periods = (List<AvailabilityForm>) addProperty.get("availabilityPeriods");
+                model.addAttribute("availabilityPeriods", periods);
                 model.addAttribute("property", addProperty.get("property"));
                 break;
             default:
@@ -208,6 +219,7 @@ public class PropertyController {
         if (bindingResult.hasErrors())
             return "property/add/2";
 
+        //FIXME: Crear un view model para esto, así no se ponen los campos a null
         property.setCreationDate(new Date());
         property.setOwner(loggedUser);
         Map<String, Object> addProperty = (Map<String, Object>) session.getAttribute("addPropertyMap");
@@ -219,6 +231,16 @@ public class PropertyController {
     @RequestMapping(value = "/add/3", method = RequestMethod.POST)
     public String processAddSubmit(HttpSession session) {
         Map<String, Object> addProperty = (Map<String, Object>) session.getAttribute("addPropertyMap");
+        List<AvailabilityForm> availabilityForms = (List<AvailabilityForm>) addProperty.get("availabilityPeriods");
+        Property property = (Property) addProperty.get("property");
+
+        if (property.getAvailabilityPeriods() != null) {
+            property.getAvailabilityPeriods().clear();
+        }
+        List<AvailabilityPeriod> availabilityPeriods = availabilityForms.stream()
+                .map(form -> form.update(property.createAvailabilityPeriod())).collect(Collectors.toCollection(LinkedList::new));
+
+        addProperty.put("availabilities", availabilityPeriods);
         addProperty.replace("step", AddStep.AVAILABILITY_DATES, AddStep.PHOTOS);
         return "redirect:?step=4";
     }
@@ -243,6 +265,9 @@ public class PropertyController {
 
         Property property = (Property) addProperty.get("property");
         repository.save(property);
+
+        List<AvailabilityPeriod> periods = (List<AvailabilityPeriod>) addProperty.get("availabilities");
+        availabilityRepository.save(periods);
 
         session.removeAttribute("addPropertyMap");
 

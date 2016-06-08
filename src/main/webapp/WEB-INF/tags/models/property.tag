@@ -1,6 +1,9 @@
 <%@ attribute name="property" type="es.uji.daal.easyrent.model.Property" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ attribute name="availabilityPeriods" type="java.util.List<es.uji.daal.easyrent.view_models.AvailabilityForm>" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="er" uri="/WEB-INF/easy-rent.tld" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div class="row">
     <div class="col-sm-4">
@@ -51,7 +54,7 @@
                 <fmt:message key="property.availability-dates" bundle="${lang}"/>
             </div>
             <div class="panel-body">
-                ## Dates ##
+                <div id="availability-calendar"></div>
             </div>
         </div>
         <div class="well">
@@ -102,3 +105,47 @@
         ## Services ##
     </div>
 </div>
+<er:time-config type="datepicker" var="datepickerFormat"/>
+<c:choose>
+    <c:when test="${not empty availabilityPeriods}">
+        <er:object-to-json object="${availabilityPeriods}" var="jsonPeriods"/>
+    </c:when>
+    <c:otherwise>
+        <er:availabilities-to-json periods="${property.availabilityPeriods}" var="jsonPeriods"/>
+    </c:otherwise>
+</c:choose>
+<script>
+    (function () {
+        var availabilityPeriods = JSON.parse('${jsonPeriods}');
+
+        $('#availability-calendar').datepicker({
+            format: '${datepickerFormat}',
+            beforeShowDay: function (date) {
+                var momentDate = moment(date);
+                var options = {
+                    enabled: false,
+                    classes: ""
+                };
+                availabilityPeriods.forEach(function (period, index) {
+                    var startDate = moment(period.startDate);
+                    if (period.endless) {
+                        if (momentDate.isAfter(startDate) || momentDate.isSame(startDate, 'day')) {
+                            options.enabled = true;
+                            options.classes = "active disabled";
+                            return;
+                        }
+                    } else {
+                        var endDate = moment(period.endDate);
+                        var range = moment().range(startDate, endDate);
+                        if (range.contains(momentDate)) {
+                            options.enabled = true;
+                            options.classes = "active disabled";
+                            return;
+                        }
+                    }
+                });
+                return options;
+            }
+        });
+    })();
+</script>

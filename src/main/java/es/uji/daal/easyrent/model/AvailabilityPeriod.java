@@ -2,7 +2,6 @@ package es.uji.daal.easyrent.model;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.UUID;
 
 /**
  * Created by alberto on 17/03/16.

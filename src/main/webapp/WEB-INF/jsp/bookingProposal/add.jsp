@@ -1,5 +1,6 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="er" uri="/WEB-INF/easy-rent.tld" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
@@ -71,9 +72,9 @@
                     <div class="form-group" id="datepicker-container">
                         <label><fmt:message key="proposal.date-range" bundle="${lang}"/></label>
                         <div class="input-daterange input-group" id="datepicker">
-                            <form:input path="startDate" cssClass="input-sm form-control"/>
+                            <form:input path="startDate" required="true" cssClass="input-sm form-control"/>
                             <span class="input-group-addon">to</span>
-                            <form:input path="endDate" cssClass="input-sm form-control"/>
+                            <form:input path="endDate" required="true" cssClass="input-sm form-control"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -92,9 +93,12 @@
                 </form:form>
             </div>
         </div>
+        <er:time-config type="datepicker" var="datepickerFormat"/>
+        <er:time-config type="moment" var="momentFormat"/>
         <script>
             $('#datepicker-container').find('.input-daterange').datepicker({
-                format: "dd/mm/yyyy"
+                format: '${datepickerFormat}',
+                startDate: moment().format('${momentFormat}')
             });
         </script>
     </jsp:body>

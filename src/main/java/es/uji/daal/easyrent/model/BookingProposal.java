@@ -1,8 +1,5 @@
 package es.uji.daal.easyrent.model;
 
-import es.uji.daal.easyrent.config.ApplicationConfig;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -21,11 +18,9 @@ public class BookingProposal extends DomainModel {
     private User tenant;
 
     @Column(nullable = false)
-    @DateTimeFormat(pattern = ApplicationConfig.DATE_FORMAT)
     private Date startDate;
 
     @Column(nullable = false)
-    @DateTimeFormat(pattern = ApplicationConfig.DATE_FORMAT)
     private Date endDate;
 
     @Column(nullable = false)

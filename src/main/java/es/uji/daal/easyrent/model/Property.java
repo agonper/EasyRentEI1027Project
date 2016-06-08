@@ -2,15 +2,12 @@ package es.uji.daal.easyrent.model;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Collection;
 import java.util.Set;
 
-import es.uji.daal.easyrent.config.ApplicationConfig;
 import org.apache.lucene.analysis.es.SpanishAnalyzer;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Indexed
