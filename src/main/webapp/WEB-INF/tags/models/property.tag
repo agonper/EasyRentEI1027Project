@@ -107,7 +107,7 @@
 </div>
 <er:time-config type="datepicker" var="datepickerFormat"/>
 <c:choose>
-    <c:when test="${not empty availabilityPeriods}">
+    <c:when test="${availabilityPeriods ne null}">
         <er:object-to-json object="${availabilityPeriods}" var="jsonPeriods"/>
     </c:when>
     <c:otherwise>

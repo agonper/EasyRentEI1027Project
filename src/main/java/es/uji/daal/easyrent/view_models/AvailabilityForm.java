@@ -37,6 +37,7 @@ public class AvailabilityForm implements ViewModel<AvailabilityPeriod> {
         this.endless = endless;
     }
 
+    @Override
     public AvailabilityForm fillUp(AvailabilityPeriod availabilityPeriod) {
         setStartDate(availabilityPeriod.getStartDate());
         setEndDate(availabilityPeriod.getEndDate());

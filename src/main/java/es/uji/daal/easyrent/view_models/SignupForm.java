@@ -56,6 +56,13 @@ public class SignupForm implements ViewModel<User>{
     }
 
     @Override
+    public SignupForm fillUp(User model) {
+        setUsername(model.getUsername());
+        setEmail(model.getEmail());
+        return this;
+    }
+
+    @Override
     public User update(User model) {
         model.setUsername(getUsername());
         model.setPassword(getPassword());

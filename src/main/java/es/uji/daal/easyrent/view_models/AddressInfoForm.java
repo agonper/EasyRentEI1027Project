@@ -34,10 +34,12 @@ public class AddressInfoForm implements ViewModel<User> {
         this.postCode = postCode;
     }
 
-    public void fillUp(User model) {
+    @Override
+    public AddressInfoForm fillUp(User model) {
         setAddress(model.getPostalAddress());
         setCountry(model.getCountry());
         setPostCode(model.getPostCode());
+        return this;
     }
 
     @Override

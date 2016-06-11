@@ -5,4 +5,5 @@ package es.uji.daal.easyrent.view_models;
  */
 public interface ViewModel<T> {
     T update(T model);
+    ViewModel fillUp(T model);
 }

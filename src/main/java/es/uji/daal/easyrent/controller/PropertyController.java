@@ -101,19 +101,15 @@ public class PropertyController {
 
         switch (addStep) {
             case PERSONAL_DATA:
-                PersonalDataForm personalDataForm = new PersonalDataForm();
-                personalDataForm.fillUp(loggedUser);
-                if (addProperty.containsKey("personalDataForm")) {
-                    personalDataForm = (PersonalDataForm) addProperty.get("personalDataForm");
-                }
+                PersonalDataForm personalDataForm = addProperty.containsKey("personalDataForm") ?
+                        (PersonalDataForm) addProperty.get("personalDataForm") :
+                        new PersonalDataForm().fillUp(loggedUser);
                 model.addAttribute("personalDataForm", personalDataForm);
                 break;
             case ADDRESS_INFO:
-                AddressInfoForm addressInfoForm = new AddressInfoForm();
-                addressInfoForm.fillUp(loggedUser);
-                if (addProperty.containsKey("addressInfoForm")) {
-                    addressInfoForm = (AddressInfoForm) addProperty.get("addressInfoForm");
-                }
+                AddressInfoForm addressInfoForm = addProperty.containsKey("addressInfoForm") ?
+                        (AddressInfoForm) addProperty.get("addressInfoForm") :
+                        new AddressInfoForm().fillUp(loggedUser);
                 model.addAttribute("addressInfoForm", addressInfoForm);
                 break;
             case PROPERTY_INFO:
@@ -125,15 +121,13 @@ public class PropertyController {
                 if (!addProperty.containsKey("availabilityPeriods")) {
                     addProperty.put("availabilityPeriods", new ArrayList<AvailabilityForm>());
                 }
-                List<AvailabilityForm> availabilityPeriods = (List<AvailabilityForm>) addProperty.get("availabilityPeriods");
-                model.addAttribute("availabilityPeriods", availabilityPeriods);
+                model.addAttribute("availabilityPeriods", addProperty.get("availabilityPeriods"));
                 model.addAttribute("availabilityForm", new AvailabilityForm());
                 break;
             case PHOTOS:
                 break;
             case CHECK:
-                List<AvailabilityForm> periods = (List<AvailabilityForm>) addProperty.get("availabilityPeriods");
-                model.addAttribute("availabilityPeriods", periods);
+                model.addAttribute("availabilityPeriods", addProperty.get("availabilityPeriods"));
                 model.addAttribute("property", addProperty.get("property"));
                 break;
             default:
