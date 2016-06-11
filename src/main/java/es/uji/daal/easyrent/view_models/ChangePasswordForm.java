@@ -35,6 +35,12 @@ public class ChangePasswordForm implements ViewModel<User> {
     }
 
     @Override
+    public ChangePasswordForm fillUp(User model) {
+        setOldPassword(model.getPassword());
+        return this;
+    }
+
+    @Override
     public User update(User model) {
         model.setPassword(getNewPassword());
         return model;

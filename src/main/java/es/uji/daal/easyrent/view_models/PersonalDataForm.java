@@ -56,7 +56,7 @@ public class PersonalDataForm implements ViewModel<User>{
         this.phoneNumber = phoneNumber;
     }
 
-    public void fillUp(User model) {
+    public PersonalDataForm fillUp(User model) {
         setName(model.getName());
         setSurnames(model.getSurnames());
         setDni(model.getDni());
@@ -65,6 +65,7 @@ public class PersonalDataForm implements ViewModel<User>{
             setCountryPrefix(phoneData[PREFIX]);
             setPhoneNumber(phoneData[NUMBER]);
         }
+        return this;
     }
 
     @Override

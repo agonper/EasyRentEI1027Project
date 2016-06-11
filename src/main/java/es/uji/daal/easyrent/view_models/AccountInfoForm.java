@@ -26,9 +26,11 @@ public class AccountInfoForm implements ViewModel<User> {
         this.email = email;
     }
 
-    public void fillUp(User model) {
+    @Override
+    public AccountInfoForm fillUp(User model) {
         setUsername(model.getUsername());
         setEmail(model.getEmail());
+        return this;
     }
 
     @Override

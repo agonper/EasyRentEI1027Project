@@ -38,6 +38,14 @@ public class BookingForm implements ViewModel<BookingProposal> {
 
 
     @Override
+    public BookingForm fillUp(BookingProposal model) {
+        setStartDate(model.getStartDate());
+        setEndDate(model.getEndDate());
+        setNumberOfTenants(model.getNumberOfTenants());
+        return this;
+    }
+
+    @Override
     public BookingProposal update(BookingProposal model) {
         model.setStartDate(getStartDate());
         model.setEndDate(getEndDate());
