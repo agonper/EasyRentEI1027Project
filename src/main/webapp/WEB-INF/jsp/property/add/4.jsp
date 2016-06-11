@@ -3,6 +3,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="navs" tagdir="/WEB-INF/tags/navs" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <fmt:message key="add-property.title" bundle="${lang}" var="title"/>
 <fmt:message key="property.photos" bundle="${lang}" var="subtitle"/>
@@ -19,7 +21,20 @@
                     ${subtitle}
             </div>
             <div class="panel-body">
+                <div id="photo-list" class="row center-block">
+                    <c:forEach items="${propertyPhotos.values()}" var="pictureUri">
+                        <div id="${pictureUri}" class="col-lg-3 col-md-4 col-sm-6 col-xs-12"><img class="img-responsive img-thumbnail" src="${pageContext.request.contextPath}/uploads/property-pics/${pictureUri}"></div>
+                    </c:forEach>
+                </div>
+                <br>
 
+                <form id="property-pictures" action="${pageContext.request.contextPath}/property/0/upload-photos" class="dropzone">
+                    <div class="fallback">
+                        <input name="file" type="file" multiple />
+                    </div>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <input type="hidden" name="type" value="session">
+                </form>
             </div>
         </div>
 
@@ -32,5 +47,38 @@
                 </div>
             </div>
         </form>
+        <fmt:message key="property.upload-photos" bundle="${lang}" var="uploadPlaceholder"/>
+        <fmt:message key="property.remove-picture" bundle="${lang}" var="removePicture"/>
+        <fmt:message key="property.cancel-upload" bundle="${lang}" var="cancelUpload"/>
+        <script>
+            (function () {
+                Dropzone.options.propertyPictures = {
+                    addRemoveLinks: true,
+                    dictDefaultMessage: '${uploadPlaceholder}',
+                    dictRemoveFile: '${removePicture}',
+                    dictCancelUpload: '${cancelUpload}',
+                    init: function () {
+                        var _this = this;
+                        _this.on('complete', function (file) {
+                            if (file.xhr.status == 200){
+                                $('#photo-list').append('<div id="' + file.xhr.response + '" class="col-lg-3 col-md-4 col-sm-6 col-xs-12">' +
+                                        '<img class="img-responsive img-thumbnail" src="${pageContext.request.contextPath}/uploads/property-pics/' + file.xhr.response + '">' +
+                                        '</div>');
+                                $(file.previewElement).find('.dz-remove').on('click', function () {
+                                    var options = {
+                                        type: 'session'
+                                    };
+                                    options['${_csrf.parameterName}'] = '${_csrf.token}';
+
+                                    $.post('${pageContext.request.contextPath}/uploads/property-pics/' + file.xhr.response + '/remove', options).done(function () {
+                                        $('#' + file.xhr.response).remove();
+                                    });
+                                });
+                            }
+                        });
+                    }
+                }
+            })();
+        </script>
     </jsp:body>
 </tag:paginabasica>

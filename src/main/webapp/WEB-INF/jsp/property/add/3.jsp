@@ -48,7 +48,7 @@
                     </c:forEach>
                     <hr>
                 </c:if>
-                <form:form cssClass="form-inline" method="post" modelAttribute="availabilityForm" action="${pageContext.request.contextPath}/property/availability-period/add">
+                <form:form cssClass="form-inline" method="post" modelAttribute="availabilityForm" action="${pageContext.request.contextPath}/property/availability-period/0/add">
                     <div class="form-group datepicker-container">
                         <label><fmt:message key="property.availability-period" bundle="${lang}"/></label>
                         <div class="input-daterange input-group" id="new-range">

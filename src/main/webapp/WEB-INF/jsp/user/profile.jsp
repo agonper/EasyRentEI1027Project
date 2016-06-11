@@ -62,14 +62,22 @@
                                     <div class="col-md-6">
                                         <c:if test="${user.equals(loggedUser)}">
                                             <form class="form-horizontal" method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/user/edit/${user.id}/upload-picture">
-                                                <div class="form-group">
-                                                    <label for="file"><fmt:message key="profile.upload-picture" bundle="${lang}"/></label>
-                                                    <input type="file" name="file" accept="image/**" id="file">
-                                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                    <label><fmt:message key="profile.upload-picture" bundle="${lang}"/></label>
+                                                    <div class="form-group">
+                                                        <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <span class="btn btn-default btn-file">
+                                                            <span class="fileinput-new"><fmt:message key="general.select-image" bundle="${lang}"/></span>
+                                                            <span class="fileinput-exists"><fmt:message key="general.change" bundle="${lang}"/></span>
+                                                            <input type="file" name="file" accept="image/**" id="file">
+                                                        </span>
+                                                        <a href="#" class="btn btn-danger fileinput-exists" data-dismiss="fileinput"><span class="glyphicon glyphicon-remove"></span> <fmt:message key="general.remove" bundle="${lang}"/></a>
+                                                        <button type="submit" class="btn btn-warning fileinput-exists"><span class="glyphicon glyphicon-upload"></span> <fmt:message key="general.upload" bundle="${lang}"/></button>
+                                                    </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-upload"></span> <fmt:message key="general.upload" bundle="${lang}"/></button>
-                                                </div>
+                                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                             </form>
                                         </c:if>
                                     </div>

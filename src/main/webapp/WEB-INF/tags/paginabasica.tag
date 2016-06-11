@@ -41,6 +41,9 @@
     <script src="${pageContext.request.contextPath}/js/moment.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/moment-range.min.js"></script>
 
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/dropzone.min.css">
+    <script src="${pageContext.request.contextPath}/js/dropzone.min.js"></script>
+
 </head>
 <body>
 <c:set var="locale" value="en"/>

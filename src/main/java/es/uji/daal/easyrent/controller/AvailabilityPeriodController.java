@@ -29,19 +29,19 @@ public class AvailabilityPeriodController {
         return "property/availabilityPeriod/listAll";
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/{propertyId}/add", method = RequestMethod.POST)
     public String add(@RequestParam(value = "type", defaultValue = "storage") String type,
                       @ModelAttribute AvailabilityForm availabilityForm,
                       BindingResult bindingResult,
-                      HttpSession session) {
-        RequestType requestType = RequestType.valueOf(type.toUpperCase());
-        if (requestType == RequestType.SESSION) {
+                      HttpSession session, @PathVariable("propertyId") String propertyId) {
+        UploadType requestType = UploadType.valueOf(type.toUpperCase());
+        if (requestType == UploadType.SESSION) {
             Map<String, Object> addProperty = (Map<String, Object>) session.getAttribute("addPropertyMap");
             List<AvailabilityForm> availabilities = (List<AvailabilityForm>) addProperty.get("availabilityPeriods");
             if (!bindingResult.hasErrors()) {
                 availabilities.add(availabilityForm);
             }
-            return "redirect:../add.html?step=3";
+            return "redirect:../../add.html?step=3";
         } else {
             return ""; //FIXME: Implement
         }
@@ -53,8 +53,8 @@ public class AvailabilityPeriodController {
                          @ModelAttribute AvailabilityForm availabilityForm,
                          BindingResult bindingResult,
                          HttpSession session) {
-        RequestType requestType = RequestType.valueOf(type.toUpperCase());
-        if (requestType == RequestType.SESSION) {
+        UploadType requestType = UploadType.valueOf(type.toUpperCase());
+        if (requestType == UploadType.SESSION) {
             Map<String, Object> addProperty = (Map<String, Object>) session.getAttribute("addPropertyMap");
             List<AvailabilityForm> availabilities = (List<AvailabilityForm>) addProperty.get("availabilityPeriods");
             if (!bindingResult.hasErrors()) {
@@ -71,8 +71,8 @@ public class AvailabilityPeriodController {
     public String delete(@RequestParam(value = "type", defaultValue = "storage") String type,
                          @PathVariable("id") String id,
                          HttpSession session) {
-        RequestType requestType = RequestType.valueOf(type.toUpperCase());
-        if (requestType == RequestType.SESSION) {
+        UploadType requestType = UploadType.valueOf(type.toUpperCase());
+        if (requestType == UploadType.SESSION) {
             Map<String, Object> addProperty = (Map<String, Object>) session.getAttribute("addPropertyMap");
             List<AvailabilityForm> availabilities = (List<AvailabilityForm>) addProperty.get("availabilityPeriods");
             int index = Integer.parseInt(id);
@@ -81,9 +81,5 @@ public class AvailabilityPeriodController {
         } else {
             return ""; //FIXME: Implement
         }
-    }
-
-    private enum RequestType {
-        SESSION, STORAGE
     }
 }

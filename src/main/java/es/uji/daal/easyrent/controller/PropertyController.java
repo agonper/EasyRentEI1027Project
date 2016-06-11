@@ -7,20 +7,19 @@ import es.uji.daal.easyrent.repository.BookingProposalRepository;
 import es.uji.daal.easyrent.repository.PropertyRepository;
 import es.uji.daal.easyrent.repository.UserRepository;
 import es.uji.daal.easyrent.utils.DateUtils;
+import es.uji.daal.easyrent.utils.FileUploader;
 import es.uji.daal.easyrent.validators.AddressInfoValidator;
 import es.uji.daal.easyrent.validators.BookingValidator;
 import es.uji.daal.easyrent.validators.PersonalDataValidator;
 import es.uji.daal.easyrent.validators.PropertyValidator;
-import es.uji.daal.easyrent.view_models.AddressInfoForm;
-import es.uji.daal.easyrent.view_models.AvailabilityForm;
-import es.uji.daal.easyrent.view_models.BookingForm;
-import es.uji.daal.easyrent.view_models.PersonalDataForm;
+import es.uji.daal.easyrent.view_models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.util.Date;
@@ -45,6 +44,9 @@ public class PropertyController {
 
     @Autowired
     private AvailabilityPeriodRepository availabilityRepository;
+
+    @Autowired
+    private FileUploader fileUploader;
 
     @RequestMapping("/list")
     public String list(Model model) {
@@ -125,6 +127,10 @@ public class PropertyController {
                 model.addAttribute("availabilityForm", new AvailabilityForm());
                 break;
             case PHOTOS:
+                if (!addProperty.containsKey("propertyPhotos")) {
+                    addProperty.put("propertyPhotos", new HashMap<String, String>());
+                }
+                model.addAttribute("propertyPhotos", addProperty.get("propertyPhotos"));
                 break;
             case CHECK:
                 model.addAttribute("availabilityPeriods", addProperty.get("availabilityPeriods"));
@@ -228,9 +234,6 @@ public class PropertyController {
         List<AvailabilityForm> availabilityForms = (List<AvailabilityForm>) addProperty.get("availabilityPeriods");
         Property property = (Property) addProperty.get("property");
 
-        if (property.getAvailabilityPeriods() != null) {
-            property.getAvailabilityPeriods().clear();
-        }
         List<AvailabilityPeriod> availabilityPeriods = availabilityForms.stream()
                 .map(form -> form.update(property.createAvailabilityPeriod())).collect(Collectors.toCollection(LinkedList::new));
 
@@ -242,6 +245,13 @@ public class PropertyController {
     @RequestMapping(value = "/add/4", method = RequestMethod.POST)
     public String processAddPhotosSubmit(HttpSession session) {
         Map<String, Object> addProperty = (Map<String, Object>) session.getAttribute("addPropertyMap");
+        Map<String, String> propertyPhotos = (Map<String, String>) addProperty.get("propertyPhotos");
+        Property property = (Property) addProperty.get("property");
+
+        List<Photo> photos = propertyPhotos.values().stream()
+                .map(property::createPhoto).collect(Collectors.toCollection(LinkedList::new));
+
+        addProperty.put("photos", photos);
         addProperty.replace("step", AddStep.PHOTOS, AddStep.CHECK);
         return "redirect:?step=5";
     }
@@ -331,6 +341,29 @@ public class PropertyController {
                 DateUtils.daysBetweenDates(bookingForm.getEndDate(), bookingForm.getStartDate()));
         proposalRepository.save(proposal);
         return "redirect:../../user/tenant/"+loggedUser.getId()+".html";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/{propertyId}/upload-photos", method = RequestMethod.POST)
+    public String add(@RequestParam(value = "type", defaultValue = "storage") String type,
+                      @RequestParam("file") MultipartFile file,
+                      HttpSession session, @PathVariable("propertyId") String propertyId) {
+        UploadType requestType = UploadType.valueOf(type.toUpperCase());
+        if (requestType == UploadType.SESSION) {
+            Map<String, Object> addProperty = (Map<String, Object>) session.getAttribute("addPropertyMap");
+            if (addProperty != null) {
+                Map<String, String> propertyPhotos = (Map<String, String>) addProperty.get("propertyPhotos");
+                String filename = fileUploader.upload("property-pics", file);
+                if (filename != null) {
+                    propertyPhotos.put(filename, filename);
+                    return filename;
+                }
+                return "none";
+            }
+            return "none";
+        } else {
+            return ""; //TODO: Implement
+        }
     }
 
     private enum AddStep {
