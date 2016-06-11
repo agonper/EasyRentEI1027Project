@@ -46,7 +46,7 @@
                         <td>${loggedUser.postalAddress}</td>
                         <td>${loggedUser.country}</td>
                         <td>${loggedUser.postCode}</td>
-                        <td>${loggedUser.signUpDate}</td>
+                        <td><t:format-date value="${loggedUser.signUpDate}"/></td>
                         <td>${loggedUser.active}</td>
                         <td>${loggedUser.deactivatedSince}</td>
                         <td><a href="${pageContext.request.contextPath}/user/update/${loggedUser.id}.html" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span></a></td>

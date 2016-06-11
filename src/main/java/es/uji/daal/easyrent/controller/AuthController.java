@@ -47,6 +47,9 @@ public class AuthController {
         if (repository.existsByUsername(form.getUsername())) {
             bindingResult.rejectValue("username", "exists", "That username already exists");
         }
+        if (repository.existsByEmail(form.getEmail())) {
+            bindingResult.rejectValue("email", "exists", "There is an account with that email");
+        }
         if (bindingResult.hasErrors()) {
             return "auth/signup";
         }

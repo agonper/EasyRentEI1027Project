@@ -38,7 +38,19 @@
                                     </label>
 
                                     <select id="selectedUserAttribute" name="selectedUserAttribute" class="form-control">
-                                        <option id="userAttribute" value="-">-</option>
+                                        <option value="username"><fmt:message key="administration-users.username" bundle="${lang}"/></option>
+                                        <option value="ID">ID</option>
+                                        <option value="NID"><fmt:message key="administration-users.nid" bundle="${lang}"/></option>
+                                        <option value="surnames"><fmt:message key="administration-users.surnames" bundle="${lang}"/></option>
+                                        <option value="role"><fmt:message key="administration-users.role" bundle="${lang}"/></option>
+                                        <option value="email"><fmt:message key="administration-users.email" bundle="${lang}"/></option>
+                                        <option value="phone number"><fmt:message key="administration-users.phoneNumber" bundle="${lang}"/></option>
+                                        <option value="address"><fmt:message key="administration-users.address" bundle="${lang}"/></option>
+                                        <option value="country"><fmt:message key="administration-users.country" bundle="${lang}"/></option>
+                                        <option value="post code"><fmt:message key="administration-users.postCode" bundle="${lang}"/></option>
+                                        <option value="sign up date"><fmt:message key="administration-users.signUpDate" bundle="${lang}"/></option>
+                                        <option value="active"><fmt:message key="administration-users.active" bundle="${lang}"/></option>
+                                        <option value="deactived since"><fmt:message key="administration-users.deactivedSince" bundle="${lang}"/></option>
                                     </select>
                                 </div>
                             </form>
