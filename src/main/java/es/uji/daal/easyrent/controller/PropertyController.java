@@ -1,10 +1,8 @@
 package es.uji.daal.easyrent.controller;
 
-import es.uji.daal.easyrent.model.BookingProposal;
-import es.uji.daal.easyrent.model.Property;
+import es.uji.daal.easyrent.model.*;
 
-import es.uji.daal.easyrent.model.PropertyType;
-import es.uji.daal.easyrent.model.User;
+import es.uji.daal.easyrent.repository.AvailabilityPeriodRepository;
 import es.uji.daal.easyrent.repository.BookingProposalRepository;
 import es.uji.daal.easyrent.repository.PropertyRepository;
 import es.uji.daal.easyrent.repository.UserRepository;
@@ -14,6 +12,7 @@ import es.uji.daal.easyrent.validators.BookingValidator;
 import es.uji.daal.easyrent.validators.PersonalDataValidator;
 import es.uji.daal.easyrent.validators.PropertyValidator;
 import es.uji.daal.easyrent.view_models.AddressInfoForm;
+import es.uji.daal.easyrent.view_models.AvailabilityForm;
 import es.uji.daal.easyrent.view_models.BookingForm;
 import es.uji.daal.easyrent.view_models.PersonalDataForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +23,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.sql.Date;
+import java.util.Date;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by daniel on 23/04/16.
@@ -42,6 +42,9 @@ public class PropertyController {
 
     @Autowired
     private BookingProposalRepository proposalRepository;
+
+    @Autowired
+    private AvailabilityPeriodRepository availabilityRepository;
 
     @RequestMapping("/list")
     public String list(Model model) {
@@ -94,6 +97,8 @@ public class PropertyController {
         Map<String, Object> addProperty = (Map<String, Object>) session.getAttribute("addPropertyMap");
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
+        addStep = fixstepIfNeeded(addProperty, addStep);
+
         switch (addStep) {
             case PERSONAL_DATA:
                 PersonalDataForm personalDataForm = new PersonalDataForm();
@@ -113,18 +118,25 @@ public class PropertyController {
                 break;
             case PROPERTY_INFO:
                 Property property = addProperty.containsKey("property") ?
-                        (Property) addProperty.get("property") :new Property(loggedUser);
+                        (Property) addProperty.get("property") : loggedUser.createProperty();
                 model.addAttribute("property", property);
                 break;
             case AVAILABILITY_DATES:
-                model.addAttribute("property", new Property(loggedUser));
+                if (!addProperty.containsKey("availabilityPeriods")) {
+                    addProperty.put("availabilityPeriods", new ArrayList<AvailabilityForm>());
+                }
+                List<AvailabilityForm> availabilityPeriods = (List<AvailabilityForm>) addProperty.get("availabilityPeriods");
+                model.addAttribute("availabilityPeriods", availabilityPeriods);
+                model.addAttribute("availabilityForm", new AvailabilityForm());
                 break;
             case PHOTOS:
-                model.addAttribute("property", new Property(loggedUser));
                 break;
             case CHECK:
-                model.addAttribute("property", new Property(loggedUser));
-                break;default:
+                List<AvailabilityForm> periods = (List<AvailabilityForm>) addProperty.get("availabilityPeriods");
+                model.addAttribute("availabilityPeriods", periods);
+                model.addAttribute("property", addProperty.get("property"));
+                break;
+            default:
 
         }
         return "property/add/"+addStep.ordinal();
@@ -148,8 +160,16 @@ public class PropertyController {
         }
     }
 
+    private AddStep fixstepIfNeeded(Map<String, Object> addProperty, AddStep requested) {
+        AddStep sessionStep = (AddStep) addProperty.get("step");
+        if (requested.ordinal() > sessionStep.ordinal()) {
+            return sessionStep;
+        }
+        return requested;
+    }
+
     @RequestMapping(value = "/add/0", method = RequestMethod.POST)
-    public String processAddZeroSubmit(@ModelAttribute("personalDataForm") PersonalDataForm personalDataForm,
+    public String processAddSubmit(@ModelAttribute("personalDataForm") PersonalDataForm personalDataForm,
                                    BindingResult bindingResult,
                                    HttpSession session) {
         PersonalDataValidator validator = new PersonalDataValidator();
@@ -169,7 +189,7 @@ public class PropertyController {
     }
 
     @RequestMapping(value = "/add/1", method = RequestMethod.POST)
-    public String processAddOneSubmit(@ModelAttribute("addressInfoForm") AddressInfoForm addressInfoForm,
+    public String processAddSubmit(@ModelAttribute("addressInfoForm") AddressInfoForm addressInfoForm,
                                    BindingResult bindingResult,
                                    HttpSession session) {
         AddressInfoValidator validator = new AddressInfoValidator();
@@ -199,13 +219,59 @@ public class PropertyController {
         if (bindingResult.hasErrors())
             return "property/add/2";
 
-        property.setCreationDate(new Date(new java.util.Date().getTime()));
+        //FIXME: Crear un view model para esto, así no se ponen los campos a null
+        property.setCreationDate(new Date());
         property.setOwner(loggedUser);
         Map<String, Object> addProperty = (Map<String, Object>) session.getAttribute("addPropertyMap");
         addProperty.put("property", property);
         addProperty.replace("step", AddStep.PROPERTY_INFO, AddStep.AVAILABILITY_DATES);
-//      redirect:../user/owner/"+ loggedUser.getId() +".html"
         return "redirect:?step=3";
+    }
+
+    @RequestMapping(value = "/add/3", method = RequestMethod.POST)
+    public String processAddSubmit(HttpSession session) {
+        Map<String, Object> addProperty = (Map<String, Object>) session.getAttribute("addPropertyMap");
+        List<AvailabilityForm> availabilityForms = (List<AvailabilityForm>) addProperty.get("availabilityPeriods");
+        Property property = (Property) addProperty.get("property");
+
+        if (property.getAvailabilityPeriods() != null) {
+            property.getAvailabilityPeriods().clear();
+        }
+        List<AvailabilityPeriod> availabilityPeriods = availabilityForms.stream()
+                .map(form -> form.update(property.createAvailabilityPeriod())).collect(Collectors.toCollection(LinkedList::new));
+
+        addProperty.put("availabilities", availabilityPeriods);
+        addProperty.replace("step", AddStep.AVAILABILITY_DATES, AddStep.PHOTOS);
+        return "redirect:?step=4";
+    }
+
+    @RequestMapping(value = "/add/4", method = RequestMethod.POST)
+    public String processAddPhotosSubmit(HttpSession session) {
+        Map<String, Object> addProperty = (Map<String, Object>) session.getAttribute("addPropertyMap");
+        addProperty.replace("step", AddStep.PHOTOS, AddStep.CHECK);
+        return "redirect:?step=5";
+    }
+
+    @RequestMapping(value = "/add/5", method = RequestMethod.POST)
+    public String processAddCheckSubmit(HttpSession session) {
+        User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Map<String, Object> addProperty = (Map<String, Object>) session.getAttribute("addPropertyMap");
+
+        PersonalDataForm personalDataForm = (PersonalDataForm) addProperty.get("personalDataForm");
+        AddressInfoForm addressInfoForm = (AddressInfoForm) addProperty.get("addressInfoForm");
+        personalDataForm.update(loggedUser);
+        addressInfoForm.update(loggedUser);
+        userRepository.save(loggedUser);
+
+        Property property = (Property) addProperty.get("property");
+        repository.save(property);
+
+        List<AvailabilityPeriod> periods = (List<AvailabilityPeriod>) addProperty.get("availabilities");
+        availabilityRepository.save(periods);
+
+        session.removeAttribute("addPropertyMap");
+
+        return "redirect:../../user/owner/"+ loggedUser.getId() +".html";
     }
 
     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
@@ -252,17 +318,20 @@ public class PropertyController {
     public String processBookingProposal(@ModelAttribute BookingForm bookingForm,
                                          @PathVariable("id") String id,
                                          BindingResult bindingResult) {
+        System.out.println("Got it!");
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Property property = repository.findOne(UUID.fromString(id));
         if (property.getOwner().equals(loggedUser)) {
             return "redirect:../show/"+id+".html";
         }
         // TODO improve form checking
+        System.out.println("Validating...");
         new BookingValidator().validate(bookingForm, bindingResult);
+        System.out.println("Validated");
         if (bindingResult.hasErrors()) {
             return "bookingProposal/add";
         }
-        BookingProposal proposal = bookingForm.update(new BookingProposal(property, loggedUser));
+        BookingProposal proposal = bookingForm.update(property.createBookingProposal(loggedUser));
         proposal.setTotalAmount(bookingForm.getNumberOfTenants() *
                 property.getPricePerDay() *
                 DateUtils.daysBetweenDates(bookingForm.getEndDate(), bookingForm.getStartDate()));

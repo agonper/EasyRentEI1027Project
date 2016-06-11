@@ -1,11 +1,7 @@
 package es.uji.daal.easyrent.model;
 
-import es.uji.daal.easyrent.config.ApplicationConfig;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Collection;
 import java.util.Set;
 
 /**
@@ -44,7 +40,6 @@ public class User extends DomainModel {
     private int postCode;
 
     @Column(nullable = false)
-    @DateTimeFormat(pattern = ApplicationConfig.DATE_FORMAT)
     private Date signUpDate;
 
     @Column(nullable = false)
@@ -57,6 +52,7 @@ public class User extends DomainModel {
     private Set<Property> properties;
 
     @OneToMany(mappedBy = "tenant")
+    @OrderBy("dateOfCreation desc ")
     private Set<BookingProposal> bookingProposals;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -224,7 +220,7 @@ public class User extends DomainModel {
 
     public User deactivate() {
         this.active = false;
-        this.deactivatedSince = new Date(new java.util.Date().getTime());
+        this.deactivatedSince = new Date();
         return this;
     }
 

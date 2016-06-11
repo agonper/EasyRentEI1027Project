@@ -26,18 +26,13 @@
                         <div class="panel-body">
 
                             <form class="form-inline" method="get" action="/administration/users/searchFor">
-                                <div class="input-group">
-                                    <input class="form-control" id="searchedFor" name="searchedFor" placeholder="Search for users" value="" size="80">
-                                    <div class="input-group-btn">
-                                        <button type="submit" class="btn btn-warning">Search </button>
-                                    </div>
-                                </div>
+
                                 <div class="form-group">
                                     <label for="selectedUserAttribute" class="left-padding30px">
                                         <fmt:message key="search.by-attribute" bundle="${lang}"/>
                                     </label>
 
-                                    <select id="selectedUserAttribute" name="selectedUserAttribute" class="form-control">
+                                    <select id="selectedUserAttribute" onchange="changedSelectValue()" name="selectedUserAttribute" class="form-control">
                                         <option value="username"><fmt:message key="administration-users.username" bundle="${lang}"/></option>
                                         <option value="ID">ID</option>
                                         <option value="NID"><fmt:message key="administration-users.nid" bundle="${lang}"/></option>
@@ -53,6 +48,162 @@
                                         <option value="deactived since"><fmt:message key="administration-users.deactivedSince" bundle="${lang}"/></option>
                                     </select>
                                 </div>
+
+                                <div class="input-group" id="input">
+                                    <input type="text" class="form-control" id="searchedFor" name="searchedFor" placeholder="Search for users" value="" size="80">
+                                    <div class="input-group-btn">
+                                        <button type="submit" class="btn btn-warning">Search </button>
+                                    </div>
+                                </div>
+
+                                <script type="text/javascript">
+                                    function changedSelectValue() {
+                                        var select = document.getElementById("selectedUserAttribute");
+                                        var selectedOption = select.options[select.selectedIndex].value;
+
+                                        var inputDiv = document.getElementById("input");
+
+                                        if (selectedOption == "post code" || selectedOption == "phone number") {
+                                            inputDiv.innerHTML = "";
+                                            inputDiv.class = "input-group";
+
+                                            var input = document.createElement('input');
+                                            input.type = "number";
+                                            input.class = "form-control";
+                                            input.id = "searchedFor";
+                                            input.name = "searchedFor";
+                                            input.placeholder = "Search for users";
+                                            input.size = 80;
+
+                                            inputDiv.appendChild(input);
+
+                                            var buttonDiv = document.createElement('div');
+                                            buttonDiv.class = "input-group-btn";
+
+                                            var button = document.createElement('button');
+                                            button.type = "submit";
+                                            button.class = "btn btn-warning";
+                                            button.textContent = "Search";
+
+                                            buttonDiv.appendChild(button);
+                                            inputDiv.appendChild(buttonDiv);
+                                        }
+
+                                        else if (selectedOption == "role") {
+                                            inputDiv.innerHTML = "";
+                                            inputDiv.class = "input-group";
+
+                                            var selectRole = document.createElement('select');
+                                            selectRole.id = "searchedFor";
+                                            selectRole.name = "searchedFor";
+
+                                            var tenantOption = document.createElement('option');
+                                            tenantOption.value = "TENANT";
+                                            tenantOption.textContent = "Tenant (test)";
+
+                                            var ownerOption = document.createElement('option');
+                                            ownerOption.value = "OWNER";
+                                            ownerOption.textContent = "Owner (test)";
+
+                                            var administrationOption = document.createElement('option');
+                                            administrationOption.value = "ADMINISTRATOR";
+                                            administrationOption.textContent = "Administrator (test)";
+
+                                            selectRole.appendChild(tenantOption);
+                                            selectRole.appendChild(ownerOption);
+                                            selectRole.appendChild(administrationOption);
+
+                                            inputDiv.appendChild(selectRole);
+
+                                            var buttonDiv = document.createElement('div');
+                                            buttonDiv.class = "input-group-btn";
+
+                                            var button = document.createElement('button');
+                                            button.type = "submit";
+                                            button.class = "btn btn-warning";
+                                            button.textContent = "Search";
+
+                                            buttonDiv.appendChild(button);
+                                            inputDiv.appendChild(buttonDiv);
+                                        }
+
+                                        else if (selectedOption == "sign up date" || selectedOption == "deactived since") {
+                                            inputDiv.innerHTML = "";
+                                            inputDiv.class = "input-group";
+
+                                            var input = document.createElement('input');
+                                            input.type = "date";
+                                            input.textContent = "Date: ";
+                                            input.id = "searchedFor";
+                                            input.name = "searchedFor";
+
+                                            inputDiv.appendChild(input);
+
+                                            var buttonDiv = document.createElement('div');
+                                            buttonDiv.class = "input-group-btn";
+
+                                            var button = document.createElement('button');
+                                            button.type = "submit";
+                                            button.class = "btn btn-warning";
+                                            button.textContent = "Search";
+
+                                            buttonDiv.appendChild(button);
+                                            inputDiv.appendChild(buttonDiv);
+                                        }
+
+                                        else if (selectedOption == "active") {
+                                            inputDiv.innerHTML = "";
+                                            inputDiv.class = "input-group";
+
+                                            var input = document.createElement('input');
+                                            input.type = "checkbox";
+                                            input.name = "active";
+                                            input.value = "active";
+                                            input.textContent = "Active: ";
+                                            input.id = "searchedFor";
+                                            input.name = "searchedFor";
+
+                                            inputDiv.appendChild(input);
+
+                                            var buttonDiv = document.createElement('div');
+                                            buttonDiv.class = "input-group-btn";
+
+                                            var button = document.createElement('button');
+                                            button.type = "submit";
+                                            button.class = "btn btn-warning";
+                                            button.textContent = "Search";
+
+                                            buttonDiv.appendChild(button);
+                                            inputDiv.appendChild(buttonDiv);
+                                        }
+
+                                        else {
+                                            inputDiv.innerHTML = "";
+
+                                            var input = document.createElement('input');
+                                            input.type = "text";
+                                            input.class = "form-control";
+                                            input.id = "searchedFor";
+                                            input.name = "searchedFor";
+                                            input.placeholder = "Search for users";
+                                            input.size = 80;
+
+                                            inputDiv.appendChild(input);
+
+                                            var buttonDiv = document.createElement('div');
+                                            buttonDiv.class = "input-group-btn";
+
+                                            var button = document.createElement('button');
+                                            button.type = "submit";
+                                            button.class = "btn btn-warning";
+                                            button.textContent = "Search";
+
+                                            buttonDiv.appendChild(button);
+                                            inputDiv.appendChild(buttonDiv);
+                                        }
+                                    }
+                                </script>
+
                             </form>
 
                         </div>
@@ -98,7 +249,6 @@
                                             <td>${user.signUpDate}</td>
                                             <td>${user.active}</td>
                                             <td>${user.deactivatedSince}</td>
-                                            <td><a href="${pageContext.request.contextPath}/user/update/${user.id}.html" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span></a></td>
                                             <td><a href="${pageContext.request.contextPath}/user/delete/${user.id}.html" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span></a></td>
                                         </tr>
                                     </c:forEach>

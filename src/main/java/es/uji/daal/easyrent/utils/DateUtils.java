@@ -1,6 +1,6 @@
 package es.uji.daal.easyrent.utils;
 
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * Created by Alberto on 17/05/2016.

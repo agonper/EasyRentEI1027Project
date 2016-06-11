@@ -1,8 +1,7 @@
 package es.uji.daal.easyrent.model;
 
 import javax.persistence.*;
-import java.sql.Date;
-import java.util.UUID;
+import java.util.Date;
 
 /**
  * Created by alberto on 17/03/16.
@@ -30,7 +29,6 @@ public class AvailabilityPeriod extends DomainModel {
 
     public AvailabilityPeriod(Property property) {
         this.property = property;
-        this.startDate = startDate;
     }
 
     public Date getStartDate() {

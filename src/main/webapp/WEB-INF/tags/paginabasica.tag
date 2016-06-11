@@ -38,6 +38,9 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap-datepicker.min.css">
     <script src="${pageContext.request.contextPath}/js/bootstrap-datepicker.min.js"></script>
 
+    <script src="${pageContext.request.contextPath}/js/moment.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/moment-range.min.js"></script>
+
 </head>
 <body>
 <c:set var="locale" value="en"/>

@@ -1,8 +1,7 @@
 package es.uji.daal.easyrent.model;
 
 import javax.persistence.*;
-import java.sql.Date;
-import java.util.UUID;
+import java.util.Date;
 
 /**
  * Created by daniel on 27/02/16.
@@ -57,7 +56,7 @@ public class BookingProposal extends DomainModel {
         this.property = property;
         this.tenant = tenant;
         status = ProposalStatus.PENDING;
-        dateOfCreation = new Date(new java.util.Date().getTime());
+        dateOfCreation = new Date();
     }
 
     public Date getStartDate() {
@@ -157,13 +156,13 @@ public class BookingProposal extends DomainModel {
 
     public BookingProposal accept() {
         status = ProposalStatus.ACCEPTED;
-        dateOfUpdate = new Date(new java.util.Date().getTime());
+        dateOfUpdate = new Date();
         return this;
     }
 
     public BookingProposal reject() {
         status = ProposalStatus.REJECTED;
-        dateOfUpdate = new Date(new java.util.Date().getTime());
+        dateOfUpdate = new Date();
         return this;
     }
 }

@@ -1,11 +1,12 @@
 package es.uji.daal.easyrent.repository;
 
 import es.uji.daal.easyrent.model.User;
-import org.hibernate.annotations.Parameter;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,6 +33,9 @@ public interface UserRepository extends CrudRepository<User, UUID>, UserReposito
     @Query("select e from User e where lower(e.Dni) like lower( concat('%', :Dni, '%') )")
     List<User> findByNIDContainedInSearchedNID(@Param("Dni") String Dni);
 
+    @Query("select e from User e where lower(e.role) like lower( concat('%', :role, '%') ) ")
+    List<User> findByRoleContainedInSearchedRole(@Param("role") String role);
+
     @Query("select e from User e where lower(e.name) like lower( concat('%', :name, '%') )")
     List<User> findByNameContainedInSearchedName(@Param("name") String name);
 
@@ -42,7 +46,7 @@ public interface UserRepository extends CrudRepository<User, UUID>, UserReposito
     List<User> findByEmailContainedInSearchedEmails(@Param("email") String email);
 
     //TODO: Test
-    @Query("select e from User e where lower(e.phoneNumber) like lower(concat('%', :phoneNumber, '%') ) ")
+    @Query("select e from User e where e.phoneNumber = concat('%d', :phoneNumber, '%d') ")
     List<User> findByPhoneContainedInSearchedPhone(@Param("phoneNumber") int phoneNumber);
 
     @Query("select e from User e where lower(e.postalAddress) like lower(concat('%', :address, '%') ) ")
@@ -52,9 +56,18 @@ public interface UserRepository extends CrudRepository<User, UUID>, UserReposito
     List<User> findByCountryContainedInSearchedCountry(@Param("country") String country);
 
     //TODO: Test
-    @Query("select e from User e where lower(e.postCode) like lower(concat('%', :postCode, '%')) ")
+    @Query("select e from User e where e.postCode = concat('%d', :postCode, '%d') ")
     List<User> findByPostCodeContainedInSearchedPostCode(@Param("postCode") int postCode);
 
+    //TODO: Test
+    @Query("select e from User e where e.signUpDate = :signUpDate")
+    List<User> findBySignUpDate(@Param("signUpDate") Date signUpDate);
 
+    //TODO: Test
+    @Query("select e from User e where e.active = :active")
+    List<User> findByActiveAccount(@Param("active") boolean active);
 
+    //TODO: Test
+    @Query("select e from User e where e.deactivatedSince = :deactivatedSince")
+    List<User> findByDeactivatedSince(@Param("deactivatedSince") Date deactivatedSince);
 }

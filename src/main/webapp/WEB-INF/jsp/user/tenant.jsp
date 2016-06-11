@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <fmt:message key="tenant.title" var="title" bundle="${lang}"/>
 
 <sec:authorize access="isAuthenticated()">
@@ -56,11 +57,11 @@
                                         <tr>
                                             <td><a href="${pageContext.request.contextPath}/booking-proposal/show/${bookingProposal.id}.html">${loop.index+1}</a></td>
                                             <td class="rowlink-skip"><a href="${pageContext.request.contextPath}/property/show/${bookingProposal.property.id}.html"><fmt:message key="general.link" bundle="${lang}"/> <span class="glyphicon glyphicon-new-window"></span> </a></td>
-                                            <td><t:format-date value="${bookingProposal.startDate}"/></td>
-                                            <td><t:format-date value="${bookingProposal.endDate}"/></td>
+                                            <td><spring:eval expression="bookingProposal.startDate"/></td>
+                                            <td><spring:eval expression="bookingProposal.endDate"/></td>
                                             <td>${bookingProposal.status.label}</td>
-                                            <td><t:format-date value="${bookingProposal.dateOfCreation}"/></td>
-                                            <td><t:format-date value="${bookingProposal.dateOfUpdate}"/></td>
+                                            <td><spring:eval expression="bookingProposal.dateOfCreation"/></td>
+                                            <td><spring:eval expression="bookingProposal.dateOfUpdate"/></td>
                                             <td class="rowlink-skip"><a class="btn btn-warning" href="${pageContext.request.contextPath}/booking-proposal/edit/${bookingProposal.id}.html"><span class="glyphicon glyphicon-edit"></span></a></td>
                                         </tr>
                                     </c:forEach>
@@ -88,7 +89,7 @@
                                         <tr>
                                             <td><a href="${pageContext.request.contextPath}/invoice/show/${invoice.id}.html">${invoice.number}</a></td>
                                             <td class="rowlink-skip"><a href="${pageContext.request.contextPath}/booking-proposal/show/${invoice.proposal.id}.html"><fmt:message key="general.link" bundle="${lang}"/> <span class="glyphicon glyphicon-new-window"></span> </a></td>
-                                            <td><t:format-date value="${invoice.expeditionDate}"/></td>
+                                            <td><spring:eval expression="invoice.expeditionDate"/></td>
                                             <td><t:show-price amount="${(invoice.vat+1)*invoice.proposal.totalAmount}"/></td>
                                             <td class="rowlink-skip"><a class="btn btn-warning" href="${pageContext.request.contextPath}/invoice/pdf/${bookingProposal.id}.html"><span class="glyphicon glyphicon-file"></span></a></td>
                                         </tr>
