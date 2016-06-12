@@ -24,14 +24,14 @@
                         <div class="panel-heading"><fmt:message key="administration-bookingProposals.searchForBookingProposals" bundle="${lang}"/></div>
                         <div class="panel-body">
 
-                            <form class="form-inline" method="get" action="/searchBookingProposals">
+                            <form class="form-inline" method="get" action="/administration/booking_proposals/searchFor">
 
                                 <div class="form-group">
-                                    <label for="selectServiceAttribute" class="left-padding30px">
+                                    <label for="selectedBookingProposalsAttribute" class="left-padding30px">
                                         <fmt:message key="search.by-attribute" bundle="${lang}"/>
                                     </label>
 
-                                    <select id="selectServiceAttribute" name="selectedBookingProposalAttribute" class="form-control">
+                                    <select id="selectedBookingProposalsAttribute" name="selectedBookingProposalsAttribute" class="form-control">
                                         <option value="ID">ID</option>
                                         <option value="propertyID"><fmt:message key="administration-bookingProposals.propertyID" bundle="${lang}"/></option>
                                         <option value="tenantID"><fmt:message key="administration-bookingProposals.tenantID" bundle="${lang}"/></option>
@@ -48,7 +48,7 @@
                                 </div>
 
                                 <div class="input-group" id="input">
-                                    <input type="text" class="form-control" name="bookingProposalAttribute" placeholder="Search for booking proposals" value="" size="80">
+                                    <input type="text" class="form-control" id="searchedFor" name="searchedFor" placeholder="Search for booking proposals" value="" size="80">
                                     <div class="input-group-btn">
                                         <button type="submit" class="btn btn-warning"><fmt:message key="administration.search" bundle="${lang}"/></button>
                                     </div>
