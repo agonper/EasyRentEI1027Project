@@ -106,7 +106,7 @@ public class AdministrationBookingProposalsSearchController {
                 catch (ParseException e) {
                     dateOfCreation = null;
                 }
-                searchResult = repository.findByStartDate(dateOfCreation);
+                searchResult = repository.findByDateOfCreation(dateOfCreation);
                 break;
 
             case "dateOfAcceptance":
@@ -118,7 +118,7 @@ public class AdministrationBookingProposalsSearchController {
                 catch (ParseException e) {
                     dateOfAcceptance = null;
                 }
-                searchResult = repository.findByStartDate(dateOfAcceptance);
+                searchResult = repository.findByDateOfUpdate(dateOfAcceptance);
                 break;
 
             case "invoice":

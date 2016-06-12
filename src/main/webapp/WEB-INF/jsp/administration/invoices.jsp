@@ -24,12 +24,12 @@
                         <div class="panel-heading"><fmt:message key="administration-invoices.searchForInvoices" bundle="${lang}"/></div>
                         <div class="panel-body">
 
-                            <form class="form-inline" method="get" action="/searchInvoices">
+                            <form class="form-inline" method="get" action="/administration/invoices/searchFor">
                                 <div class="form-group">
-                                    <label for="selectServiceAttribute" class="left-padding30px">
+                                    <label for="selectInvoiceAttribute" class="left-padding30px">
                                         <fmt:message key="search.by-attribute" bundle="${lang}"/>
                                     </label>
-                                    <select id="selectServiceAttribute" class="form-control">
+                                    <select id="selectInvoiceAttribute" class="form-control">
                                         <option value="number"><fmt:message key="invoice.number" bundle="${lang}"/></option>
                                         <option value="ID">ID</option>
                                         <option value="booking"><fmt:message key="invoice.booking" bundle="${lang}"/></option>
