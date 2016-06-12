@@ -20,17 +20,39 @@
             <t:administration-options location="invoices"/>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="panel panel-warning top-padding">
-                        <div class="panel-heading">Search for invoices</div>
+                    <div class="panel panel-warning top-padding30px">
+                        <div class="panel-heading"><fmt:message key="administration-invoices.searchForInvoices" bundle="${lang}"/></div>
                         <div class="panel-body">
-                            <form:form cssClass="form-horizontal" method="post" action="/searchInvoices" modelAttribute="invoices">
-                                <input type="text">
-                                <select/>
-                                <input type="submit" class="btn btn-warning"/>
-                            </form:form>
+
+                            <form class="form-inline" method="get" action="/administration/invoices/searchFor">
+
+                                <div class="form-group">
+                                    <label for="selectedInvoiceAttribute" class="left-padding30px">
+                                        <fmt:message key="search.by-attribute" bundle="${lang}"/>
+                                    </label>
+
+                                    <select id="selectedInvoiceAttribute" name="selectedInvoiceAttribute" class="form-control">
+                                        <option value="number"><fmt:message key="invoice.number" bundle="${lang}"/></option>
+                                        <option value="ID">ID</option>
+                                        <option value="bookingID"><fmt:message key="invoice.booking" bundle="${lang}"/></option>
+                                        <option value="vat"><fmt:message key="invoice.vat" bundle="${lang}"/></option>
+                                        <option value="address"><fmt:message key="invoice.address" bundle="${lang}"/></option>
+                                        <option value="expeditionDate"><fmt:message key="invoice.expedition-date" bundle="${lang}"/></option>
+                                        <option value="totalAmount"><fmt:message key="invoice.total-amount" bundle="${lang}"/></option>
+                                    </select>
+                                </div>
+
+                                <div class="input-group" id="input">
+                                    <input type="text" class="form-control" id="searchedFor" name="searchedFor" placeholder="Search for invoices" value="" size="80">
+                                    <div class="input-group-btn">
+                                        <button type="submit" class="btn btn-warning"><fmt:message key="administration.search" bundle="${lang}"/></button>
+                                    </div>
+                                </div>
+                            </form>
+
                         </div>
 
-                        <div class="panel-heading">List of searched invoices</div>
+                        <div class="panel-heading"><fmt:message key="administration-invoices.listOfSearchedInvoices" bundle="${lang}"/></div>
                         <div class="panel-body">
                             <div class="table-responsive">
                                 <table class="table">

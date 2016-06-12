@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 /**
  * Created by Alberto on 08/05/2016.
@@ -31,4 +32,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
             return false;
         }
     }
+
+
+
 }
