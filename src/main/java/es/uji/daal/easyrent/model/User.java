@@ -43,9 +43,9 @@ public class User extends DomainModel {
     private Date signUpDate;
 
     @Column(nullable = false)
-    public boolean active;
+    private boolean active;
 
-    public Date deactivatedSince;
+    private Date deactivatedSince;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     @OrderBy("creationDate desc ")

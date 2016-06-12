@@ -73,12 +73,14 @@
                                             input.id = "searchedFor";
                                             input.name = "searchedFor";
                                             input.placeholder = "Search for users";
+                                            input.min = 0;
+                                            input.max = 999999999;
                                             input.size = 80;
 
                                             inputDiv.appendChild(input);
 
                                             var buttonDiv = document.createElement('div');
-                                            buttonDiv.class = "input-group-btn";
+                                            buttonDiv.className = "input-group-btn";
 
                                             var button = document.createElement('button');
                                             button.type = "submit";
@@ -96,6 +98,7 @@
                                             var selectRole = document.createElement('select');
                                             selectRole.id = "searchedFor";
                                             selectRole.name = "searchedFor";
+                                            selectRole.className = "form-control";
 
                                             var tenantOption = document.createElement('option');
                                             tenantOption.value = "TENANT";
@@ -133,9 +136,10 @@
 
                                             var input = document.createElement('input');
                                             input.type = "date";
-                                            input.textContent = "Date: ";
+                                            var text = document.createTextNode("Date: ");
                                             input.id = "searchedFor";
                                             input.name = "searchedFor";
+                                            input.className = "form-control";
 
                                             inputDiv.appendChild(input);
 
@@ -158,7 +162,7 @@
                                             var input = document.createElement('input');
                                             input.type = "checkbox";
                                             input.name = "active";
-                                            input.value = "active";
+                                            input.value = "true";
                                             input.textContent = "Active: ";
                                             input.id = "searchedFor";
                                             input.name = "searchedFor";
