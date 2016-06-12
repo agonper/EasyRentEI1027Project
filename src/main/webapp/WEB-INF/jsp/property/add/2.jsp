@@ -48,33 +48,33 @@
                         </div>
                         <div class="col-md-6">
                             <fmt:message key="property.price-per-day" bundle="${lang}" var="pricePerDay"/>
-                            <tag:input path="pricePerDay" label="${pricePerDay}"/>
+                            <tag:input path="pricePerDay" type="number" step=".01" label="${pricePerDay}"/>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <fmt:message key="property.capacity" bundle="${lang}" var="capacity"/>
-                            <tag:input path="capacity" label="${capacity} &nbsp;(<span class='glyphicon glyphicon-user'></span>)"/>
+                            <tag:input path="capacity" type="number" label="${capacity} &nbsp;(<span class='glyphicon glyphicon-user'></span>)"/>
                         </div>
                         <div class="col-md-6">
                             <fmt:message key="property.rooms" bundle="${lang}" var="rooms"/>
-                            <tag:input path="rooms" label="${rooms}"/>
+                            <tag:input path="rooms" type="number" label="${rooms}"/>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <fmt:message key="property.bathrooms" bundle="${lang}" var="bathrooms"/>
-                            <tag:input path="bathrooms" label="${bathrooms}"/>
+                            <tag:input path="bathrooms" type="number" label="${bathrooms}"/>
                         </div>
                         <div class="col-md-6">
                             <fmt:message key="property.beds" bundle="${lang}" var="beds"/>
-                            <tag:input path="beds" label="${beds}"/>
+                            <tag:input path="beds" type="number" label="${beds}"/>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <fmt:message key="property.floor-space" bundle="${lang}" var="floorSpace"/>
-                            <tag:input path="floorSpace" label="${floorSpace}"/>
+                            <tag:input path="floorSpace" type="number" label="${floorSpace}"/>
                         </div>
                         <div class="col-md-6">
                             <fmt:message key="property.description" bundle="${lang}" var="description"/>

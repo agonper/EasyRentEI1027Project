@@ -1,13 +1,14 @@
 <%@ page pageEncoding="UTF-8" %>
-<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<%@ taglib prefix="m" tagdir="/WEB-INF/tags/models" %>
+<%@ taglib prefix="tag" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="navs" tagdir="/WEB-INF/tags/navs" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <fmt:message key="add-property.title" bundle="${lang}" var="title"/>
-<fmt:message key="general.check" bundle="${lang}" var="subtitle"/>
-<t:paginabasica title="${title}: subtitle">
+<fmt:message key="property.photos" bundle="${lang}" var="subtitle"/>
+<tag:paginabasica title="${title}: subtitle">
     <jsp:body>
         <div class="page-header">
             <h1>${title} <small>${subtitle}</small></h1>
@@ -20,7 +21,29 @@
                     ${subtitle}
             </div>
             <div class="panel-body">
-                <m:property property="${property}" availabilityPeriods="${availabilityPeriods}" photos="${photos}"/>
+                <div id="photo-list" class="row center-block">
+                    <c:forEach items="${propertyPhotos.values()}" var="pictureUri" varStatus="status">
+                        <div id="${pictureUri}" class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                            <div class="thumbnail">
+                                <img class="img-responsive" src="${pageContext.request.contextPath}/uploads/property-pics/${pictureUri}">
+                                <div class="caption text-right">
+                                    <p><a id="remove-${pictureUri}" href="#" class="btn btn-danger property-photo-remove">
+                                        <span class="glyphicon glyphicon-remove"></span> <fmt:message key="general.remove" bundle="${lang}"/>
+                                    </a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </div>
+                <br>
+
+                <form id="property-pictures" action="${pageContext.request.contextPath}/property/0/upload-photos" class="dropzone">
+                    <div class="fallback">
+                        <input name="file" type="file" multiple />
+                    </div>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <input type="hidden" name="type" value="session">
+                </form>
             </div>
         </div>
 
@@ -28,10 +51,64 @@
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <div class="row">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <a class="btn btn-warning" href="${pageContext.request.contextPath}/property/add?step=4"><span class="glyphicon glyphicon-backward"></span> <fmt:message key="general.back" bundle="${lang}"/></a>
-                    <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-save"></span> <fmt:message key="general.save" bundle="${lang}"/></button>
+                    <a class="btn btn-warning" href="${pageContext.request.contextPath}/property/add?step=3"><span class="glyphicon glyphicon-backward"></span> <fmt:message key="general.back" bundle="${lang}"/></a>
+                    <button type="submit" class="btn btn-warning"><fmt:message key="general.next" bundle="${lang}"/> <span class="glyphicon glyphicon-forward"></span> </button>
                 </div>
             </div>
         </form>
+        <fmt:message key="property.upload-photos" bundle="${lang}" var="uploadPlaceholder"/>
+        <fmt:message key="property.remove-picture" bundle="${lang}" var="removePicture"/>
+        <fmt:message key="property.cancel-upload" bundle="${lang}" var="cancelUpload"/>
+        <script>
+            (function () {
+                var postOptions = {
+                    type: 'session'
+                };
+                postOptions['${_csrf.parameterName}'] = '${_csrf.token}';
+
+                Dropzone.options.propertyPictures = {
+                    addRemoveLinks: true,
+                    dictDefaultMessage: '${uploadPlaceholder}',
+                    dictRemoveFile: '${removePicture}',
+                    dictCancelUpload: '${cancelUpload}',
+                    init: function () {
+                        var _this = this;
+                        _this.on('complete', function (file) {
+                            if (file.xhr.status == 200){
+                                var pictureId = file.xhr.response;
+                                $('#photo-list').append(''+
+                                        '<div id="' + pictureId + '" class="col-lg-3 col-md-4 col-sm-6 col-xs-12">' +
+                                            '<div class="thumbnail">' +
+                                                '<img class="img-responsive" src="${pageContext.request.contextPath}/uploads/property-pics/' + pictureId + '">' +
+                                                '<div class="caption text-right">' +
+                                                    '<p><a id="remove-' + pictureId + '" href="#" class="btn btn-danger property-photo-remove">' +
+                                                        '<span class="glyphicon glyphicon-remove"></span> <fmt:message key="general.remove" bundle="${lang}"/>' +
+                                                    '</a></p>' +
+                                                '</div>' +
+                                            '</div>' +
+                                        '</div>');
+                                $('#remove-' + pictureId).on('click', removeHandler);
+                                $(file.previewElement).find('.dz-remove').on('click', function () {
+
+                                    $.post('${pageContext.request.contextPath}/uploads/property-pics/' + file.xhr.response + '/remove', postOptions).done(function () {
+                                        $('#' + pictureId).remove();
+                                    });
+                                });
+                            }
+                        });
+                    }
+                };
+                
+                function removeHandler(evt) {
+                    evt.stopPropagation();
+                    var resourceId = $(evt.currentTarget).attr('id').split('-')[1];
+                    $.post('${pageContext.request.contextPath}/uploads/property-pics/' + resourceId + '/remove', postOptions).done(function () {
+                        $('#' + resourceId).remove();
+                    });
+                }
+
+                $('.property-photo-remove').on('click', removeHandler);
+            })();
+        </script>
     </jsp:body>
-</t:paginabasica>
+</tag:paginabasica>

@@ -6,6 +6,7 @@
 <%@ attribute name="path" required="true" %>
 <%@ attribute name="label" required="false" %>
 <%@ attribute name="type" required="false" %>
+<%@ attribute name="step" required="false" %>
 <%@ attribute name="required" required="false" type="java.lang.Boolean" %>
 
 <c:if test="${empty label}">
@@ -24,6 +25,8 @@
             <c:if test='${type.equals("textarea")}'><form:textarea path="${path}" cssClass="form-control" /></c:if>
             <c:if test='${type.equals("checkbox")}'><form:checkbox path="${path}" cssClass="form-control" value="${false}"/></c:if>
             <c:if test='${type.equals("date")}'><form:input path="${path}" type="date" cssClass="form-control"/></c:if>
+            <c:if test='${type.equals("number") and not empty step}'><form:input path="${path}" type="number" cssClass="form-control" step="${step}" min="0" /></c:if>
+            <c:if test='${type.equals("number") and empty step}'><form:input path="${path}" type="number" cssClass="form-control" min="0"/></c:if>
             <c:if test="${status.error}">
                 <span class="help-block">${status.errorMessage}</span>
             </c:if>

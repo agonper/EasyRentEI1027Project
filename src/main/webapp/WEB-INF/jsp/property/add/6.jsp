@@ -1,14 +1,13 @@
 <%@ page pageEncoding="UTF-8" %>
-<%@ taglib prefix="tag" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="m" tagdir="/WEB-INF/tags/models" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="navs" tagdir="/WEB-INF/tags/navs" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <fmt:message key="add-property.title" bundle="${lang}" var="title"/>
-<fmt:message key="property.services" bundle="${lang}" var="subtitle"/>
-<tag:paginabasica title="${title}: subtitle">
+<fmt:message key="general.check" bundle="${lang}" var="subtitle"/>
+<t:paginabasica title="${title}: subtitle">
     <jsp:body>
         <div class="page-header">
             <h1>${title} <small>${subtitle}</small></h1>
@@ -21,18 +20,18 @@
                     ${subtitle}
             </div>
             <div class="panel-body">
-
+                <m:property property="${property}" availabilityPeriods="${availabilityPeriods}" photos="${photos}"/>
             </div>
         </div>
 
-        <form method="post" class="form-horizontal" action="${pageContext.request.contextPath}/property/add/4">
+        <form method="post" class="form-horizontal" action="${pageContext.request.contextPath}/property/add/6">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <div class="row">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <a class="btn btn-warning" href="${pageContext.request.contextPath}/property/add?step=3"><span class="glyphicon glyphicon-backward"></span> <fmt:message key="general.back" bundle="${lang}"/></a>
-                    <button type="submit" class="btn btn-warning"><fmt:message key="general.next" bundle="${lang}"/> <span class="glyphicon glyphicon-forward"></span> </button>
+                    <a class="btn btn-warning" href="${pageContext.request.contextPath}/property/add?step=4"><span class="glyphicon glyphicon-backward"></span> <fmt:message key="general.back" bundle="${lang}"/></a>
+                    <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-save"></span> <fmt:message key="general.save" bundle="${lang}"/></button>
                 </div>
             </div>
         </form>
     </jsp:body>
-</tag:paginabasica>
+</t:paginabasica>

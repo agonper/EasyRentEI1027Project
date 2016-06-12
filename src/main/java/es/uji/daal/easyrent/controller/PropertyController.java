@@ -81,6 +81,7 @@ public class PropertyController {
                 {"pencil", "profile.address-info"},
                 {"home", "property.property-info"},
                 {"calendar", "property.availability-dates"},
+                {"cutlery", "property.services"},
                 {"picture", "property.photos"},
                 {"ok", "general.check"}
         };
@@ -126,6 +127,8 @@ public class PropertyController {
                 model.addAttribute("availabilityPeriods", addProperty.get("availabilityPeriods"));
                 model.addAttribute("availabilityForm", new AvailabilityForm());
                 break;
+            case SERVICES:
+                break;
             case PHOTOS:
                 if (!addProperty.containsKey("propertyPhotos")) {
                     addProperty.put("propertyPhotos", new HashMap<String, String>());
@@ -150,7 +153,7 @@ public class PropertyController {
         } catch (NumberFormatException e) {
             intStep = 0;
         }
-        return (intStep >= 0 && intStep < 6) ? AddStep.values()[intStep] : AddStep.PERSONAL_DATA;
+        return (intStep >= 0 && intStep < AddStep.values().length) ? AddStep.values()[intStep] : AddStep.PERSONAL_DATA;
     }
 
     private void initializeSessionVariables(HttpSession session) {
@@ -239,11 +242,21 @@ public class PropertyController {
                 .map(form -> form.update(property.createAvailabilityPeriod())).collect(Collectors.toCollection(LinkedList::new));
 
         addProperty.put("availabilities", availabilityPeriods);
-        addProperty.replace("step", AddStep.AVAILABILITY_DATES, AddStep.PHOTOS);
+        addProperty.replace("step", AddStep.AVAILABILITY_DATES, AddStep.SERVICES);
         return "redirect:?step=4";
     }
 
     @RequestMapping(value = "/add/4", method = RequestMethod.POST)
+    public String processAddServicesSubmit(HttpSession session) {
+        Map<String, Object> addProperty = (Map<String, Object>) session.getAttribute("addPropertyMap");
+        Map<String, String> propertyPhotos = (Map<String, String>) addProperty.get("propertyPhotos");
+        Property property = (Property) addProperty.get("property");
+
+        addProperty.replace("step", AddStep.SERVICES, AddStep.PHOTOS);
+        return "redirect:?step=5";
+    }
+
+    @RequestMapping(value = "/add/5", method = RequestMethod.POST)
     public String processAddPhotosSubmit(HttpSession session) {
         Map<String, Object> addProperty = (Map<String, Object>) session.getAttribute("addPropertyMap");
         Map<String, String> propertyPhotos = (Map<String, String>) addProperty.get("propertyPhotos");
@@ -254,10 +267,10 @@ public class PropertyController {
 
         addProperty.put("photos", photos);
         addProperty.replace("step", AddStep.PHOTOS, AddStep.CHECK);
-        return "redirect:?step=5";
+        return "redirect:?step=6";
     }
 
-    @RequestMapping(value = "/add/5", method = RequestMethod.POST)
+    @RequestMapping(value = "/add/6", method = RequestMethod.POST)
     public String processAddCheckSubmit(HttpSession session) {
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Map<String, Object> addProperty = (Map<String, Object>) session.getAttribute("addPropertyMap");
@@ -371,6 +384,6 @@ public class PropertyController {
     }
 
     private enum AddStep {
-        PERSONAL_DATA, ADDRESS_INFO, PROPERTY_INFO, AVAILABILITY_DATES, PHOTOS, CHECK
+        PERSONAL_DATA, ADDRESS_INFO, PROPERTY_INFO, AVAILABILITY_DATES, SERVICES, PHOTOS, CHECK
     }
 }
