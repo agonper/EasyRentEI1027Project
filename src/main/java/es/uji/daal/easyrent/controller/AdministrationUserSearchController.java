@@ -38,7 +38,7 @@ public class AdministrationUserSearchController {
                 break;
 
             case "ID":
-
+                //TODO: Completar
                 break;
 
             case "role":

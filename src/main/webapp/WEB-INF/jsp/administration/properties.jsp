@@ -24,17 +24,18 @@
                         <div class="panel-heading"><fmt:message key="administration-properties.searchForProperties" bundle="${lang}"/></div>
                         <div class="panel-body">
 
-                            <form class="form-inline" method="get" action="/searchProperties">
+                            <form class="form-inline" method="get" action="/administration/properties/searchFor">
 
                                 <div class="form-group">
-                                    <label for="selectServiceAttribute" class="left-padding30px">
+                                    <label for="selectedPropertyAttribute" class="left-padding30px">
                                         <fmt:message key="search.by-attribute" bundle="${lang}"/>
                                     </label>
 
-                                    <select id="selectServiceAttribute" class="form-control">
+                                    <select id="selectedPropertyAttribute" class="form-control" name="selectedPropertyAttribute">
                                         <option value="title"><fmt:message key="administration-properties.title" bundle="${lang}"/></option>
                                         <option value="ID">ID</option>
                                         <option value="ownerID"><fmt:message key="administration-properties.ownerID" bundle="${lang}"/></option>
+                                        <option value="owner"><fmt:message key="administration-properties.ownerUsername" bundle="${lang}"/></option>
                                         <option value="location"><fmt:message key="administration-properties.location" bundle="${lang}"/></option>
                                         <option value="rooms"><fmt:message key="administration-properties.rooms" bundle="${lang}"/></option>
                                         <option value="capacity"><fmt:message key="administration-properties.capacity" bundle="${lang}"/></option>
@@ -49,7 +50,7 @@
                                 </div>
 
                                 <div class="input-group" id="input">
-                                    <input type="text" class="form-control" name="propertyAttribute" placeholder="Search for properties" value="" size="80">
+                                    <input type="text" class="form-control" id="searchedFor" name="searchedFor" placeholder="Search for properties" value="" size="80">
                                     <div class="input-group-btn">
                                         <button type="submit" class="btn btn-warning"><fmt:message key="administration.search" bundle="${lang}"/></button>
                                     </div>
@@ -66,6 +67,7 @@
                                     <tr>
                                         <th>ID</th>
                                         <th><fmt:message key="administration-properties.ownerID" bundle="${lang}"/></th>
+                                        <th><fmt:message key="administration-properties.ownerUsername" bundle="${lang}"/></th>
                                         <th><fmt:message key="administration-properties.title" bundle="${lang}"/></th>
                                         <th><fmt:message key="administration-properties.location" bundle="${lang}"/></th>
                                         <th><fmt:message key="administration-properties.rooms" bundle="${lang}"/></th>
@@ -82,6 +84,7 @@
                                         <tr>
                                             <td>${property.id}</td>
                                             <td>${property.owner.id}</td>
+                                            <td>${property.owner.username}</td>
                                             <td>${property.title}</td>
                                             <td>${property.location}</td>
                                             <td>${property.rooms}</td>
