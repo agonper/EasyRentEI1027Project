@@ -22,8 +22,17 @@
             </div>
             <div class="panel-body">
                 <div id="photo-list" class="row center-block">
-                    <c:forEach items="${propertyPhotos.values()}" var="pictureUri">
-                        <div id="${pictureUri}" class="col-lg-3 col-md-4 col-sm-6 col-xs-12"><img class="img-responsive img-thumbnail" src="${pageContext.request.contextPath}/uploads/property-pics/${pictureUri}"></div>
+                    <c:forEach items="${propertyPhotos.values()}" var="pictureUri" varStatus="status">
+                        <div id="${pictureUri}" class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                            <div class="thumbnail">
+                                <img class="img-responsive" src="${pageContext.request.contextPath}/uploads/property-pics/${pictureUri}">
+                                <div class="caption text-right">
+                                    <p><a id="remove-${pictureUri}" href="#" class="btn btn-danger property-photo-remove">
+                                        <span class="glyphicon glyphicon-remove"></span> <fmt:message key="general.remove" bundle="${lang}"/>
+                                    </a></p>
+                                </div>
+                            </div>
+                        </div>
                     </c:forEach>
                 </div>
                 <br>
@@ -52,6 +61,11 @@
         <fmt:message key="property.cancel-upload" bundle="${lang}" var="cancelUpload"/>
         <script>
             (function () {
+                var postOptions = {
+                    type: 'session'
+                };
+                postOptions['${_csrf.parameterName}'] = '${_csrf.token}';
+
                 Dropzone.options.propertyPictures = {
                     addRemoveLinks: true,
                     dictDefaultMessage: '${uploadPlaceholder}',
@@ -61,23 +75,39 @@
                         var _this = this;
                         _this.on('complete', function (file) {
                             if (file.xhr.status == 200){
-                                $('#photo-list').append('<div id="' + file.xhr.response + '" class="col-lg-3 col-md-4 col-sm-6 col-xs-12">' +
-                                        '<img class="img-responsive img-thumbnail" src="${pageContext.request.contextPath}/uploads/property-pics/' + file.xhr.response + '">' +
+                                var pictureId = file.xhr.response;
+                                $('#photo-list').append(''+
+                                        '<div id="' + pictureId + '" class="col-lg-3 col-md-4 col-sm-6 col-xs-12">' +
+                                            '<div class="thumbnail">' +
+                                                '<img class="img-responsive" src="${pageContext.request.contextPath}/uploads/property-pics/' + pictureId + '">' +
+                                                '<div class="caption text-right">' +
+                                                    '<p><a id="remove-' + pictureId + '" href="#" class="btn btn-danger property-photo-remove">' +
+                                                        '<span class="glyphicon glyphicon-remove"></span> <fmt:message key="general.remove" bundle="${lang}"/>' +
+                                                    '</a></p>' +
+                                                '</div>' +
+                                            '</div>' +
                                         '</div>');
+                                $('#remove-' + pictureId).on('click', removeHandler);
                                 $(file.previewElement).find('.dz-remove').on('click', function () {
-                                    var options = {
-                                        type: 'session'
-                                    };
-                                    options['${_csrf.parameterName}'] = '${_csrf.token}';
 
-                                    $.post('${pageContext.request.contextPath}/uploads/property-pics/' + file.xhr.response + '/remove', options).done(function () {
-                                        $('#' + file.xhr.response).remove();
+                                    $.post('${pageContext.request.contextPath}/uploads/property-pics/' + file.xhr.response + '/remove', postOptions).done(function () {
+                                        $('#' + pictureId).remove();
                                     });
                                 });
                             }
                         });
                     }
+                };
+                
+                function removeHandler(evt) {
+                    evt.stopPropagation();
+                    var resourceId = $(evt.currentTarget).attr('id').split('-')[1];
+                    $.post('${pageContext.request.contextPath}/uploads/property-pics/' + resourceId + '/remove', postOptions).done(function () {
+                        $('#' + resourceId).remove();
+                    });
                 }
+
+                $('.property-photo-remove').on('click', removeHandler);
             })();
         </script>
     </jsp:body>

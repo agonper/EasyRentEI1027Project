@@ -1,6 +1,7 @@
-<%@ attribute name="property" type="es.uji.daal.easyrent.model.Property" %>
+<%@ attribute name="property" type="es.uji.daal.easyrent.model.Property" required="true" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ attribute name="availabilityPeriods" type="java.util.List<es.uji.daal.easyrent.view_models.AvailabilityForm>" %>
+<%@ attribute name="photos" type="java.util.List<es.uji.daal.easyrent.model.Photo>" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="er" uri="/WEB-INF/easy-rent.tld" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -19,17 +20,43 @@
         <%-- TODO Move this to a tag once we can upload images--%>
         <div id="property-show-carousel" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
-                <li data-target="#property-show-carousel" data-slide-to="0" class="active"></li>
-                <li data-target="#property-show-carousel" data-slide-to="1"></li>
+                <c:choose>
+                    <c:when test="${not empty photos or not empty property.photos}">
+                        <c:if test="${empty photos}">
+                            <c:set var="photos" value="${property.photos}"/>
+                        </c:if>
+                        <c:forEach var="photo" items="${photos}" varStatus="status">
+                            <li data-target="#property-show-carousel" data-slide-to="${status.index}" ${status.index eq 0 ? 'class="active"' : ''}></li>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <li data-target="#property-show-carousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#property-show-carousel" data-slide-to="1"></li>
+                    </c:otherwise>
+                </c:choose>
             </ol>
 
             <div class="carousel-inner" role="listbox">
-                <div class="item active">
-                    <img src="${pageContext.request.contextPath}/img/neighborhood1.jpg" width="720" height="480">
-                </div>
-                <div class="item">
-                    <img src="${pageContext.request.contextPath}/img/neighborhood2.jpg" width="720" height="480">
-                </div>
+                <c:choose>
+                    <c:when test="${not empty photos or not empty property.photos}">
+                        <c:if test="${empty photos}">
+                            <c:set var="photos" value="${property.photos}"/>
+                        </c:if>
+                        <c:forEach var="photo" items="${photos}" varStatus="status">
+                            <div class="item ${status.index eq 0 ? 'active' : ''}">
+                                <img src="${pageContext.request.contextPath}/uploads/property-pics/${photo.filename}" width="720" height="480">
+                            </div>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="item active">
+                            <img src="${pageContext.request.contextPath}/img/neighborhood1.jpg" width="720" height="480">
+                        </div>
+                        <div class="item">
+                            <img src="${pageContext.request.contextPath}/img/neighborhood2.jpg" width="720" height="480">
+                        </div>
+                    </c:otherwise>
+                </c:choose>
             </div>
 
             <a class="left carousel-control" href="#property-show-carousel" role="button" data-slide="prev">

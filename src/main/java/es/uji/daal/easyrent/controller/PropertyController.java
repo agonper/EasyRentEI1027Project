@@ -2,10 +2,7 @@ package es.uji.daal.easyrent.controller;
 
 import es.uji.daal.easyrent.model.*;
 
-import es.uji.daal.easyrent.repository.AvailabilityPeriodRepository;
-import es.uji.daal.easyrent.repository.BookingProposalRepository;
-import es.uji.daal.easyrent.repository.PropertyRepository;
-import es.uji.daal.easyrent.repository.UserRepository;
+import es.uji.daal.easyrent.repository.*;
 import es.uji.daal.easyrent.utils.DateUtils;
 import es.uji.daal.easyrent.utils.FileUploader;
 import es.uji.daal.easyrent.validators.AddressInfoValidator;
@@ -44,6 +41,9 @@ public class PropertyController {
 
     @Autowired
     private AvailabilityPeriodRepository availabilityRepository;
+
+    @Autowired
+    private PhotoRepository photoRepository;
 
     @Autowired
     private FileUploader fileUploader;
@@ -134,6 +134,7 @@ public class PropertyController {
                 break;
             case CHECK:
                 model.addAttribute("availabilityPeriods", addProperty.get("availabilityPeriods"));
+                model.addAttribute("photos", addProperty.get("photos"));
                 model.addAttribute("property", addProperty.get("property"));
                 break;
             default:
@@ -272,6 +273,9 @@ public class PropertyController {
 
         List<AvailabilityPeriod> periods = (List<AvailabilityPeriod>) addProperty.get("availabilities");
         availabilityRepository.save(periods);
+
+        List<Photo> photos = (List<Photo>) addProperty.get("photos");
+        photoRepository.save(photos);
 
         session.removeAttribute("addPropertyMap");
 

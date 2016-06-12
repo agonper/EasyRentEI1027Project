@@ -20,7 +20,7 @@
                     ${subtitle}
             </div>
             <div class="panel-body">
-                <m:property property="${property}" availabilityPeriods="${availabilityPeriods}"/>
+                <m:property property="${property}" availabilityPeriods="${availabilityPeriods}" photos="${photos}"/>
             </div>
         </div>
 
