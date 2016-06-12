@@ -21,46 +21,62 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-warning top-padding30px">
-                        <div class="panel-heading">Search for properties</div>
+                        <div class="panel-heading"><fmt:message key="administration-properties.searchForProperties" bundle="${lang}"/></div>
                         <div class="panel-body">
 
                             <form class="form-inline" method="get" action="/searchProperties">
-                                <div class="input-group">
-                                    <input class="form-control" name="propertyAttribute" placeholder="Search for properties" value="" size="80">
-                                    <div class="input-group-btn">
-                                        <button type="submit" class="btn btn-warning">Search </button>
-                                    </div>
-                                </div>
+
                                 <div class="form-group">
                                     <label for="selectServiceAttribute" class="left-padding30px">
                                         <fmt:message key="search.by-attribute" bundle="${lang}"/>
                                     </label>
+
                                     <select id="selectServiceAttribute" class="form-control">
-                                        <option>-</option>
+                                        <option value="title"><fmt:message key="administration-properties.title" bundle="${lang}"/></option>
+                                        <option value="ID">ID</option>
+                                        <option value="ownerID"><fmt:message key="administration-properties.ownerID" bundle="${lang}"/></option>
+                                        <option value="location"><fmt:message key="administration-properties.location" bundle="${lang}"/></option>
+                                        <option value="rooms"><fmt:message key="administration-properties.rooms" bundle="${lang}"/></option>
+                                        <option value="capacity"><fmt:message key="administration-properties.capacity" bundle="${lang}"/></option>
+                                        <option value="beds"><fmt:message key="administration-properties.beds" bundle="${lang}"/></option>
+                                        <option value="bathrooms"><fmt:message key="administration-properties.bathrooms" bundle="${lang}"/></option>
+                                        <option value="floorSpace"><fmt:message key="administration-properties.floorSpace" bundle="${lang}"/></option>
+                                        <option value="pricePerDay"><fmt:message key="administration-properties.pricePerDay" bundle="${lang}"/></option>
+                                        <option value="creationDate"><fmt:message key="administration-properties.creationDate" bundle="${lang}"/></option>
+                                        <option value="type"><fmt:message key="administration-properties.type" bundle="${lang}"/></option>
+                                        <option value="description"><fmt:message key="administration-properties.description" bundle="${lang}"/>
                                     </select>
                                 </div>
+
+                                <div class="input-group" id="input">
+                                    <input type="text" class="form-control" name="propertyAttribute" placeholder="Search for properties" value="" size="80">
+                                    <div class="input-group-btn">
+                                        <button type="submit" class="btn btn-warning"><fmt:message key="administration.search" bundle="${lang}"/></button>
+                                    </div>
+                                </div>
+
                             </form>
 
                         </div>
 
-                        <div class="panel-heading">List of searched properties</div>
+                        <div class="panel-heading"><fmt:message key="administration-users.listOfSearchedProperties" bundle="${lang}"/></div>
                         <div class="panel-body">
                             <div class="table-responsive">
                                 <table class="table">
                                     <tr>
                                         <th>ID</th>
-                                        <th>Owner id</th>
-                                        <th>Title</th>
-                                        <th>Location</th>
-                                        <th>Rooms</th>
-                                        <th>Capacity</th>
-                                        <th>Beds</th>
-                                        <th>Bathrooms</th>
-                                        <th>Floor space</th>
-                                        <th>Price per day</th>
-                                        <th>Creation date</th>
-                                        <th>Type</th>
-                                        <th>Description</th>
+                                        <th><fmt:message key="administration-properties.ownerID" bundle="${lang}"/></th>
+                                        <th><fmt:message key="administration-properties.title" bundle="${lang}"/></th>
+                                        <th><fmt:message key="administration-properties.location" bundle="${lang}"/></th>
+                                        <th><fmt:message key="administration-properties.rooms" bundle="${lang}"/></th>
+                                        <th><fmt:message key="administration-properties.capacity" bundle="${lang}"/></th>
+                                        <th><fmt:message key="administration-properties.beds" bundle="${lang}"/></th>
+                                        <th><fmt:message key="administration-properties.bathrooms" bundle="${lang}"/></th>
+                                        <th><fmt:message key="administration-properties.floorSpace" bundle="${lang}"/></th>
+                                        <th><fmt:message key="administration-properties.pricePerDay" bundle="${lang}"/></th>
+                                        <th><fmt:message key="administration-properties.creationDate" bundle="${lang}"/></th>
+                                        <th><fmt:message key="administration-properties.type" bundle="${lang}"/></th>
+                                        <th><fmt:message key="administration-properties.description" bundle="${lang}"/></th>
                                     </tr>
                                     <c:forEach var="property" items="${properties}">
                                         <tr>
@@ -77,7 +93,6 @@
                                             <td>${property.creationDate}</td>
                                             <td>${property.type.label}</td>
                                             <td>${property.description}</td>
-                                            <td><a href="${pageContext.request.contextPath}/property/update/${property.id}.html" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span></a></td>
                                             <td><a href="${pageContext.request.contextPath}/property/delete/${property.id}.html" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span></a></td>
                                         </tr>
                                     </c:forEach>

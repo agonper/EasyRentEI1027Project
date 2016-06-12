@@ -22,7 +22,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-warning top-padding30px">
-                        <div class="panel-heading">Search for users</div>
+                        <div class="panel-heading"><fmt:message key="administration-users.searchForUsers" bundle="${lang}"/></div>
                         <div class="panel-body">
 
                             <form class="form-inline" method="get" action="/administration/users/searchFor">
@@ -52,7 +52,7 @@
                                 <div class="input-group" id="input">
                                     <input type="text" class="form-control" id="searchedFor" name="searchedFor" placeholder="Search for users" value="" size="80">
                                     <div class="input-group-btn">
-                                        <button type="submit" class="btn btn-warning">Search </button>
+                                        <button type="submit" class="btn btn-warning"><fmt:message key="administration.search" bundle="${lang}"/></button>
                                     </div>
                                 </div>
 
@@ -65,11 +65,11 @@
 
                                         if (selectedOption == "post code" || selectedOption == "phone number") {
                                             inputDiv.innerHTML = "";
-                                            inputDiv.class = "input-group";
+                                            inputDiv.className = "input-group";
 
                                             var input = document.createElement('input');
                                             input.type = "number";
-                                            input.class = "form-control";
+                                            input.className = "form-control";
                                             input.id = "searchedFor";
                                             input.name = "searchedFor";
                                             input.placeholder = "Search for users";
@@ -82,7 +82,7 @@
 
                                             var button = document.createElement('button');
                                             button.type = "submit";
-                                            button.class = "btn btn-warning";
+                                            button.className = "btn btn-warning";
                                             button.textContent = "Search";
 
                                             buttonDiv.appendChild(button);
@@ -91,7 +91,7 @@
 
                                         else if (selectedOption == "role") {
                                             inputDiv.innerHTML = "";
-                                            inputDiv.class = "input-group";
+                                            inputDiv.className = "input-group";
 
                                             var selectRole = document.createElement('select');
                                             selectRole.id = "searchedFor";
@@ -116,11 +116,11 @@
                                             inputDiv.appendChild(selectRole);
 
                                             var buttonDiv = document.createElement('div');
-                                            buttonDiv.class = "input-group-btn";
+                                            buttonDiv.className = "input-group-btn";
 
                                             var button = document.createElement('button');
                                             button.type = "submit";
-                                            button.class = "btn btn-warning";
+                                            button.className = "btn btn-warning";
                                             button.textContent = "Search";
 
                                             buttonDiv.appendChild(button);
@@ -129,7 +129,7 @@
 
                                         else if (selectedOption == "sign up date" || selectedOption == "deactived since") {
                                             inputDiv.innerHTML = "";
-                                            inputDiv.class = "input-group";
+                                            inputDiv.className = "input-group";
 
                                             var input = document.createElement('input');
                                             input.type = "date";
@@ -140,11 +140,11 @@
                                             inputDiv.appendChild(input);
 
                                             var buttonDiv = document.createElement('div');
-                                            buttonDiv.class = "input-group-btn";
+                                            buttonDiv.className = "input-group-btn";
 
                                             var button = document.createElement('button');
                                             button.type = "submit";
-                                            button.class = "btn btn-warning";
+                                            button.className = "btn btn-warning";
                                             button.textContent = "Search";
 
                                             buttonDiv.appendChild(button);
@@ -153,7 +153,7 @@
 
                                         else if (selectedOption == "active") {
                                             inputDiv.innerHTML = "";
-                                            inputDiv.class = "input-group";
+                                            inputDiv.className = "input-group";
 
                                             var input = document.createElement('input');
                                             input.type = "checkbox";
@@ -166,11 +166,11 @@
                                             inputDiv.appendChild(input);
 
                                             var buttonDiv = document.createElement('div');
-                                            buttonDiv.class = "input-group-btn";
+                                            buttonDiv.className = "input-group-btn";
 
                                             var button = document.createElement('button');
                                             button.type = "submit";
-                                            button.class = "btn btn-warning";
+                                            button.className = "btn btn-warning";
                                             button.textContent = "Search";
 
                                             buttonDiv.appendChild(button);
@@ -182,7 +182,7 @@
 
                                             var input = document.createElement('input');
                                             input.type = "text";
-                                            input.class = "form-control";
+                                            input.className = "form-control";
                                             input.id = "searchedFor";
                                             input.name = "searchedFor";
                                             input.placeholder = "Search for users";
@@ -191,11 +191,11 @@
                                             inputDiv.appendChild(input);
 
                                             var buttonDiv = document.createElement('div');
-                                            buttonDiv.class = "input-group-btn";
+                                            buttonDiv.className = "input-group-btn";
 
                                             var button = document.createElement('button');
                                             button.type = "submit";
-                                            button.class = "btn btn-warning";
+                                            button.className = "btn btn-warning";
                                             button.textContent = "Search";
 
                                             buttonDiv.appendChild(button);
@@ -208,7 +208,7 @@
 
                         </div>
 
-                        <div class="panel-heading">List of searched users</div>
+                        <div class="panel-heading"><fmt:message key="administration-users.listOfSearchedUsers" bundle="${lang}"/></div>
                         <div class="panel-body">
                             <div class="table-responsive">
                                 <table class="table">
