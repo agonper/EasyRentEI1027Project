@@ -1,5 +1,7 @@
 package es.uji.daal.easyrent.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Collection;
@@ -19,19 +21,24 @@ public class Service extends DomainModel {
     @Column(nullable = false, unique = true)
     private String value;
 
+    @JsonIgnore
     @ManyToOne
     private User user;
 
+    @JsonIgnore
     @Column(nullable = false)
     private boolean active;
 
     @Column(nullable = false)
     private Date creationDate;
 
+    @JsonIgnore
     private Date activeSince;
 
+    @JsonIgnore
     private int serviceProposals;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "services", cascade = CascadeType.ALL)
     private List<Property> properties;
 
@@ -56,6 +63,7 @@ public class Service extends DomainModel {
 
     private void initService(User user) {
         this.user = user;
+        serviceProposals = 0;
         creationDate = new Date();
     }
 

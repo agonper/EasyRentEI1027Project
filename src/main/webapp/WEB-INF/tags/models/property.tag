@@ -1,6 +1,7 @@
 <%@ attribute name="property" type="es.uji.daal.easyrent.model.Property" required="true" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ attribute name="availabilityPeriods" type="java.util.List<es.uji.daal.easyrent.view_models.AvailabilityForm>" %>
+<%@ attribute name="services" type="java.util.List<es.uji.daal.easyrent.model.Service>" %>
 <%@ attribute name="photos" type="java.util.List<es.uji.daal.easyrent.model.Photo>" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="er" uri="/WEB-INF/easy-rent.tld" %>
@@ -129,7 +130,24 @@
         <fmt:message key="property.services" bundle="${lang}"/>
     </div>
     <div class="panel-body">
-        ## Services ##
+        <c:choose>
+            <c:when test="${not empty services or not empty property.services}">
+                <c:if test="${empty services}">
+                    <c:set var="services" value="${property.services}"/>
+                </c:if>
+                <c:forEach var="service" items="${services}" varStatus="status">
+                    <er:color-gen number="${status.index}" var="color"/>
+                    <span class="h3">
+                        <span style="margin: 5px" class="label label-${color}">
+                                ${service.name}
+                        </span>
+                    </span>
+                </c:forEach>
+            </c:when>
+            <c:otherwise>
+                <fmt:message key="service.none" bundle="${lang}"/>
+            </c:otherwise>
+        </c:choose>
     </div>
 </div>
 <er:time-config type="datepicker" var="datepickerFormat"/>

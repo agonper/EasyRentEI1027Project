@@ -22,14 +22,14 @@
             </div>
             <div class="panel-body">
                 <div id="photo-list" class="row center-block">
-                    <c:forEach items="${propertyPhotos.values()}" var="pictureUri" varStatus="status">
+                    <c:forEach items="${propertyPhotos}" var="pictureUri" varStatus="status">
                         <div id="${pictureUri}" class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
                             <div class="thumbnail">
                                 <img class="img-responsive" src="${pageContext.request.contextPath}/uploads/property-pics/${pictureUri}">
                                 <div class="caption text-right">
-                                    <p><a id="remove-${pictureUri}" href="#" class="btn btn-danger property-photo-remove">
+                                    <p><button id="remove-${pictureUri}" class="btn btn-danger property-photo-remove">
                                         <span class="glyphicon glyphicon-remove"></span> <fmt:message key="general.remove" bundle="${lang}"/>
-                                    </a></p>
+                                    </button></p>
                                 </div>
                             </div>
                         </div>
@@ -44,18 +44,19 @@
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <input type="hidden" name="type" value="session">
                 </form>
+                <br>
+                <form method="post" class="form-horizontal" action="${pageContext.request.contextPath}/property/add/5">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <div class="row">
+                        <div class="col-sm-offset-1 col-sm-10">
+                            <a class="btn btn-warning" href="${pageContext.request.contextPath}/property/add?step=3"><span class="glyphicon glyphicon-backward"></span> <fmt:message key="general.back" bundle="${lang}"/></a>
+                            <button type="submit" class="btn btn-warning"><fmt:message key="general.next" bundle="${lang}"/> <span class="glyphicon glyphicon-forward"></span> </button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
 
-        <form method="post" class="form-horizontal" action="${pageContext.request.contextPath}/property/add/5">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            <div class="row">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <a class="btn btn-warning" href="${pageContext.request.contextPath}/property/add?step=3"><span class="glyphicon glyphicon-backward"></span> <fmt:message key="general.back" bundle="${lang}"/></a>
-                    <button type="submit" class="btn btn-warning"><fmt:message key="general.next" bundle="${lang}"/> <span class="glyphicon glyphicon-forward"></span> </button>
-                </div>
-            </div>
-        </form>
         <fmt:message key="property.upload-photos" bundle="${lang}" var="uploadPlaceholder"/>
         <fmt:message key="property.remove-picture" bundle="${lang}" var="removePicture"/>
         <fmt:message key="property.cancel-upload" bundle="${lang}" var="cancelUpload"/>
@@ -81,9 +82,9 @@
                                             '<div class="thumbnail">' +
                                                 '<img class="img-responsive" src="${pageContext.request.contextPath}/uploads/property-pics/' + pictureId + '">' +
                                                 '<div class="caption text-right">' +
-                                                    '<p><a id="remove-' + pictureId + '" href="#" class="btn btn-danger property-photo-remove">' +
+                                                    '<p><button id="remove-' + pictureId + '" class="btn btn-danger property-photo-remove">' +
                                                         '<span class="glyphicon glyphicon-remove"></span> <fmt:message key="general.remove" bundle="${lang}"/>' +
-                                                    '</a></p>' +
+                                                    '</button></p>' +
                                                 '</div>' +
                                             '</div>' +
                                         '</div>');

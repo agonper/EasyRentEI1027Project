@@ -54,7 +54,19 @@
             <name>var</name>
         </attribute>
     </tag>
-    <!-- Invoke 'Generate' action to add tags or functions -->
-
+    
+    <tag>
+        <name>color-gen</name>
+        <tag-class>es.uji.daal.easyrent.tags.ColorGenerator</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>number</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>var</name>
+        </attribute>
+    </tag>
 
 </taglib>

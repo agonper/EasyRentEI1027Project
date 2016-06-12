@@ -25,7 +25,7 @@
             <div class="panel-body">
                 <c:if test="${not empty availabilityPeriods}">
                     <c:forEach var="availabilityPeriod" items="${availabilityPeriods}" varStatus="status">
-                        <form class="form-inline" method="post" action="${pageContext.request.contextPath}/property/availability-period/update/${status.index}">
+                        <form style="margin: 3px;" class="form-inline" method="post" action="${pageContext.request.contextPath}/property/availability-period/update/${status.index}">
                             <div class="form-group datepicker-container">
                                 <label><fmt:message key="property.availability-period" bundle="${lang}"/> #${status.index+1}</label>
                                 <div class="input-daterange input-group" id="range-${status.index}">
@@ -66,18 +66,18 @@
                     </div>
                     <input type="hidden" name="type" value="session">
                 </form:form>
+                <br>
+                <form method="post" class="form-horizontal" action="${pageContext.request.contextPath}/property/add/3">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <div class="row">
+                        <div class="col-sm-offset-1 col-sm-10">
+                            <a class="btn btn-warning" href="${pageContext.request.contextPath}/property/add?step=2"><span class="glyphicon glyphicon-backward"></span> <fmt:message key="general.back" bundle="${lang}"/></a>
+                            <button type="submit" class="btn btn-warning"><fmt:message key="general.next" bundle="${lang}"/> <span class="glyphicon glyphicon-forward"></span> </button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
-
-        <form method="post" class="form-horizontal" action="${pageContext.request.contextPath}/property/add/3">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            <div class="row">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <a class="btn btn-warning" href="${pageContext.request.contextPath}/property/add?step=2"><span class="glyphicon glyphicon-backward"></span> <fmt:message key="general.back" bundle="${lang}"/></a>
-                    <button type="submit" class="btn btn-warning"><fmt:message key="general.next" bundle="${lang}"/> <span class="glyphicon glyphicon-forward"></span> </button>
-                </div>
-            </div>
-        </form>
         <er:time-config type="datepicker" var="datepickerFormat"/>
         <script>
             (function () {

@@ -1,7 +1,9 @@
 package es.uji.daal.easyrent.model;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.lucene.analysis.es.SpanishAnalyzer;
@@ -212,9 +214,22 @@ public class Property extends DomainModel {
         return services;
     }
 
+    public void setServices(HashSet<Service> services) {
+        this.services = services;
+    }
+
     public void addService(Service service) {
+        if (getServices() == null) {
+            setServices(new HashSet<>());
+        }
         getServices().add(service);
-        service.addProperty(this);
+    }
+
+    public void addServices(Collection<Service> services) {
+        if (getServices() == null) {
+            setServices(new HashSet<>());
+        }
+        getServices().addAll(services);
     }
 
     @PreRemove

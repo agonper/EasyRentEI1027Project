@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Alberto on 12/05/2016.
@@ -48,8 +49,8 @@ public class PhotosController {
             if (addProperty == null) {
                 return "ERROR";
             }
-            Map<String, String> propertyPhotos = (Map<String, String>) addProperty.get("propertyPhotos");
-            if (!propertyPhotos.containsKey(imageName)) {
+            Set<String> propertyPhotos = (Set<String>) addProperty.get("propertyPhotos");
+            if (!propertyPhotos.contains(imageName)) {
                 return "ERROR";
             }
             propertyPhotos.remove(imageName);

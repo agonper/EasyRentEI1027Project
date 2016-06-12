@@ -20,18 +20,18 @@
                     ${subtitle}
             </div>
             <div class="panel-body">
-                <m:property property="${property}" availabilityPeriods="${availabilityPeriods}" photos="${photos}"/>
+                <m:property property="${property}" availabilityPeriods="${availabilityPeriods}" photos="${photos}" services="${services}"/>
+                <form method="post" class="form-horizontal" action="${pageContext.request.contextPath}/property/add/6">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <div class="row">
+                        <div class="col-sm-offset-1 col-sm-10">
+                            <a class="btn btn-warning" href="${pageContext.request.contextPath}/property/add?step=4"><span class="glyphicon glyphicon-backward"></span> <fmt:message key="general.back" bundle="${lang}"/></a>
+                            <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-save"></span> <fmt:message key="general.save" bundle="${lang}"/></button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
 
-        <form method="post" class="form-horizontal" action="${pageContext.request.contextPath}/property/add/6">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            <div class="row">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <a class="btn btn-warning" href="${pageContext.request.contextPath}/property/add?step=4"><span class="glyphicon glyphicon-backward"></span> <fmt:message key="general.back" bundle="${lang}"/></a>
-                    <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-save"></span> <fmt:message key="general.save" bundle="${lang}"/></button>
-                </div>
-            </div>
-        </form>
     </jsp:body>
 </t:paginabasica>

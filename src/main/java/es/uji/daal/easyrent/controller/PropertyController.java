@@ -43,6 +43,9 @@ public class PropertyController {
     private AvailabilityPeriodRepository availabilityRepository;
 
     @Autowired
+    private ServiceRepository serviceRepository;
+
+    @Autowired
     private PhotoRepository photoRepository;
 
     @Autowired
@@ -128,15 +131,20 @@ public class PropertyController {
                 model.addAttribute("availabilityForm", new AvailabilityForm());
                 break;
             case SERVICES:
+                if (!addProperty.containsKey("services")) {
+                    addProperty.put("services", new ArrayList<Service>());
+                }
+                model.addAttribute("services", addProperty.get("services"));
                 break;
             case PHOTOS:
                 if (!addProperty.containsKey("propertyPhotos")) {
-                    addProperty.put("propertyPhotos", new HashMap<String, String>());
+                    addProperty.put("propertyPhotos", new HashSet<String>());
                 }
                 model.addAttribute("propertyPhotos", addProperty.get("propertyPhotos"));
                 break;
             case CHECK:
                 model.addAttribute("availabilityPeriods", addProperty.get("availabilityPeriods"));
+                model.addAttribute("services", addProperty.get("services"));
                 model.addAttribute("photos", addProperty.get("photos"));
                 model.addAttribute("property", addProperty.get("property"));
                 break;
@@ -249,7 +257,6 @@ public class PropertyController {
     @RequestMapping(value = "/add/4", method = RequestMethod.POST)
     public String processAddServicesSubmit(HttpSession session) {
         Map<String, Object> addProperty = (Map<String, Object>) session.getAttribute("addPropertyMap");
-        Map<String, String> propertyPhotos = (Map<String, String>) addProperty.get("propertyPhotos");
         Property property = (Property) addProperty.get("property");
 
         addProperty.replace("step", AddStep.SERVICES, AddStep.PHOTOS);
@@ -259,10 +266,10 @@ public class PropertyController {
     @RequestMapping(value = "/add/5", method = RequestMethod.POST)
     public String processAddPhotosSubmit(HttpSession session) {
         Map<String, Object> addProperty = (Map<String, Object>) session.getAttribute("addPropertyMap");
-        Map<String, String> propertyPhotos = (Map<String, String>) addProperty.get("propertyPhotos");
+        Set<String> propertyPhotos = (Set<String>) addProperty.get("propertyPhotos");
         Property property = (Property) addProperty.get("property");
 
-        List<Photo> photos = propertyPhotos.values().stream()
+        List<Photo> photos = propertyPhotos.stream()
                 .map(property::createPhoto).collect(Collectors.toCollection(LinkedList::new));
 
         addProperty.put("photos", photos);
@@ -282,6 +289,9 @@ public class PropertyController {
         userRepository.save(loggedUser);
 
         Property property = (Property) addProperty.get("property");
+        List<Service> services = (List<Service>) addProperty.get("services");
+        property.addServices(services);
+        serviceRepository.save(services);
         repository.save(property);
 
         List<AvailabilityPeriod> periods = (List<AvailabilityPeriod>) addProperty.get("availabilities");
@@ -289,6 +299,8 @@ public class PropertyController {
 
         List<Photo> photos = (List<Photo>) addProperty.get("photos");
         photoRepository.save(photos);
+
+        // FIXME Increment service usage
 
         session.removeAttribute("addPropertyMap");
 
@@ -316,11 +328,12 @@ public class PropertyController {
 
     @RequestMapping(value = "/delete/{id}")
     public String processDelete(@PathVariable(value = "id") String id) {
+        User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UUID propertyId = UUID.fromString(id);
         if (repository.exists(propertyId)) {
             repository.delete(propertyId);
         }
-        return "redirect:../list.html";
+        return "redirect:../../user/owner/" + loggedUser.getId() + ".html";
     }
 
     @RequestMapping(value = "/booking-proposal/{id}")
@@ -369,10 +382,10 @@ public class PropertyController {
         if (requestType == UploadType.SESSION) {
             Map<String, Object> addProperty = (Map<String, Object>) session.getAttribute("addPropertyMap");
             if (addProperty != null) {
-                Map<String, String> propertyPhotos = (Map<String, String>) addProperty.get("propertyPhotos");
+                Set<String> propertyPhotos = (Set<String>) addProperty.get("propertyPhotos");
                 String filename = fileUploader.upload("property-pics", file);
                 if (filename != null) {
-                    propertyPhotos.put(filename, filename);
+                    propertyPhotos.add(filename);
                     return filename;
                 }
                 return "none";
