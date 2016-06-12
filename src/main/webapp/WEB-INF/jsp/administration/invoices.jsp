@@ -25,14 +25,16 @@
                         <div class="panel-body">
 
                             <form class="form-inline" method="get" action="/administration/invoices/searchFor">
+
                                 <div class="form-group">
-                                    <label for="selectInvoiceAttribute" class="left-padding30px">
+                                    <label for="selectedInvoiceAttribute" class="left-padding30px">
                                         <fmt:message key="search.by-attribute" bundle="${lang}"/>
                                     </label>
-                                    <select id="selectInvoiceAttribute" class="form-control">
+
+                                    <select id="selectedInvoiceAttribute" name="selectedInvoiceAttribute" class="form-control">
                                         <option value="number"><fmt:message key="invoice.number" bundle="${lang}"/></option>
                                         <option value="ID">ID</option>
-                                        <option value="booking"><fmt:message key="invoice.booking" bundle="${lang}"/></option>
+                                        <option value="bookingID"><fmt:message key="invoice.booking" bundle="${lang}"/></option>
                                         <option value="vat"><fmt:message key="invoice.vat" bundle="${lang}"/></option>
                                         <option value="address"><fmt:message key="invoice.address" bundle="${lang}"/></option>
                                         <option value="expeditionDate"><fmt:message key="invoice.expedition-date" bundle="${lang}"/></option>
@@ -40,8 +42,8 @@
                                     </select>
                                 </div>
 
-                                <div class="input-group">
-                                    <input class="form-control" name="invoiceAttribute" placeholder="Search for invoices" value="" size="80">
+                                <div class="input-group" id="input">
+                                    <input type="text" class="form-control" id="searchedFor" name="searchedFor" placeholder="Search for invoices" value="" size="80">
                                     <div class="input-group-btn">
                                         <button type="submit" class="btn btn-warning"><fmt:message key="administration.search" bundle="${lang}"/></button>
                                     </div>
