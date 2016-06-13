@@ -20,6 +20,13 @@
                 <c:choose>
                     <c:when test="${loggedUser == null || loggedUser.id == null}">
                         <li>
+                            <fmt:message key="index.invite-signup" bundle="${lang}" var="addPropertyBtn"/>
+                            <a href="${pageContext.request.contextPath}/property/add.html" title="${addPropertyBtn}">
+                                <span class="glyphicon glyphicon-plus"><span class="glyphicon glyphicon-home"></span></span> ${addPropertyBtn.toUpperCase()}
+                            </a>
+                        </li>
+                        <li class="divider-vertical hidden-xs"></li>
+                        <li>
                             <a href="${pageContext.request.contextPath}/login.html">
                                 <span class="glyphicon glyphicon-log-in"></span> <fmt:message key="navigation.login" bundle="${lang}"/>
                             </a>
@@ -34,7 +41,7 @@
                         <li>
                             <fmt:message key="add-property.add" bundle="${lang}" var="addPropertyBtn"/>
                             <a href="${pageContext.request.contextPath}/property/add.html" title="${addPropertyBtn}">
-                                <span class="glyphicon glyphicon-plus"></span> <span class="visible-xs-inline">${addPropertyBtn.toUpperCase()}</span>
+                                <span class="glyphicon glyphicon-plus"><span class="glyphicon glyphicon-home"></span></span> <span class="visible-xs-inline">${addPropertyBtn.toUpperCase()}</span>
                             </a>
                         </li>
                         <li>

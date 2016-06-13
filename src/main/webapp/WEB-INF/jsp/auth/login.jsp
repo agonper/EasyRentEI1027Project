@@ -43,6 +43,7 @@
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-log-in"></span> <fmt:message key="login.title" bundle="${lang}"/></button>
+                <span style="margin-left: 3px;"><fmt:message key="index.new-user" bundle="${lang}"/> <a href="${pageContext.request.contextPath}/signup.html"><fmt:message key="index.create-account" bundle="${lang}"/> </a> </span>
             </div>
         </div>
     </form:form>
