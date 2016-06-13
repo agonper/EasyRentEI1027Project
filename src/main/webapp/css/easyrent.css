@@ -5,7 +5,7 @@
     -o-background-size: cover;
     background-size: cover;
     color: #fff;
-    padding: 100px 25px;
+    padding: 80px 25px 30px;
 }
 
 .container-padded {
@@ -72,6 +72,14 @@
 .carousel-control.right, .carousel-control.left {
     background-image: none;
     color: #f39c12;
+}
+
+.corporative-color {
+    color: #f39c12;
+}
+
+a > .corporative-color:hover {
+    color: #e67e22;
 }
 
 .carousel-indicators li {

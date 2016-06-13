@@ -1,7 +1,7 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@ taglib prefix="tag" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<tag:paginabasica title="EasyRent">
+<tag:paginabasica title="EasyRent" resource="index">
     <jsp:body>
         <div class="page-header">
             <h1><fmt:message key="easyrent.home" bundle="${lang}"/></h1>
