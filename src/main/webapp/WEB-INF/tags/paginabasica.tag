@@ -77,7 +77,7 @@
 <div class="container ${resource ne 'index' ? 'container-padded' : ''}">
     <jsp:doBody />
 </div>
-<footer class="container-fluid container-padded bg-cloud">
+<footer class="container-fluid container-padded bg-concrete">
     <hr>
     <p class="text-white text-center">
         &copy;<er:year-tag/> - <fmt:message key="easyrent.project" bundle="${lang}"/>

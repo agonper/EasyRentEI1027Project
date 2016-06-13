@@ -15,7 +15,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="${pageContext.request.contextPath}/">
-                <span class="corporative-color">
+                <span class="corporate-text">
                     <span class="glyphicon glyphicon-home"></span>
                     <c:if test="${resource ne 'index'}">
                         <span>EasyRent</span>
@@ -39,7 +39,7 @@
                                 <span class="glyphicon glyphicon-log-in"></span> <fmt:message key="navigation.login" bundle="${lang}"/>
                             </a>
                         </li>
-                        <li id="signup-nav-btn" class="bg-cloud text-white">
+                        <li id="signup-nav-btn" class="bg-concrete text-white">
                             <a class="text-white" href="${pageContext.request.contextPath}/signup.html">
                                 <fmt:message key="navigation.signup" bundle="${lang}"/>
                             </a>
@@ -64,8 +64,8 @@
                                 <span class="glyphicon glyphicon-user"></span> ${loggedUser.username.toUpperCase()}
                             </a>
                         </li>
-                        <li id="logout-nav-btn" class="bg-cloud text-white">
-                            <a href="#" id="logout-btn" class="bg-cloud text-white">
+                        <li id="logout-nav-btn" class="bg-concrete text-white">
+                            <a href="#" id="logout-btn" class="bg-concrete text-white">
                                 <span class="glyphicon glyphicon-log-out"></span> <fmt:message key="navigation.logout" bundle="${lang}"/>
                             </a>
                         </li>

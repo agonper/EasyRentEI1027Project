@@ -57,8 +57,12 @@
     color: #fff !important;
 }
 
-.bg-cloud {
-    background-color: #95a5a6;
+.bg-concrete {
+    background-color: #95a5a6 !important;
+}
+
+.bg-silver {
+    background-color: #bdc3c7 !important;
 }
 
 .top-padding30px {
@@ -74,11 +78,11 @@
     color: #f39c12;
 }
 
-.corporative-color {
+.corporate-text {
     color: #f39c12;
 }
 
-a > .corporative-color:hover {
+a > .corporate-text:hover {
     color: #e67e22;
 }
 
@@ -88,4 +92,43 @@ a > .corporative-color:hover {
 
 .carousel-indicators li.active {
     background-color: #e67e22;
+}
+
+.text-shadow,
+.index-box h1,
+.index-box h2,
+.index-box h3 {
+    text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);
+}
+
+.text-silver {
+    color: #bdc3c7;
+}
+
+.index-box {
+    background-color: #fff;
+    padding: 80px 25px;
+}
+
+.spare-box {
+    margin: 10px;
+    -webkit-box-shadow: 10px 10px 15px -8px rgba(0,0,0,0.35);
+    -moz-box-shadow: 10px 10px 15px -8px rgba(0,0,0,0.35);
+    box-shadow: 10px 10px 15px -8px rgba(0,0,0,0.35);
+}
+
+.index-image-1 {
+    background: url("/img/pillows.jpg") no-repeat right top;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.index-image-2 {
+    background: url("/img/sea.jpg") no-repeat right top;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }

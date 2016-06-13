@@ -3,7 +3,26 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <tag:paginabasica title="EasyRent" resource="index">
     <jsp:body>
-        <div class="page-header">
+        <div class="index-image-1 index-box corporate-text spare-box">
+            <h1><fmt:message key="index.need-some-rest" bundle="${lang}"/> </h1>
+            <h3><fmt:message key="index.relax-slogan" bundle="${lang}"/> </h3>
+        </div>
+
+        <div class="bg-silver index-box text-center text-white spare-box">
+            <h2><fmt:message key="index.what-we-do" bundle="${lang}"/> </h2>
+        </div>
+
+        <div class="index-image-2 index-box text-right text-white spare-box">
+            <h1><fmt:message key="index.no-worries" bundle="${lang}"/></h1>
+            <h3><fmt:message key="index.as-a-tenant" bundle="${lang}"/> </h3>
+            <h3><fmt:message key="index.as-an-owner" bundle="${lang}"/> </h3>
+        </div>
+
+        <div class="index-box text-center corporate-text">
+            <h1><fmt:message key="index.convinced" bundle="${lang}"/> <a href="${pageContext.request.contextPath}/signup.html" class="btn btn-warning btn-lg"><fmt:message key="index.start-now" bundle="${lang}"/> </a></h1>
+        </div>
+
+        <%--<div class="page-header">
             <h1><fmt:message key="easyrent.home" bundle="${lang}"/></h1>
         </div>
         <p>
@@ -26,6 +45,6 @@
         </div>
         <div class="well">
             <p>Está feo! Arreglar!</p>
-        </div>
+        </div>--%>
     </jsp:body>
 </tag:paginabasica>
