@@ -74,7 +74,7 @@
         </form>
     </div>
 </header>
-<div class="container container-padded">
+<div class="container ${resource ne 'index' ? 'container-padded' : ''}">
     <jsp:doBody />
 </div>
 <footer class="container-fluid container-padded bg-cloud">

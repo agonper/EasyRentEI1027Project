@@ -64,10 +64,10 @@
                                             <form class="form-horizontal" method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/user/edit/${user.id}/upload-picture">
                                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                                     <label><fmt:message key="profile.upload-picture" bundle="${lang}"/></label>
-                                                    <div class="form-group">
-                                                        <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+                                                    <div class="form-group" style="margin: 0">
+                                                        <div class="fileinput-preview thumbnail fileinput-exists" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
                                                     </div>
-                                                    <div class="form-group">
+                                                    <div class="form-group" style="margin: 0">
                                                         <span class="btn btn-default btn-file">
                                                             <span class="fileinput-new"><fmt:message key="general.select-image" bundle="${lang}"/></span>
                                                             <span class="fileinput-exists"><fmt:message key="general.change" bundle="${lang}"/></span>

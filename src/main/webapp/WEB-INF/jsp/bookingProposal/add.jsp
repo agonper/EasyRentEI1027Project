@@ -53,7 +53,7 @@
                 <div class="well">
                     <div class="row">
                         <div class="col-lg-6">
-                            <strong><fmt:message key="property.price" bundle="${lang}"/> (<span class="glyphicon glyphicon-calendar"></span> / <span class="glyphicon glyphicon-user"></span>)</strong>
+                            <strong><fmt:message key="property.price-per-day" bundle="${lang}"/> (<span class="glyphicon glyphicon-calendar"></span>)</strong>
                         </div>
                         <div class="col-lg-6">
                             <strong><span class="h2"><t:show-price amount="${property.pricePerDay}"/></span></strong>
