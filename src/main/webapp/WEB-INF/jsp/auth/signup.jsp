@@ -5,6 +5,10 @@
 <fmt:message key="signup.title" var="title" bundle="${lang}"/>
 <t:paginabasica title="${title}">
     <jsp:body>
+        <ol class="breadcrumb">
+            <li><a href="${pageContext.request.contextPath}/index.html"><fmt:message key="index.home" bundle="${lang}"/> </a></li>
+            <li class="active">${title}</li>
+        </ol>
         <div class="page-header">
             <h1>${title}</h1>
         </div>

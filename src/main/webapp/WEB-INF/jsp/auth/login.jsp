@@ -9,6 +9,10 @@
 <c:url value="/login.html" var="loginUrl"/>
 <fmt:message key="login.title" var="title" bundle="${lang}"/>
 <t:paginabasica title="${title}" >
+    <ol class="breadcrumb">
+        <li><a href="${pageContext.request.contextPath}/index.html"><fmt:message key="index.home" bundle="${lang}"/> </a></li>
+        <li class="active">${title}</li>
+    </ol>
     <div class="page-header">
         <h1>${title}</h1>
     </div>

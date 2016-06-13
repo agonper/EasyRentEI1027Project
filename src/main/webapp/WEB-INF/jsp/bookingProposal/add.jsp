@@ -9,6 +9,14 @@
 <fmt:message key="proposal.title" bundle="${lang}" var="title"/>
 <t:paginabasica title="${title}">
     <jsp:body>
+        <ol class="breadcrumb">
+            <li><a href="${pageContext.request.contextPath}/index.html"><fmt:message key="index.home" bundle="${lang}"/></a></li>
+            <c:if test="${not empty param.q}">
+                <li><a href="${pageContext.request.contextPath}/search.html?q=${param.q}"><fmt:message key="general.search" bundle="${lang}"/></a></li>
+            </c:if>
+            <li><a href="${pageContext.request.contextPath}/property/show/${property.id}.html${not empty param.q ? '?q=' : ''}${not empty param.q ? param.q : ''}">${property.title}</a></li>
+            <li class="active">${title}</li>
+        </ol>
         <div class="page-header">
             <span class="h1">${title} <fmt:message key="general.for" bundle="${lang}"/>: <a href="${pageContext.request.contextPath}/property/show/${property.id}.html">${property.title}</a></span>
         </div>

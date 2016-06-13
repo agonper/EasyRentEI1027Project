@@ -12,6 +12,17 @@
 <fmt:message key="general.by" bundle="${lang}" var="by"/>
 <t:paginabasica title="${property.title}">
     <jsp:body>
+        <ol class="breadcrumb">
+            <li><a href="${pageContext.request.contextPath}/index.html"><fmt:message key="index.home" bundle="${lang}"/></a></li>
+            <c:if test="${not empty param.q}">
+                <li><a href="${pageContext.request.contextPath}/search.html?q=${param.q}"><fmt:message key="general.search" bundle="${lang}"/></a></li>
+            </c:if>
+            <c:if test="${property.owner.equals(loggedUser)}">
+                <li><a href="${pageContext.request.contextPath}/user/profile/${loggedUser.id}.html"><fmt:message key="profile.title" bundle="${lang}"/></a></li>
+                <li><a href="${pageContext.request.contextPath}/user/owner/${loggedUser.id}.html"><fmt:message key="owner.title" bundle="${lang}"/></a></li>
+            </c:if>
+            <li class="active">${property.title}</li>
+        </ol>
         <div class="page-header">
             <div class="row">
                 <div class="col-md-11">
@@ -24,7 +35,7 @@
                             <a class="btn btn-warning" href="${pageContext.request.contextPath}/property/edit/${property.id}.html"><span class="glyphicon glyphicon-edit"></span> <fmt:message key="general.edit" bundle="${lang}"/></a>
                         </c:when>
                         <c:otherwise>
-                            <a class="btn btn-warning" href="${pageContext.request.contextPath}/property/booking-proposal/${property.id}.html"><span class="glyphicon glyphicon-ok"></span> <fmt:message key="proposal.book" bundle="${lang}"/> </a>
+                            <a class="btn btn-warning" href="${pageContext.request.contextPath}/property/booking-proposal/${property.id}.html${not empty param.q ? '?q=' : ''}${not empty param.q ? param.q : ''}"><span class="glyphicon glyphicon-ok"></span> <fmt:message key="proposal.book" bundle="${lang}"/> </a>
                         </c:otherwise>
                     </c:choose>
                 </div>

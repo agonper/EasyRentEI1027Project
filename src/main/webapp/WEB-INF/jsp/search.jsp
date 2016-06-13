@@ -23,7 +23,7 @@
                 <tbody data-link="row" class="rowlink">
                     <c:forEach var="property" items="${properties}" varStatus="loop">
                         <tr>
-                            <td><a href="${pageContext.request.contextPath}/property/show/${property.id}.html">${property.title}</a></td>
+                            <td><a href="${pageContext.request.contextPath}/property/show/${property.id}.html?q=${param.q}">${property.title}</a></td>
                             <td>${property.location}</td>
                             <td><t:show-price amount="${property.pricePerDay}"/></td>
                             <td>${property.type.label}</td>

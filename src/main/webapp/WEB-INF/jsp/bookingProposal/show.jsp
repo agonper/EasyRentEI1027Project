@@ -11,6 +11,19 @@
 <fmt:message key="proposal.title" bundle="${lang}" var="title"/>
 <t:paginabasica title="${title}">
     <jsp:body>
+        <ol class="breadcrumb">
+            <li><a href="${pageContext.request.contextPath}/index.html"><fmt:message key="index.home" bundle="${lang}"/></a></li>
+            <li><a href="${pageContext.request.contextPath}/user/profile/${loggedUser.id}.html"><fmt:message key="profile.title" bundle="${lang}"/></a></li>
+            <c:choose>
+                <c:when test="${bookingProposal.tenant.equals(loggedUser)}">
+                    <li><a href="${pageContext.request.contextPath}/user/tenant/${loggedUser.id}.html"><fmt:message key="tenant.title" bundle="${lang}"/></a></li>
+                </c:when>
+                <c:otherwise>
+                    <li><a href="${pageContext.request.contextPath}/user/owner/${loggedUser.id}.html"><fmt:message key="owner.title" bundle="${lang}"/></a></li>
+                </c:otherwise>
+            </c:choose>
+            <li class="active">${title}</li>
+        </ol>
         <div class="row">
             <div class="page-header">
                 <div class="row">

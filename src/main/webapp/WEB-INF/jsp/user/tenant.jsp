@@ -12,6 +12,11 @@
 
 <t:paginabasica title="${title}: ${user.username}">
     <jsp:body>
+        <ol class="breadcrumb">
+            <li><a href="${pageContext.request.contextPath}/index.html"><fmt:message key="index.home" bundle="${lang}"/></a></li>
+            <li><a href="${pageContext.request.contextPath}/user/profile/${loggedUser.id}.html"><fmt:message key="profile.title" bundle="${lang}"/></a></li>
+            <li class="active">${title}</li>
+        </ol>
         <div class="page-header">
             <span class="h1">${title}: ${user.username}</span>
         </div>

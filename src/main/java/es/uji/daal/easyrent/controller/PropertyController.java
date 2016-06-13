@@ -286,6 +286,9 @@ public class PropertyController {
         AddressInfoForm addressInfoForm = (AddressInfoForm) addProperty.get("addressInfoForm");
         personalDataForm.update(loggedUser);
         addressInfoForm.update(loggedUser);
+        if (loggedUser.getRole() == UserRole.TENANT) {
+            loggedUser.setRole(UserRole.OWNER);
+        }
         userRepository.save(loggedUser);
 
         Property property = (Property) addProperty.get("property");

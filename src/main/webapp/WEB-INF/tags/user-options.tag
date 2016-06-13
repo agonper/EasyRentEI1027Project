@@ -12,7 +12,7 @@
 <c:if test="${user.equals(loggedUser)}">
     <ul class="nav nav-tabs nav-justified" id="user-options">
         <li role="presentation" class="${location.equals("profile") ? 'active' : ''}"><a href="${pageContext.request.contextPath}/user/profile/${user.id}.html#user-options"><fmt:message key="profile.title" bundle="${lang}"/></a></li>
-        <c:if test="${user.role == 'TENANT'}">
+        <c:if test="${user.role == 'OWNER'}">
             <li role="presentation" class="${location.equals("owner") ? 'active' : ''}"><a href="${pageContext.request.contextPath}/user/owner/${user.id}.html#user-options"><fmt:message key="owner.title" bundle="${lang}"/></a></li>
         </c:if>
         <li role="presentation" class="${location.equals("tenant") ? 'active' : ''}"><a href="${pageContext.request.contextPath}/user/tenant/${user.id}.html#user-options"><fmt:message key="tenant.title" bundle="${lang}"/></a></li>
