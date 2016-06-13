@@ -50,7 +50,7 @@
                             </a>
                         </li>
                         <li id="logout-nav-btn" class="bg-cloud text-white">
-                            <a href="<c:url value="/logout.html" />" class="bg-cloud text-white">
+                            <a href="#" id="logout-btn" class="bg-cloud text-white">
                                 <span class="glyphicon glyphicon-log-out"></span> <fmt:message key="navigation.logout" bundle="${lang}"/>
                             </a>
                         </li>
@@ -60,3 +60,15 @@
         </div>
     </div>
 </nav>
+<script>
+    (function () {
+        $('#logout-btn').click(function (evt) {
+            evt.stopPropagation();
+            var options = {};
+            options['${_csrf.parameterName}'] = '${_csrf.token}'
+            $.post('${pageContext.request.contextPath}/logout', options).done(function () {
+                window.location.reload();
+            });
+        })
+    })()
+</script>

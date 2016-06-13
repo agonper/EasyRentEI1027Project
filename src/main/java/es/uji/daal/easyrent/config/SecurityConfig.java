@@ -40,10 +40,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .loginPage("/login.html")
                     .defaultSuccessUrl("/index.html")
                     .and()
-                .logout()
-                    .logoutUrl("/logout.html")
-                    .logoutSuccessUrl("/login.html?logout")
-                    .and()
                 .exceptionHandling()
                     .accessDeniedPage("/403.html");
     }
