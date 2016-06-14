@@ -33,8 +33,6 @@
 
                                     <select id="selectedInvoiceAttribute" name="selectedInvoiceAttribute" class="form-control">
                                         <option value="number"><fmt:message key="invoice.number" bundle="${lang}"/></option>
-                                        <option value="ID">ID</option>
-                                        <option value="bookingID"><fmt:message key="invoice.booking" bundle="${lang}"/></option>
                                         <option value="vat"><fmt:message key="invoice.vat" bundle="${lang}"/></option>
                                         <option value="address"><fmt:message key="invoice.address" bundle="${lang}"/></option>
                                         <option value="expeditionDate"><fmt:message key="invoice.expedition-date" bundle="${lang}"/></option>

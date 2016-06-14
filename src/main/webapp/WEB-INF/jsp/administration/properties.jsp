@@ -33,8 +33,6 @@
 
                                     <select id="selectedPropertyAttribute" class="form-control" name="selectedPropertyAttribute">
                                         <option value="title"><fmt:message key="administration-properties.title" bundle="${lang}"/></option>
-                                        <option value="ID">ID</option>
-                                        <option value="ownerID"><fmt:message key="administration-properties.ownerID" bundle="${lang}"/></option>
                                         <option value="owner"><fmt:message key="administration-properties.ownerUsername" bundle="${lang}"/></option>
                                         <option value="location"><fmt:message key="administration-properties.location" bundle="${lang}"/></option>
                                         <option value="rooms"><fmt:message key="administration-properties.rooms" bundle="${lang}"/></option>

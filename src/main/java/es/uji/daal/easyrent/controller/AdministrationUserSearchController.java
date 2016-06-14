@@ -37,10 +37,6 @@ public class AdministrationUserSearchController {
                 searchResult = repository.findByUsernameContainedInSearchedName(searchedFor);
                 break;
 
-            case "ID":
-                //TODO: Completar
-                break;
-
             case "role":
                 searchResult = repository.findByRoleContainedInSearchedRole(searchedFor);
                 break;

@@ -17,16 +17,12 @@ public interface BookingProposalRepository extends CrudRepository<BookingProposa
     List<BookingProposal> findByProperty_Owner_IdOrderByDateOfCreationDesc(UUID owner);
 
     //TODO: Test
-    @Query("select b from BookingProposal b where b.id = :id")
-    List<BookingProposal> findByIDContainedInSearchedID(@Param("id") UUID id);
+    @Query("select b from BookingProposal b where lower(b.property.title) like lower(concat('%', :title, '%') ) ")
+    List<BookingProposal> findByPropertyTitleContainedInSearchedPropertyTitle(@Param("title") String title);
 
     //TODO: Test
-    @Query("select b from BookingProposal b where b.property.owner.id = :id")
-    List<BookingProposal> findByOwnerIDContainedInSearchedOwnerID(@Param("id") UUID id);
-
-    //TODO: Test
-    @Query("select b from BookingProposal b where b.tenant.id = :id")
-    List<BookingProposal> findByTenantIDContainedInSearchedTenantID(@Param("id") UUID id);
+    @Query("select b from BookingProposal b where lower(b.tenant.username) like lower(concat('%', :username, '%') ) ")
+    List<BookingProposal> findByTenantUsernameContainedInSearchedTenantUsername(@Param("username") String username);
 
     //TODO: Test
     @Query("select b from BookingProposal b where b.startDate = :startDate")
@@ -61,6 +57,6 @@ public interface BookingProposalRepository extends CrudRepository<BookingProposa
     List<BookingProposal> findByDateOfUpdate(@Param("dateOfUpdate") Date dateOfUpdate);
 
     //TODO: Test
-    @Query("select b from BookingProposal b where b.invoice.id = :invoiceID")
-    List<BookingProposal> findByInvoiceID(@Param("invoiceID") UUID invoiceID);
+    @Query("select b from BookingProposal b where b.invoice.number = :number")
+    List<BookingProposal> findByInvoiceNumber(@Param("number") int number);
 }

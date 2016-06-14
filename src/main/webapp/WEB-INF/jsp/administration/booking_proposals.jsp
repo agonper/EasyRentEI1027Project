@@ -32,9 +32,8 @@
                                     </label>
 
                                     <select id="selectedBookingProposalsAttribute" name="selectedBookingProposalsAttribute" class="form-control">
-                                        <option value="ID">ID</option>
-                                        <option value="propertyID"><fmt:message key="administration-bookingProposals.propertyID" bundle="${lang}"/></option>
-                                        <option value="tenantID"><fmt:message key="administration-bookingProposals.tenantID" bundle="${lang}"/></option>
+                                        <option value="propertyTitle"><fmt:message key="administration-bookingProposals.propertyTitle" bundle="${lang}"/></option>
+                                        <option value="tenantUsername"><fmt:message key="administration-bookingProposals.tenantUsername" bundle="${lang}"/></option>
                                         <option value="startDate"><fmt:message key="administration-bookingProposals.startDate" bundle="${lang}"/></option>
                                         <option value="endDate"><fmt:message key="administration-bookingProposals.endDate" bundle="${lang}"/></option>
                                         <option value="status"><fmt:message key="administration-bookingProposals.status" bundle="${lang}"/></option>
@@ -43,7 +42,7 @@
                                         <option value="numberOfTenants"><fmt:message key="administration-bookingProposals.numberOfTenants" bundle="${lang}"/></option>
                                         <option value="dateOfCreation"><fmt:message key="administration-bookingProposals.dateOfCreation" bundle="${lang}"/></option>
                                         <option value="dateOfAcceptance"><fmt:message key="administration-bookingProposals.dateOfAcceptance" bundle="${lang}"/></option>
-                                        <option value="invoice"><fmt:message key="administration-bookingProposals.invoice" bundle="${lang}"/></option>
+                                        <option value="invoiceNumber"><fmt:message key="administration-bookingProposals.invoiceNumber" bundle="${lang}"/></option>
                                     </select>
                                 </div>
 
@@ -64,8 +63,8 @@
                                 <table class="table">
                                     <tr>
                                         <th>ID</th>
-                                        <th><fmt:message key="administration-bookingProposals.propertyID" bundle="${lang}"/></th>
-                                        <th><fmt:message key="administration-bookingProposals.tenantID" bundle="${lang}"/></th>
+                                        <th><fmt:message key="administration-bookingProposals.propertyTitle" bundle="${lang}"/></th>
+                                        <th><fmt:message key="administration-bookingProposals.tenantUsername" bundle="${lang}"/></th>
                                         <th><fmt:message key="administration-bookingProposals.startDate" bundle="${lang}"/></th>
                                         <th><fmt:message key="administration-bookingProposals.endDate" bundle="${lang}"/></th>
                                         <th><fmt:message key="administration-bookingProposals.status" bundle="${lang}"/></th>
@@ -74,7 +73,7 @@
                                         <th><fmt:message key="administration-bookingProposals.numberOfTenants" bundle="${lang}"/></th>
                                         <th><fmt:message key="administration-bookingProposals.dateOfCreation" bundle="${lang}"/></th>
                                         <th><fmt:message key="administration-bookingProposals.dateOfAcceptance" bundle="${lang}"/></th>
-                                        <th><fmt:message key="administration-bookingProposals.invoice" bundle="${lang}"/></th>
+                                        <th><fmt:message key="administration-bookingProposals.invoiceNumber" bundle="${lang}"/></th>
                                         <th><fmt:message key="administration-bookingProposals.delete?" bundle="${lang}"/></th>
                                     </tr>
                                     <c:forEach var="bookingProposal" items="${bookingProposals}">

@@ -34,7 +34,6 @@
 
                                     <select id="selectedUserAttribute" onchange="changedSelectValue()" name="selectedUserAttribute" class="form-control">
                                         <option value="username"><fmt:message key="administration-users.username" bundle="${lang}"/></option>
-                                        <option value="ID">ID</option>
                                         <option value="NID"><fmt:message key="administration-users.nid" bundle="${lang}"/></option>
                                         <option value="surnames"><fmt:message key="administration-users.surnames" bundle="${lang}"/></option>
                                         <option value="role"><fmt:message key="administration-users.role" bundle="${lang}"/></option>

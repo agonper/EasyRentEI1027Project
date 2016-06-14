@@ -21,19 +21,20 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-warning top-padding30px">
-                        <div class="panel-heading">Alerts for most demanded services</div>
+                        <div class="panel-heading"><fmt:message key="administration-services.alertsForMostDemanded" bundle="${lang}"/></div>
                         <div class="panel-body">
+
                             <div class="table-responsive">
                                 <table class="table">
                                     <tr>
                                         <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Value</th>
-                                        <th>User ID</th>
-                                        <th>Active</th>
-                                        <th>Creation date</th>
-                                        <th>Active since</th>
-                                        <th>Service proposals</th>
+                                        <th><fmt:message key="service.name" bundle="${lang}"/></th>
+                                        <th><fmt:message key="service.value" bundle="${lang}"/> </th>
+                                        <th><fmt:message key="service.proposedBy" bundle="${lang}"/> </th>
+                                        <th><fmt:message key="service.active" bundle="${lang}"/> </th>
+                                        <th><fmt:message key="service.creationDate" bundle="${lang}"/> </th>
+                                        <th><fmt:message key="service.activeSince" bundle="${lang}"/> </th>
+                                        <th><fmt:message key="service.serviceProposals" bundle="${lang}"/> </th>
                                     </tr>
                                     <c:forEach var="service" items="${services}">
                                         <tr>
@@ -53,48 +54,56 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="panel-heading">Search for services</div>
+
+                        <div class="panel-heading"><fmt:message key="administration-services.searchForServices" bundle="${lang}"/> </div>
                         <div class="panel-body">
 
-                            <form class="form-inline" method="get" action="/searchServices">
-                                <div class="input-group">
-                                    <input class="form-control" name="servicesAttribute" placeholder="Search for services" value="" size="80">
+                            <form class="form-inline" method="get" action="/administration/services/searchFor">
+
+                                <div class="form-group">
+                                    <label for="selectedServiceAttribute">
+                                        <fmt:message key="search.by-attribute" bundle="${lang}"/>
+                                    </label>
+                                    <select id="selectedServiceAttribute" name="selectedServiceAttribute" class="form-control">
+                                        <option value="name"><fmt:message key="service.name" bundle="${lang}"/></option>
+                                        <option value="proposedByUser"><fmt:message key="service.value" bundle="${lang}"/></option>
+                                        <option value="active"><fmt:message key="service.active" bundle="${lang}"/></option>
+                                        <option value="creationDate"><fmt:message key="service.creationDate" bundle="${lang}"/></option>
+                                        <option value="activeSince"><fmt:message key="service.activeSince" bundle="${lang}"/></option>
+                                        <option value="serviceProposals"><fmt:message key="service.serviceProposals" bundle="${lang}"/></option>
+                                    </select>
+                                </div>
+
+                                <div class="input-group" id="input">
+                                    <input type="text" class="form-control" id="searchedFor" name="searchedFor" placeholder="Search for services" value="" size="80">
                                     <div class="input-group-btn">
                                         <button type="submit" class="btn btn-warning">Search </button>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="selectServiceAttribute" class="left-padding30px">
-                                        <fmt:message key="search.by-attribute" bundle="${lang}"/>
-                                    </label>
-                                    <select id="selectServiceAttribute" class="form-control">
-                                        <option>-</option>
-                                    </select>
                                 </div>
                             </form>
 
                         </div>
 
-                        <div class="panel-heading">List of searched services</div>
+                        <div class="panel-heading"><fmt:message key="administration-services.listOfSearchedServices" bundle="${lang}"/> </div>
                         <div class="panel-body">
                             <div class="table-responsive">
                                 <table class="table">
                                     <tr>
                                         <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Value</th>
-                                        <th>User ID</th>
-                                        <th>Active</th>
-                                        <th>Creation date</th>
-                                        <th>Active since</th>
-                                        <th>Service proposals</th>
+                                        <th><fmt:message key="service.name" bundle="${lang}"/></th>
+                                        <th><fmt:message key="service.value" bundle="${lang}"/> </th>
+                                        <th><fmt:message key="service.proposedBy" bundle="${lang}"/> </th>
+                                        <th><fmt:message key="service.active" bundle="${lang}"/> </th>
+                                        <th><fmt:message key="service.creationDate" bundle="${lang}"/> </th>
+                                        <th><fmt:message key="service.activeSince" bundle="${lang}"/> </th>
+                                        <th><fmt:message key="service.serviceProposals" bundle="${lang}"/> </th>
                                     </tr>
                                     <c:forEach var="service" items="${services}">
                                         <tr>
                                             <td>${service.id}</td>
                                             <td>${service.name}</td>
                                             <td>${service.value}</td>
-                                            <td>${service.user.id}</td>
+                                            <td>${service.user.username}</td>
                                             <td>${service.active}</td>
                                             <td>${service.creationDate}</td>
                                             <td>${service.activeSince}</td>
