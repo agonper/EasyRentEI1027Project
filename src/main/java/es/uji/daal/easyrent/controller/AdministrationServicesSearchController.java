@@ -2,16 +2,12 @@ package es.uji.daal.easyrent.controller;
 
 import es.uji.daal.easyrent.model.Service;
 import es.uji.daal.easyrent.repository.ServiceRepository;
-import es.uji.daal.easyrent.validators.ServiceValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
-import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
