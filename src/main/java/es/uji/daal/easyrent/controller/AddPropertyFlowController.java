@@ -2,7 +2,6 @@ package es.uji.daal.easyrent.controller;
 
 import es.uji.daal.easyrent.model.*;
 import es.uji.daal.easyrent.repository.*;
-import es.uji.daal.easyrent.utils.FileUploader;
 import es.uji.daal.easyrent.validators.AddressInfoValidator;
 import es.uji.daal.easyrent.validators.PersonalDataValidator;
 import es.uji.daal.easyrent.validators.PropertyValidator;

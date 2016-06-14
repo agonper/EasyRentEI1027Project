@@ -28,18 +28,18 @@
                         <fmt:message key="tenant.sections" bundle="${lang}"/>
                     </div>
                     <div class="list-group">
-                        <a class="list-group-item ${(param.size() == 0 or param.proposals != null) ? 'active' : ''}" href="?proposals#sub-menu">
+                        <a class="list-group-item active" data-toggle="tab" href="#tenant-proposals">
                             <fmt:message key="tenant.emited-proposals" bundle="${lang}"/> <span class="badge">${user.bookingProposals.size()}</span>
                         </a>
-                        <a class="list-group-item ${(param.invoices != null) ? 'active' : ''}" href="?invoices#sub-menu">
+                        <a class="list-group-item" data-toggle="tab" href="#tenant-invoices">
                             <fmt:message key="tenant.invoices" bundle="${lang}"/> <span class="badge">${invoices.size()}</span>
                         </a>
                     </div>
                 </div>
             </div>
             <div class="col-md-9">
-                <div class="panel panel-warning">
-                    <c:if test="${param.size() == 0 or param.proposals != null}">
+                <div class="tab-content">
+                    <div id="tenant-proposals" class="panel panel-warning tab-pane active">
                         <div class="panel-heading">
                             <fmt:message key="tenant.emited-proposals" bundle="${lang}"/>
                         </div>
@@ -73,8 +73,8 @@
                                 </tbody>
                             </table>
                         </div>
-                    </c:if>
-                    <c:if test="${param.invoices != null}">
+                    </div>
+                    <div id="tenant-invoices" class="panel panel-warning tab-pane">
                         <div class="panel-heading">
                             <fmt:message key="tenant.invoices" bundle="${lang}"/>
                         </div>
@@ -102,9 +102,25 @@
                                 </tbody>
                             </table>
                         </div>
-                    </c:if>
+                    </div>
                 </div>
             </div>
         </div>
+        <script>
+            (function () {
+                $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+                    var $toBeShown = $(e.target);
+                    $toBeShown.parent().find('.active').removeClass('active');
+                    $toBeShown.addClass('active');
+                });
+
+                $(document).ready(function () {
+                    var fragment = document.location.hash;
+                    if (fragment != "") {
+                        $('a[href="' + fragment + '"]').tab('show');
+                    }
+                })
+            })();
+        </script>
     </jsp:body>
 </t:paginabasica>

@@ -64,7 +64,7 @@ public class UserEditController {
                     repository.existsByUsername(accountInfoForm.getUsername())) {
                 bindingResult.rejectValue("username", "invalid", "Username already exits");
             }
-            if (repository.existsByEmail(accountInfoForm.getEmail())) {
+            if (repository.existsByEmail(accountInfoForm.getEmail()) && !accountInfoForm.getEmail().equals(user.getEmail())) {
                 bindingResult.rejectValue("email", "exists", "There is an account with that email");
             }
             if (bindingResult.hasErrors()) {
@@ -138,7 +138,7 @@ public class UserEditController {
             personalDataForm.update(user);
             repository.save(user);
         }
-        return "redirect:../../profile/"+id+".html?personalData";
+        return "redirect:../../profile/"+id+".html#main-personal-data";
     }
 
     @RequestMapping("/{id}/address-info")
@@ -168,7 +168,7 @@ public class UserEditController {
             addressInfoForm.update(user);
             repository.save(user);
         }
-        return "redirect:../../profile/"+id+".html?addressInfo";
+        return "redirect:../../profile/"+id+".html#main-address-info";
     }
 
     @RequestMapping(value = "/{id}/upload-picture", method = RequestMethod.POST)

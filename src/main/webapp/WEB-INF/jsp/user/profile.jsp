@@ -22,19 +22,19 @@
         <t:user-options user="${user}" location="profile"/>
         <div class="row">
             <div class="col-md-3">
-                <div class="panel panel-warning" id="sub-menu">
+                <div class="panel panel-warning">
                     <div class="panel-heading">
                         <fmt:message key="profile.sections" bundle="${lang}"/>
                     </div>
                     <div class="list-group">
-                        <a class="list-group-item ${(param.size() == 0 or param.accountInfo != null) ? 'active' : ''}" href="?accountInfo#sub-menu">
+                        <a class="list-group-item active" data-toggle="tab" href="#main-account-info">
                             <fmt:message key="profile.account-info" bundle="${lang}"/>
                         </a>
                         <c:if test="${user.equals(loggedUser)}">
-                            <a class="list-group-item ${(param.personalData != null) ? 'active' : ''} ${user.equals(loggedUser) ? '' : 'disabled'}" href="?personalData#sub-menu">
+                            <a class="list-group-item" data-toggle="tab" href="#main-personal-data">
                                 <fmt:message key="profile.personal-data" bundle="${lang}"/>
                             </a>
-                            <a class="list-group-item ${(param.addressInfo != null) ? 'active' : ''} ${user.equals(loggedUser) ? '' : 'disabled'}" href="?addressInfo#sub-menu">
+                            <a class="list-group-item" data-toggle="tab" href="#main-address-info">
                                 <fmt:message key="profile.address-info" bundle="${lang}"/>
                             </a>
                         </c:if>
@@ -42,8 +42,8 @@
                 </div>
             </div>
             <div class="col-md-9">
-                <div class="panel panel-warning">
-                    <c:if test="${param.size() == 0 or param.accountInfo != null}">
+                <div class="tab-content">
+                    <div id="main-account-info" class="panel panel-warning tab-pane active">
                         <div class="panel-heading">
                             <fmt:message key="profile.account-info" bundle="${lang}"/>
                         </div>
@@ -104,40 +104,60 @@
                                 </a>
                             </div>
                         </c:if>
+                    </div>
+                    <c:if test="${user.equals(loggedUser)}">
+                        <div id="main-personal-data" class="panel panel-warning tab-pane">
+                            <div class="panel-heading">
+                                <fmt:message key="profile.personal-data" bundle="${lang}"/>
+                            </div>
+                            <ul class="list-group">
+                                <t:li-hb stringKey="user.name">${user.name}</t:li-hb>
+                                <t:li-hb stringKey="user.surnames">${user.surnames}</t:li-hb>
+                                <t:li-hb stringKey="user.dni">${user.dni}</t:li-hb>
+                                <t:li-hb stringKey="user.phone-number">${user.phoneNumber}</t:li-hb>
+                            </ul>
+                            <div class="panel-footer">
+                                <a class="btn btn-warning" href="${pageContext.request.contextPath}/user/edit/${user.id}/personal-data">
+                                    <span class="glyphicon glyphicon-edit"></span> <fmt:message key="general.edit" bundle="${lang}"/>
+                                </a>
+                            </div>
+                        </div>
                     </c:if>
-                    <c:if test="${user.equals(loggedUser) and param.personalData != null}">
-                        <div class="panel-heading">
-                            <fmt:message key="profile.personal-data" bundle="${lang}"/>
-                        </div>
-                        <ul class="list-group">
-                            <t:li-hb stringKey="user.name">${user.name}</t:li-hb>
-                            <t:li-hb stringKey="user.surnames">${user.surnames}</t:li-hb>
-                            <t:li-hb stringKey="user.dni">${user.dni}</t:li-hb>
-                            <t:li-hb stringKey="user.phone-number">${user.phoneNumber}</t:li-hb>
-                        </ul>
-                        <div class="panel-footer">
-                            <a class="btn btn-warning" href="${pageContext.request.contextPath}/user/edit/${user.id}/personal-data">
-                                <span class="glyphicon glyphicon-edit"></span> <fmt:message key="general.edit" bundle="${lang}"/>
-                            </a>
-                        </div>
-                    </c:if>
-                    <c:if test="${user.equals(loggedUser) and param.addressInfo != null}">
-                        <div class="panel-heading">
-                            <fmt:message key="profile.address-info" bundle="${lang}"/>
-                        </div>
-                        <ul class="list-group">
-                            <t:li-hb stringKey="user.address">${user.postalAddress}</t:li-hb>
-                            <t:li-hb stringKey="user.country">${user.country}</t:li-hb>
-                            <t:li-hb stringKey="user.post-code">${user.postCode}</t:li-hb>
-                        </ul>
-                        <div class="panel-footer">
-                            <a class="btn btn-warning" href="${pageContext.request.contextPath}/user/edit/${user.id}/address-info">
-                                <span class="glyphicon glyphicon-edit"></span> <fmt:message key="general.edit" bundle="${lang}"/>
-                            </a>
+                    <c:if test="${user.equals(loggedUser)}">
+                        <div id="main-address-info" class="panel panel-warning tab-pane">
+                            <div class="panel-heading">
+                                <fmt:message key="profile.address-info" bundle="${lang}"/>
+                            </div>
+                            <ul class="list-group">
+                                <t:li-hb stringKey="user.address">${user.postalAddress}</t:li-hb>
+                                <t:li-hb stringKey="user.country">${user.country}</t:li-hb>
+                                <t:li-hb stringKey="user.post-code">${user.postCode}</t:li-hb>
+                            </ul>
+                            <div class="panel-footer">
+                                <a class="btn btn-warning" href="${pageContext.request.contextPath}/user/edit/${user.id}/address-info">
+                                    <span class="glyphicon glyphicon-edit"></span> <fmt:message key="general.edit" bundle="${lang}"/>
+                                </a>
+                            </div>
                         </div>
                     </c:if>
                 </div>
             </div>
         </div>
+        <script>
+            (function () {
+                $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+                    var $toBeShown = $(e.target);
+                    $toBeShown.parent().find('.active').removeClass('active');
+                    $toBeShown.addClass('active');
+                });
+
+                $(document).ready(function () {
+                    var fragment = document.location.hash;
+                    if (fragment != "") {
+                        $('a[href="' + fragment + '"]').tab('show');
+                    }
+                })
+            })();
+        </script>
     </jsp:body>
 </t:paginabasica>

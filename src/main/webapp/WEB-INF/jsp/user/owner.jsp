@@ -28,18 +28,18 @@
                         <fmt:message key="owner.sections" bundle="${lang}"/>
                     </div>
                     <div class="list-group">
-                        <a class="list-group-item ${(param.size() == 0 or param.properties != null) ? 'active' : ''}" href="?properties#sub-menu">
+                        <a class="list-group-item active" data-toggle="tab" href="#owner-properties">
                             <fmt:message key="owner.properties" bundle="${lang}"/> <span class="badge">${user.properties.size()}</span>
                         </a>
-                        <a class="list-group-item ${(param.proposals != null) ? 'active' : ''}" href="?proposals#sub-menu">
+                        <a class="list-group-item" data-toggle="tab" href="#owner-proposals">
                             <fmt:message key="owner.received-proposals" bundle="${lang}"/> <span class="badge">${bookingProposals.size()}</span>
                         </a>
                     </div>
                 </div>
             </div>
             <div class="col-md-9">
-                <div class="panel panel-warning">
-                    <c:if test="${param.size() == 0 or param.properties != null}">
+                <div class="tab-content">
+                    <div id="owner-properties" class="panel panel-warning tab-pane active">
                         <div class="panel-heading">
                             <fmt:message key="owner.properties" bundle="${lang}"/>
                         </div>
@@ -74,8 +74,8 @@
                         <div class="panel-footer">
                             <td><a class="btn btn-warning" href="${pageContext.request.contextPath}/property/add.html"><span class="glyphicon glyphicon-plus"></span> <fmt:message key="add-property.add" bundle="${lang}"/></a></td>
                         </div>
-                    </c:if>
-                    <c:if test="${param.proposals != null}">
+                    </div>
+                    <div id="owner-proposals" class="panel panel-warning tab-pane">
                         <div class="panel-heading">
                             <fmt:message key="owner.received-proposals" bundle="${lang}"/>
                         </div>
@@ -120,9 +120,25 @@
                                 </tbody>
                             </table>
                         </div>
-                    </c:if>
+                    </div>
                 </div>
             </div>
         </div>
+        <script>
+            (function () {
+                $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+                    var $toBeShown = $(e.target);
+                    $toBeShown.parent().find('.active').removeClass('active');
+                    $toBeShown.addClass('active');
+                });
+
+                $(document).ready(function () {
+                    var fragment = document.location.hash;
+                    if (fragment != "") {
+                        $('a[href="' + fragment + '"]').tab('show');
+                    }
+                })
+            })();
+        </script>
     </jsp:body>
 </t:paginabasica>
