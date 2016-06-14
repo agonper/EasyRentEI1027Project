@@ -27,7 +27,7 @@
                             <form class="form-inline" method="get" action="/administration/invoices/searchFor">
 
                                 <div class="form-group">
-                                    <label for="selectedInvoiceAttribute" class="left-padding30px">
+                                    <label for="selectedInvoiceAttribute">
                                         <fmt:message key="search.by-attribute" bundle="${lang}"/>
                                     </label>
 

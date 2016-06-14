@@ -1,6 +1,7 @@
 <%@ tag description="EasyRent boilerplate"
         pageEncoding="UTF-8"%>
 <%@ attribute name="title" required="false"%>
+<%@ attribute name="resource"%>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="er" uri="/WEB-INF/easy-rent.tld" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -55,24 +56,28 @@
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="locale" var="lang" scope="application"/>
 
-<t:navigation/>
-<header class="jumbotron text-center">
-    <h1>EasyRent</h1>
-    <p><fmt:message key="easyrent.slogan" bundle="${lang}" /></p>
-    <form class="form-inline" method="get" action="${pageContext.request.contextPath}/search.html">
-        <div class="input-group">
-            <fmt:message key="home.search" bundle="${lang}" var="search"/>
-            <input class="form-control" name="q" placeholder="${search}" value="${param.q != null ? param.q : ''}" size="50">
-            <div class="input-group-btn">
-                <button type="submit" class="btn btn-default"><fmt:message key="home.search-btn" bundle="${lang}"/> </button>
+<t:navigation resource="${resource}"/>
+<header class="jumbotron ${resource eq 'index' ? 'text-center' : ''}">
+    <div class="${resource eq 'index' ? '' : 'container'}">
+        <c:if test="${resource eq 'index'}">
+            <h1>EasyRent</h1>
+            <p><fmt:message key="easyrent.slogan" bundle="${lang}" /></p>
+        </c:if>
+        <form class="form-inline" method="get" action="${pageContext.request.contextPath}/search.html">
+            <div class="input-group">
+                <fmt:message key="home.search" bundle="${lang}" var="search"/>
+                <input class="form-control" name="q" placeholder="${search}" value="${param.q != null ? param.q : ''}" size="50">
+                <div class="input-group-btn">
+                    <button type="submit" class="btn btn-default"><fmt:message key="home.search-btn" bundle="${lang}"/> </button>
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </header>
-<div class="container container-padded">
+<div class="container ${resource ne 'index' ? 'container-padded' : ''}">
     <jsp:doBody />
 </div>
-<footer class="container-fluid container-padded bg-cloud">
+<footer class="container-fluid container-padded bg-concrete">
     <hr>
     <p class="text-white text-center">
         &copy;<er:year-tag/> - <fmt:message key="easyrent.project" bundle="${lang}"/>

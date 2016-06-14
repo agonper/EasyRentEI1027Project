@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
 
 <%@ attribute name="location" required="true" %>
 
@@ -13,6 +14,6 @@
     <li role="presentation" class="${location.equals("properties") ? 'active' : ''}"><a href="${pageContext.request.contextPath}/administration/properties.html#administration-options"><fmt:message key="administration.properties" bundle="${lang}"/></a></li>
     <li role="presentation" class="${location.equals("booking_proposals") ? 'active' : ''}"><a href="${pageContext.request.contextPath}/administration/booking_proposals.html#administration-options"><fmt:message key="administration.booking-proposals" bundle="${lang}"/></a></li>
     <li role="presentation" class="${location.equals("invoices") ? 'active' : ''}"><a href="${pageContext.request.contextPath}/administration/invoices.html#administration-options"><fmt:message key="administration.invoices" bundle="${lang}"/></a></li>
-    <li role="presentation" class="${location.equals("services") ? 'active' : ''}"><a href="${pageContext.request.contextPath}/administration/services.html#administration-options"><fmt:message key="administration.services" bundle="${lang}"/> <span class="badge">0</span></a></li>
+    <li role="presentation" class="${location.equals("services") ? 'active' : ''}"><a href="${pageContext.request.contextPath}/administration/services.html#administration-options"><fmt:message key="administration.services" bundle="${lang}"/> <span class="badge">${numberOfServicesNotActive}</span></a></li>
 </ul>
 <br>

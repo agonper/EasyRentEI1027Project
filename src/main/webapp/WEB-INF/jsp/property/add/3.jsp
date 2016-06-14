@@ -2,7 +2,6 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="er" uri="/WEB-INF/easy-rent.tld" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="er" uri="/WEB-INF/easy-rent.tld" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="navs" tagdir="/WEB-INF/tags/navs" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -12,6 +11,7 @@
 <fmt:message key="property.availability-dates" bundle="${lang}" var="subtitle"/>
 <t:paginabasica title="${title}: subtitle">
     <jsp:body>
+        <t:property-add-breadcrumb subtitle="${subtitle}"/>
         <div class="page-header">
             <h1>${title} <small>${subtitle}</small></h1>
         </div>

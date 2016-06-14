@@ -1,6 +1,8 @@
 package es.uji.daal.easyrent.repository;
 
 import es.uji.daal.easyrent.model.Service;
+import javafx.scene.control.Pagination;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -40,4 +42,10 @@ public interface ServiceRepository extends CrudRepository<Service, UUID> {
 
     @Query("select s from Service s where s.serviceProposals = :serviceProposals")
     List<Service> findByServiceProposals(@Param("serviceProposals") int serviceProposals);
+
+    @Query("select s from Service s where s.active = false order by s.serviceProposals desc")
+    List<Service> findTop5MostDemandedServices(Pageable pagination);
+
+    @Query("select count(s) from Service s where s.active = false")
+    int findNumberOfServicesNotActive();
 }

@@ -5,6 +5,10 @@
 <fmt:message key="signup.title" var="title" bundle="${lang}"/>
 <t:paginabasica title="${title}">
     <jsp:body>
+        <ol class="breadcrumb">
+            <li><a href="${pageContext.request.contextPath}/index.html"><fmt:message key="index.home" bundle="${lang}"/> </a></li>
+            <li class="active">${title}</li>
+        </ol>
         <div class="page-header">
             <h1>${title}</h1>
         </div>
@@ -22,6 +26,7 @@
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <button type="submit" class="btn btn-warning"><fmt:message key="signup.title" bundle="${lang}"/></button>
+                    <span style="margin-left: 3px;"><fmt:message key="index.owns-account" bundle="${lang}"/> <a href="${pageContext.request.contextPath}/login.html"><fmt:message key="login.title" bundle="${lang}"/> </a> </span>
                 </div>
             </div>
         </form:form>

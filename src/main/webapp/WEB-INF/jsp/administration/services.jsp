@@ -34,21 +34,31 @@
                                         <th><fmt:message key="service.active" bundle="${lang}"/> </th>
                                         <th><fmt:message key="service.creationDate" bundle="${lang}"/> </th>
                                         <th><fmt:message key="service.activeSince" bundle="${lang}"/> </th>
-                                        <th><fmt:message key="service.serviceProposals" bundle="${lang}"/> </th>
+                                        <th><fmt:message key="service.serviceProposals" bundle="${lang}"/></th>
+                                        <th><fmt:message key="service.changeState" bundle="${lang}"/></th>
+                                        <th><fmt:message key="service.delete" bundle="${lang}"/></th>
                                     </tr>
-                                    <c:forEach var="service" items="${services}">
+                                    <c:forEach var="service" items="${mostDemandedServices}">
                                         <tr>
                                             <td>${service.id}</td>
                                             <td>${service.name}</td>
                                             <td>${service.value}</td>
-                                            <td>${service.user.id}</td>
+                                            <td>${service.user.username}</td>
                                             <td>${service.active}</td>
                                             <td>${service.creationDate}</td>
                                             <td>${service.activeSince}</td>
                                             <td>${service.serviceProposals}</td>
-                                            <td><a href="${pageContext.request.contextPath}/service/changeState/${service.id}.html" class="btn btn-primary"><span class="glyphicon glyphicon-plus-sign"></span></a> </td>
-                                            <td><a href="${pageContext.request.contextPath}/service/update/${service.id}.html" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span></a></td>
-                                            <td><a href="${pageContext.request.contextPath}/service/delete/${service.id}.html" class="btn btn-primary"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                            <td><a href="${pageContext.request.contextPath}/administration/services/changeState/${service.id}.html" class="btn btn-primary">
+                                                <c:choose>
+                                                    <c:when test="${service.active == true}">
+                                                        <span class="glyphicon glyphicon-off"> OFF</span>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <span class="glyphicon glyphicon-off"> ON</span>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </a> </td>
+                                            <td><a href="${pageContext.request.contextPath}/administration/services/delete/${service.id}.html" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></a></td>
                                         </tr>
                                     </c:forEach>
                                 </table>
@@ -77,7 +87,7 @@
                                 <div class="input-group" id="input">
                                     <input type="text" class="form-control" id="searchedFor" name="searchedFor" placeholder="Search for services" value="" size="80">
                                     <div class="input-group-btn">
-                                        <button type="submit" class="btn btn-warning">Search </button>
+                                        <button type="submit" class="btn btn-warning"><fmt:message key="administration.search" bundle="${lang}"/></button>
                                     </div>
                                 </div>
                             </form>
@@ -97,6 +107,8 @@
                                         <th><fmt:message key="service.creationDate" bundle="${lang}"/> </th>
                                         <th><fmt:message key="service.activeSince" bundle="${lang}"/> </th>
                                         <th><fmt:message key="service.serviceProposals" bundle="${lang}"/> </th>
+                                        <th><fmt:message key="service.changeState" bundle="${lang}"/></th>
+                                        <th><fmt:message key="service.delete" bundle="${lang}"/></th>
                                     </tr>
                                     <c:forEach var="service" items="${services}">
                                         <tr>
@@ -108,9 +120,17 @@
                                             <td>${service.creationDate}</td>
                                             <td>${service.activeSince}</td>
                                             <td>${service.serviceProposals}</td>
-                                            <td><a href="${pageContext.request.contextPath}/service/changeState/${service.id}.html" class="btn btn-primary"><span class="glyphicon glyphicon-plus-sign"></span></a> </td>
-                                            <td><a href="${pageContext.request.contextPath}/service/update/${service.id}.html" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span></a></td>
-                                            <td><a href="${pageContext.request.contextPath}/service/delete/${service.id}.html" class="btn btn-primary"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                            <td><a href="${pageContext.request.contextPath}/administration/services/changeState/${service.id}.html" class="btn btn-primary">
+                                                <c:choose>
+                                                    <c:when test="${service.active == true}">
+                                                        <span class="glyphicon glyphicon-off"> OFF</span>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <span class="glyphicon glyphicon-off"> ON</span>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </a> </td>
+                                            <td><a href="${pageContext.request.contextPath}/administration/services/delete/${service.id}.html" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></a></td>
                                         </tr>
                                     </c:forEach>
                                 </table>

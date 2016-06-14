@@ -27,7 +27,7 @@
                             <form class="form-inline" method="get" action="/administration/booking_proposals/searchFor">
 
                                 <div class="form-group">
-                                    <label for="selectedBookingProposalsAttribute" class="left-padding30px">
+                                    <label for="selectedBookingProposalsAttribute">
                                         <fmt:message key="search.by-attribute" bundle="${lang}"/>
                                     </label>
 

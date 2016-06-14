@@ -59,9 +59,9 @@ public class AuthController {
         return "redirect:index.html";
     }
 
-    @RequestMapping("/logout")
+    /*@RequestMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:index.html";
-    }
+    }*/
 }

@@ -27,7 +27,7 @@
                             <form class="form-inline" method="get" action="/administration/properties/searchFor">
 
                                 <div class="form-group">
-                                    <label for="selectedPropertyAttribute" class="left-padding30px">
+                                    <label for="selectedPropertyAttribute">
                                         <fmt:message key="search.by-attribute" bundle="${lang}"/>
                                     </label>
 
