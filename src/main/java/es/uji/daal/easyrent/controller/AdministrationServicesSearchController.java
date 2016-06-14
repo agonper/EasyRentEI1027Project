@@ -77,7 +77,7 @@ public class AdministrationServicesSearchController {
             case "serviceProposals":
                 Integer proposals;
                 try {
-                    proposals = Integer.getInteger(searchedFor);
+                    proposals = Integer.parseInt(searchedFor);
                     searchResult = repository.findByServiceProposals(proposals);
                 }
                 catch (NumberFormatException e) {

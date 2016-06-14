@@ -74,9 +74,9 @@
                                     <label for="selectedServiceAttribute">
                                         <fmt:message key="search.by-attribute" bundle="${lang}"/>
                                     </label>
-                                    <select id="selectedServiceAttribute" name="selectedServiceAttribute" class="form-control">
+                                    <select id="selectedServiceAttribute" onchange="changedSelectValue()" name="selectedServiceAttribute" class="form-control">
                                         <option value="name"><fmt:message key="service.name" bundle="${lang}"/></option>
-                                        <option value="proposedByUser"><fmt:message key="service.value" bundle="${lang}"/></option>
+                                        <option value="proposedByUser"><fmt:message key="service.proposedBy" bundle="${lang}"/></option>
                                         <option value="active"><fmt:message key="service.active" bundle="${lang}"/></option>
                                         <option value="creationDate"><fmt:message key="service.creationDate" bundle="${lang}"/></option>
                                         <option value="activeSince"><fmt:message key="service.activeSince" bundle="${lang}"/></option>
@@ -90,6 +90,61 @@
                                         <button type="submit" class="btn btn-warning"><fmt:message key="administration.search" bundle="${lang}"/></button>
                                     </div>
                                 </div>
+
+                                <script type="text/javascript">
+                                    function changedSelectValue() {
+                                        var select = document.getElementById("selectedServiceAttribute");
+                                        var selectedOption = select.options[select.selectedIndex].value;
+
+                                        var inputDiv = document.getElementById("input");
+
+                                        if (selectedOption == "active") {
+                                            inputDiv.innerHTML = "";
+                                            inputDiv.className = "input-group";
+
+                                            inputDiv.insertAdjacentHTML('afterbegin', " Yes: <input type='radio' name='searchedFor' value='true' id='searchFor'>" +
+                                                    " No: <input type='radio' name='searchedFor' value='false' id='searchedFor'>" +
+                                                    "<div class='input-group-btn'>" +
+                                                    "<button type='submit' class='btn btn-warning'>" +
+                                                    "<fmt:message key='administration.search' bundle='${lang}'/>" +
+                                                    "</button>" +
+                                                    "</div>"
+                                            );
+                                        }
+                                        else if (selectedOption == "creationDate" || selectedOption == "activeSince") {
+                                            inputDiv.innerHTML = "";
+                                            inputDiv.className = "input-group";
+
+                                            inputDiv.insertAdjacentHTML('afterbegin',
+                                                    "<input type='date' id='searchedFor' name='searchedFor' class='form-control'>" +
+                                                    "<div class='input-group-btn'>" +
+                                                    "<button type='submit' class='btn btn-warning'>" +
+                                                    "<fmt:message key='administration.search' bundle='${lang}'/>" +
+                                                    "</button>" +
+                                                    "</div>");
+                                        }
+                                        else if (selectedOption == "serviceProposals") {
+                                            inputDiv.innerHTML = "";
+                                            inputDiv.className = "input-group";
+
+                                            inputDiv.insertAdjacentHTML('afterbegin', "<input type='number' class='form-control' id='searchedFor' name='searchedFor' placeholder='Search for services' min='0' size=80>" +
+                                                    "<div class='input-group-btn'>" +
+                                                    "<button type='submit' class='btn btn-warning'>" +
+                                                    "<fmt:message key='administration.search' bundle='${lang}'/>" +
+                                                    "</button></div>");
+                                        }
+                                        else {
+                                            inputDiv.innerHTML = "";
+                                            inputDiv.className = "input-group";
+
+                                            inputDiv.insertAdjacentHTML('afterbegin', "<input type='text' class='form-control' id='searchedFor' name='searchedFor' placeholder='Search for services' size='80'>" +
+                                                    "<div class='input-group-btn'>" +
+                                                    "<button type='submit' class='btn btn-warning'>" +
+                                                    "<fmt:message key='administration.search' bundle='${lang}'/>" +
+                                                    "</button></div>");
+                                        }
+                                    }
+                                </script>
                             </form>
 
                         </div>

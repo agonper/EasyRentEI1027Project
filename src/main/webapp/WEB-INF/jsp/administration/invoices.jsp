@@ -31,7 +31,7 @@
                                         <fmt:message key="search.by-attribute" bundle="${lang}"/>
                                     </label>
 
-                                    <select id="selectedInvoiceAttribute" name="selectedInvoiceAttribute" class="form-control">
+                                    <select id="selectedInvoiceAttribute" onchange="changedSelectValue()" name="selectedInvoiceAttribute" class="form-control">
                                         <option value="number"><fmt:message key="invoice.number" bundle="${lang}"/></option>
                                         <option value="vat"><fmt:message key="invoice.vat" bundle="${lang}"/></option>
                                         <option value="address"><fmt:message key="invoice.address" bundle="${lang}"/></option>
@@ -41,11 +41,64 @@
                                 </div>
 
                                 <div class="input-group" id="input">
-                                    <input type="text" class="form-control" id="searchedFor" name="searchedFor" placeholder="Search for invoices" value="" size="80">
+                                    <input type="number" class="form-control" id="searchedFor" name="searchedFor" placeholder="Search for invoices" size="80">
                                     <div class="input-group-btn">
                                         <button type="submit" class="btn btn-warning"><fmt:message key="administration.search" bundle="${lang}"/></button>
                                     </div>
                                 </div>
+
+                                <script type="text/javascript">
+                                    function changedSelectValue() {
+                                        var select = document.getElementById("selectedInvoiceAttribute");
+                                        var selectedOption = select.options[select.selectedIndex].value;
+
+                                        var inputDiv = document.getElementById("input");
+
+                                        if (selectedOption == "number") {
+                                            inputDiv.innerHTML = "";
+                                            inputDiv.className = "input-group";
+
+                                            inputDiv.insertAdjacentHTML('afterbegin', "<input type='number' class='form-control' id='searchedFor' name='searchedFor' placeholder='Search for invoices' min='0' size='80'>" +
+                                                    "<div class='input-group-btn'>" +
+                                                    "<button type='submit' class='btn btn-warning'>" +
+                                                    "<fmt:message key='administration.search' bundle='${lang}'/>" +
+                                                    "</button></div>");
+                                        }
+                                        else if (selectedOption == "vat" || selectedOption == "totalAmount") {
+                                            inputDiv.innerHTML = "";
+                                            inputDiv.className = "input-group";
+
+                                            inputDiv.insertAdjacentHTML('afterbegin', "<input type='number' class='form-control' id='searchedFor' name='searchedFor' placeholder='Search for invoices' min='0' step='0.1' size='80'>" +
+                                                    "<div class='input-group-btn'>" +
+                                                    "<button type='submit' class='btn btn-warning'>" +
+                                                    "<fmt:message key='administration.search' bundle='${lang}'/>" +
+                                                    "</button></div>");
+                                        }
+                                        else if (selectedOption == "expeditionDate") {
+                                            inputDiv.innerHTML = "";
+                                            inputDiv.className = "input-group";
+
+                                            inputDiv.insertAdjacentHTML('afterbegin',
+                                                    "<input type='date' id='searchedFor' name='searchedFor' class='form-control'>" +
+                                                    "<div class='input-group-btn'>" +
+                                                    "<button type='submit' class='btn btn-warning'>" +
+                                                    "<fmt:message key='administration.search' bundle='${lang}'/>" +
+                                                    "</button>" +
+                                                    "</div>");
+                                        }
+                                        else {
+                                            inputDiv.innerHTML = "";
+                                            inputDiv.className = "input-group";
+
+                                            inputDiv.insertAdjacentHTML('afterbegin', "<input type='text' class='form-control' id='searchedFor' name='searchedFor' placeholder='Search for invoices' size='80'>" +
+                                                    "<div class='input-group-btn'>" +
+                                                    "<button type='submit' class='btn btn-warning'>" +
+                                                    "<fmt:message key='administration.search' bundle='${lang}'/>" +
+                                                    "</button></div>");
+                                        }
+                                    }
+                                </script>
+
                             </form>
 
                         </div>

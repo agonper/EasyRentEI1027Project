@@ -31,7 +31,7 @@
                                         <fmt:message key="search.by-attribute" bundle="${lang}"/>
                                     </label>
 
-                                    <select id="selectedPropertyAttribute" class="form-control" name="selectedPropertyAttribute">
+                                    <select id="selectedPropertyAttribute" onchange="changedSelectValue()" class="form-control" name="selectedPropertyAttribute">
                                         <option value="title"><fmt:message key="administration-properties.title" bundle="${lang}"/></option>
                                         <option value="owner"><fmt:message key="administration-properties.ownerUsername" bundle="${lang}"/></option>
                                         <option value="location"><fmt:message key="administration-properties.location" bundle="${lang}"/></option>
@@ -43,7 +43,7 @@
                                         <option value="pricePerDay"><fmt:message key="administration-properties.pricePerDay" bundle="${lang}"/></option>
                                         <option value="creationDate"><fmt:message key="administration-properties.creationDate" bundle="${lang}"/></option>
                                         <option value="type"><fmt:message key="administration-properties.type" bundle="${lang}"/></option>
-                                        <option value="description"><fmt:message key="administration-properties.description" bundle="${lang}"/>
+                                        <option value="description"><fmt:message key="administration-properties.description" bundle="${lang}"/></option>
                                     </select>
                                 </div>
 
@@ -53,6 +53,46 @@
                                         <button type="submit" class="btn btn-warning"><fmt:message key="administration.search" bundle="${lang}"/></button>
                                     </div>
                                 </div>
+
+                                <script type="text/javascript">
+                                    function changedSelectValue() {
+                                        var select = document.getElementById("selectedPropertyAttribute");
+                                        var selectedOption = select.options[select.selectedIndex].value;
+
+                                        var inputDiv = document.getElementById("input");
+
+                                        if (selectedOption == "rooms" || selectedOption == "capacity" || selectedOption == "beds" || selectedOption == "bathroom" || selectedOption == "floorSpace") {
+                                            inputDiv.innerHTML = "";
+                                            inputDiv.className = "input-group";
+
+                                            inputDiv.insertAdjacentHTML('afterbegin', "<input type='number' class='form-control' id='searchedFor' name='searchedFor' placeholder='Search for properties' min='0' max='999' size='80'>" +
+                                            "<div class='input-group-btn'>" +
+                                            "<button type='submit' class='btn btn-warning'>" +
+                                            "<fmt:message key='administration.search' bundle='${lang}'/>" +
+                                            "</button></div>");
+                                        }
+                                        else if (selectedOption == "pricePerDay") {
+                                            inputDiv.innerHTML = "";
+                                            inputDiv.className = "input-group";
+
+                                            inputDiv.insertAdjacentHTML('afterbegin', "<input type='number' class='form-control' id='searchedFor' name='searchedFor' placeholder='Search for properties' min='0' max='9999' step='0.1' size='80'>" +
+                                                    "<div class='input-group-btn'>" +
+                                                    "<button type='submit' class='btn btn-warning'>" +
+                                                    "<fmt:message key='administration.search' bundle='${lang}'/>" +
+                                                    "</button></div>");
+                                        }
+                                        else {
+                                            inputDiv.innerHTML = "";
+                                            inputDiv.className = "input-group";
+
+                                            inputDiv.insertAdjacentHTML('afterbegin', "<input type='text' class='form-control' id='searchedFor' name='searchedFor' placeholder='Search for properties' size='80'>" +
+                                                    "<div class='input-group-btn'>" +
+                                                    "<button type='submit' class='btn btn-warning'>" +
+                                                    "<fmt:message key='administration.search' bundle='${lang}'/>" +
+                                                    "</button></div>");
+                                        }
+                                    }
+                                </script>
 
                             </form>
 
