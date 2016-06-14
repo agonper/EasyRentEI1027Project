@@ -21,87 +21,171 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-warning top-padding30px">
-                        <div class="panel-heading">Alerts for most demanded services</div>
+                        <div class="panel-heading"><fmt:message key="administration-services.alertsForMostDemanded" bundle="${lang}"/></div>
                         <div class="panel-body">
+
                             <div class="table-responsive">
                                 <table class="table">
                                     <tr>
                                         <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Value</th>
-                                        <th>User ID</th>
-                                        <th>Active</th>
-                                        <th>Creation date</th>
-                                        <th>Active since</th>
-                                        <th>Service proposals</th>
+                                        <th><fmt:message key="service.name" bundle="${lang}"/></th>
+                                        <th><fmt:message key="service.value" bundle="${lang}"/> </th>
+                                        <th><fmt:message key="service.proposedBy" bundle="${lang}"/> </th>
+                                        <th><fmt:message key="service.active" bundle="${lang}"/> </th>
+                                        <th><fmt:message key="service.creationDate" bundle="${lang}"/> </th>
+                                        <th><fmt:message key="service.activeSince" bundle="${lang}"/> </th>
+                                        <th><fmt:message key="service.serviceProposals" bundle="${lang}"/></th>
+                                        <th><fmt:message key="service.changeState" bundle="${lang}"/></th>
+                                        <th><fmt:message key="service.delete" bundle="${lang}"/></th>
                                     </tr>
-                                    <c:forEach var="service" items="${services}">
+                                    <c:forEach var="service" items="${mostDemandedServices}">
                                         <tr>
                                             <td>${service.id}</td>
                                             <td>${service.name}</td>
                                             <td>${service.value}</td>
-                                            <td>${service.user.id}</td>
+                                            <td>${service.user.username}</td>
                                             <td>${service.active}</td>
                                             <td>${service.creationDate}</td>
                                             <td>${service.activeSince}</td>
                                             <td>${service.serviceProposals}</td>
-                                            <td><a href="${pageContext.request.contextPath}/service/changeState/${service.id}.html" class="btn btn-primary"><span class="glyphicon glyphicon-plus-sign"></span></a> </td>
-                                            <td><a href="${pageContext.request.contextPath}/service/update/${service.id}.html" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span></a></td>
-                                            <td><a href="${pageContext.request.contextPath}/service/delete/${service.id}.html" class="btn btn-primary"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                            <td><a href="${pageContext.request.contextPath}/administration/services/changeState/${service.id}.html" class="btn btn-primary">
+                                                <c:choose>
+                                                    <c:when test="${service.active == true}">
+                                                        <span class="glyphicon glyphicon-off"> OFF</span>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <span class="glyphicon glyphicon-off"> ON</span>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </a> </td>
+                                            <td><a href="${pageContext.request.contextPath}/administration/services/delete/${service.id}.html" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></a></td>
                                         </tr>
                                     </c:forEach>
                                 </table>
                             </div>
                         </div>
-                        <div class="panel-heading">Search for services</div>
+
+                        <div class="panel-heading"><fmt:message key="administration-services.searchForServices" bundle="${lang}"/> </div>
                         <div class="panel-body">
 
-                            <form class="form-inline" method="get" action="/searchServices">
-                                <div class="input-group">
-                                    <input class="form-control" name="servicesAttribute" placeholder="Search for services" value="" size="80">
-                                    <div class="input-group-btn">
-                                        <button type="submit" class="btn btn-warning">Search </button>
-                                    </div>
-                                </div>
+                            <form class="form-inline" method="get" action="/administration/services/searchFor">
+
                                 <div class="form-group">
-                                    <label for="selectServiceAttribute" class="left-padding30px">
+                                    <label for="selectedServiceAttribute">
                                         <fmt:message key="search.by-attribute" bundle="${lang}"/>
                                     </label>
-                                    <select id="selectServiceAttribute" class="form-control">
-                                        <option>-</option>
+                                    <select id="selectedServiceAttribute" onchange="changedSelectValue()" name="selectedServiceAttribute" class="form-control">
+                                        <option value="name"><fmt:message key="service.name" bundle="${lang}"/></option>
+                                        <option value="proposedByUser"><fmt:message key="service.proposedBy" bundle="${lang}"/></option>
+                                        <option value="active"><fmt:message key="service.active" bundle="${lang}"/></option>
+                                        <option value="creationDate"><fmt:message key="service.creationDate" bundle="${lang}"/></option>
+                                        <option value="activeSince"><fmt:message key="service.activeSince" bundle="${lang}"/></option>
+                                        <option value="serviceProposals"><fmt:message key="service.serviceProposals" bundle="${lang}"/></option>
                                     </select>
                                 </div>
+
+                                <div class="input-group" id="input">
+                                    <input type="text" class="form-control" id="searchedFor" name="searchedFor" placeholder="Search for services" value="" size="80">
+                                    <div class="input-group-btn">
+                                        <button type="submit" class="btn btn-warning"><fmt:message key="administration.search" bundle="${lang}"/></button>
+                                    </div>
+                                </div>
+
+                                <script type="text/javascript">
+                                    function changedSelectValue() {
+                                        var select = document.getElementById("selectedServiceAttribute");
+                                        var selectedOption = select.options[select.selectedIndex].value;
+
+                                        var inputDiv = document.getElementById("input");
+
+                                        if (selectedOption == "active") {
+                                            inputDiv.innerHTML = "";
+                                            inputDiv.className = "input-group";
+
+                                            inputDiv.insertAdjacentHTML('afterbegin', " Yes: <input type='radio' name='searchedFor' value='true' id='searchFor'>" +
+                                                    " No: <input type='radio' name='searchedFor' value='false' id='searchedFor'>" +
+                                                    "<div class='input-group-btn'>" +
+                                                    "<button type='submit' class='btn btn-warning'>" +
+                                                    "<fmt:message key='administration.search' bundle='${lang}'/>" +
+                                                    "</button>" +
+                                                    "</div>"
+                                            );
+                                        }
+                                        else if (selectedOption == "creationDate" || selectedOption == "activeSince") {
+                                            inputDiv.innerHTML = "";
+                                            inputDiv.className = "input-group";
+
+                                            inputDiv.insertAdjacentHTML('afterbegin',
+                                                    "<input type='date' id='searchedFor' name='searchedFor' class='form-control'>" +
+                                                    "<div class='input-group-btn'>" +
+                                                    "<button type='submit' class='btn btn-warning'>" +
+                                                    "<fmt:message key='administration.search' bundle='${lang}'/>" +
+                                                    "</button>" +
+                                                    "</div>");
+                                        }
+                                        else if (selectedOption == "serviceProposals") {
+                                            inputDiv.innerHTML = "";
+                                            inputDiv.className = "input-group";
+
+                                            inputDiv.insertAdjacentHTML('afterbegin', "<input type='number' class='form-control' id='searchedFor' name='searchedFor' placeholder='Search for services' min='0' size=80>" +
+                                                    "<div class='input-group-btn'>" +
+                                                    "<button type='submit' class='btn btn-warning'>" +
+                                                    "<fmt:message key='administration.search' bundle='${lang}'/>" +
+                                                    "</button></div>");
+                                        }
+                                        else {
+                                            inputDiv.innerHTML = "";
+                                            inputDiv.className = "input-group";
+
+                                            inputDiv.insertAdjacentHTML('afterbegin', "<input type='text' class='form-control' id='searchedFor' name='searchedFor' placeholder='Search for services' size='80'>" +
+                                                    "<div class='input-group-btn'>" +
+                                                    "<button type='submit' class='btn btn-warning'>" +
+                                                    "<fmt:message key='administration.search' bundle='${lang}'/>" +
+                                                    "</button></div>");
+                                        }
+                                    }
+                                </script>
                             </form>
 
                         </div>
 
-                        <div class="panel-heading">List of searched services</div>
+                        <div class="panel-heading"><fmt:message key="administration-services.listOfSearchedServices" bundle="${lang}"/> </div>
                         <div class="panel-body">
                             <div class="table-responsive">
                                 <table class="table">
                                     <tr>
                                         <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Value</th>
-                                        <th>User ID</th>
-                                        <th>Active</th>
-                                        <th>Creation date</th>
-                                        <th>Active since</th>
-                                        <th>Service proposals</th>
+                                        <th><fmt:message key="service.name" bundle="${lang}"/></th>
+                                        <th><fmt:message key="service.value" bundle="${lang}"/> </th>
+                                        <th><fmt:message key="service.proposedBy" bundle="${lang}"/> </th>
+                                        <th><fmt:message key="service.active" bundle="${lang}"/> </th>
+                                        <th><fmt:message key="service.creationDate" bundle="${lang}"/> </th>
+                                        <th><fmt:message key="service.activeSince" bundle="${lang}"/> </th>
+                                        <th><fmt:message key="service.serviceProposals" bundle="${lang}"/> </th>
+                                        <th><fmt:message key="service.changeState" bundle="${lang}"/></th>
+                                        <th><fmt:message key="service.delete" bundle="${lang}"/></th>
                                     </tr>
                                     <c:forEach var="service" items="${services}">
                                         <tr>
                                             <td>${service.id}</td>
                                             <td>${service.name}</td>
                                             <td>${service.value}</td>
-                                            <td>${service.user.id}</td>
+                                            <td>${service.user.username}</td>
                                             <td>${service.active}</td>
                                             <td>${service.creationDate}</td>
                                             <td>${service.activeSince}</td>
                                             <td>${service.serviceProposals}</td>
-                                            <td><a href="${pageContext.request.contextPath}/service/changeState/${service.id}.html" class="btn btn-primary"><span class="glyphicon glyphicon-plus-sign"></span></a> </td>
-                                            <td><a href="${pageContext.request.contextPath}/service/update/${service.id}.html" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span></a></td>
-                                            <td><a href="${pageContext.request.contextPath}/service/delete/${service.id}.html" class="btn btn-primary"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                            <td><a href="${pageContext.request.contextPath}/administration/services/changeState/${service.id}.html" class="btn btn-primary">
+                                                <c:choose>
+                                                    <c:when test="${service.active == true}">
+                                                        <span class="glyphicon glyphicon-off"> OFF</span>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <span class="glyphicon glyphicon-off"> ON</span>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </a> </td>
+                                            <td><a href="${pageContext.request.contextPath}/administration/services/delete/${service.id}.html" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></a></td>
                                         </tr>
                                     </c:forEach>
                                 </table>

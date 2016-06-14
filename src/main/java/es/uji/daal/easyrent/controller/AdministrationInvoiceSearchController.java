@@ -31,9 +31,6 @@ public class AdministrationInvoiceSearchController {
         List<Invoice> searchResult = new LinkedList<>();
 
         switch (selectedInvoiceAttribute) {
-            case "ID":
-                //TODO: Completar
-                break;
 
             case "number":
                 Integer number;
@@ -45,10 +42,6 @@ public class AdministrationInvoiceSearchController {
                 }
 
                 searchResult = repository.findByNumber(number);
-                break;
-
-            case "bookingID":
-                //TODO: Completar
                 break;
 
             case "vat":
@@ -80,7 +73,14 @@ public class AdministrationInvoiceSearchController {
                 break;
 
             case "totalAmount":
-                //TODO: Concretar estado en la BBDD
+                Float totalAmount;
+                try {
+                    totalAmount = Float.parseFloat(searchedFor);
+                    searchResult = repository.findByTotalAmount(totalAmount);
+                }
+                catch (NumberFormatException e) {
+
+                }
                 break;
         }
 

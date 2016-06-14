@@ -31,16 +31,12 @@ public class AdministrationBookingProposalsSearchController {
         List<BookingProposal> searchResult = new LinkedList<>();
 
         switch (selectedBookingProposalsAttribute) {
-            case "ID":
-                //TODO: Completar
+            case "propertyTitle":
+                searchResult = repository.findByPropertyTitleContainedInSearchedPropertyTitle(searchedFor);
                 break;
 
-            case "propertyID":
-                //TODO: Completar
-                break;
-
-            case "tenantID":
-                //TODO: Completar
+            case "tenantUsername":
+                searchResult = repository.findByTenantUsernameContainedInSearchedTenantUsername(searchedFor);
                 break;
 
             case "startDate":
@@ -121,8 +117,15 @@ public class AdministrationBookingProposalsSearchController {
                 searchResult = repository.findByDateOfUpdate(dateOfAcceptance);
                 break;
 
-            case "invoice":
-                //TODO: Completar
+            case "invoiceNumber":
+                Integer number;
+                try {
+                    number = Integer.parseInt(searchedFor);
+                }
+                catch (NumberFormatException e) {
+                    number = -1;
+                }
+                searchResult = repository.findByInvoiceNumber(number);
                 break;
         }
 

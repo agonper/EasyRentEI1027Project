@@ -21,14 +21,6 @@ public interface PropertyRepository extends CrudRepository<Property, UUID>, Prop
     @Query("select p from Property p where lower(p.owner.username) like lower(concat('%', :owner, '%') ) ")
     List<Property> findByOwnerContainedInSearchedOwner(@Param("owner") String owner);
 
-    //TODO: Test
-    @Query("select p from Property p where p.id = :id ")
-    List<Property> findByIDContainedInSearchedID(@Param("id") UUID id);
-
-    //TODO: Arreglar
-    //@Query("select p from Property p where p.owner.id = :ownerID ")
-    //List<Property> findByOwnerIDContainedInSearchedOwnerID(@Param("id") UUID ownerID);
-
     @Query("select p from Property p where lower(p.location) like lower(concat('%', :location, '%') ) ")
     List<Property> findByLocationContainedInSearchedLocation(@Param("location") String location);
 
@@ -54,10 +46,10 @@ public interface PropertyRepository extends CrudRepository<Property, UUID>, Prop
     List<Property> findByCreationDate(@Param("creationDate") Date creationDate);
 
     //TODO: Test
-    @Query("select p from Property p where lower(p.type) like lower(concat('%', :type, '%') ) ")
-    List<Property> findByTypeContainedInSearchedType(@Param("type") String type);
-
-    //TODO: Test
     @Query("select p from Property p where lower(p.description) like lower(concat('%', :description, '%') ) ")
     List<Property> findByDescriptionContainedInSearchedDescription(@Param("description") String description);
+
+    //TODO: Test
+    @Query("select p from Property p where lower(p.type) like lower(concat('%', :type, '%') ) ")
+    List<Property> findByTypeContainedInSearchedType(@Param("type") String type);
 }

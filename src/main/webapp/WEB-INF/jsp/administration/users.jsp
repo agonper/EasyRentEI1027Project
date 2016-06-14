@@ -28,13 +28,12 @@
                             <form class="form-inline" method="get" action="/administration/users/searchFor">
 
                                 <div class="form-group">
-                                    <label for="selectedUserAttribute" class="left-padding30px">
+                                    <label for="selectedUserAttribute">
                                         <fmt:message key="search.by-attribute" bundle="${lang}"/>
                                     </label>
 
                                     <select id="selectedUserAttribute" onchange="changedSelectValue()" name="selectedUserAttribute" class="form-control">
                                         <option value="username"><fmt:message key="administration-users.username" bundle="${lang}"/></option>
-                                        <option value="ID">ID</option>
                                         <option value="NID"><fmt:message key="administration-users.nid" bundle="${lang}"/></option>
                                         <option value="surnames"><fmt:message key="administration-users.surnames" bundle="${lang}"/></option>
                                         <option value="role"><fmt:message key="administration-users.role" bundle="${lang}"/></option>
@@ -67,143 +66,64 @@
                                             inputDiv.innerHTML = "";
                                             inputDiv.className = "input-group";
 
-                                            var input = document.createElement('input');
-                                            input.type = "number";
-                                            input.className = "form-control";
-                                            input.id = "searchedFor";
-                                            input.name = "searchedFor";
-                                            input.placeholder = "Search for users";
-                                            input.min = 0;
-                                            input.max = 999999999;
-                                            input.size = 80;
-
-                                            inputDiv.appendChild(input);
-
-                                            var buttonDiv = document.createElement('div');
-                                            buttonDiv.className = "input-group-btn";
-
-                                            var button = document.createElement('button');
-                                            button.type = "submit";
-                                            button.className = "btn btn-warning";
-                                            button.textContent = "Search";
-
-                                            buttonDiv.appendChild(button);
-                                            inputDiv.appendChild(buttonDiv);
+                                            inputDiv.insertAdjacentHTML('afterbegin', "<input type='number' class='form-control' id='searchedFor' name='searchedFor' placeholder='Search for users' min='0' max='999999999999' size='80'>" +
+                                            "<div class='input-group-btn'>" +
+                                            "<button type='submit' class='btn btn-warning'>" +
+                                            "<fmt:message key='administration.search' bundle='${lang}'/>" +
+                                            "</button></div>");
                                         }
 
                                         else if (selectedOption == "role") {
                                             inputDiv.innerHTML = "";
                                             inputDiv.className = "input-group";
 
-                                            var selectRole = document.createElement('select');
-                                            selectRole.id = "searchedFor";
-                                            selectRole.name = "searchedFor";
-                                            selectRole.className = "form-control";
-
-                                            var tenantOption = document.createElement('option');
-                                            tenantOption.value = "TENANT";
-                                            tenantOption.textContent = "Tenant (test)";
-
-                                            var ownerOption = document.createElement('option');
-                                            ownerOption.value = "OWNER";
-                                            ownerOption.textContent = "Owner (test)";
-
-                                            var administrationOption = document.createElement('option');
-                                            administrationOption.value = "ADMINISTRATOR";
-                                            administrationOption.textContent = "Administrator (test)";
-
-                                            selectRole.appendChild(tenantOption);
-                                            selectRole.appendChild(ownerOption);
-                                            selectRole.appendChild(administrationOption);
-
-                                            inputDiv.appendChild(selectRole);
-
-                                            var buttonDiv = document.createElement('div');
-                                            buttonDiv.className = "input-group-btn";
-
-                                            var button = document.createElement('button');
-                                            button.type = "submit";
-                                            button.className = "btn btn-warning";
-                                            button.textContent = "Search";
-
-                                            buttonDiv.appendChild(button);
-                                            inputDiv.appendChild(buttonDiv);
+                                            inputDiv.insertAdjacentHTML('afterbegin', "<select id='searchedFor' name='searchedFor' class='form-control'>" +
+                                            "<option value='TENANT'>Tenant</option>" +
+                                            "<option value='OWNER'>Owner</option>" +
+                                            "<option value='ADMINISTRATOR'>Administrator</option>" +
+                                            "</select>" +
+                                            "<div class='input-group-btn'>" +
+                                            "<button type='submit' class='btn btn-warning'>" +
+                                            "<fmt:message key='administration.search' bundle='${lang}'/>" +
+                                            "</button></div>"
+                                            );
                                         }
 
                                         else if (selectedOption == "sign up date" || selectedOption == "deactived since") {
                                             inputDiv.innerHTML = "";
                                             inputDiv.className = "input-group";
 
-                                            var input = document.createElement('input');
-                                            input.type = "date";
-                                            var text = document.createTextNode("Date: ");
-                                            input.id = "searchedFor";
-                                            input.name = "searchedFor";
-                                            input.className = "form-control";
-
-                                            inputDiv.appendChild(input);
-
-                                            var buttonDiv = document.createElement('div');
-                                            buttonDiv.className = "input-group-btn";
-
-                                            var button = document.createElement('button');
-                                            button.type = "submit";
-                                            button.className = "btn btn-warning";
-                                            button.textContent = "Search";
-
-                                            buttonDiv.appendChild(button);
-                                            inputDiv.appendChild(buttonDiv);
+                                            inputDiv.insertAdjacentHTML('afterbegin',
+                                            "<input type='date' id='searchedFor' name='searchedFor' class='form-control'>" +
+                                            "<div class='input-group-btn'>" +
+                                            "<button type='submit' class='btn btn-warning'>" +
+                                            "<fmt:message key='administration.search' bundle='${lang}'/>" +
+                                            "</button>" +
+                                            "</div>");
                                         }
 
                                         else if (selectedOption == "active") {
                                             inputDiv.innerHTML = "";
                                             inputDiv.className = "input-group";
 
-                                            var input = document.createElement('input');
-                                            input.type = "checkbox";
-                                            input.name = "active";
-                                            input.value = "true";
-                                            input.textContent = "Active: ";
-                                            input.id = "searchedFor";
-                                            input.name = "searchedFor";
-
-                                            inputDiv.appendChild(input);
-
-                                            var buttonDiv = document.createElement('div');
-                                            buttonDiv.className = "input-group-btn";
-
-                                            var button = document.createElement('button');
-                                            button.type = "submit";
-                                            button.className = "btn btn-warning";
-                                            button.textContent = "Search";
-
-                                            buttonDiv.appendChild(button);
-                                            inputDiv.appendChild(buttonDiv);
+                                            inputDiv.insertAdjacentHTML('afterbegin', " Yes: <input type='radio' name='searchedFor' value='true' id='searchFor'>" +
+                                                    " No: <input type='radio' name='searchedFor' value='false' id='searchedFor'>" +
+                                                    "<div class='input-group-btn'>" +
+                                                    "<button type='submit' class='btn btn-warning'>" +
+                                                    "<fmt:message key='administration.search' bundle='${lang}'/>" +
+                                                    "</button>" +
+                                                    "</div>"
+                                            );
                                         }
 
                                         else {
                                             inputDiv.innerHTML = "";
 
-                                            var input = document.createElement('input');
-                                            input.type = "text";
-                                            input.className = "form-control";
-                                            input.id = "searchedFor";
-                                            input.name = "searchedFor";
-                                            input.placeholder = "Search for users";
-                                            input.size = 80;
-
-                                            inputDiv.appendChild(input);
-
-                                            var buttonDiv = document.createElement('div');
-                                            buttonDiv.className = "input-group-btn";
-
-                                            var button = document.createElement('button');
-                                            button.type = "submit";
-                                            button.className = "btn btn-warning";
-                                            button.textContent = "Search";
-
-                                            buttonDiv.appendChild(button);
-                                            inputDiv.appendChild(buttonDiv);
+                                            inputDiv.insertAdjacentHTML('afterbegin', "<input type='text' class='form-control' id='searchedFor' name='searchedFor' placeholder='Search for users' size='80'>" +
+                                            "<div class='input-group-btn'>" +
+                                            "<button type='submit' class='btn btn-warning'>" +
+                                            "<fmt:message key='administration.search' bundle='${lang}'/>" +
+                                            "</button></div>");
                                         }
                                     }
                                 </script>

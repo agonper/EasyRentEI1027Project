@@ -27,14 +27,13 @@
                             <form class="form-inline" method="get" action="/administration/booking_proposals/searchFor">
 
                                 <div class="form-group">
-                                    <label for="selectedBookingProposalsAttribute" class="left-padding30px">
+                                    <label for="selectedBookingProposalsAttribute">
                                         <fmt:message key="search.by-attribute" bundle="${lang}"/>
                                     </label>
 
-                                    <select id="selectedBookingProposalsAttribute" name="selectedBookingProposalsAttribute" class="form-control">
-                                        <option value="ID">ID</option>
-                                        <option value="propertyID"><fmt:message key="administration-bookingProposals.propertyID" bundle="${lang}"/></option>
-                                        <option value="tenantID"><fmt:message key="administration-bookingProposals.tenantID" bundle="${lang}"/></option>
+                                    <select id="selectedBookingProposalsAttribute" onchange="changedSelectValue()" name="selectedBookingProposalsAttribute" class="form-control">
+                                        <option value="propertyTitle"><fmt:message key="administration-bookingProposals.propertyTitle" bundle="${lang}"/></option>
+                                        <option value="tenantUsername"><fmt:message key="administration-bookingProposals.tenantUsername" bundle="${lang}"/></option>
                                         <option value="startDate"><fmt:message key="administration-bookingProposals.startDate" bundle="${lang}"/></option>
                                         <option value="endDate"><fmt:message key="administration-bookingProposals.endDate" bundle="${lang}"/></option>
                                         <option value="status"><fmt:message key="administration-bookingProposals.status" bundle="${lang}"/></option>
@@ -43,7 +42,7 @@
                                         <option value="numberOfTenants"><fmt:message key="administration-bookingProposals.numberOfTenants" bundle="${lang}"/></option>
                                         <option value="dateOfCreation"><fmt:message key="administration-bookingProposals.dateOfCreation" bundle="${lang}"/></option>
                                         <option value="dateOfAcceptance"><fmt:message key="administration-bookingProposals.dateOfAcceptance" bundle="${lang}"/></option>
-                                        <option value="invoice"><fmt:message key="administration-bookingProposals.invoice" bundle="${lang}"/></option>
+                                        <option value="invoiceNumber"><fmt:message key="administration-bookingProposals.invoiceNumber" bundle="${lang}"/></option>
                                     </select>
                                 </div>
 
@@ -53,6 +52,73 @@
                                         <button type="submit" class="btn btn-warning"><fmt:message key="administration.search" bundle="${lang}"/></button>
                                     </div>
                                 </div>
+                                
+                                <script type="text/javascript">
+                                    function changedSelectValue() {
+                                        var select = document.getElementById("selectedBookingProposalsAttribute");
+                                        var selectedOption = select.options[select.selectedIndex].value;
+
+                                        var inputDiv = document.getElementById("input");
+
+                                        if (selectedOption == "startDate" || selectedOption == "endDate" || selectedOption == "dateOfCreation" || selectedOption == "dateOfAcceptance") {
+                                            inputDiv.innerHTML = "";
+                                            inputDiv.className = "input-group";
+
+                                            inputDiv.insertAdjacentHTML('afterbegin',
+                                                    "<input type='date' id='searchedFor' name='searchedFor' class='form-control'>" +
+                                                    "<div class='input-group-btn'>" +
+                                                    "<button type='submit' class='btn btn-warning'>" +
+                                                    "<fmt:message key='administration.search' bundle='${lang}'/>" +
+                                                    "</button>" +
+                                                    "</div>");
+                                        }
+                                        else if (selectedOption == "status") {
+                                            inputDiv.innerHTML = "";
+                                            inputDiv.className = "input-group";
+
+                                            inputDiv.insertAdjacentHTML('afterbegin', "<select id='searchedFor' name='searchedFor' class='form-control'>" +
+                                                    "<option value='PENDING'>Pending</option>" +
+                                                    "<option value='ACCEPTED'>Accepted</option>" +
+                                                    "<option value='REJECTED'>Rejected</option>" +
+                                                    "</select>" +
+                                                    "<div class='input-group-btn'>" +
+                                                    "<button type='submit' class='btn btn-warning'>" +
+                                                    "<fmt:message key='administration.search' bundle='${lang}'/>" +
+                                                    "</button></div>"
+                                            );
+                                        }
+                                        else if (selectedOption == "totalAmount") {
+                                            inputDiv.innerHTML = "";
+                                            inputDiv.className = "input-group";
+
+                                            inputDiv.insertAdjacentHTML('afterbegin', "<input type='number' class='form-control' id='searchedFor' name='searchedFor' placeholder='Search for booking proposals' min='0' step='0.1' size='80'>" +
+                                                    "<div class='input-group-btn'>" +
+                                                    "<button type='submit' class='btn btn-warning'>" +
+                                                    "<fmt:message key='administration.search' bundle='${lang}'/>" +
+                                                    "</button></div>");
+                                        }
+                                        else if (selectedOption == "numberOfTenants" || selectedOption == "invoiceNumber") {
+                                            inputDiv.innerHTML = "";
+                                            inputDiv.className = "input-group";
+
+                                            inputDiv.insertAdjacentHTML('afterbegin', "<input type='number' class='form-control' id='searchedFor' name='searchedFor' placeholder='Search for booking proposals' min='0' size='80'>" +
+                                                    "<div class='input-group-btn'>" +
+                                                    "<button type='submit' class='btn btn-warning'>" +
+                                                    "<fmt:message key='administration.search' bundle='${lang}'/>" +
+                                                    "</button></div>");
+                                        }
+                                        else {
+                                            inputDiv.innerHTML = "";
+                                            inputDiv.className = "input-group";
+
+                                            inputDiv.insertAdjacentHTML('afterbegin', "<input type='text' class='form-control' id='searchedFor' name='searchedFor' placeholder='Search for booking proposals' size='80'>" +
+                                                    "<div class='input-group-btn'>" +
+                                                    "<button type='submit' class='btn btn-warning'>" +
+                                                    "<fmt:message key='administration.search' bundle='${lang}'/>" +
+                                                    "</button></div>");
+                                        }
+                                    }
+                                </script>
 
                             </form>
 
@@ -64,8 +130,8 @@
                                 <table class="table">
                                     <tr>
                                         <th>ID</th>
-                                        <th><fmt:message key="administration-bookingProposals.propertyID" bundle="${lang}"/></th>
-                                        <th><fmt:message key="administration-bookingProposals.tenantID" bundle="${lang}"/></th>
+                                        <th><fmt:message key="administration-bookingProposals.propertyTitle" bundle="${lang}"/></th>
+                                        <th><fmt:message key="administration-bookingProposals.tenantUsername" bundle="${lang}"/></th>
                                         <th><fmt:message key="administration-bookingProposals.startDate" bundle="${lang}"/></th>
                                         <th><fmt:message key="administration-bookingProposals.endDate" bundle="${lang}"/></th>
                                         <th><fmt:message key="administration-bookingProposals.status" bundle="${lang}"/></th>
@@ -74,7 +140,7 @@
                                         <th><fmt:message key="administration-bookingProposals.numberOfTenants" bundle="${lang}"/></th>
                                         <th><fmt:message key="administration-bookingProposals.dateOfCreation" bundle="${lang}"/></th>
                                         <th><fmt:message key="administration-bookingProposals.dateOfAcceptance" bundle="${lang}"/></th>
-                                        <th><fmt:message key="administration-bookingProposals.invoice" bundle="${lang}"/></th>
+                                        <th><fmt:message key="administration-bookingProposals.invoiceNumber" bundle="${lang}"/></th>
                                         <th><fmt:message key="administration-bookingProposals.delete?" bundle="${lang}"/></th>
                                     </tr>
                                     <c:forEach var="bookingProposal" items="${bookingProposals}">

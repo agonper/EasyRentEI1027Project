@@ -40,14 +40,6 @@ public class AdministrationPropertySearchController {
                 searchResult = repository.findByTitleContainedInSearchedTitle(searchedFor);
                 break;
 
-            case "ID":
-                //TODO: Complete
-                break;
-
-            case "ownerID":
-                //TODO: Complete
-                break;
-
             case "location":
                 searchResult = repository.findByLocationContainedInSearchedLocation(searchedFor);
                 break;
