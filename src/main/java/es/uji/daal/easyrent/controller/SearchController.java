@@ -26,9 +26,12 @@ public class SearchController {
 
     @RequestMapping("/search")
     public String search(Model model, Pageable pageable,
-                         @RequestParam("q") String query) {
-        String[] searchParameters = query.split("[\b,;:]");
-        List<String> parametersList = Arrays.asList(searchParameters);
+                         @RequestParam(value = "q") String query) {
+
+        if ("".equals(query.trim())) {
+            return "redirect:index.html";
+        }
+
         Page<Property> properties = repository.searchBy(query, pageable);
 
         model.addAttribute("properties", properties.getContent());

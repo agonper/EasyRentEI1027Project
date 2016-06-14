@@ -118,7 +118,7 @@
                                                 <tbody data-link="row" class="rowlink">
                                                 <c:forEach var="invoice" items="${invoices}">
                                                     <tr>
-                                                        <td><a href="${pageContext.request.contextPath}/invoice/show/${invoice.id}.html">${invoice.number}</a></td>
+                                                        <td><a href="${pageContext.request.contextPath}/invoice/show/${invoice.id}.html"><fmt:formatNumber pattern="00000" value="${invoice.number}"/></a></td>
                                                         <td class="rowlink-skip"><a href="${pageContext.request.contextPath}/booking-proposal/show/${invoice.proposal.id}.html"><fmt:message key="general.link" bundle="${lang}"/> <span class="glyphicon glyphicon-new-window"></span> </a></td>
                                                         <td><spring:eval expression="invoice.expeditionDate"/></td>
                                                         <td><t:show-price amount="${(invoice.vat+1)*invoice.proposal.totalAmount}"/></td>

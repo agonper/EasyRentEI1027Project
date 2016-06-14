@@ -15,9 +15,9 @@
         <c:forEach begin="1" end="${totalPages}" var="page">
             <li class="${page == currentPage+1 ? 'active' : ''}"><a href="${pageContext.request.contextPath}/${baseUri}?q=${param.q}&page=${page-1}&size=${param.size != null ? param.size : 20}">${page}</a></li>
         </c:forEach>
-        <li class="${currentPage+1 == totalPages ? 'disabled' : ''}">
+        <li class="${totalPages == 0 or currentPage+1 == totalPages ? 'disabled' : ''}">
             <c:set var="next" value="${pageContext.request.contextPath}/${baseUri}?q=${param.q}&page=${param.page != null ? param.page+1 : 1}&size=${param.size != null ? param.size : 20}"/>
-            <a href="${currentPage+1 != totalPages ? next : '#'}" aria-label="Next">
+            <a href="${totalPages != 0 and currentPage+1 != totalPages ? next : '#'}" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
             </a>
         </li>

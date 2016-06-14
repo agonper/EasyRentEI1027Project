@@ -13,30 +13,39 @@
             <h1><fmt:message key="search.title" bundle="${lang}"/></h1>
         </div>
         <div class="table-responsive">
-            <table class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th><fmt:message key="property.title" bundle="${lang}"/> </th>
-                        <th><fmt:message key="property.location" bundle="${lang}"/> <span class="glyphicon glyphicon-map-marker"></span> </th>
-                        <th><fmt:message key="property.price-per-day" bundle="${lang}"/></th>
-                        <th><fmt:message key="property.type" bundle="${lang}"/></th>
-                        <th><fmt:message key="property.capacity" bundle="${lang}"/> (<span class="glyphicon glyphicon-user"></span> )</th>
-                        <th><fmt:message key="property.floor-space" bundle="${lang}"/></th>
-                    </tr>
-                </thead>
-                <tbody data-link="row" class="rowlink">
-                    <c:forEach var="property" items="${properties}" varStatus="loop">
+            <c:choose>
+                <c:when test="${empty properties}">
+                    <div class="text-silver text-center">
+                        <h1><fmt:message key="search.no-results" bundle="${lang}"/> '${param.q}'. <fmt:message key="search.less-keywords" bundle="${lang}"/> </h1>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <table class="table table-striped table-hover">
+                        <thead>
                         <tr>
-                            <td><a href="${pageContext.request.contextPath}/property/show/${property.id}.html?q=${param.q}">${property.title}</a></td>
-                            <td>${property.location}</td>
-                            <td><t:show-price amount="${property.pricePerDay}"/></td>
-                            <td>${property.type.label}</td>
-                            <td>${property.capacity}</td>
-                            <td>${property.floorSpace}</td>
+                            <th><fmt:message key="property.title" bundle="${lang}"/> </th>
+                            <th><fmt:message key="property.location" bundle="${lang}"/> <span class="glyphicon glyphicon-map-marker"></span> </th>
+                            <th><fmt:message key="property.price-per-day" bundle="${lang}"/></th>
+                            <th><fmt:message key="property.type" bundle="${lang}"/></th>
+                            <th><fmt:message key="property.capacity" bundle="${lang}"/> (<span class="glyphicon glyphicon-user"></span> )</th>
+                            <th><fmt:message key="property.floor-space" bundle="${lang}"/></th>
                         </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
+                        </thead>
+                        <tbody data-link="row" class="rowlink">
+                        <c:forEach var="property" items="${properties}" varStatus="loop">
+                            <tr>
+                                <td><a href="${pageContext.request.contextPath}/property/show/${property.id}.html?q=${param.q}">${property.title}</a></td>
+                                <td>${property.location}</td>
+                                <td><t:show-price amount="${property.pricePerDay}"/></td>
+                                <td>${property.type.label}</td>
+                                <td>${property.capacity}</td>
+                                <td>${property.floorSpace}</td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </c:otherwise>
+            </c:choose>
         </div>
         <tag:paginator currentPage="${currentPage}" totalPages="${totalPages}" baseUri="search"/>
 
