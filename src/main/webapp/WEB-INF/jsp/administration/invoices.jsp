@@ -41,7 +41,7 @@
                                 </div>
 
                                 <div class="input-group" id="input">
-                                    <input type="number" class="form-control" id="searchedFor" name="searchedFor" placeholder="Search for invoices" size="80">
+                                    <input type="number" class="form-control" id="searchedFor" name="searchedFor" placeholder="Search for invoices" value="" size="80">
                                     <div class="input-group-btn">
                                         <button type="submit" class="btn btn-warning"><fmt:message key="administration.search" bundle="${lang}"/></button>
                                     </div>
