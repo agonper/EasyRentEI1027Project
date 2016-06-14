@@ -91,7 +91,7 @@ public class PropertyController {
         if (repository.exists(propertyId)) {
             repository.delete(propertyId);
         }
-        return "redirect:../../user/owner/" + loggedUser.getId() + ".html";
+        return "redirect:../../index.html#owner";
     }
 
     @RequestMapping(value = "/booking-proposal/{id}")
@@ -128,7 +128,7 @@ public class PropertyController {
                 property.getPricePerDay() *
                 DateUtils.daysBetweenDates(bookingForm.getEndDate(), bookingForm.getStartDate()));
         proposalRepository.save(proposal);
-        return "redirect:../../user/tenant/"+loggedUser.getId()+".html";
+        return "redirect:../../index.html#tenant";
     }
 
     @ResponseBody

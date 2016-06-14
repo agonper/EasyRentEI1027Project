@@ -51,30 +51,6 @@ public class UserController {
         return "user/profile";
     }
 
-    @RequestMapping("/owner/{id}")
-    public String owner(Model model, @PathVariable String id) {
-        User user = repository.findOne(UUID.fromString(id));
-        User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (!loggedUser.equals(user)) {
-            return "redirect:../../index.html";
-        }
-        model.addAttribute("user", user);
-        model.addAttribute("bookingProposals", proposalRepository.findByProperty_Owner_IdOrderByDateOfCreationDesc(user.getId()));
-        return "user/owner";
-    }
-
-    @RequestMapping("/tenant/{id}")
-    public String tenant(Model model, @PathVariable String id) {
-        User user = repository.findOne(UUID.fromString(id));
-        User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (!loggedUser.equals(user)) {
-            return "redirect:../../index.html";
-        }
-        model.addAttribute("user", user);
-        model.addAttribute("invoices", invoiceRepository.findByProposal_Tenant_IdOrderByExpeditionDateDesc(user.getId()));
-        return "user/tenant";
-    }
-
     @RequestMapping("/add")
     public String add(Model model) {
         User user = new User();

@@ -276,6 +276,6 @@ public class AddPropertyFlowController {
 
         session.removeAttribute("addPropertyMap");
 
-        return "redirect:../../user/owner/"+ loggedUser.getId() +".html";
+        return "redirect:../../index.html#owner-properties";
     }
 }

@@ -5,6 +5,10 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <tag:paginabasica title="EasyRent">
     <jsp:body>
+        <ol class="breadcrumb">
+            <li><a href="${pageContext.request.contextPath}/index.html"><fmt:message key="index.home" bundle="${lang}"/></a></li>
+            <li class="active"><fmt:message key="general.search" bundle="${lang}"/></li>
+        </ol>
         <div class="page-header">
             <h1><fmt:message key="search.title" bundle="${lang}"/></h1>
         </div>

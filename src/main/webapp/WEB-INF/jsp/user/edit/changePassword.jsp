@@ -8,6 +8,11 @@
 <sec:authentication var="loggedUser" property="principal" />
 <t:paginabasica title="${title}">
     <jsp:body>
+        <ol class="breadcrumb">
+            <li><a href="${pageContext.request.contextPath}/index.html"><fmt:message key="index.home" bundle="${lang}"/></a></li>
+            <li><a href="${pageContext.request.contextPath}/user/profile/${loggedUser.id}.html#main-account-info"><fmt:message key="profile.title" bundle="${lang}"/></a></li>
+            <li class="active">${title}</li>
+        </ol>
         <div class="page-header">
             <h1>${title}</h1>
         </div>

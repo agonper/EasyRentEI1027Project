@@ -54,7 +54,7 @@
                         </li>
                         <li>
                             <fmt:message key="notifications.title" bundle="${lang}" var="notificationsBtn"/>
-                            <a href="${pageContext.request.contextPath}/user/notifications/${loggedUser.id}.html" title="${notificationsBtn}">
+                            <a href="${pageContext.request.contextPath}/user/profile/${loggedUser.id}.html#notifications" title="${notificationsBtn}">
                                 <span class="glyphicon glyphicon-bell"></span> <span class="visible-xs-inline">${notificationsBtn.toUpperCase()}</span> <span class="badge">0</span>
                             </a>
                         </li>

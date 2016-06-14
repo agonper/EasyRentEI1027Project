@@ -42,7 +42,7 @@ public class BookingController {
         if (loggedUser.equals(proposal.getProperty().getOwner())) {
             proposal.reject();
             repository.save(proposal);
-            return "redirect:../../user/owner/"+loggedUser.getId()+".html?proposals";
+            return "redirect:../../index.html#owner-proposals";
         }
         return "redirect:../../index.html";
     }
@@ -62,7 +62,7 @@ public class BookingController {
             invoice.setAddress(tenant.getPostalAddress()+" "+tenant.getCountry()+" "+tenant.getPostCode());
 
             repository.save(proposal);
-            return "redirect:../../user/owner/"+loggedUser.getId()+".html?proposals";
+            return "redirect:../../index.html#owner-proposals";
         }
         return "redirect:../../index.html";
     }

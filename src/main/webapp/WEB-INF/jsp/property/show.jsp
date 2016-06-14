@@ -18,8 +18,7 @@
                 <li><a href="${pageContext.request.contextPath}/search.html?q=${param.q}"><fmt:message key="general.search" bundle="${lang}"/></a></li>
             </c:if>
             <c:if test="${property.owner.equals(loggedUser)}">
-                <li><a href="${pageContext.request.contextPath}/user/profile/${loggedUser.id}.html"><fmt:message key="profile.title" bundle="${lang}"/></a></li>
-                <li><a href="${pageContext.request.contextPath}/user/owner/${loggedUser.id}.html"><fmt:message key="owner.title" bundle="${lang}"/></a></li>
+                <li><a href="${pageContext.request.contextPath}/index.html#owner-properties"><fmt:message key="home.my-properties" bundle="${lang}"/></a></li>
             </c:if>
             <li class="active">${property.title}</li>
         </ol>

@@ -13,13 +13,12 @@
     <jsp:body>
         <ol class="breadcrumb">
             <li><a href="${pageContext.request.contextPath}/index.html"><fmt:message key="index.home" bundle="${lang}"/></a></li>
-            <li><a href="${pageContext.request.contextPath}/user/profile/${loggedUser.id}.html"><fmt:message key="profile.title" bundle="${lang}"/></a></li>
             <c:choose>
                 <c:when test="${bookingProposal.tenant.equals(loggedUser)}">
-                    <li><a href="${pageContext.request.contextPath}/user/tenant/${loggedUser.id}.html"><fmt:message key="tenant.title" bundle="${lang}"/></a></li>
+                    <li><a href="${pageContext.request.contextPath}/index.html#tenant"><fmt:message key="home.my-booking-proposals" bundle="${lang}"/></a></li>
                 </c:when>
                 <c:otherwise>
-                    <li><a href="${pageContext.request.contextPath}/user/owner/${loggedUser.id}.html"><fmt:message key="owner.title" bundle="${lang}"/></a></li>
+                    <li><a href="${pageContext.request.contextPath}/index.html#owner-proposals"><fmt:message key="home.my-properties" bundle="${lang}"/></a></li>
                 </c:otherwise>
             </c:choose>
             <li class="active">${title}</li>
