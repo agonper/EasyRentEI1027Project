@@ -16,7 +16,7 @@
             <c:choose>
                 <c:when test="${empty properties}">
                     <div class="text-silver text-center">
-                        <h1><fmt:message key="search.no-results" bundle="${lang}"/> '${param.q}'. <fmt:message key="search.less-keywords" bundle="${lang}"/> </h1>
+                        <h3><fmt:message key="search.no-results" bundle="${lang}"/> '${param.q}'. <fmt:message key="search.less-keywords" bundle="${lang}"/> </h3>
                     </div>
                 </c:when>
                 <c:otherwise>

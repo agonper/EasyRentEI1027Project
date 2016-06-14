@@ -21,6 +21,7 @@
                     ${subtitle}
             </div>
             <div class="panel-body">
+                <h1>${property.title}</h1>
                 <m:property property="${property}" availabilityPeriods="${availabilityPeriods}" photos="${photos}" services="${services}"/>
                 <form method="post" class="form-horizontal" action="${pageContext.request.contextPath}/property/add/6">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
