@@ -1,13 +1,17 @@
 package es.uji.daal.easyrent.controller;
 
+import es.uji.daal.easyrent.model.Service;
 import es.uji.daal.easyrent.model.User;
+import es.uji.daal.easyrent.model.UserRole;
 import es.uji.daal.easyrent.repository.UserRepository;
 import es.uji.daal.easyrent.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -119,4 +123,63 @@ public class AdministrationUserSearchController {
         return "administration/users";
     }
 
+    @RequestMapping("/changeRole/{id}")
+    public String processChangeState(@ModelAttribute("user") User user, @PathVariable("id") String id, @RequestParam("selectedRole") String selectedRole, HttpSession session, Model model) {
+        User changedUser;
+        UUID userID = UUID.fromString(id);
+
+        if (repository.exists(userID)) {
+            changedUser = repository.findOne(userID);
+
+            if (!changedUser.getUsername().equals(session.getAttribute("username"))) {
+                switch (selectedRole) {
+                    case "ADMINISTRATOR":
+                        changedUser.setRole(UserRole.ADMINISTRATOR);
+                        break;
+
+                    case "TENANT":
+                        if (changedUser.getProperties().isEmpty()) {
+                            changedUser.setRole(UserRole.TENANT);
+                        }
+                        break;
+
+                    case "OWNER":
+                        changedUser.setRole(UserRole.OWNER);
+                        break;
+                }
+
+                repository.save(changedUser);
+                model.addAttribute("user", changedUser);
+            }
+        }
+
+        return "redirect:../";
+    }
+
+    @RequestMapping("/changeState/{id}")
+    public String processChangeState(@ModelAttribute("user") User user, @PathVariable("id") String id, Model model) {
+        User changedUser;
+        UUID userID = UUID.fromString(id);
+
+        if (repository.exists(userID)) {
+            changedUser = repository.findOne(userID);
+            User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            if (!loggedUser.getName().equals(changedUser.getName())) {
+                if (!changedUser.isActive()) {
+                    changedUser.setActive(true);
+                    if (changedUser.getDeactivatedSince() != null) {
+                        changedUser.setDeactivatedSince(null);
+                    }
+                }
+                else {
+                    if (changedUser.getDeactivatedSince() == null)
+                        changedUser.setDeactivatedSince(new java.sql.Date(System.currentTimeMillis()));
+                    changedUser.setActive(false);
+                }
+            }
+            repository.save(changedUser);
+            model.addAttribute("user", changedUser);
+        }
+        return "redirect:../";
+    }
 }

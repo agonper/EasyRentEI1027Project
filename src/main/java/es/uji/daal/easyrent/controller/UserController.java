@@ -69,11 +69,11 @@ public class UserController {
     }
 
     @RequestMapping(value = "/delete/{id}")
-    public String delete(Model model, @PathVariable String id) {
+    public String delete(Model model, @PathVariable("id") String id) {
         UUID userId = UUID.fromString(id);
         if (repository.exists(userId)) {
             repository.delete(userId);
         }
-        return "redirect:../list.html";
+        return "redirect:administration/users";
     }
 }
