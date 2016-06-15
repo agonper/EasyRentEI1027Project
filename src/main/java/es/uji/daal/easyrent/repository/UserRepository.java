@@ -26,10 +26,6 @@ public interface UserRepository extends CrudRepository<User, UUID>, UserReposito
     @Query("select e from User e where lower(e.username) like lower( concat('%', :username, '%') )")
     List<User> findByUsernameContainedInSearchedName(@Param("username") String username);
 
-    //TODO: Terminate
-    @Query("select e from User e where lower(e.id) like lower( concat('%', :id, '%') )")
-    List<User> findByIDContainedInSearchedID(@Param("id") UUID id);
-
     @Query("select e from User e where lower(e.Dni) like lower( concat('%', :Dni, '%') )")
     List<User> findByNIDContainedInSearchedNID(@Param("Dni") String Dni);
 
@@ -46,8 +42,8 @@ public interface UserRepository extends CrudRepository<User, UUID>, UserReposito
     List<User> findByEmailContainedInSearchedEmails(@Param("email") String email);
 
     //TODO: Test
-    @Query("select e from User e where e.phoneNumber = concat('%d', :phoneNumber, '%d') ")
-    List<User> findByPhoneContainedInSearchedPhone(@Param("phoneNumber") int phoneNumber);
+    @Query("select e from User e where e.phoneNumber = :phoneNumber")
+    List<User> findByPhone(@Param("phoneNumber") int phoneNumber);
 
     @Query("select e from User e where lower(e.postalAddress) like lower(concat('%', :address, '%') ) ")
     List<User> findByAddressContainedInSearchedAddress(@Param("address") String address);
@@ -56,18 +52,14 @@ public interface UserRepository extends CrudRepository<User, UUID>, UserReposito
     List<User> findByCountryContainedInSearchedCountry(@Param("country") String country);
 
     //TODO: Test
-    @Query("select e from User e where e.postCode = concat('%d', :postCode, '%d') ")
-    List<User> findByPostCodeContainedInSearchedPostCode(@Param("postCode") int postCode);
+    @Query("select e from User e where e.postCode = :postCode")
+    List<User> findByPostCode(@Param("postCode") int postCode);
 
-    //TODO: Test
-    @Query("select e from User e where e.signUpDate = :signUpDate")
-    List<User> findBySignUpDate(@Param("signUpDate") Date signUpDate);
+    List<User> findBySignUpDateBetween(Date signUpDateInitial, Date signUpDateFinal);
 
     //TODO: Test
     @Query("select e from User e where e.active = :active")
     List<User> findByActiveAccount(@Param("active") boolean active);
 
-    //TODO: Test
-    @Query("select e from User e where e.deactivatedSince = :deactivatedSince")
-    List<User> findByDeactivatedSince(@Param("deactivatedSince") Date deactivatedSince);
+    List<User> findByDeactivatedSinceBetween(Date deactivatedSinceInitial, Date deactivatedSinceFinal);
 }

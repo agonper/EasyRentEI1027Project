@@ -58,14 +58,15 @@ public class AdministrationUserSearchController {
                 break;
 
             case "phone number":
-                Integer phone = null;
+                Integer phone;
                 try {
                     phone = Integer.parseInt(searchedFor);
+                    searchResult = repository.findByPhone(phone);
                 }
                 catch (Exception e) {
 
                 }
-                searchResult = repository.findByPhoneContainedInSearchedPhone(phone);
+
                 break;
 
             case "address":
@@ -77,19 +78,21 @@ public class AdministrationUserSearchController {
                 break;
 
             case "post code":
-                searchResult = repository.findByPostCodeContainedInSearchedPostCode(Integer.parseInt(searchedFor));
+                searchResult = repository.findByPostCode(Integer.parseInt(searchedFor));
                 break;
 
             case "sign up date":
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                Date date = null;
+                Date date;
                 try {
                     date = formatter.parse(searchedFor);
+                    long day = date.getTime();
+                    searchResult = repository.findBySignUpDateBetween(new Date(day), new Date(day + 86399999));
                 }
                 catch (ParseException e) {
 
                 }
-                searchResult = repository.findBySignUpDate(date);
+
                 break;
 
             case "active":
@@ -98,14 +101,16 @@ public class AdministrationUserSearchController {
 
             case "deactived since":
                 formatter = new SimpleDateFormat("yyyy-MM-dd");
-                date = null;
+
                 try {
                     date = formatter.parse(searchedFor);
+                    long day = date.getTime();
+                    searchResult = repository.findByDeactivatedSinceBetween(new Date(day), new Date(day + 86399999));
                 }
                 catch (ParseException e) {
 
                 }
-                searchResult = repository.findByDeactivatedSince(date);
+
                 break;
         }
 

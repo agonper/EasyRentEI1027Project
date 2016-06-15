@@ -2,9 +2,11 @@ package es.uji.daal.easyrent.repository;
 
 import es.uji.daal.easyrent.model.BookingProposal;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.Temporal;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import javax.persistence.TemporalType;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -16,47 +18,32 @@ public interface BookingProposalRepository extends CrudRepository<BookingProposa
     List<BookingProposal> findByTenant_Id(UUID tenantID);
     List<BookingProposal> findByProperty_Owner_IdOrderByDateOfCreationDesc(UUID owner);
 
-    //TODO: Test
     @Query("select b from BookingProposal b where lower(b.property.title) like lower(concat('%', :title, '%') ) ")
     List<BookingProposal> findByPropertyTitleContainedInSearchedPropertyTitle(@Param("title") String title);
 
-    //TODO: Test
     @Query("select b from BookingProposal b where lower(b.tenant.username) like lower(concat('%', :username, '%') ) ")
     List<BookingProposal> findByTenantUsernameContainedInSearchedTenantUsername(@Param("username") String username);
 
-    //TODO: Test
-    @Query("select b from BookingProposal b where b.startDate = :startDate")
-    List<BookingProposal> findByStartDate(@Param("startDate") Date startDate);
+    List<BookingProposal> findByStartDateBetween(Date initialStartDate, Date finalStartDate);
 
-    //TODO: Test
-    @Query("select b from BookingProposal b where b.endDate = :endDate")
-    List<BookingProposal> findByEndDate(@Param("endDate") Date endDate);
+    List<BookingProposal> findByEndDateBetween(Date initialEndDate, Date finalEndDate);
 
-    //TODO: Test
     @Query("select b from BookingProposal b where lower(b.status) like lower(:status) ")
     List<BookingProposal> findByStatus(@Param("status") String status);
 
-    //TODO: Test
     @Query("select b from BookingProposal b where lower(b.paymentReference) like lower(concat('%', :paymentReference, '%') ) ")
     List<BookingProposal> findByPaymentReferenceContainedInSearchedPaymentReference(@Param("paymentReference") String paymentReference);
 
-    //TODO: Test
     @Query("select b from BookingProposal b where b.totalAmount = :totalAmount")
     List<BookingProposal> findByTotalAmount(@Param("totalAmount") float totalAmount);
 
-    //TODO: Test
     @Query("select b from BookingProposal b where b.numberOfTenants = :numberOfTenants")
     List<BookingProposal> findByNumberOfTenants(@Param("numberOfTenants") int numberOfTenants);
 
-    //TODO: Test
-    @Query("select b from BookingProposal b where b.dateOfCreation = :dateOfCreation")
-    List<BookingProposal> findByDateOfCreation(@Param("dateOfCreation") Date dateOfCreation);
+    List<BookingProposal> findByDateOfCreationBetween(Date initialDateOfCreation, Date finalDateOfCreation);
 
-    //TODO: Test
-    @Query("select b from BookingProposal b where b.dateOfUpdate = :dateOfUpdate")
-    List<BookingProposal> findByDateOfUpdate(@Param("dateOfUpdate") Date dateOfUpdate);
+    List<BookingProposal> findByDateOfUpdateBetween(Date initialDateOfUpdate, Date finalDateOfUpdate);
 
-    //TODO: Test
     @Query("select b from BookingProposal b where b.invoice.number = :number")
     List<BookingProposal> findByInvoiceNumber(@Param("number") int number);
 }

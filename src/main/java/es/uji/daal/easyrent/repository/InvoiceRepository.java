@@ -25,8 +25,7 @@ public interface InvoiceRepository extends CrudRepository<Invoice, UUID> {
     @Query("select i from Invoice i where lower(i.address) like lower(concat('%', :address, '%') ) ")
     List<Invoice> findByAddressContainedInSearchedAddress(@Param("address") String address);
 
-    @Query("select i from Invoice i where i.expeditionDate = :expeditionDate")
-    List<Invoice> findByExpeditionDate(@Param("expeditionDate") Date expeditionDate);
+    List<Invoice> findByExpeditionDateBetween(Date expeditionDateInitial, Date expeditionDateFinal);
 
     @Query("select i from Invoice i where i.proposal.totalAmount = :totalAmount")
     List<Invoice> findByTotalAmount(@Param("totalAmount") float totalAmount);

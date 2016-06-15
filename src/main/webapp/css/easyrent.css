@@ -132,3 +132,7 @@ a > .corporate-text:hover {
     -o-background-size: cover;
     background-size: cover;
 }
+
+.administrationInputField {
+    width: 500px;
+}

@@ -65,11 +65,12 @@ public class AdministrationInvoiceSearchController {
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                 try {
                     expeditionDate = formatter.parse(searchedFor);
+                    long day = expeditionDate.getTime();
+                    searchResult = repository.findByExpeditionDateBetween(new Date(day), new Date(day + 86399999));
                 }
                 catch (ParseException e) {
-                    expeditionDate = null;
+
                 }
-                searchResult = repository.findByExpeditionDate(expeditionDate);
                 break;
 
             case "totalAmount":

@@ -115,11 +115,13 @@ public class AdministrationPropertySearchController {
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                 try {
                     creationDate = formatter.parse(searchedFor);
+                    long day = creationDate.getTime();
+                    searchResult = repository.findByCreationDateBetween(new Date(day), new Date(day + 86399999));
                 }
                 catch (ParseException e) {
-                    creationDate = null;
+
                 }
-                searchResult = repository.findByCreationDate(creationDate);
+
                 break;
 
             case "type":

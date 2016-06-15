@@ -31,14 +31,12 @@ public interface ServiceRepository extends CrudRepository<Service, UUID> {
     @Query("select s from Service s where lower(s.user.username) like lower(concat('%', :username, '%') ) ")
     List<Service> searchByUserContainedInSearchedUser(@Param("username") String username);
 
-    @Query("select s from Service s where s.creationDate = :creationDate ")
-    List<Service> findByCreationDate(@Param("creationDate") Date creationDate);
+    List<Service> findByCreationDateBetween(Date creationDateInitial, Date creationDateFinal);
 
     @Query("select s from Service s where s.active = :active")
     List<Service> findActive(@Param("active") boolean active);
 
-    @Query("select s from Service s where s.activeSince = :activeSince")
-    List<Service> findByActiveSince(@Param("activeSince") Date activeSince);
+    List<Service> findByActiveSinceBetween(Date activeSinceInitial, Date activeSinceFinal);
 
     @Query("select s from Service s where s.serviceProposals = :serviceProposals")
     List<Service> findByServiceProposals(@Param("serviceProposals") int serviceProposals);

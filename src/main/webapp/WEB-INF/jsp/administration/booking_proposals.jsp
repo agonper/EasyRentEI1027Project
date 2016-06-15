@@ -65,7 +65,7 @@
                                             inputDiv.className = "input-group";
 
                                             inputDiv.insertAdjacentHTML('afterbegin',
-                                                    "<input type='date' id='searchedFor' name='searchedFor' class='form-control'>" +
+                                                    "<input type='date' id='searchedFor' name='searchedFor' class='form-control administrationInputField'>" +
                                                     "<div class='input-group-btn'>" +
                                                     "<button type='submit' class='btn btn-warning'>" +
                                                     "<fmt:message key='administration.search' bundle='${lang}'/>" +
@@ -76,7 +76,7 @@
                                             inputDiv.innerHTML = "";
                                             inputDiv.className = "input-group";
 
-                                            inputDiv.insertAdjacentHTML('afterbegin', "<select id='searchedFor' name='searchedFor' class='form-control'>" +
+                                            inputDiv.insertAdjacentHTML('afterbegin', "<select id='searchedFor' name='searchedFor' class='form-control administrationInputField'>" +
                                                     "<option value='PENDING'>Pending</option>" +
                                                     "<option value='ACCEPTED'>Accepted</option>" +
                                                     "<option value='REJECTED'>Rejected</option>" +
@@ -91,7 +91,7 @@
                                             inputDiv.innerHTML = "";
                                             inputDiv.className = "input-group";
 
-                                            inputDiv.insertAdjacentHTML('afterbegin', "<input type='number' class='form-control' id='searchedFor' name='searchedFor' placeholder='Search for booking proposals' min='0' step='0.1' size='80'>" +
+                                            inputDiv.insertAdjacentHTML('afterbegin', "<input type='number' class='form-control administrationInputField' id='searchedFor' name='searchedFor' placeholder='Search for booking proposals' min='0' step='0.1' size='80'>" +
                                                     "<div class='input-group-btn'>" +
                                                     "<button type='submit' class='btn btn-warning'>" +
                                                     "<fmt:message key='administration.search' bundle='${lang}'/>" +
@@ -101,7 +101,7 @@
                                             inputDiv.innerHTML = "";
                                             inputDiv.className = "input-group";
 
-                                            inputDiv.insertAdjacentHTML('afterbegin', "<input type='number' class='form-control' id='searchedFor' name='searchedFor' placeholder='Search for booking proposals' min='0' size='80'>" +
+                                            inputDiv.insertAdjacentHTML('afterbegin', "<input type='number' class='form-control administrationInputField' id='searchedFor' name='searchedFor' placeholder='Search for booking proposals' min='0' size='80'>" +
                                                     "<div class='input-group-btn'>" +
                                                     "<button type='submit' class='btn btn-warning'>" +
                                                     "<fmt:message key='administration.search' bundle='${lang}'/>" +
@@ -111,7 +111,7 @@
                                             inputDiv.innerHTML = "";
                                             inputDiv.className = "input-group";
 
-                                            inputDiv.insertAdjacentHTML('afterbegin', "<input type='text' class='form-control' id='searchedFor' name='searchedFor' placeholder='Search for booking proposals' size='80'>" +
+                                            inputDiv.insertAdjacentHTML('afterbegin', "<input type='text' class='form-control administrationInputField' id='searchedFor' name='searchedFor' placeholder='Search for booking proposals' size='80'>" +
                                                     "<div class='input-group-btn'>" +
                                                     "<button type='submit' class='btn btn-warning'>" +
                                                     "<fmt:message key='administration.search' bundle='${lang}'/>" +

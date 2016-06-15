@@ -42,14 +42,11 @@ public interface PropertyRepository extends CrudRepository<Property, UUID>, Prop
     @Query("select p from Property p where p.pricePerDay = :pricePerDay")
     List<Property> findByPricePerDay(@Param("pricePerDay") float pricePerDay);
 
-    @Query("select p from Property p where p.creationDate = :creationDate")
-    List<Property> findByCreationDate(@Param("creationDate") Date creationDate);
+    List<Property> findByCreationDateBetween(Date creationDateInitial, Date creationDateFinal);
 
-    //TODO: Test
     @Query("select p from Property p where lower(p.description) like lower(concat('%', :description, '%') ) ")
     List<Property> findByDescriptionContainedInSearchedDescription(@Param("description") String description);
 
-    //TODO: Test
     @Query("select p from Property p where lower(p.type) like lower(concat('%', :type, '%') ) ")
     List<Property> findByTypeContainedInSearchedType(@Param("type") String type);
 }

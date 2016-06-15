@@ -81,6 +81,16 @@
                                                     "<fmt:message key='administration.search' bundle='${lang}'/>" +
                                                     "</button></div>");
                                         }
+                                        else if (selectedOption == "creationDate") {
+                                            inputDiv.innerHTML = "";
+                                            inputDiv.className = "input-group";
+
+                                            inputDiv.insertAdjacentHTML('afterbegin', "<input type='date' class='form-control' id='searchedFor' name='searchedFor' placeholder='Search for properties' size='80'>" +
+                                                    "<div class='input-group-btn'>" +
+                                                    "<button type='submit' class='btn btn-warning'>" +
+                                                    "<fmt:message key='administration.search' bundle='${lang}'/>" +
+                                                    "</button></div>");
+                                        }
                                         else {
                                             inputDiv.innerHTML = "";
                                             inputDiv.className = "input-group";

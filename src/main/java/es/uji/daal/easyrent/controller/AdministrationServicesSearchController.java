@@ -55,7 +55,8 @@ public class AdministrationServicesSearchController {
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                 try {
                     creationDate = formatter.parse(searchedFor);
-                    searchResult = repository.findByCreationDate(creationDate);
+                    long day = creationDate.getTime();
+                    searchResult = repository.findByCreationDateBetween(new Date(day), new Date(day + 86399999));
                 }
                 catch (ParseException e) {
 
@@ -67,7 +68,8 @@ public class AdministrationServicesSearchController {
                 formatter = new SimpleDateFormat("yyyy-MM-dd");
                 try {
                     activeSince = formatter.parse(searchedFor);
-                    searchResult = repository.findByActiveSince(activeSince);
+                    long day = activeSince.getTime();
+                    searchResult = repository.findByActiveSinceBetween(new Date(day), new Date(day + 86399999));
                 }
                 catch (ParseException e) {
 

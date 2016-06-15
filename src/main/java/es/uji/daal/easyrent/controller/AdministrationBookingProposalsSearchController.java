@@ -44,11 +44,13 @@ public class AdministrationBookingProposalsSearchController {
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                 try {
                     startDate = formatter.parse(searchedFor);
+                    long day = startDate.getTime();
+                    searchResult = repository.findByStartDateBetween(new Date(day), new Date(day + 86399999));
                 }
                 catch (ParseException e) {
-                    startDate = null;
+
                 }
-                searchResult = repository.findByStartDate(startDate);
+
                 break;
 
             case "endDate":
@@ -56,11 +58,13 @@ public class AdministrationBookingProposalsSearchController {
                 formatter = new SimpleDateFormat("yyyy-MM-dd");
                 try {
                     endDate = formatter.parse(searchedFor);
+                    long day = endDate.getTime();
+                    searchResult = repository.findByEndDateBetween(new Date(day), new Date(day + 86399999));
                 }
                 catch (ParseException e) {
-                    endDate = null;
+
                 }
-                searchResult = repository.findByEndDate(endDate);
+
                 break;
 
             case "status":
@@ -98,11 +102,13 @@ public class AdministrationBookingProposalsSearchController {
                 formatter = new SimpleDateFormat("yyyy-MM-dd");
                 try {
                     dateOfCreation = formatter.parse(searchedFor);
+                    long day = dateOfCreation.getTime();
+                    searchResult = repository.findByDateOfCreationBetween(new Date(day), new Date(day + 86399999));
                 }
                 catch (ParseException e) {
-                    dateOfCreation = null;
+
                 }
-                searchResult = repository.findByDateOfCreation(dateOfCreation);
+
                 break;
 
             case "dateOfAcceptance":
@@ -110,11 +116,13 @@ public class AdministrationBookingProposalsSearchController {
                 formatter = new SimpleDateFormat("yyyy-MM-dd");
                 try {
                     dateOfAcceptance = formatter.parse(searchedFor);
+                    long day = dateOfAcceptance.getTime();
+                    searchResult = repository.findByDateOfUpdateBetween(new Date(day), new Date(day + 86399999));
                 }
                 catch (ParseException e) {
-                    dateOfAcceptance = null;
+
                 }
-                searchResult = repository.findByDateOfUpdate(dateOfAcceptance);
+
                 break;
 
             case "invoiceNumber":
