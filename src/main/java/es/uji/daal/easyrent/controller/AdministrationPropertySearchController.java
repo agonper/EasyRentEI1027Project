@@ -123,11 +123,11 @@ public class AdministrationPropertySearchController {
                 break;
 
             case "type":
-                repository.findByTypeContainedInSearchedType(searchedFor);
+                searchResult = repository.findByTypeContainedInSearchedType(searchedFor);
                 break;
 
             case "description":
-                repository.findByDescriptionContainedInSearchedDescription(searchedFor);
+                searchResult = repository.findByDescriptionContainedInSearchedDescription(searchedFor);
                 break;
 
         }
