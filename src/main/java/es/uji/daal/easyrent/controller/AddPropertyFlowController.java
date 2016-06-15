@@ -72,7 +72,7 @@ public class AddPropertyFlowController {
         Map<String, Object> addProperty = (Map<String, Object>) session.getAttribute("addPropertyMap");
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        addStep = fixstepIfNeeded(addProperty, addStep);
+        addStep = fixStepIfNeeded(addProperty, addStep);
 
         switch (addStep) {
             case PERSONAL_DATA:
@@ -141,7 +141,7 @@ public class AddPropertyFlowController {
         }
     }
 
-    private AddStep fixstepIfNeeded(Map<String, Object> addProperty, AddStep requested) {
+    private AddStep fixStepIfNeeded(Map<String, Object> addProperty, AddStep requested) {
         AddStep sessionStep = (AddStep) addProperty.get("step");
         if (requested.ordinal() > sessionStep.ordinal()) {
             return sessionStep;

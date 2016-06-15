@@ -16,7 +16,7 @@
             <h1>${title} <small>${subtitle}</small></h1>
         </div>
 
-        <navs:add-property step="${pageContext.session.getAttribute('addPropertyMap').step.ordinal()}" steps="${steps}" path="/property/add"/>
+        <navs:stepper step="${pageContext.session.getAttribute('addPropertyMap').step.ordinal()}" steps="${steps}" path="/property/add"/>
 
         <div class="panel panel-warning">
             <div class="panel-heading">

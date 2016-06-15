@@ -171,7 +171,7 @@
                     enabled: false,
                     classes: ""
                 };
-                availabilityPeriods.forEach(function (period, index) {
+                availabilityPeriods.forEach(function (period) {
                     var startDate = moment(period.startDate);
                     if (period.endless) {
                         if (momentDate.isAfter(startDate) || momentDate.isSame(startDate, 'day')) {
