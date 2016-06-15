@@ -94,43 +94,6 @@ public class PropertyController {
         return "redirect:../../index.html#owner";
     }
 
-    @RequestMapping(value = "/booking-proposal/{id}")
-    public String bookingProposal(Model model, @PathVariable("id") String id) {
-        User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Property property = repository.findOne(UUID.fromString(id));
-        if (property.getOwner().equals(loggedUser)) {
-            return "redirect:../show/"+id+".html";
-        }
-        model.addAttribute("property", property);
-        model.addAttribute("bookingForm", new BookingForm());
-        return "bookingProposal/add";
-    }
-
-    @RequestMapping(value = "/booking-proposal/{id}", method = RequestMethod.POST)
-    public String processBookingProposal(@ModelAttribute BookingForm bookingForm,
-                                         @PathVariable("id") String id,
-                                         BindingResult bindingResult) {
-        System.out.println("Got it!");
-        User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Property property = repository.findOne(UUID.fromString(id));
-        if (property.getOwner().equals(loggedUser)) {
-            return "redirect:../show/"+id+".html";
-        }
-        // TODO improve form checking
-        System.out.println("Validating...");
-        new BookingValidator().validate(bookingForm, bindingResult);
-        System.out.println("Validated");
-        if (bindingResult.hasErrors()) {
-            return "bookingProposal/add";
-        }
-        BookingProposal proposal = bookingForm.update(property.createBookingProposal(loggedUser));
-        proposal.setTotalAmount(bookingForm.getNumberOfTenants() *
-                property.getPricePerDay() *
-                DateUtils.daysBetweenDates(bookingForm.getEndDate(), bookingForm.getStartDate()));
-        proposalRepository.save(proposal);
-        return "redirect:../../index.html#tenant";
-    }
-
     @ResponseBody
     @RequestMapping(value = "/{propertyId}/upload-photos", method = RequestMethod.POST)
     public String add(@RequestParam(value = "type", defaultValue = "storage") String type,
