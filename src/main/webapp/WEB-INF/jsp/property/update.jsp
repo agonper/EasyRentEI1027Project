@@ -1,0 +1,41 @@
+<%@ page pageEncoding="UTF-8" %>
+<%@ taglib prefix="tag" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
+<tag:paginabasica title="EasyRent - Update the property">
+    <jsp:body>
+
+        <h1>Updating the property</h1>
+        <hr>
+        <form:form method="post" modelAttribute="property" cssClass="form-group">
+
+            <tag:input path="title" label="Name of the property"/>
+
+            <tag:input path="location" label="Location"/>
+
+            <tag:input path="rooms" label="Rooms"/>
+
+            <tag:input path="capacity" label="Capacity"/>
+
+            <tag:input path="beds" label="Number of beds"/>
+
+            <tag:input path="bathrooms" label="Bathrooms"/>
+
+            <tag:input path="floorSpace" label="Floor space"/>
+
+            <tag:input path="pricePerDay" label="Initial price per day"/>
+
+            <form:label path="type" cssClass="control-label col-sm-2">Type of property</form:label>
+            <div class="col-sm-10">
+                <form:select path="type" cssClass="form-control">
+                    <form:options items="${propertyTypes}" itemValue="lowerName" itemLabel="name"/>
+                </form:select>
+                <form:errors path="type" cssClass=""/>
+            </div>
+
+            <tag:input path="description" label="Description" type="textarea"/>
+            <input type="submit" value="Add the property" class="btn btn-default"/>
+        </form:form>
+
+    </jsp:body>
+</tag:paginabasica>
