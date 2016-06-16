@@ -15,9 +15,16 @@ import java.util.Collection;
 public class BookingValidator implements Validator {
 
     private final Collection<AvailabilityPeriod> periods;
+    private final boolean firstStage;
 
     public BookingValidator(Collection<AvailabilityPeriod> periods) {
         this.periods = periods;
+        this.firstStage = true;
+    }
+
+    public BookingValidator(Collection<AvailabilityPeriod> periods, boolean firstStage) {
+        this.periods = periods;
+        this.firstStage = firstStage;
     }
 
     @Override
@@ -37,7 +44,15 @@ public class BookingValidator implements Validator {
         }
 
         if (form.getStartDate() != null && form.getEndDate() != null && !BookingUtils.isDatePeriodAvailable(form, periods)) {
-            errors.rejectValue("startDate", "invalid", "The chosen period is not available.");
+            if (firstStage) {
+                errors.rejectValue("startDate", "invalid", "The chosen period is not available.");
+            } else {
+                errors.rejectValue("startDate", "invalid", "The chosen period is no longer available. Apologies.");
+            }
+        }
+
+        if (!firstStage && (form.getPaymentReference() == null || "".equals(form.getPaymentReference()))) {
+            errors.rejectValue("startDate", "invalid", "You must pay first.");
         }
     }
 }

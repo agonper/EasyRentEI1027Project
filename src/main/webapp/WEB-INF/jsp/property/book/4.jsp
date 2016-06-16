@@ -5,6 +5,7 @@
 <%@ taglib prefix="fm" tagdir="/WEB-INF/tags/forms" %>
 <%@ taglib prefix="navs" tagdir="/WEB-INF/tags/navs" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <fmt:message key="book-property.title" bundle="${lang}" var="title"/>
 <fmt:message key="general.check" bundle="${lang}" var="subtitle"/>
@@ -22,21 +23,36 @@
                 ${subtitle}
             </div>
             <ul class="list-group">
-                <t:li-hb stringKey="proposal.start-date"><spring:eval expression="bookingProposal.startDate"/></t:li-hb>
-                <t:li-hb stringKey="proposal.end-date"><spring:eval expression="bookingProposal.endDate"/></t:li-hb>
-                <t:li-hb stringKey="proposal.number-of-tenants">${bookingProposal.numberOfTenants}</t:li-hb>
                 <t:li-hb stringKey="proposal.amount"><t:show-price amount="${bookingProposal.totalAmount}"/></t:li-hb>
+                <t:li-hb stringKey="proposal.pay-btn">
+                    <c:choose>
+                        <c:when test="${not empty bookingForm.paymentReference}">
+                            <span class="h2"><span class="label label-success"><span class="glyphicon glyphicon-ok-sign"></span> <fmt:message key="proposal.paid" bundle="${lang}"/></span></span>
+                        </c:when>
+                        <c:otherwise>
+                            <form method="post" action="${pageContext.request.contextPath}/property/booking-proposal/${property.id}/pay">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                <button type="submit" id="pay-btn" class="btn btn-primary"><fmt:message key="proposal.pay-btn" bundle="${lang}"/></button>
+                            </form>
+                        </c:otherwise>
+                    </c:choose>
+                </t:li-hb>
             </ul>
             <div class="panel-body">
-                <form class="form-horizontal" action="${pageContext.request.contextPath}/property/booking-proposal/${property.id}/3" method="post">
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <form:form cssClass="form-horizontal" action="${pageContext.request.contextPath}/property/booking-proposal/${property.id}/4" method="post" modelAttribute="bookingForm">
+                    <form:hidden path="paymentReference"/>
+                    <div class="form-group">
+                        <div class="col-sm-offset-1 col-sm-10">
+                            <form:errors cssClass="text-danger" path="startDate"/>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <div class="col-sm-offset-1 col-sm-10">
                             <a href="${pageContext.request.contextPath}/property/booking-proposal/${property.id}.html?step=2" class="btn btn-warning"><span class="glyphicon glyphicon-backward"></span> <fmt:message key="general.back" bundle="${lang}"/></a>
-                            <button type="submit" class="btn btn-warning"><fmt:message key="proposal.pay" bundle="${lang}"/> <span class="glyphicon glyphicon-forward"></span></button>
+                            <button type="submit" class="btn btn-warning"><fmt:message key="general.finish" bundle="${lang}"/> <span class="glyphicon glyphicon-forward"></span></button>
                         </div>
                     </div>
-                </form>
+                </form:form>
             </div>
         </div>
     </jsp:body>

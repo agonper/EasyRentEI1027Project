@@ -3,8 +3,11 @@ package es.uji.daal.easyrent.controller;
 import es.uji.daal.easyrent.model.BookingProposal;
 import es.uji.daal.easyrent.model.Property;
 import es.uji.daal.easyrent.model.User;
+import es.uji.daal.easyrent.repository.AvailabilityPeriodRepository;
 import es.uji.daal.easyrent.repository.BookingProposalRepository;
 import es.uji.daal.easyrent.repository.PropertyRepository;
+import es.uji.daal.easyrent.utils.AvailabilityChanges;
+import es.uji.daal.easyrent.utils.BookingUtils;
 import es.uji.daal.easyrent.utils.DateUtils;
 import es.uji.daal.easyrent.validators.AddressInfoValidator;
 import es.uji.daal.easyrent.validators.BookingValidator;
@@ -31,6 +34,9 @@ public class BookPropertyFlowController {
 
     @Autowired
     private PropertyRepository propertyRepository;
+
+    @Autowired
+    private AvailabilityPeriodRepository availabilityRepository;
 
     @Autowired
     private BookingProposalRepository proposalRepository;
@@ -98,6 +104,7 @@ public class BookPropertyFlowController {
                 break;
             case CHECK:
             case PAY:
+                model.addAttribute("bookingForm", bookProperty.get("bookingForm"));
                 model.addAttribute("bookingProposal", bookProperty.get("bookingProposal"));
                 break;
             default:
@@ -132,6 +139,12 @@ public class BookPropertyFlowController {
         BookStep sessionStep = (BookStep) bookProperty.get("step");
         if (requested.ordinal() > sessionStep.ordinal()) {
             return sessionStep;
+        }
+        if (bookProperty.containsKey("bookingForm")) {
+            BookingForm form = (BookingForm) bookProperty.get("bookingForm");
+            if (form.getPaymentReference() != null && !"".equals(form.getPaymentReference()) && requested.ordinal() < BookStep.CHECK.ordinal()) {
+                return BookStep.CHECK;
+            }
         }
         return requested;
     }
@@ -191,7 +204,7 @@ public class BookPropertyFlowController {
 
         BookingProposal proposal = bookingForm.update(property.createBookingProposal(loggedUser));
         proposal.setTotalAmount(property.getPricePerDay() *
-                DateUtils.daysBetweenDates(bookingForm.getEndDate(), bookingForm.getStartDate()));
+                DateUtils.daysBetweenDates(bookingForm.getStartDate(), bookingForm.getEndDate()));
 
         Map<String, Object> bookProperty = (Map<String, Object>) session.getAttribute(getSessionMapName(propertyId));
         bookProperty.put("bookingForm", bookingForm);
@@ -201,4 +214,54 @@ public class BookPropertyFlowController {
         return "redirect:?step=3";
     }
 
+    @RequestMapping(value = "/3", method = RequestMethod.POST)
+    public String processCheckBookingProposal(HttpSession session, @PathVariable("id") String propertyId) {
+
+        Map<String, Object> bookProperty = (Map<String, Object>) session.getAttribute(getSessionMapName(propertyId));
+        bookProperty.replace("step", BookStep.CHECK, BookStep.PAY);
+
+        return "redirect:?step=4";
+    }
+
+    @RequestMapping(value = "/4", method = RequestMethod.POST)
+    public String processBookingProposal(@ModelAttribute BookingForm bookingForm,
+                                         BindingResult bindingResult,
+                                         Model model,
+                                         HttpSession session, @PathVariable("id") String propertyId) {
+
+        Property property = propertyRepository.findOne(UUID.fromString(propertyId));
+
+        Map<String, Object> bookProperty = (Map<String, Object>) session.getAttribute(getSessionMapName(propertyId));
+        BookingProposal proposal = (BookingProposal) bookProperty.get("bookingProposal");
+        BookingForm form = (BookingForm) bookProperty.get("bookingForm");
+
+        new BookingValidator(property.getAvailabilityPeriods(), false).validate(form, bindingResult);
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("bookingProposal", proposal);
+            return "property/book/4";
+        }
+
+        AvailabilityChanges changes = BookingUtils.getChanges(form, property.getAvailabilityPeriods());
+        availabilityRepository.delete(changes.getToBeRemoved());
+        availabilityRepository.save(changes.getToBeSaved());
+
+        proposal.setPaymentReference(bookingForm.getPaymentReference());
+        proposalRepository.save(proposal);
+
+        session.removeAttribute(getSessionMapName(propertyId));
+
+        return "redirect:../../../index.html#tenant";
+    }
+
+    @RequestMapping(value = "/pay", method = RequestMethod.POST)
+    public String payBookingProposal(HttpSession session, @PathVariable("id") String propertyId) {
+
+        Map<String, Object> bookProperty = (Map<String, Object>) session.getAttribute(getSessionMapName(propertyId));
+        BookingForm form = (BookingForm) bookProperty.get("bookingForm");
+
+        form.setPaymentReference(UUID.randomUUID().toString().replace("-", ""));
+        bookProperty.put("bookingForm", form);
+
+        return "redirect:?step=4";
+    }
 }

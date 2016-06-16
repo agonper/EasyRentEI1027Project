@@ -27,7 +27,6 @@
             </ul>
             <br>
         </c:if>
-
         
         <div class="tab-content">
             <div id="main" class="tab-pane fade in active">

@@ -11,6 +11,7 @@ public class BookingForm implements ViewModel<BookingProposal> {
     private Date startDate;
     private Date endDate;
     private int numberOfTenants;
+    private String paymentReference;
 
     public Date getStartDate() {
         return startDate;
@@ -36,12 +37,20 @@ public class BookingForm implements ViewModel<BookingProposal> {
         this.numberOfTenants = numberOfTenants;
     }
 
+    public String getPaymentReference() {
+        return paymentReference;
+    }
+
+    public void setPaymentReference(String paymentReference) {
+        this.paymentReference = paymentReference;
+    }
 
     @Override
     public BookingForm fillUp(BookingProposal model) {
         setStartDate(model.getStartDate());
         setEndDate(model.getEndDate());
         setNumberOfTenants(model.getNumberOfTenants());
+        setPaymentReference(model.getPaymentReference());
         return this;
     }
 
@@ -50,6 +59,7 @@ public class BookingForm implements ViewModel<BookingProposal> {
         model.setStartDate(getStartDate());
         model.setEndDate(getEndDate());
         model.setNumberOfTenants(getNumberOfTenants());
+        model.setPaymentReference(getPaymentReference());
         return model;
     }
 }
