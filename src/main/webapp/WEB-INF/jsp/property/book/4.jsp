@@ -11,7 +11,7 @@
 <fmt:message key="general.check" bundle="${lang}" var="subtitle"/>
 <t:paginabasica title="${title}: ${subtitle}">
     <jsp:body>
-        <t:property-add-breadcrumb subtitle="${subtitle}"/>
+        <t:property-book-breadcrumb subtitle="${subtitle}"/>
         <div class="page-header">
             <h1>${title} <small>${subtitle}</small></h1>
         </div>

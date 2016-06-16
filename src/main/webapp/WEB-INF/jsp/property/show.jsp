@@ -34,7 +34,14 @@
                             <a class="btn btn-warning" href="${pageContext.request.contextPath}/property/edit/${property.id}.html"><span class="glyphicon glyphicon-edit"></span> <fmt:message key="general.edit" bundle="${lang}"/></a>
                         </c:when>
                         <c:otherwise>
-                            <a class="btn btn-warning" href="${pageContext.request.contextPath}/property/booking-proposal/${property.id}.html${not empty param.q ? '?q=' : ''}${not empty param.q ? param.q : ''}"><span class="glyphicon glyphicon-ok"></span> <fmt:message key="proposal.book" bundle="${lang}"/> </a>
+                            <c:choose>
+                                <c:when test="${empty property.availabilityPeriods}">
+                                    <a class="btn btn-warning disabled" href="#"><span class="glyphicon glyphicon-ok"></span> <fmt:message key="proposal.book" bundle="${lang}"/> </a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a class="btn btn-warning" href="${pageContext.request.contextPath}/property/booking-proposal/${property.id}.html${not empty param.q ? '?q=' : ''}${not empty param.q ? param.q : ''}"><span class="glyphicon glyphicon-ok"></span> <fmt:message key="proposal.book" bundle="${lang}"/> </a>
+                                </c:otherwise>
+                            </c:choose>
                         </c:otherwise>
                     </c:choose>
                 </div>
