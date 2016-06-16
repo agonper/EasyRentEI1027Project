@@ -34,6 +34,12 @@
                 </div>
             </c:when>
             <c:otherwise>
+                <c:if test="${not empty param.success}">
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong><fmt:message key="general.success" bundle="${lang}"/> </strong> <fmt:message key="add-property.success" bundle="${lang}" />
+                    </div>
+                </c:if>
                 <div class="page-header">
                     <span class="h1"><fmt:message key="index.home" bundle="${lang}"/> : ${loggedUser.username}</span>
                 </div>
