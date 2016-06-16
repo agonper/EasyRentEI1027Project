@@ -8,6 +8,7 @@ import es.uji.daal.easyrent.validators.PropertyValidator;
 import es.uji.daal.easyrent.view_models.AddressInfoForm;
 import es.uji.daal.easyrent.view_models.AvailabilityForm;
 import es.uji.daal.easyrent.view_models.PersonalDataForm;
+import es.uji.daal.easyrent.view_models.PropertyForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -88,9 +89,9 @@ public class AddPropertyFlowController {
                 model.addAttribute("addressInfoForm", addressInfoForm);
                 break;
             case PROPERTY_INFO:
-                Property property = addProperty.containsKey("property") ?
-                        (Property) addProperty.get("property") : loggedUser.createProperty();
-                model.addAttribute("property", property);
+                PropertyForm propertyForm = addProperty.containsKey("propertyForm") ?
+                        (PropertyForm) addProperty.get("propertyForm") : new PropertyForm();
+                model.addAttribute("propertyForm", propertyForm);
                 break;
             case AVAILABILITY_DATES:
                 if (!addProperty.containsKey("availabilityPeriods")) {
@@ -190,21 +191,20 @@ public class AddPropertyFlowController {
     }
 
     @RequestMapping(value = "/2", method = RequestMethod.POST)
-    public String processAddSubmit(@ModelAttribute("property") Property property,
+    public String processAddSubmit(@ModelAttribute("propertyForm") PropertyForm propertyForm,
                                    BindingResult bindingResult,
                                    HttpSession session) {
         PropertyValidator validator = new PropertyValidator();
-        validator.validate(property, bindingResult);
+        validator.validate(propertyForm, bindingResult);
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (bindingResult.hasErrors())
             return "property/add/2";
 
-        //FIXME: Crear un view model para esto, así no se ponen los campos a null
-        property.setCreationDate(new Date());
-        property.setOwner(loggedUser);
+        Property property = propertyForm.update(loggedUser.createProperty());
         Map<String, Object> addProperty = (Map<String, Object>) session.getAttribute("addPropertyMap");
         addProperty.put("property", property);
+        addProperty.put("propertyForm", propertyForm);
         addProperty.replace("step", AddStep.PROPERTY_INFO, AddStep.AVAILABILITY_DATES);
         return "redirect:?step=3";
     }

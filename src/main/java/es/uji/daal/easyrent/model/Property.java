@@ -55,6 +55,7 @@ public class Property extends DomainModel {
     @Column(nullable = false)
     private Date creationDate;
 
+    @OrderBy("startDate asc ")
     @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<AvailabilityPeriod> availabilityPeriods;
 

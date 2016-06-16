@@ -1,6 +1,7 @@
 package es.uji.daal.easyrent.validators;
 
 import es.uji.daal.easyrent.model.Property;
+import es.uji.daal.easyrent.view_models.PropertyForm;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -9,26 +10,25 @@ import org.springframework.validation.Validator;
  */
 public class PropertyValidator implements Validator {
 
-    String positiveAndLessThan100 = "It's necessary a positive number and less than 100.";
-    String positiveAndLessThan1000 = "It's necessary a positive number and less than 1000.";
-    String positiveAndLessThan10000 = "It's necessary a positive number and less than 10000.";
+    private String positiveAndLessThan100 = "It's necessary a positive number and less than 100.";
+    private String positiveAndLessThan1000 = "It's necessary a positive number and less than 1000.";
+    private String positiveAndLessThan10000 = "It's necessary a positive number and less than 10000.";
 
     @Override
     public boolean supports(Class<?> aClass) {
-        return Property.class.equals(aClass);
+        return PropertyForm.class.equals(aClass);
     }
 
     @Override
     public void validate(Object o, Errors errors) {
-        Property property = (Property)o;
+        PropertyForm property = (PropertyForm) o;
 
         if (property.getTitle().equals("")) {
-            errors.rejectValue("title", "required", "It's necessary to introduce a value.");
+            errors.rejectValue("title", "required", "The title of the property is needed.");
         }
 
-        //TODO: Revisar si hacerlo con un campo o un selector
         if (property.getLocation().equals("")) {
-
+            errors.rejectValue("location", "required", "The location of the property is needed.");
         }
 
         if (property.getRooms() <= 0 || property.getRooms() > 99) {
@@ -53,11 +53,6 @@ public class PropertyValidator implements Validator {
 
         if (property.getPricePerDay() <= 0.0 || property.getPricePerDay() >= 10000.0) {
             errors.rejectValue("pricePerDay", "required", positiveAndLessThan10000);
-        }
-
-        //TODO: Tipo no seleccionado
-        if (property.getType() == null) {
-
         }
     }
 }

@@ -65,23 +65,41 @@ public class PropertyController {
         return "property/show";
     }
 
-    @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String update(Model model, @PathVariable(value = "id") String id) {
-        model.addAttribute("property", repository.findOne(UUID.fromString(id)));
-        return "property/update";
+        User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Property property = repository.findOne(UUID.fromString(id));
+
+        if (!loggedUser.equals(property.getOwner())) {
+            return "redirect:../show/" + id + ".html";
+        }
+
+        model.addAttribute("propertyForm", new PropertyForm().fillUp(property));
+        fillEditPage(model, property);
+        return "property/edit";
     }
 
-    //TODO: Revisar validez del ID
-    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
-    public String processUpdateSubmit(@ModelAttribute("property") Property property, BindingResult bindingResult) {
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
+    public String processUpdateSubmit(@ModelAttribute("propertyForm") PropertyForm propertyForm,
+                                      BindingResult bindingResult,
+                                      @PathVariable("id") String id,
+                                      Model model) {
         PropertyValidator validator = new PropertyValidator();
-        validator.validate(property, bindingResult);
+        validator.validate(propertyForm, bindingResult);
 
-        if (bindingResult.hasErrors())
-            return "property/update";
+        Property property = repository.findOne(UUID.fromString(id));
+        fillEditPage(model, property);
+        if (bindingResult.hasErrors()) {
+            return "property/edit";
+        }
 
-        repository.save(property);
-        return "redirect:../list.html";
+        repository.save(propertyForm.update(property));
+        return "redirect:" + id + ".html?success=t";
+    }
+
+    private void fillEditPage(Model model, Property property) {
+        model.addAttribute("property", property);
+        model.addAttribute("availabilityForm", new AvailabilityForm());
     }
 
     @RequestMapping(value = "/delete/{id}")
