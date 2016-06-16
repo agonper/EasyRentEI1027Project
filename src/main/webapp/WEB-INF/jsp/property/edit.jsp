@@ -168,7 +168,12 @@
                         <fmt:message key="property.photos" bundle="${lang}"/>
                     </div>
                     <div class="panel-body">
-
+                        <fm:photo-uploader photos="${property.photos}" type="storage" propertyId="${property.id.toString()}"/>
+                        <div class="row">
+                            <div class="col-sm-offset-1 col-sm-10">
+                                <a href="${pageContext.request.contextPath}/property/show/${property.id}.html" class="btn btn-warning"><span class="glyphicon glyphicon-backward"></span> <fmt:message key="edit-property.back" bundle="${lang}"/> </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

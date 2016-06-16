@@ -207,6 +207,10 @@ public class Property extends DomainModel {
         return photos;
     }
 
+    public void setPhotos(Set<Photo> photos) {
+        this.photos = photos;
+    }
+
     public Photo createPhoto(String filename) {
         return new Photo(this, filename);
     }
@@ -238,6 +242,13 @@ public class Property extends DomainModel {
         if (getServices() == null) {
             setServices(new HashSet<>());
         }
+    }
+
+    public void removePhoto(Photo photo) {
+        if (getPhotos() == null) {
+            setPhotos(new HashSet<>());
+        }
+        getPhotos().remove(photo);
     }
 
     @PreRemove

@@ -9,4 +9,6 @@ import java.util.UUID;
  * Created by Alberto on 07/05/2016.
  */
 public interface PhotoRepository extends CrudRepository<Photo, UUID> {
+
+    Photo findByFilename(String filename);
 }

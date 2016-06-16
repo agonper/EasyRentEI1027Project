@@ -1,5 +1,9 @@
 package es.uji.daal.easyrent.controller;
 
+import es.uji.daal.easyrent.model.Photo;
+import es.uji.daal.easyrent.model.Property;
+import es.uji.daal.easyrent.repository.PhotoRepository;
+import es.uji.daal.easyrent.repository.PropertyRepository;
 import es.uji.daal.easyrent.utils.FileLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -22,6 +26,12 @@ import java.util.Set;
 @RequestMapping("/uploads")
 // FIXME Una vez hablemos sobre esto, renombrar a singular
 public class PhotosController {
+
+    @Autowired
+    private PhotoRepository repository;
+
+    @Autowired
+    private PropertyRepository propertyRepository;
 
     @Autowired
     private FileLoader fileLoader;
@@ -54,6 +64,12 @@ public class PhotosController {
                 return "ERROR";
             }
             propertyPhotos.remove(imageName);
+            // TODO: Remove also on filesystem
+        } else {
+            Photo photo = repository.findByFilename(imageName);
+            Property property = photo.getProperty();
+            property.removePhoto(photo);
+            propertyRepository.save(property);
             // TODO: Remove also on filesystem
         }
         return "OK";

@@ -34,10 +34,10 @@ public class PropertyController {
     private PropertyRepository repository;
 
     @Autowired
-    private BookingProposalRepository proposalRepository;
+    private FileUploader fileUploader;
 
     @Autowired
-    private FileUploader fileUploader;
+    private PhotoRepository photoRepository;
 
     @RequestMapping("/list")
     public String list(Model model) {
@@ -105,8 +105,13 @@ public class PropertyController {
     @RequestMapping(value = "/delete/{id}")
     public String processDelete(@PathVariable(value = "id") String id) {
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
         UUID propertyId = UUID.fromString(id);
         if (repository.exists(propertyId)) {
+            Property property = repository.findOne(propertyId);
+            if (!loggedUser.equals(property.getOwner())) {
+                return "redirect:../show/" + id + ".html#owner";
+            }
             repository.delete(propertyId);
         }
         return "redirect:../../index.html#owner";
@@ -131,7 +136,14 @@ public class PropertyController {
             }
             return "none";
         } else {
-            return ""; //TODO: Implement
+            Property property = repository.findOne(UUID.fromString(propertyId));
+            String filename = fileUploader.upload("property-pics", file);
+            if (filename != null) {
+                Photo photo = property.createPhoto(filename);
+                photoRepository.save(photo);
+                return filename;
+            }
+            return "none";
         }
     }
 }
