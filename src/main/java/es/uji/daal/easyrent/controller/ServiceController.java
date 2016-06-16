@@ -2,8 +2,10 @@ package es.uji.daal.easyrent.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import es.uji.daal.easyrent.model.Property;
 import es.uji.daal.easyrent.model.Service;
 import es.uji.daal.easyrent.model.User;
+import es.uji.daal.easyrent.repository.PropertyRepository;
 import es.uji.daal.easyrent.repository.ServiceRepository;
 import es.uji.daal.easyrent.utils.Strings;
 import es.uji.daal.easyrent.validators.ServiceValidator;
@@ -28,7 +30,10 @@ import java.util.UUID;
 @RequestMapping("/service")
 public class ServiceController {
     @Autowired
-    ServiceRepository repository;
+    private ServiceRepository repository;
+
+    @Autowired
+    private PropertyRepository propertyRepository;
 
     @ResponseBody
     @RequestMapping(value = "/property/{propertyId}/list")
@@ -50,10 +55,13 @@ public class ServiceController {
                 return "[]";
             }
         } else {
-            //TODO: Implement
+            Property property = propertyRepository.findOne(UUID.fromString(propertyId));
+            try {
+                return om.writeValueAsString(property.getServices());
+            } catch (JsonProcessingException e) {
+                return "[]";
+            }
         }
-
-        return "[]";
     }
 
     @ResponseBody
@@ -66,6 +74,12 @@ public class ServiceController {
 
         String value = Strings.underscore(name);
         Service service = repository.findByValue(value);
+        if (service == null) {
+            service = new Service(loggedUser);
+            service.setName(name);
+            service.setValue(value);
+        }
+
         UploadType uploadType = UploadType.valueOf(type.toUpperCase());
 
         if (uploadType == UploadType.SESSION) {
@@ -74,11 +88,6 @@ public class ServiceController {
                 return "ERROR";
             }
             List<Service> services = (List<Service>) addProperty.get("services");
-            if (service == null) {
-                service = new Service(loggedUser);
-                service.setName(name);
-                service.setValue(value);
-            }
             for (Service s : services) {
                 if (service.getValue().equals(s.getValue())) {
                     return "ERROR";
@@ -86,7 +95,9 @@ public class ServiceController {
             }
             services.add(service);
         } else {
-            //TODO: Implement
+            Property property = propertyRepository.findOne(UUID.fromString(propertyId));
+            property.addService(service);
+            repository.save(service);
         }
 
         return "OK";
@@ -108,7 +119,10 @@ public class ServiceController {
             int index = Integer.parseInt(id);
             services.remove(index);
         } else {
-            //TODO: Implement
+            Service service = repository.findOne(UUID.fromString(id));
+            Property property = propertyRepository.findOne(UUID.fromString(propertyId));
+            property.removeService(service);
+            repository.save(service);
         }
 
         return "OK";

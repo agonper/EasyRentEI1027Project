@@ -220,17 +220,24 @@ public class Property extends DomainModel {
     }
 
     public void addService(Service service) {
-        if (getServices() == null) {
-            setServices(new HashSet<>());
-        }
+        initializeServices();
         getServices().add(service);
     }
 
     public void addServices(Collection<Service> services) {
+        initializeServices();
+        getServices().addAll(services);
+    }
+
+    public void removeService(Service service) {
+        initializeServices();
+        getServices().remove(service);
+    }
+
+    private void initializeServices() {
         if (getServices() == null) {
             setServices(new HashSet<>());
         }
-        getServices().addAll(services);
     }
 
     @PreRemove

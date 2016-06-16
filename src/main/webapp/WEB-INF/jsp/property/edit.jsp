@@ -129,7 +129,36 @@
                         <fmt:message key="property.services" bundle="${lang}"/>
                     </div>
                     <div class="panel-body">
-
+                        <div id="property-services">
+                            <c:forEach items="${property.services}" var="service" varStatus="status">
+                                <er:color-gen number="${status.index}" var="color"/>
+                                <button style="margin: 3px;" id="service-${service.id}" class="btn btn-labeled btn-${color} remove-service">
+                                    <span class="btn-label">
+                                        <i class="glyphicon glyphicon-remove"></i>
+                                    </span>
+                                    ${service.name}
+                                </button>
+                            </c:forEach>
+                        </div>
+                        <hr>
+                        <form id="upload-service" class="form-inline" action="${pageContext.request.contextPath}/service/property/${property.id}/add">
+                            <div class="form-group">
+                                <label><fmt:message key="service.title" bundle="${lang}"/> </label>
+                                <div class="input-group">
+                                    <input name="name" class="form-control" required>
+                                    <div class="input-group-btn">
+                                        <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-plus"></span> <fmt:message key="general.add" bundle="${lang}"/></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        </form>
+                        <br>
+                        <div class="row">
+                            <div class="col-sm-offset-1 col-sm-10">
+                                <a href="${pageContext.request.contextPath}/property/show/${property.id}.html" class="btn btn-warning"><span class="glyphicon glyphicon-backward"></span> <fmt:message key="edit-property.back" bundle="${lang}"/> </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -200,6 +229,55 @@
                         }
                     });
                 });
+
+                $('#upload-service').submit(function (evt) {
+                    evt.preventDefault();
+                    var form = $(this);
+                    var data = form.serializeArray();
+
+                    var options = {};
+                    data.forEach(function (elem) {
+                        options[elem.name] = elem.value;
+                    });
+                    $.post(form.attr('action'), options).done(function () {
+                        reloadServices();
+                        form.trigger('reset');
+                    })
+
+                });
+
+                $('.remove-service').on('click', removeService);
+
+                function removeService() {
+                    var $el = $(this);
+                    var idParts = $el.attr('id').split('-');
+                    idParts.shift();
+                    var id = idParts.join('-');
+
+                    var options = {};
+                    options['${_csrf.parameterName}'] = '${_csrf.token}';
+
+                    $.post('${pageContext.request.contextPath}/service/property/${property.id}/remove/' + id, options).done(reloadServices);
+                }
+
+                function reloadServices() {
+                    var colors = ["primary", "success", "info", "warning", "danger"];
+                    $.getJSON('${pageContext.request.contextPath}/service/property/${property.id}/list').done(function (services) {
+                        var propertyServices = $('#property-services');
+                        propertyServices.html("");
+
+                        services.forEach(function (service, i) {
+                            propertyServices.append('' +
+                                    '<button style="margin: 3px;" id="service-' + service.id + '" class="btn btn-labeled btn-' + colors[i % colors.length] + ' remove-service">' +
+                                    '<span class="btn-label">' +
+                                    '<i class="glyphicon glyphicon-remove"></i>' +
+                                    '</span>' +
+                                    service.name +
+                                    '</button>');
+                        });
+                        $('.remove-service').on('click', removeService);
+                    });
+                }
             })();
         </script>
     </jsp:body>
