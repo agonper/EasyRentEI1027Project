@@ -171,6 +171,9 @@
                     enabled: false,
                     classes: ""
                 };
+                if (momentDate.isBefore(moment())) {
+                    return options;
+                }
                 availabilityPeriods.forEach(function (period) {
                     var startDate = moment(period.startDate);
                     if (period.endless) {
