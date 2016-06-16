@@ -28,65 +28,69 @@ public class AdministrationInvoiceSearchController {
     @RequestMapping("/searchFor")
     public String searchFor(@RequestParam String searchedFor, @RequestParam String selectedInvoiceAttribute, Model model) {
 
-        List<Invoice> searchResult = new LinkedList<>();
+        if (AdministrationController.userIsAdmin()) {
+            List<Invoice> searchResult = new LinkedList<>();
 
-        switch (selectedInvoiceAttribute) {
+            switch (selectedInvoiceAttribute) {
 
-            case "number":
-                Integer number;
-                try {
-                    number = Integer.parseInt(searchedFor);
-                }
-                catch (NumberFormatException e) {
-                    number = -1;
-                }
+                case "number":
+                    Integer number;
+                    try {
+                        number = Integer.parseInt(searchedFor);
+                    }
+                    catch (NumberFormatException e) {
+                        number = -1;
+                    }
 
-                searchResult = repository.findByNumber(number);
-                break;
+                    searchResult = repository.findByNumber(number);
+                    break;
 
-            case "vat":
-                Float vat;
-                try {
-                    vat = Float.parseFloat(searchedFor);
-                }
-                catch (NumberFormatException e) {
-                    vat = -1f;
-                }
+                case "vat":
+                    Float vat;
+                    try {
+                        vat = Float.parseFloat(searchedFor);
+                    }
+                    catch (NumberFormatException e) {
+                        vat = -1f;
+                    }
 
-                searchResult = repository.findByVAT(vat);
-                break;
+                    searchResult = repository.findByVAT(vat);
+                    break;
 
-            case "address":
-                searchResult = repository.findByAddressContainedInSearchedAddress(searchedFor);
-                break;
+                case "address":
+                    searchResult = repository.findByAddressContainedInSearchedAddress(searchedFor);
+                    break;
 
-            case "expeditionDate":
-                Date expeditionDate;
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                try {
-                    expeditionDate = formatter.parse(searchedFor);
-                    long day = expeditionDate.getTime();
-                    searchResult = repository.findByExpeditionDateBetween(new Date(day), new Date(day + 86399999));
-                }
-                catch (ParseException e) {
+                case "expeditionDate":
+                    Date expeditionDate;
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                    try {
+                        expeditionDate = formatter.parse(searchedFor);
+                        long day = expeditionDate.getTime();
+                        searchResult = repository.findByExpeditionDateBetween(new Date(day), new Date(day + 86399999));
+                    }
+                    catch (ParseException e) {
 
-                }
-                break;
+                    }
+                    break;
 
-            case "totalAmount":
-                Float totalAmount;
-                try {
-                    totalAmount = Float.parseFloat(searchedFor);
-                    searchResult = repository.findByTotalAmount(totalAmount);
-                }
-                catch (NumberFormatException e) {
+                case "totalAmount":
+                    Float totalAmount;
+                    try {
+                        totalAmount = Float.parseFloat(searchedFor);
+                        searchResult = repository.findByTotalAmount(totalAmount);
+                    }
+                    catch (NumberFormatException e) {
 
-                }
-                break;
+                    }
+                    break;
+            }
+
+            model.addAttribute("invoices", searchResult);
+
+            return "administration/invoices";
         }
 
-        model.addAttribute("invoices", searchResult);
-
-        return "administration/invoices";
+        return "index";
     }
 }

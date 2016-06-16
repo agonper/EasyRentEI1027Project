@@ -78,9 +78,15 @@
                                             inputDiv.className = "input-group";
 
                                             inputDiv.insertAdjacentHTML('afterbegin', "<select id='searchedFor' name='searchedFor' class='form-control'>" +
-                                            "<option value='TENANT'>Tenant</option>" +
-                                            "<option value='OWNER'>Owner</option>" +
-                                            "<option value='ADMINISTRATOR'>Administrator</option>" +
+                                            "<option value='TENANT'>" +
+                                                            "<fmt:message key='tenant.title' bundle='${lang}'/>" +
+                                                    "</option>" +
+                                            "<option value='OWNER'>" +
+                                                    "<fmt:message key='owner.title' bundle='${lang}'/>" +
+                                            "</option>" +
+                                            "<option value='ADMINISTRATOR'>" +
+                                                    "<fmt:message key='administrator.title' bundle='${lang}'/>" +
+                                            "</option>" +
                                             "</select>" +
                                             "<div class='input-group-btn'>" +
                                             "<button type='submit' class='btn btn-warning'>" +
@@ -152,8 +158,9 @@
                                         <th><fmt:message key="user.signup-date" bundle="${lang}"/></th>
                                         <th><fmt:message key="user.active" bundle="${lang}"/></th>
                                         <th><fmt:message key="user.deactivated-since" bundle="${lang}"/></th>
-                                        <th><fmt:message key="general.edit" bundle="${lang}"/></th>
-                                        <th><fmt:message key="general.delete" bundle="${lang}"/></th>
+                                        <th><fmt:message key="administration-users.changeState" bundle="${lang}"/></th>
+                                        <th><fmt:message key="administration-users.changeRole" bundle="${lang}"/></th>
+                                        <th></th>
                                     </tr>
 
                                     <c:forEach var="user" items="${users}">
@@ -173,7 +180,26 @@
                                             <td>${user.signUpDate}</td>
                                             <td>${user.active}</td>
                                             <td>${user.deactivatedSince}</td>
-                                            <td><a href="${pageContext.request.contextPath}/user/delete/${user.id}.html" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                            <td><a href="${pageContext.request.contextPath}/administration/users/changeState/${user.id}" class="btn btn-primary">
+                                                <c:choose>
+                                                    <c:when test="${user.active == true}">
+                                                        <span class="glyphicon glyphicon-off"> OFF</span>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <span class="glyphicon glyphicon-off"> ON</span>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </a></td>
+                                            <td>
+                                                <form class="form-inline" method="get" action="/administration/users/changeRole/${user.id}">
+                                                    <select id="selectedRole" name="selectedRole" class="form-control">
+                                                        <option value="TENANT">"<fmt:message key='tenant.title' bundle='${lang}'/>" </option>
+                                                        <option value="OWNER">"<fmt:message key='owner.title' bundle='${lang}'/>" </option>
+                                                        <option value="ADMINISTRATOR">"<fmt:message key='administrator.title' bundle='${lang}'/>" </option>
+                                                    </select>
+                                                    <button type="submit" class="btn btn-primary"><span class="glyphicon-random"><fmt:message key="administration-users.change" bundle="${lang}"/></span></button>
+                                                </form>
+                                            </td>
                                         </tr>
                                     </c:forEach>
                                 </table>

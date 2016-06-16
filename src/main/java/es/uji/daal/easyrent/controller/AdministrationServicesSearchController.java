@@ -27,71 +27,75 @@ public class AdministrationServicesSearchController {
     @RequestMapping("/searchFor")
     public String searchFor(@RequestParam String searchedFor, @RequestParam String selectedServiceAttribute, Model model) {
 
-        List<Service> searchResult = new LinkedList<>();
+        if (AdministrationController.userIsAdmin()) {
+            List<Service> searchResult = new LinkedList<>();
 
-        switch (selectedServiceAttribute) {
+            switch (selectedServiceAttribute) {
 
-            case "name":
-                searchResult = repository.searchByNameContainedInSearchedName(searchedFor);
-                break;
+                case "name":
+                    searchResult = repository.searchByNameContainedInSearchedName(searchedFor);
+                    break;
 
-            case "proposedByUser":
-                searchResult = repository.searchByUserContainedInSearchedUser(searchedFor);
-                break;
+                case "proposedByUser":
+                    searchResult = repository.searchByUserContainedInSearchedUser(searchedFor);
+                    break;
 
-            case "active":
-                Boolean active;
-                try {
-                    active = Boolean.valueOf(searchedFor);
-                    searchResult = repository.findActive(active);
-                }
-                catch (NumberFormatException e) {
+                case "active":
+                    Boolean active;
+                    try {
+                        active = Boolean.valueOf(searchedFor);
+                        searchResult = repository.findActive(active);
+                    }
+                    catch (NumberFormatException e) {
 
-                }
-                break;
+                    }
+                    break;
 
-            case "creationDate":
-                Date creationDate;
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                try {
-                    creationDate = formatter.parse(searchedFor);
-                    long day = creationDate.getTime();
-                    searchResult = repository.findByCreationDateBetween(new Date(day), new Date(day + 86399999));
-                }
-                catch (ParseException e) {
+                case "creationDate":
+                    Date creationDate;
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                    try {
+                        creationDate = formatter.parse(searchedFor);
+                        long day = creationDate.getTime();
+                        searchResult = repository.findByCreationDateBetween(new Date(day), new Date(day + 86399999));
+                    }
+                    catch (ParseException e) {
 
-                }
-                break;
+                    }
+                    break;
 
-            case "activeSince":
-                Date activeSince;
-                formatter = new SimpleDateFormat("yyyy-MM-dd");
-                try {
-                    activeSince = formatter.parse(searchedFor);
-                    long day = activeSince.getTime();
-                    searchResult = repository.findByActiveSinceBetween(new Date(day), new Date(day + 86399999));
-                }
-                catch (ParseException e) {
+                case "activeSince":
+                    Date activeSince;
+                    formatter = new SimpleDateFormat("yyyy-MM-dd");
+                    try {
+                        activeSince = formatter.parse(searchedFor);
+                        long day = activeSince.getTime();
+                        searchResult = repository.findByActiveSinceBetween(new Date(day), new Date(day + 86399999));
+                    }
+                    catch (ParseException e) {
 
-                }
-                break;
+                    }
+                    break;
 
-            case "serviceProposals":
-                Integer proposals;
-                try {
-                    proposals = Integer.parseInt(searchedFor);
-                    searchResult = repository.findByServiceProposals(proposals);
-                }
-                catch (NumberFormatException e) {
+                case "serviceProposals":
+                    Integer proposals;
+                    try {
+                        proposals = Integer.parseInt(searchedFor);
+                        searchResult = repository.findByServiceProposals(proposals);
+                    }
+                    catch (NumberFormatException e) {
 
-                }
-                break;
+                    }
+                    break;
+            }
+
+            model.addAttribute("services", searchResult);
+            mostDemandedServices(model);
+
+            return "administration/services";
         }
 
-        model.addAttribute("services", searchResult);
-        mostDemandedServices(model);
-
-        return "administration/services";
+        return "index";
     }
 
     //TODO: Funcional, pero seguramente mejorable computacionalmente
@@ -103,32 +107,42 @@ public class AdministrationServicesSearchController {
 
     @RequestMapping("/changeState/{id}")
     public String processChangeState(@ModelAttribute("service") Service service, @PathVariable(value = "id") String id, Model model) {
-        Service changedService;
-        UUID serviceID = UUID.fromString(id);
 
-        if (repository.exists(serviceID)) {
-            changedService = new Service(repository.findOne(serviceID));
+        if (AdministrationController.userIsAdmin()) {
+            Service changedService;
+            UUID serviceID = UUID.fromString(id);
 
-            if (!changedService.getActive()) {
-                changedService.setActive(true);
-                if (changedService.getActiveSince() == null)
-                    changedService.setActiveSince(new java.sql.Date(System.currentTimeMillis()));
+            if (repository.exists(serviceID)) {
+                changedService = new Service(repository.findOne(serviceID));
+
+                if (!changedService.getActive()) {
+                    changedService.setActive(true);
+                    if (changedService.getActiveSince() == null)
+                        changedService.setActiveSince(new java.sql.Date(System.currentTimeMillis()));
+                }
+                else
+                    changedService.setActive(false);
+
+                repository.save(changedService);
             }
-            else
-                changedService.setActive(false);
-
-            repository.save(changedService);
+            mostDemandedServices(model);
+            return "redirect:../";
         }
-        mostDemandedServices(model);
-        return "redirect:../";
+
+        return "index";
     }
 
     @RequestMapping("/delete/{id}")
     public String processDelete(@PathVariable(value = "id") String id) {
-        UUID serviceID = UUID.fromString(id);
-        if (repository.exists(serviceID))
-            repository.delete(serviceID);
 
-        return "redirect:../";
+        if (AdministrationController.userIsAdmin()) {
+            UUID serviceID = UUID.fromString(id);
+            if (repository.exists(serviceID))
+                repository.delete(serviceID);
+
+            return "redirect:../";
+        }
+
+        return "index";
     }
 }

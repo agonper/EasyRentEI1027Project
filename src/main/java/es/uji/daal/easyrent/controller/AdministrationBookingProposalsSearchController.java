@@ -28,117 +28,121 @@ public class AdministrationBookingProposalsSearchController {
     @RequestMapping("/searchFor")
     public String searchFor(@RequestParam String searchedFor, @RequestParam String selectedBookingProposalsAttribute, Model model) {
 
-        List<BookingProposal> searchResult = new LinkedList<>();
+        if (AdministrationController.userIsAdmin()) {
+            List<BookingProposal> searchResult = new LinkedList<>();
 
-        switch (selectedBookingProposalsAttribute) {
-            case "propertyTitle":
-                searchResult = repository.findByPropertyTitleContainedInSearchedPropertyTitle(searchedFor);
-                break;
+            switch (selectedBookingProposalsAttribute) {
+                case "propertyTitle":
+                    searchResult = repository.findByPropertyTitleContainedInSearchedPropertyTitle(searchedFor);
+                    break;
 
-            case "tenantUsername":
-                searchResult = repository.findByTenantUsernameContainedInSearchedTenantUsername(searchedFor);
-                break;
+                case "tenantUsername":
+                    searchResult = repository.findByTenantUsernameContainedInSearchedTenantUsername(searchedFor);
+                    break;
 
-            case "startDate":
-                Date startDate;
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                try {
-                    startDate = formatter.parse(searchedFor);
-                    long day = startDate.getTime();
-                    searchResult = repository.findByStartDateBetween(new Date(day), new Date(day + 86399999));
-                }
-                catch (ParseException e) {
+                case "startDate":
+                    Date startDate;
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                    try {
+                        startDate = formatter.parse(searchedFor);
+                        long day = startDate.getTime();
+                        searchResult = repository.findByStartDateBetween(new Date(day), new Date(day + 86399999));
+                    }
+                    catch (ParseException e) {
 
-                }
+                    }
 
-                break;
+                    break;
 
-            case "endDate":
-                Date endDate;
-                formatter = new SimpleDateFormat("yyyy-MM-dd");
-                try {
-                    endDate = formatter.parse(searchedFor);
-                    long day = endDate.getTime();
-                    searchResult = repository.findByEndDateBetween(new Date(day), new Date(day + 86399999));
-                }
-                catch (ParseException e) {
+                case "endDate":
+                    Date endDate;
+                    formatter = new SimpleDateFormat("yyyy-MM-dd");
+                    try {
+                        endDate = formatter.parse(searchedFor);
+                        long day = endDate.getTime();
+                        searchResult = repository.findByEndDateBetween(new Date(day), new Date(day + 86399999));
+                    }
+                    catch (ParseException e) {
 
-                }
+                    }
 
-                break;
+                    break;
 
-            case "status":
-                searchResult = repository.findByStatus(searchedFor);
-                break;
+                case "status":
+                    searchResult = repository.findByStatus(searchedFor);
+                    break;
 
-            case "paymentReference":
-                searchResult = repository.findByPaymentReferenceContainedInSearchedPaymentReference(searchedFor);
-                break;
+                case "paymentReference":
+                    searchResult = repository.findByPaymentReferenceContainedInSearchedPaymentReference(searchedFor);
+                    break;
 
-            case "totalAmount":
-                Float totalAmount;
-                try {
-                    totalAmount = Float.parseFloat(searchedFor);
-                }
-                catch (NumberFormatException e) {
-                    totalAmount = -1f;
-                }
-                searchResult = repository.findByTotalAmount(totalAmount);
-                break;
+                case "totalAmount":
+                    Float totalAmount;
+                    try {
+                        totalAmount = Float.parseFloat(searchedFor);
+                    }
+                    catch (NumberFormatException e) {
+                        totalAmount = -1f;
+                    }
+                    searchResult = repository.findByTotalAmount(totalAmount);
+                    break;
 
-            case "numberOfTenants":
-                Integer numberOfTenants;
-                try {
-                    numberOfTenants = Integer.parseInt(searchedFor);
-                }
-                catch(NumberFormatException e) {
-                    numberOfTenants = -1;
-                }
-                searchResult = repository.findByNumberOfTenants(numberOfTenants);
-                break;
+                case "numberOfTenants":
+                    Integer numberOfTenants;
+                    try {
+                        numberOfTenants = Integer.parseInt(searchedFor);
+                    }
+                    catch(NumberFormatException e) {
+                        numberOfTenants = -1;
+                    }
+                    searchResult = repository.findByNumberOfTenants(numberOfTenants);
+                    break;
 
-            case "dateOfCreation":
-                Date dateOfCreation;
-                formatter = new SimpleDateFormat("yyyy-MM-dd");
-                try {
-                    dateOfCreation = formatter.parse(searchedFor);
-                    long day = dateOfCreation.getTime();
-                    searchResult = repository.findByDateOfCreationBetween(new Date(day), new Date(day + 86399999));
-                }
-                catch (ParseException e) {
+                case "dateOfCreation":
+                    Date dateOfCreation;
+                    formatter = new SimpleDateFormat("yyyy-MM-dd");
+                    try {
+                        dateOfCreation = formatter.parse(searchedFor);
+                        long day = dateOfCreation.getTime();
+                        searchResult = repository.findByDateOfCreationBetween(new Date(day), new Date(day + 86399999));
+                    }
+                    catch (ParseException e) {
 
-                }
+                    }
 
-                break;
+                    break;
 
-            case "dateOfAcceptance":
-                Date dateOfAcceptance;
-                formatter = new SimpleDateFormat("yyyy-MM-dd");
-                try {
-                    dateOfAcceptance = formatter.parse(searchedFor);
-                    long day = dateOfAcceptance.getTime();
-                    searchResult = repository.findByDateOfUpdateBetween(new Date(day), new Date(day + 86399999));
-                }
-                catch (ParseException e) {
+                case "dateOfAcceptance":
+                    Date dateOfAcceptance;
+                    formatter = new SimpleDateFormat("yyyy-MM-dd");
+                    try {
+                        dateOfAcceptance = formatter.parse(searchedFor);
+                        long day = dateOfAcceptance.getTime();
+                        searchResult = repository.findByDateOfUpdateBetween(new Date(day), new Date(day + 86399999));
+                    }
+                    catch (ParseException e) {
 
-                }
+                    }
 
-                break;
+                    break;
 
-            case "invoiceNumber":
-                Integer number;
-                try {
-                    number = Integer.parseInt(searchedFor);
-                }
-                catch (NumberFormatException e) {
-                    number = -1;
-                }
-                searchResult = repository.findByInvoiceNumber(number);
-                break;
+                case "invoiceNumber":
+                    Integer number;
+                    try {
+                        number = Integer.parseInt(searchedFor);
+                    }
+                    catch (NumberFormatException e) {
+                        number = -1;
+                    }
+                    searchResult = repository.findByInvoiceNumber(number);
+                    break;
+            }
+
+            model.addAttribute("bookingProposals", searchResult);
+
+            return "administration/booking_proposals";
         }
 
-        model.addAttribute("bookingProposals", searchResult);
-
-        return "administration/booking_proposals";
+        return "index";
     }
 }
