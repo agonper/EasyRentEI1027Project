@@ -5,6 +5,7 @@
 <%@ taglib prefix="fm" tagdir="/WEB-INF/tags/forms" %>
 <%@ taglib prefix="navs" tagdir="/WEB-INF/tags/navs" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="er" uri="/WEB-INF/easy-rent.tld" %>
 
 <fmt:message key="book-property.title" bundle="${lang}" var="title"/>
 <fmt:message key="general.check" bundle="${lang}" var="subtitle"/>
@@ -25,7 +26,11 @@
                 <t:li-hb stringKey="proposal.start-date"><spring:eval expression="bookingProposal.startDate"/></t:li-hb>
                 <t:li-hb stringKey="proposal.end-date"><spring:eval expression="bookingProposal.endDate"/></t:li-hb>
                 <t:li-hb stringKey="proposal.number-of-tenants">${bookingProposal.numberOfTenants}</t:li-hb>
+                <t:li-hb stringKey="proposal.number-of-days">${numberOfDays}</t:li-hb>
                 <t:li-hb stringKey="proposal.amount"><t:show-price amount="${bookingProposal.totalAmount}"/></t:li-hb>
+                <t:li-hb stringKey="invoice.vat">${vat}%</t:li-hb>
+                <er:calculate-vat value="${bookingProposal.totalAmount}" var="priceWithVat"/>
+                <t:li-hb stringKey="proposal.total-amount"><t:show-price amount="${priceWithVat}"/></t:li-hb>
             </ul>
             <div class="panel-body">
                 <form class="form-horizontal" action="${pageContext.request.contextPath}/property/booking-proposal/${property.id}/3" method="post">

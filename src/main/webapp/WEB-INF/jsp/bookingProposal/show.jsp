@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="er" uri="/WEB-INF/easy-rent.tld" %>
 
 <sec:authorize access="isAuthenticated()">
     <sec:authentication var="loggedUser" property="principal" />
@@ -63,7 +64,8 @@
                         <t:li-hb stringKey="proposal.start-date"><spring:eval expression="bookingProposal.startDate"/></t:li-hb>
                         <t:li-hb stringKey="proposal.end-date"><spring:eval expression="bookingProposal.endDate"/></t:li-hb>
                         <t:li-hb stringKey="proposal.number-of-tenants">${bookingProposal.numberOfTenants}</t:li-hb>
-                        <t:li-hb stringKey="proposal.amount"><t:show-price amount="${bookingProposal.totalAmount}"/></t:li-hb>
+                        <er:calculate-vat value="${bookingProposal.totalAmount}" var="priceWithVat"/>
+                        <t:li-hb stringKey="proposal.amount"><t:show-price amount="${priceWithVat}"/></t:li-hb>
                     </ul>
                 </div>
             </div>

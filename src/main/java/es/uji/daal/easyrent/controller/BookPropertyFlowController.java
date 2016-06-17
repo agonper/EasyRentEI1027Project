@@ -1,11 +1,13 @@
 package es.uji.daal.easyrent.controller;
 
 import es.uji.daal.easyrent.model.BookingProposal;
+import es.uji.daal.easyrent.model.Invoice;
 import es.uji.daal.easyrent.model.Property;
 import es.uji.daal.easyrent.model.User;
 import es.uji.daal.easyrent.repository.AvailabilityPeriodRepository;
 import es.uji.daal.easyrent.repository.BookingProposalRepository;
 import es.uji.daal.easyrent.repository.PropertyRepository;
+import es.uji.daal.easyrent.tags.InvoiceTools;
 import es.uji.daal.easyrent.utils.AvailabilityChanges;
 import es.uji.daal.easyrent.utils.BookingUtils;
 import es.uji.daal.easyrent.utils.DateUtils;
@@ -103,6 +105,9 @@ public class BookPropertyFlowController {
                 model.addAttribute("bookingForm", bookProperty.get("bookingForm"));
                 break;
             case CHECK:
+                BookingForm bf = (BookingForm) bookProperty.get("bookingForm");
+                model.addAttribute("numberOfDays", 1+DateUtils.daysBetweenDates(bf.getStartDate(), bf.getEndDate()));
+                model.addAttribute("vat", InvoiceTools.VAT*100);
             case PAY:
                 model.addAttribute("bookingForm", bookProperty.get("bookingForm"));
                 model.addAttribute("bookingProposal", bookProperty.get("bookingProposal"));
@@ -204,7 +209,7 @@ public class BookPropertyFlowController {
 
         BookingProposal proposal = bookingForm.update(property.createBookingProposal(loggedUser));
         proposal.setTotalAmount(property.getPricePerDay() *
-                DateUtils.daysBetweenDates(bookingForm.getStartDate(), bookingForm.getEndDate()));
+                (1+DateUtils.daysBetweenDates(bookingForm.getStartDate(), bookingForm.getEndDate())));
 
         Map<String, Object> bookProperty = (Map<String, Object>) session.getAttribute(getSessionMapName(propertyId));
         bookProperty.put("bookingForm", bookingForm);

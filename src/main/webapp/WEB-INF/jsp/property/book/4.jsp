@@ -6,6 +6,7 @@
 <%@ taglib prefix="navs" tagdir="/WEB-INF/tags/navs" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="er" uri="/WEB-INF/easy-rent.tld" %>
 
 <fmt:message key="book-property.title" bundle="${lang}" var="title"/>
 <fmt:message key="general.check" bundle="${lang}" var="subtitle"/>
@@ -23,7 +24,8 @@
                 ${subtitle}
             </div>
             <ul class="list-group">
-                <t:li-hb stringKey="proposal.amount"><t:show-price amount="${bookingProposal.totalAmount}"/></t:li-hb>
+                <er:calculate-vat value="${bookingProposal.totalAmount}" var="priceWithVat"/>
+                <t:li-hb stringKey="proposal.total-amount"><t:show-price amount="${priceWithVat}"/></t:li-hb>
                 <t:li-hb stringKey="proposal.pay-btn">
                     <c:choose>
                         <c:when test="${not empty bookingForm.paymentReference}">

@@ -88,9 +88,13 @@
                                     <strong><fmt:message key="property.price-per-day" bundle="${lang}"/> &nbsp;&nbsp;(<span class="glyphicon glyphicon-calendar"></span>)</strong>
                                 </div>
                                 <div class="col-lg-6">
-                                    <strong><span class="h2"><t:show-price amount="${property.pricePerDay}"/></span></strong>
+                                    <er:calculate-vat value="${property.pricePerDay}" var="priceWithVat"/>
+                                    <strong><span class="h2"><t:show-price amount="${priceWithVat}"/></span></strong>
                                 </div>
                             </div>
+                        </div>
+                        <div class="text-right">
+                            <small><fmt:message key="property.includes-vat" bundle="${lang}"/></small>
                         </div>
                     </div>
                     <div class="col-md-7">
@@ -116,7 +120,7 @@
                                 <fmt:message key="property.description" bundle="${lang}"/>
                             </div>
                             <div class="panel-body">
-                                    ${property.description}
+                                ${property.description}
                             </div>
                         </div>
                     </div>

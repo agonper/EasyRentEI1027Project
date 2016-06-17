@@ -3,6 +3,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="er" uri="/WEB-INF/easy-rent.tld" %>
+
 <tag:paginabasica title="EasyRent">
     <jsp:body>
         <ol class="breadcrumb">
@@ -36,7 +38,8 @@
                             <tr>
                                 <td><a href="${pageContext.request.contextPath}/property/show/${property.id}.html?q=${param.q}">${property.title}</a></td>
                                 <td>${property.location}</td>
-                                <td><t:show-price amount="${property.pricePerDay}"/></td>
+                                <er:calculate-vat value="${property.pricePerDay}" var="priceWithVat"/>
+                                <td><t:show-price amount="${priceWithVat}"/></td>
                                 <td>${property.type.label}</td>
                                 <td>${property.capacity}</td>
                                 <td>${property.floorSpace}</td>
