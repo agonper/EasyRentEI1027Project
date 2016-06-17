@@ -1,18 +1,21 @@
 package es.uji.daal.easyrent.controller;
 
+import es.uji.daal.easyrent.model.AvailabilityPeriod;
+import es.uji.daal.easyrent.model.Photo;
 import es.uji.daal.easyrent.model.Property;
+import es.uji.daal.easyrent.repository.AvailabilityPeriodRepository;
+import es.uji.daal.easyrent.repository.PhotoRepository;
 import es.uji.daal.easyrent.repository.PropertyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by daniel on 12/06/16.
@@ -24,6 +27,12 @@ public class AdministrationPropertySearchController {
 
     @Autowired
     PropertyRepository repository;
+
+    @Autowired
+    PhotoRepository photoRepository;
+
+    @Autowired
+    AvailabilityPeriodRepository availabilityPeriodRepository;
 
     @RequestMapping("/searchFor")
     public String searchFor(@RequestParam String searchedFor, @RequestParam String selectedPropertyAttribute, Model model) {
@@ -138,6 +147,38 @@ public class AdministrationPropertySearchController {
             model.addAttribute("properties", searchResult);
 
             return "administration/properties";
+        }
+
+        return "index";
+    }
+
+    @RequestMapping("/delete/{id}")
+    public String processDelete(@PathVariable("id") String id) {
+
+        if (AdministrationController.userIsAdmin()) {
+            UUID propertyID = UUID.fromString(id);
+            if (repository.exists(propertyID)) {
+                Property property = repository.findOne(propertyID);
+
+                if (property.getBookingProposals().isEmpty()) {
+
+                    Set<Photo> propertyPhotos = property.getPhotos();
+                    Set<AvailabilityPeriod> availabilityPeriods = property.getAvailabilityPeriods();
+
+                    for (Photo photo : propertyPhotos) {
+                        System.out.println(photo.getProperty().toString());
+                        photoRepository.delete(photo);
+                    }
+
+                    for (AvailabilityPeriod av : availabilityPeriods) {
+                        availabilityPeriodRepository.delete(av);
+                    }
+
+                    repository.delete(propertyID);
+                }
+            }
+
+            return "redirect:../";
         }
 
         return "index";
