@@ -5,6 +5,7 @@ import es.uji.daal.easyrent.repository.BookingProposalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -13,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by daniel on 12/06/16.
@@ -141,6 +143,20 @@ public class AdministrationBookingProposalsSearchController {
             model.addAttribute("bookingProposals", searchResult);
 
             return "administration/booking_proposals";
+        }
+
+        return "index";
+    }
+
+    @RequestMapping("/delete/{id}")
+    public String processDelete(@PathVariable(value = "id") String id) {
+
+        if (AdministrationController.userIsAdmin()) {
+            UUID bookingProposalID = UUID.fromString(id);
+            if (repository.exists(bookingProposalID))
+                repository.delete(bookingProposalID);
+
+            return "redirect:../";
         }
 
         return "index";

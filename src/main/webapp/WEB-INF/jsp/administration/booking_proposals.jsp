@@ -157,7 +157,7 @@
                                             <td>${bookingProposal.dateOfCreation}</td>
                                             <td>${bookingProposal.dateOfUpdate}</td>
                                             <td>${bookingProposal.invoice.number}</td>
-                                            <td><a href="${pageContext.request.contextPath}/bookingProposal/delete/${bookingProposal.id}.html" class="btn btn-primary"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                            <td><a href="${pageContext.request.contextPath}/administration/booking_proposals/delete/${bookingProposal.id}.html" class="btn btn-primary"><span class="glyphicon glyphicon-remove"></span></a></td>
                                         </tr>
                                     </c:forEach>
                                 </table>

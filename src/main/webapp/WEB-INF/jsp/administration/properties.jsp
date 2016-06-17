@@ -144,7 +144,7 @@
                                             <td>${property.creationDate}</td>
                                             <td>${property.type.label}</td>
                                             <td>${property.description}</td>
-                                            <td><a href="${pageContext.request.contextPath}/property/delete/${property.id}.html" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                            <td><a href="${pageContext.request.contextPath}/administration/properties/delete/${property.id}.html" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span></a></td>
                                         </tr>
                                     </c:forEach>
                                 </table>
