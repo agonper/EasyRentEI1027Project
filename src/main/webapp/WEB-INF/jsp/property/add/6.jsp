@@ -27,7 +27,7 @@
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <div class="row">
                         <div class="col-sm-offset-1 col-sm-10">
-                            <a class="btn btn-warning" href="${pageContext.request.contextPath}/property/add?step=4"><span class="glyphicon glyphicon-backward"></span> <fmt:message key="general.back" bundle="${lang}"/></a>
+                            <a class="btn btn-warning" href="${pageContext.request.contextPath}/property/add?step=5"><span class="glyphicon glyphicon-backward"></span> <fmt:message key="general.back" bundle="${lang}"/></a>
                             <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-save"></span> <fmt:message key="general.save" bundle="${lang}"/></button>
                         </div>
                     </div>
