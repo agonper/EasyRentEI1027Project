@@ -1,5 +1,7 @@
 package es.uji.daal.easyrent.model;
 
+import es.uji.daal.easyrent.tags.InvoiceTools;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -10,8 +12,9 @@ import java.util.Date;
 @Table(name = "invoices")
 public class Invoice extends DomainModel {
 
-    @Column(columnDefinition = "serial")
-    private int number;
+    @Column(columnDefinition = "serial", unique = true, nullable = false, insertable = false, updatable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long number;
 
     @OneToOne(optional = false)
     private BookingProposal proposal;
@@ -23,6 +26,12 @@ public class Invoice extends DomainModel {
     private String address;
 
     @Column(nullable = false)
+    private String country;
+
+    @Column(nullable = false)
+    private int postCode;
+
+    @Column(nullable = false)
     private Date expeditionDate;
 
     /**
@@ -31,11 +40,16 @@ public class Invoice extends DomainModel {
      * ======
      */
 
-    public Invoice() {
-        expeditionDate = new Date();
+    protected Invoice() {
     }
 
-    public int getNumber() {
+    public Invoice(BookingProposal proposal) {
+        expeditionDate = new Date();
+        this.proposal = proposal;
+        vat = InvoiceTools.VAT;
+    }
+
+    public long getNumber() {
         return number;
     }
 
@@ -75,9 +89,5 @@ public class Invoice extends DomainModel {
 
     public BookingProposal getProposal() {
         return proposal;
-    }
-
-    public void setProposal(BookingProposal proposal) {
-        this.proposal = proposal;
     }
 }
