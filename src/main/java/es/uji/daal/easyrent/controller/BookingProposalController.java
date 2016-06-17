@@ -4,6 +4,7 @@ import es.uji.daal.easyrent.model.BookingProposal;
 import es.uji.daal.easyrent.model.Invoice;
 import es.uji.daal.easyrent.model.User;
 import es.uji.daal.easyrent.repository.BookingProposalRepository;
+import es.uji.daal.easyrent.tags.InvoiceTools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -55,8 +56,7 @@ public class BookingProposalController {
             proposal.accept();
             Invoice invoice = new Invoice();
             proposal.setInvoice(invoice);
-            // FIXME please kill me
-            invoice.setVat(0.21f);
+            invoice.setVat(InvoiceTools.VAT);
 
             User tenant = proposal.getTenant();
             invoice.setAddress(tenant.getPostalAddress()+" "+tenant.getCountry()+" "+tenant.getPostCode());

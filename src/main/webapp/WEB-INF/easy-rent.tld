@@ -69,4 +69,18 @@
         </attribute>
     </tag>
 
+    <tag>
+        <name>calculate-vat</name>
+        <tag-class>es.uji.daal.easyrent.tags.InvoiceTools</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>value</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>var</name>
+        </attribute>
+    </tag>
+
 </taglib>
