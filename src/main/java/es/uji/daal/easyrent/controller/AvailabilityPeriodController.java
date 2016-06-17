@@ -30,13 +30,6 @@ public class AvailabilityPeriodController {
     @Autowired
     PropertyRepository propertyRepository;
 
-    @RequestMapping("/listAll")
-    public String listAvailabilityPeriods(Model model) {
-        List<AvailabilityPeriod> availabilityPeriods = (List<AvailabilityPeriod>) repository.findAll();
-        model.addAttribute("availabilityPeriods", availabilityPeriods);
-        return "property/availabilityPeriod/listAll";
-    }
-
     @RequestMapping(value = "/{propertyId}/add", method = RequestMethod.POST)
     public String add(@RequestParam(value = "type", defaultValue = "storage") String type,
                       @ModelAttribute AvailabilityForm availabilityForm,

@@ -58,10 +58,4 @@ public class AuthController {
         repository.save(user);
         return "redirect:index.html";
     }
-
-    /*@RequestMapping("/logout")
-    public String logout(HttpSession session) {
-        session.invalidate();
-        return "redirect:index.html";
-    }*/
 }

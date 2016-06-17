@@ -1,6 +1,7 @@
 package es.uji.daal.easyrent.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -10,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/invoice")
 public class InvoiceController {
 
-    @RequestMapping("/{id}/access")
-    public String access() {
-        //TODO: Terminate
+    @RequestMapping("/show/{id}")
+    public String access(@PathVariable("id") String id) {
+        //TODO: Implement
 
-        return "invoice/access";
+        return "invoice/show";
     }
 }

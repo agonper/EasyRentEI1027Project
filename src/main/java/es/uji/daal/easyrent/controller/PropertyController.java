@@ -39,25 +39,6 @@ public class PropertyController {
     @Autowired
     private PhotoRepository photoRepository;
 
-    @RequestMapping("/list")
-    public String list(Model model) {
-        List<Property> properties = (List<Property>) repository.findAll();
-        model.addAttribute("properties", properties);
-        return "property/list";
-    }
-
-    @RequestMapping("/listOwnProperties")
-    public String listOwnProperties(Model model) {
-        User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (loggedUser != null) {
-            UUID userID = loggedUser.getId();
-            List<Property> userProperties = repository.findByOwner_Id(userID);
-            model.addAttribute("userProperties", userProperties);
-            return "property/listOwnProperties";
-        }
-        return "redirect:../login.html";
-    }
-
     @RequestMapping("/show/{id}")
     public String show(Model model, @PathVariable("id") String id) {
         Property property = repository.findOne(UUID.fromString(id));
