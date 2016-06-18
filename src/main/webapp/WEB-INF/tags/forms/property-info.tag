@@ -27,7 +27,7 @@
         </div>
     </div>
     <div class="col-md-6">
-        <fmt:message key="property.price-per-day" bundle="${lang}" var="pricePerDay"/>
+        <fmt:message key="property.price-per-day-wo-vat" bundle="${lang}" var="pricePerDay"/>
         <tag:input path="pricePerDay" type="number" step=".01" label="${pricePerDay}"/>
     </div>
 </div>

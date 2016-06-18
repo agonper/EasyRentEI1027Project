@@ -54,20 +54,20 @@ public class BookingUtils {
                 if (form.getEndDate().equals(period.getEndDate())) {
                     toBeRemoved.add(period);
                 } else {
-                    period.setStartDate(DateUtils.getDatePlus(form.getEndDate(), 1));
+                    period.setStartDate(DateUtils.getDatePlusDays(form.getEndDate(), 1));
                     toBeSaved.add(period);
                 }
             } else {
                 if (form.getEndDate().equals(period.getEndDate())) {
-                    period.setEndDate(DateUtils.getDateMinus(form.getStartDate(), 1));
+                    period.setEndDate(DateUtils.getDateMinusDays(form.getStartDate(), 1));
                     toBeSaved.add(period);
                 } else {
                     AvailabilityPeriod endPeriod = new AvailabilityPeriod(period.getProperty());
-                    endPeriod.setStartDate(DateUtils.getDatePlus(form.getEndDate(), 1));
+                    endPeriod.setStartDate(DateUtils.getDatePlusDays(form.getEndDate(), 1));
                     endPeriod.setEndDate(period.getEndDate());
                     toBeSaved.add(endPeriod);
 
-                    period.setEndDate(DateUtils.getDateMinus(form.getStartDate(), 1));
+                    period.setEndDate(DateUtils.getDateMinusDays(form.getStartDate(), 1));
                     toBeSaved.add(period);
                 }
             }
@@ -81,7 +81,7 @@ public class BookingUtils {
             if (form.getStartDate().equals(firstPeriod.getStartDate())) {
                 toBeRemoved.add(firstPeriod);
             } else {
-                firstPeriod.setEndDate(DateUtils.getDateMinus(form.getStartDate(), 1));
+                firstPeriod.setEndDate(DateUtils.getDateMinusDays(form.getStartDate(), 1));
                 toBeSaved.add(firstPeriod);
             }
 
@@ -89,7 +89,7 @@ public class BookingUtils {
             if (form.getEndDate().equals(lastPeriod.getEndDate())) {
                 toBeRemoved.add(lastPeriod);
             } else {
-                lastPeriod.setStartDate(DateUtils.getDatePlus(form.getEndDate(), 1));
+                lastPeriod.setStartDate(DateUtils.getDatePlusDays(form.getEndDate(), 1));
                 toBeSaved.add(lastPeriod);
             }
         }

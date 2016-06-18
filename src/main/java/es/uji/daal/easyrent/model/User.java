@@ -52,7 +52,7 @@ public class User extends DomainModel {
     private Set<Property> properties;
 
     @OneToMany(mappedBy = "tenant")
-    @OrderBy("dateOfCreation desc ")
+    @OrderBy("dateOfCreation desc, invoice ")
     private Set<BookingProposal> bookingProposals;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
