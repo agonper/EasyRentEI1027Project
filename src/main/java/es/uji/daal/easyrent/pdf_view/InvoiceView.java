@@ -48,6 +48,7 @@ public class InvoiceView extends AbstractITextPdfView{
         form.setField("expeditionDate", sdf.format(invoice.getExpeditionDate()));
         form.setField("totalAmount", String.format("%.02f%s", proposal.getTotalAmount(), CURRENCY));
         form.setField("tenantName", String.format("%s %s", proposal.getTenant().getName(), proposal.getTenant().getSurnames()));
+        form.setField("tenantNid", proposal.getTenant().getDni());
         form.setField("address", invoice.getAddress());
         form.setField("country", invoice.getCountry());
         form.setField("postCode", String.valueOf(invoice.getPostCode()));
