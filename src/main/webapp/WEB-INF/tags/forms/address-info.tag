@@ -7,4 +7,4 @@
 <fmt:message key="user.country" var="country" bundle="${lang}"/>
 <t:input path="country" required="true" label="${country}"/>
 <fmt:message key="user.post-code" var="postCode" bundle="${lang}"/>
-<t:input path="postCode" required="true" label="${postCode}"/>
+<t:input path="postCode" type="number" required="true" label="${postCode}"/>

@@ -18,6 +18,9 @@ public interface BookingProposalRepository extends CrudRepository<BookingProposa
     List<BookingProposal> findByTenant_Id(UUID tenantID);
     List<BookingProposal> findByProperty_Owner_IdOrderByDateOfCreationDesc(UUID owner);
 
+    @Query("select bp from BookingProposal bp where (bp.startDate < current_date or bp.dateOfCreation <= :date) and lower(bp.status) = 'pending'")
+    List<BookingProposal> findInfeasibleProposalsFrom(@Param("date") Date date);
+
     @Query("select b from BookingProposal b where lower(b.property.title) like lower(concat('%', :title, '%') ) ")
     List<BookingProposal> findByPropertyTitleContainedInSearchedPropertyTitle(@Param("title") String title);
 
