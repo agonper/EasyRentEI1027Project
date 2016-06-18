@@ -29,7 +29,7 @@ public class InvoiceView extends AbstractITextPdfView{
     }
 
     @Override
-    protected void compileTemplate(Map<String, Object> model, ByteArrayOutputStream outputStream, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void compileTemplate(Map<String, Object> model, ByteArrayOutputStream outputStream, HttpServletRequest request, HttpServletResponse response) throws Exception {
         ClassLoader loader = getClass().getClassLoader();
         PdfReader template = new PdfReader(loader.getResourceAsStream(TEMPLATE_SRC));
 
@@ -56,7 +56,7 @@ public class InvoiceView extends AbstractITextPdfView{
         form.setField("numberOfTenants", String.valueOf(proposal.getNumberOfTenants()));
         form.setField("daysDescription", String.format("Property rental from %s to %s",
                 sdf.format(proposal.getStartDate()), sdf.format(proposal.getEndDate())));
-        form.setField("tenantsDescription", "Tenants that rented the property");
+        form.setField("tenantsDescription", String.format("Tenants that rented the property #B%s", proposal.getId()));
         form.setField("pricePerDay", String.format("%.02f%s", proposal.getTotalAmount() / ((float) numberOfDays), CURRENCY));
         form.setField("pricePerTenant", String.format("%.02f%s", 0.0f, CURRENCY));
         form.setField("daysTotal", String.format("%.02f%s", proposal.getTotalAmount(), CURRENCY));

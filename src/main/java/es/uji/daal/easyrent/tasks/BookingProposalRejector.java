@@ -1,5 +1,6 @@
 package es.uji.daal.easyrent.tasks;
 
+import es.uji.daal.easyrent.handler.BookingProposalEmailBroker;
 import es.uji.daal.easyrent.model.AvailabilityPeriod;
 import es.uji.daal.easyrent.model.BookingProposal;
 import es.uji.daal.easyrent.repository.AvailabilityPeriodRepository;
@@ -26,10 +27,13 @@ public class BookingProposalRejector {
     @Autowired
     private AvailabilityPeriodRepository periodRepository;
 
-    @Scheduled(cron = "01 0 0 * * *")
+    @Autowired
+    private BookingProposalEmailBroker emailBroker;
+
+    @Scheduled(cron = "01 00 00 * * *")
     public void rejectInfeasibleProposals() {
         List<BookingProposal> proposals = proposalRepository.findInfeasibleProposalsFrom(
-                DateUtils.getDateMinusDays(new Date(), 2));
+                DateUtils.getDateMinusDays(new Date(), 1));
 
         Logger.getAnonymousLogger().info(String.format("Rejecting %d proposals because of its infeasibility",
                 proposals.size()));
@@ -43,9 +47,14 @@ public class BookingProposalRejector {
             return period;
         }).collect(Collectors.toList());
 
-        // TODO send email to affected tenants
-
         proposalRepository.save(proposals);
         periodRepository.save(periods);
+
+        proposals.forEach(bookingProposal -> {
+            emailBroker
+                    .setProposal(bookingProposal)
+                    .sendExpirationOwnerEmail()
+                    .sendExpirationTenantEmail();
+        });
     }
 }

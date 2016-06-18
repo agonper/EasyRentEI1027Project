@@ -20,7 +20,7 @@
                     <li><a href="${pageContext.request.contextPath}/index.html#tenant"><fmt:message key="home.my-booking-proposals" bundle="${lang}"/></a></li>
                 </c:when>
                 <c:otherwise>
-                    <li><a href="${pageContext.request.contextPath}/index.html#owner-proposals"><fmt:message key="home.my-properties" bundle="${lang}"/></a></li>
+                    <li><a href="${pageContext.request.contextPath}/index.html#owner-proposals"><fmt:message key="owner.received-proposals" bundle="${lang}"/></a></li>
                 </c:otherwise>
             </c:choose>
             <li class="active">${title}</li>

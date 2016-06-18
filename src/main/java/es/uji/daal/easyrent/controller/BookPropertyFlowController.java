@@ -1,5 +1,6 @@
 package es.uji.daal.easyrent.controller;
 
+import es.uji.daal.easyrent.handler.BookingProposalEmailBroker;
 import es.uji.daal.easyrent.model.BookingProposal;
 import es.uji.daal.easyrent.model.Invoice;
 import es.uji.daal.easyrent.model.Property;
@@ -42,6 +43,9 @@ public class BookPropertyFlowController {
 
     @Autowired
     private BookingProposalRepository proposalRepository;
+
+    @Autowired
+    private BookingProposalEmailBroker emailBroker;
 
     private enum BookStep {
         PERSONAL_DATA, ADDRESS_INFO, BOOKING_PROPOSAL, CHECK, PAY
@@ -254,6 +258,11 @@ public class BookPropertyFlowController {
         proposalRepository.save(proposal);
 
         session.removeAttribute(getSessionMapName(propertyId));
+
+        emailBroker
+                .setProposal(proposal)
+                .sendTenantCreationEmail()
+                .sendOwnerCreationEmail();
 
         return "redirect:../../../index.html#tenant";
     }
