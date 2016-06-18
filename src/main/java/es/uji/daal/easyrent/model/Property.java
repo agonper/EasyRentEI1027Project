@@ -10,6 +10,7 @@ import org.apache.lucene.analysis.es.SpanishAnalyzer;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Indexed
@@ -53,6 +54,7 @@ public class Property extends DomainModel {
     private String description;
 
     @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
 
     @OrderBy("startDate asc ")

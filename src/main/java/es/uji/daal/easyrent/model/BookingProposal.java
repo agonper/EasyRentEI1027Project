@@ -1,5 +1,7 @@
 package es.uji.daal.easyrent.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -36,6 +38,7 @@ public class BookingProposal extends DomainModel {
     private int numberOfTenants;
 
     @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dateOfCreation;
 
     private Date dateOfUpdate;

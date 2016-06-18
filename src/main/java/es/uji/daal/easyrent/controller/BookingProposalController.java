@@ -1,12 +1,9 @@
 package es.uji.daal.easyrent.controller;
 
-import es.uji.daal.easyrent.model.AvailabilityPeriod;
-import es.uji.daal.easyrent.model.BookingProposal;
-import es.uji.daal.easyrent.model.Invoice;
-import es.uji.daal.easyrent.model.User;
+import es.uji.daal.easyrent.handler.BookingProposalEmailBroker;
+import es.uji.daal.easyrent.model.*;
 import es.uji.daal.easyrent.repository.AvailabilityPeriodRepository;
 import es.uji.daal.easyrent.repository.BookingProposalRepository;
-import es.uji.daal.easyrent.tags.InvoiceTools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -30,6 +27,9 @@ public class BookingProposalController {
     @Autowired
     private AvailabilityPeriodRepository periodRepository;
 
+    @Autowired
+    private BookingProposalEmailBroker emailBroker;
+
     @RequestMapping("/show/{id}")
     public String show(Model model, @PathVariable("id") String id) {
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -45,7 +45,7 @@ public class BookingProposalController {
     public String reject(@PathVariable("id") String id) {
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         BookingProposal proposal = repository.findOne(UUID.fromString(id));
-        if (loggedUser.equals(proposal.getProperty().getOwner())) {
+        if (loggedUser.equals(proposal.getProperty().getOwner()) && proposal.getStatus() == ProposalStatus.PENDING) {
             proposal.reject();
             repository.save(proposal);
 
@@ -53,6 +53,11 @@ public class BookingProposalController {
             period.setStartDate(proposal.getStartDate());
             period.setEndDate(proposal.getEndDate());
             periodRepository.save(period);
+
+            emailBroker
+                    .setProposal(proposal)
+                    .sendTenantRejectionEmail();
+
             return "redirect:../../index.html#owner-proposals";
         }
         return "redirect:../../index.html";
@@ -62,14 +67,20 @@ public class BookingProposalController {
     public String accept(@PathVariable("id") String id) {
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         BookingProposal proposal = repository.findOne(UUID.fromString(id));
-        if (loggedUser.equals(proposal.getProperty().getOwner())) {
+        if (loggedUser.equals(proposal.getProperty().getOwner()) && proposal.getStatus() == ProposalStatus.PENDING) {
             proposal.accept();
             Invoice invoice = proposal.createInvoice();
 
             User tenant = proposal.getTenant();
-            invoice.setAddress(tenant.getPostalAddress()+" "+tenant.getCountry()+" "+tenant.getPostCode());
+            invoice.setAddress(tenant.getPostalAddress());
+            invoice.setCountry(tenant.getCountry());
+            invoice.setPostCode(tenant.getPostCode());
 
             repository.save(proposal);
+
+            emailBroker
+                    .setProposal(proposal)
+                    .sendTenantAcceptationEmail();
             return "redirect:../../index.html#owner-proposals";
         }
         return "redirect:../../index.html";

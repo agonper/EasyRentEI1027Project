@@ -98,7 +98,7 @@
                                         </div>
                                     </t:li-hb>
                                     <t:li-hb stringKey="user.username">${user.username}</t:li-hb>
-                                    <c:if test="${loggedUser != null}">
+                                    <c:if test="${not empty loggedUser}">
                                         <t:li-hb stringKey="user.email">${user.email}</t:li-hb>
                                     </c:if>
                                     <t:li-hb stringKey="user.user-type">${user.role.toString().substring(0,1).toUpperCase()}${user.role.toString().substring(1)}</t:li-hb>
