@@ -32,16 +32,7 @@ public abstract class AbstractITextPdfView extends AbstractView{
         // IE workaround: write into byte array first.
         ByteArrayOutputStream baos = createTemporaryOutputStream();
 
-        // Apply preferences and build metadata.
-        Document document = newDocument();
-        PdfWriter writer = newWriter(document, baos);
-        prepareWriter(model, writer, request);
-        buildPdfMetadata(model, document, request);
-
-        // Build PDF document.
-        document.open();
-        buildPdfDocument(model, document, writer, request, response);
-        document.close();
+        compileTemplate(model, baos, request, response);
 
         // Flush to HTTP response.
         writeToResponse(response, baos);
@@ -68,6 +59,6 @@ public abstract class AbstractITextPdfView extends AbstractView{
     protected void buildPdfMetadata(Map<String, Object> model, Document document, HttpServletRequest request) {
     }
 
-    protected abstract void buildPdfDocument(Map<String, Object> model, Document document, PdfWriter writer,
-                                             HttpServletRequest request, HttpServletResponse response) throws Exception;
+    protected abstract void compileTemplate(Map<String, Object> model, ByteArrayOutputStream baos,
+                                            HttpServletRequest request, HttpServletResponse response) throws Exception;
 }

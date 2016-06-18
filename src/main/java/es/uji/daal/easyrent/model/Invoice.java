@@ -53,10 +53,6 @@ public class Invoice extends DomainModel {
         return number;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
-    }
-
     public float getVat() {
         return vat;
     }
@@ -75,6 +71,22 @@ public class Invoice extends DomainModel {
 
     public Date getExpeditionDate() {
         return expeditionDate;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public int getPostCode() {
+        return postCode;
+    }
+
+    public void setPostCode(int postCode) {
+        this.postCode = postCode;
     }
 
     public void setExpeditionDate(Date expeditionDate) {
