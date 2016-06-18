@@ -18,11 +18,11 @@ public class DateUtils {
         return toDate(LocalDate.of(year, month, day));
     }
 
-    public static Date getDatePlus(Date date, int days) {
+    public static Date getDatePlusDays(Date date, int days) {
         return toDate(toLocalDate(date).plusDays(days));
     }
 
-    public static Date getDateMinus(Date date, int days) {
+    public static Date getDateMinusDays(Date date, int days) {
         return toDate(toLocalDate(date).minusDays(days));
     }
 
