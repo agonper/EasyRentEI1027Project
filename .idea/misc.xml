@@ -48,6 +48,12 @@
       </list>
     </option>
   </component>
+<<<<<<< HEAD
+=======
+  <component name="PDMPlugin">
+    <option name="skipTestSources" value="false" />
+  </component>
+>>>>>>> cec4631cc9b238db98c5ae426ceff0c846d68c6d
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />
