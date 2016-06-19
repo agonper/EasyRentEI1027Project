@@ -93,7 +93,11 @@ public class PropertyController {
             if (!loggedUser.equals(property.getOwner())) {
                 return "redirect:../show/" + id + ".html#owner";
             }
+            if (property.getBookingProposals().size() > 0) {
+                return "redirect:../../index.html?error=dp#owner-properties";
+            }
             repository.delete(propertyId);
+            return "redirect:../../index.html?success=pd#owner";
         }
         return "redirect:../../index.html#owner";
     }

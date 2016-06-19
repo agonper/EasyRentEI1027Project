@@ -50,6 +50,9 @@
                         <c:if test="${param.success eq 'p'}">
                             <fmt:message key="add-property.success" bundle="${lang}" />
                         </c:if>
+                        <c:if test="${param.success eq 'pd'}">
+                            <fmt:message key="property.delete-success" bundle="${lang}"/>
+                        </c:if>
                         <c:if test="${param.success eq 'bp'}">
                             <fmt:message key="book-property.success" bundle="${lang}"/>
                         </c:if>
@@ -65,7 +68,7 @@
                 <c:if test="${not empty param.error}">
                     <div class="alert alert-danger alert-dismissible" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <span class="glyphicon glyphicon-exclamation-sign"></span><strong><fmt:message key="general.error" bundle="${lang}"/> </strong> <fmt:message key="edit-property.period-collides" bundle="${lang}" />
+                        <span class="glyphicon glyphicon-exclamation-sign"></span><strong><fmt:message key="general.error" bundle="${lang}"/> </strong> <fmt:message key="property.delete-error" bundle="${lang}" />
                     </div>
                 </c:if>
                 <div class="page-header">
@@ -191,6 +194,11 @@
                                             <div class="panel-heading">
                                                 <fmt:message key="owner.properties" bundle="${lang}"/>
                                             </div>
+                                            <div class="panel-body">
+                                                <div class="alert alert-info">
+                                                    <strong><fmt:message key="general.info" bundle="${lang}"/> </strong><fmt:message key="property.delete-info" bundle="${lang}"/>
+                                                </div>
+                                            </div>
                                             <div class="table-responsive">
                                                 <table class="table table-striped table-hover">
                                                     <thead>
@@ -205,17 +213,17 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody data-link="row" class="rowlink">
-                                                    <c:forEach var="property" items="${user.properties}" varStatus="loop">
-                                                        <tr>
-                                                            <td><a href="${pageContext.request.contextPath}/property/show/${property.id}.html">${loop.index+1}</a></td>
-                                                            <td>${property.title}</td>
-                                                            <td><spring:eval expression="property.pricePerDay"/></td>
-                                                            <td>${property.type.label}</td>
-                                                            <td><spring:eval expression="property.creationDate"/></td>
-                                                            <td class="rowlink-skip"><a class="btn btn-warning" href="${pageContext.request.contextPath}/property/edit/${property.id}.html"><span class="glyphicon glyphicon-edit"></span></a></td>
-                                                            <td class="rowlink-skip"><a class="btn btn-danger" href="${pageContext.request.contextPath}/property/delete/${property.id}.html"><span class="glyphicon glyphicon-remove"></span></a></td>
-                                                        </tr>
-                                                    </c:forEach>
+                                                        <c:forEach var="property" items="${user.properties}" varStatus="loop">
+                                                            <tr>
+                                                                <td><a href="${pageContext.request.contextPath}/property/show/${property.id}.html">${loop.index+1}</a></td>
+                                                                <td>${property.title}</td>
+                                                                <td><spring:eval expression="property.pricePerDay"/></td>
+                                                                <td>${property.type.label}</td>
+                                                                <td><spring:eval expression="property.creationDate"/></td>
+                                                                <td class="rowlink-skip"><a class="btn btn-warning" href="${pageContext.request.contextPath}/property/edit/${property.id}.html"><span class="glyphicon glyphicon-edit"></span></a></td>
+                                                                <td class="rowlink-skip"><button id="delete-${property.id}" data-toggle="modal" data-target="#property-delete-modal" class="btn btn-danger ${fn:length(property.bookingProposals) gt 0 ? 'disabled' : ''}"><span class="glyphicon glyphicon-remove"></span></button></td>
+                                                            </tr>
+                                                        </c:forEach>
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -275,14 +283,23 @@
                         </div>
                     </c:if>
                 </div>
+                <%-- Property delete modal --%>
+                <div class="modal fade" id="property-delete-modal" tabindex="-1" role="dialog" aria-labelledby="propertyDeleteLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="propertyDeleteLabel"><fmt:message key="property.delete-confirmation" bundle="${lang}"/> </h4>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="general.cancel" bundle="${lang}"/> </button>
+                                <button type="button" id="confirm-delete-property" class="btn btn-danger"><fmt:message key="general.delete" bundle="${lang}"/> </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <script>
                     (function () {
-                        $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
-                            var $toBeShown = $(e.target);
-                            $toBeShown.parent().find('.active').removeClass('active');
-                            $toBeShown.addClass('active');
-                        });
-
                         $(document).ready(function () {
                             var fragment = document.location.hash;
                             if (fragment != "") {
@@ -291,6 +308,23 @@
                                 $('a[href="' + tab + '"]').tab('show');
                                 $('a[href="' + fragment + '"]').tab('show');
                             }
+                        })
+
+                        $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+                            var $toBeShown = $(e.target);
+                            $toBeShown.parent().find('.active').removeClass('active');
+                            $toBeShown.addClass('active');
+                        });
+
+                        $('#property-delete-modal').on('show.bs.modal', function (e) {
+                            var button = $(e.relatedTarget);
+                            var idParts = button.attr('id').split('-');
+                            idParts.shift();
+                            var id = idParts.join('-');
+                            $('#confirm-delete-property').unbind('click').on('click', function () {
+                                var url = '${pageContext.request.contextPath}/property/delete/'+ id +'.html';
+                                window.location.replace(url);
+                            });
                         })
                     })();
                 </script>
