@@ -52,4 +52,9 @@ public class IndexController {
     private String becomeAHost() {
         return "index/becomeAHost";
     }
+
+    @RequestMapping("/about-us")
+    private String aboutUs() {
+        return "index/aboutUs";
+    }
 }
