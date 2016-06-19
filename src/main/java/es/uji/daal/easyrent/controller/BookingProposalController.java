@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.UUID;
 
@@ -39,6 +41,27 @@ public class BookingProposalController {
             return "bookingProposal/show";
         }
         return "redirect:../../index.html";
+    }
+
+    @RequestMapping(value = "/edit/{id}")
+    public String edit(Model model, @PathVariable("id") String id) {
+        User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        BookingProposal proposal = repository.findOne(UUID.fromString(id));
+        if (loggedUser.equals(proposal.getTenant()) && proposal.getStatus() == ProposalStatus.PENDING) {
+            model.addAttribute("numberOfTenants", proposal.getNumberOfTenants());
+            model.addAttribute("bookingProposal", proposal);
+            return "bookingProposal/edit";
+        }
+        return "redirect:../../index.html";
+    }
+
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
+    public String processEdit(@RequestParam("numberOfTenants") String numberOfTenants,
+                              @PathVariable("id") String id) {
+        BookingProposal proposal = repository.findOne(UUID.fromString(id));
+        proposal.setNumberOfTenants(Integer.parseInt(numberOfTenants));
+        repository.save(proposal);
+        return "redirect:../edit/" + id + ".html?success=be";
     }
 
     @RequestMapping("/reject/{id}")

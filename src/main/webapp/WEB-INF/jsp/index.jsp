@@ -130,7 +130,7 @@
                                                         <td>${bookingProposal.status.label}</td>
                                                         <td><spring:eval expression="bookingProposal.dateOfCreation"/></td>
                                                         <td><spring:eval expression="bookingProposal.dateOfUpdate"/></td>
-                                                        <td class="rowlink-skip"><a class="btn btn-warning" href="${pageContext.request.contextPath}/booking-proposal/edit/${bookingProposal.id}.html"><span class="glyphicon glyphicon-edit"></span></a></td>
+                                                        <td class="rowlink-skip"><a class="btn btn-warning ${bookingProposal.status ne 'PENDING' ? 'disabled' : ''}" ${bookingProposal.status ne 'PENDING' ? 'disabled' : ''} href="${pageContext.request.contextPath}/booking-proposal/edit/${bookingProposal.id}.html"><span class="glyphicon glyphicon-edit"></span></a></td>
                                                     </tr>
                                                 </c:forEach>
                                                 </tbody>

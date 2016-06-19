@@ -35,7 +35,7 @@
                 <c:choose>
                     <c:when test="${bookingProposal.tenant.equals(loggedUser)}">
                         <div class="col-md-offset-2 col-md-1">
-                            <a class="btn btn-warning" href="${pageContext.request.contextPath}/booking-proposal/edit/${bookingProposal.id}.html"><span class="glyphicon glyphicon-edit"></span> <fmt:message key="general.edit" bundle="${lang}"/></a>
+                            <a class="btn btn-warning ${bookingProposal.status ne 'PENDING' ? 'disabled' : ''}" ${bookingProposal.status ne 'PENDING' ? 'disabled' : ''} href="${pageContext.request.contextPath}/booking-proposal/edit/${bookingProposal.id}.html"><span class="glyphicon glyphicon-edit"></span> <fmt:message key="general.edit" bundle="${lang}"/></a>
                         </div>
                     </c:when>
                     <c:otherwise>
