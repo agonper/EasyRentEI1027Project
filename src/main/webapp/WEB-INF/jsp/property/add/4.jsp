@@ -49,7 +49,7 @@
                     <input type="hidden" name="type" value="session"/>
                 </form>
                 <br>
-                <form method="post" class="form-horizontal" action="${pageContext.request.contextPath}/property/add/4">
+                <form id="step-submit-form" method="post" class="form-horizontal" action="${pageContext.request.contextPath}/property/add/4">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <div class="row">
                         <div class="col-sm-offset-1 col-sm-10">
@@ -60,6 +60,26 @@
                 </form>
             </div>
         </div>
+
+        <%-- Services modal --%>
+        <div class="modal fade" id="confirm-no-services-modal" tabindex="-1" role="dialog" aria-labelledby="confirmNoServicesLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="confirmNoServicesLabel"><fmt:message key="add-property.confirm-no-services" bundle="${lang}"/> </h4>
+                    </div>
+                    <div class="modal-body">
+                        <fmt:message key="add-property.confirm-no-services-msg" bundle="${lang}"/>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="general.cancel" bundle="${lang}"/> </button>
+                        <button type="button" id="confirm-no-services" class="btn btn-warning"><fmt:message key="general.continue-anyway" bundle="${lang}"/> </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <script>
             (function () {
                 $('#upload-service').submit(function (evt) {
@@ -110,6 +130,26 @@
                         $('.remove-service').on('click', removeService);
                     });
                 }
+
+                $('#confirm-no-services').unbind('click').on('click', function () {
+                    $('#step-submit-form').submit();
+                });
+
+                var triggeredOnce = false;
+
+                $('#step-submit-form').submit(function (e) {
+                    if (!triggeredOnce) {
+                        e.preventDefault();
+                        $.getJSON('${pageContext.request.contextPath}/service/property/0/list?type=session').done(function (services) {
+                            triggeredOnce = true;
+                            if (services.length == 0) {
+                                $('#confirm-no-services-modal').modal('show');
+                            } else {
+                                $('#step-submit-form').submit();
+                            }
+                        });
+                    }
+                })
             })();
         </script>
     </jsp:body>

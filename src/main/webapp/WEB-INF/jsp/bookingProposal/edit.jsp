@@ -59,7 +59,7 @@
                     <t:li-hb stringKey="proposal.end-date"><spring:eval expression="bookingProposal.endDate"/></t:li-hb>
                     <t:li-hb stringKey="proposal.number-of-tenants">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-sm-4">
                                 <select class="form-control" name="numberOfTenants">
                                     <c:forEach begin="1" end="${bookingProposal.property.capacity}" var="i">
                                         <option value="${i}" ${bookingProposal.numberOfTenants eq i ? 'selected' : ''}>${i}</option>

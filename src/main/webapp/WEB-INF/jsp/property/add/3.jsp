@@ -6,6 +6,7 @@
 <%@ taglib prefix="navs" tagdir="/WEB-INF/tags/navs" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <fmt:message key="add-property.title" bundle="${lang}" var="title"/>
 <fmt:message key="property.availability-dates" bundle="${lang}" var="subtitle"/>
@@ -67,7 +68,7 @@
                     <input type="hidden" name="type" value="session">
                 </form:form>
                 <br>
-                <form method="post" class="form-horizontal" action="${pageContext.request.contextPath}/property/add/3">
+                <form id="step-submit-form" method="post" class="form-horizontal" action="${pageContext.request.contextPath}/property/add/3">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <div class="row">
                         <div class="col-sm-offset-1 col-sm-10">
@@ -78,6 +79,26 @@
                 </form>
             </div>
         </div>
+
+        <%-- Availability period modal --%>
+        <div class="modal fade" id="confirm-no-availability-modal" tabindex="-1" role="dialog" aria-labelledby="confirmNoAvailabilityLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="confirmNoAvailabilityLabel"><fmt:message key="add-property.confirm-no-availability" bundle="${lang}"/> </h4>
+                    </div>
+                    <div class="modal-body">
+                        <fmt:message key="add-property.confirm-no-availability-msg" bundle="${lang}"/>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="general.cancel" bundle="${lang}"/> </button>
+                        <button type="button" id="confirm-no-availability" class="btn btn-warning"><fmt:message key="general.continue-anyway" bundle="${lang}"/> </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <er:time-config type="datepicker" var="datepickerFormat"/>
         <script>
             (function () {
@@ -121,6 +142,21 @@
                         }
                     });
                 });
+
+                var triggeredOnce = false;
+                $('#confirm-no-availability').unbind('click').on('click', function () {
+                    $('#step-submit-form').submit();
+                });
+
+                var noAvailabilities = ${fn:length(availabilityPeriods) eq 0 ? 'true' : 'false'};
+
+                $('#step-submit-form').submit(function (e) {
+                    if (noAvailabilities && !triggeredOnce) {
+                        e.preventDefault();
+                        triggeredOnce = true;
+                        $('#confirm-no-availability-modal').modal('show');
+                    }
+                })
             })();
         </script>
     </jsp:body>
