@@ -23,7 +23,7 @@ public class PersonalDataValidator implements Validator {
         }
 
         if (!form.getDni().equals("") && !form.getDni().matches("[0-9]{8}[A-Za-z]")) {
-            errors.rejectValue("dni", "invalid", "Invalid NID. Format XXXXXXXXXx.");
+            errors.rejectValue("dni", "invalid", "Invalid NID. Format: 8 numbers and 1 letter.");
         }
 
         if (form.getCountryPrefix().equals("") && !form.getPhoneNumber().equals("")) {
