@@ -29,7 +29,7 @@
                     <c:when test="${loggedUser == null || loggedUser.id == null}">
                         <li>
                             <fmt:message key="index.invite-signup" bundle="${lang}" var="addPropertyBtn"/>
-                            <a href="${pageContext.request.contextPath}/property/add.html" title="${addPropertyBtn}">
+                            <a href="${pageContext.request.contextPath}/become-a-host.html" title="${addPropertyBtn}">
                                 <span class="glyphicon glyphicon-plus"><span class="glyphicon glyphicon-home"></span></span> ${addPropertyBtn.toUpperCase()}
                             </a>
                         </li>
