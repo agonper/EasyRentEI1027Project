@@ -54,5 +54,9 @@ public class PropertyValidator implements Validator {
         if (property.getPricePerDay() <= 0.0 || property.getPricePerDay() >= 10000.0) {
             errors.rejectValue("pricePerDay", "required", positiveAndLessThan10000);
         }
+
+        if (property.getLocation().equals("")) {
+            errors.rejectValue("description", "required", "A description is needed so your tenant will understand better your ad");
+        }
     }
 }
