@@ -17,13 +17,16 @@ public class PersonalDataValidator implements Validator {
     public void validate(Object obj, Errors errors) {
         PersonalDataForm form = (PersonalDataForm) obj;
 
-        // FIXME Tenia que hacerlo :P
         if (form.getName().equals("")) {
             errors.rejectValue("name", "invalid", "A man needs a name.");
         }
 
-        if (!form.getDni().equals("") && !form.getDni().matches("[0-9]{8}[A-Za-z]")) {
-            errors.rejectValue("dni", "invalid", "Invalid NID. Format XXXXXXXXXx.");
+        if (form.getSurnames().equals("")) {
+            errors.rejectValue("surnames", "invalid", "Please, introduce your surname/s");
+        }
+
+        if (!form.getDni().matches("[0-9]{8}[A-Z]")) {
+            errors.rejectValue("dni", "invalid", "Invalid NID. Format XXXXXXXXx. X are digits, x is an upper case letter");
         }
 
         if (form.getCountryPrefix().equals("") && !form.getPhoneNumber().equals("")) {

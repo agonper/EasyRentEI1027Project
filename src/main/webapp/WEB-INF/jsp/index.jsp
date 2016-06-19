@@ -14,6 +14,15 @@
     <jsp:body>
         <c:choose>
             <c:when test="${empty loggedUser}">
+
+                <c:if test="${not empty param.success}">
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong><fmt:message key="general.success" bundle="${lang}"/> </strong>
+                        <fmt:message key="signup.success" bundle="${lang}" />
+                    </div>
+                </c:if>
+
                 <div class="index-image-1 index-box corporate-text spare-box">
                     <h1><fmt:message key="index.need-some-rest" bundle="${lang}"/> </h1>
                     <h3><fmt:message key="index.relax-slogan" bundle="${lang}"/> </h3>
@@ -37,7 +46,20 @@
                 <c:if test="${not empty param.success}">
                     <div class="alert alert-success alert-dismissible" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <strong><fmt:message key="general.success" bundle="${lang}"/> </strong> <fmt:message key="add-property.success" bundle="${lang}" />
+                        <strong><fmt:message key="general.success" bundle="${lang}"/> </strong>
+                        <c:if test="${param.success eq 'p'}">
+                            <fmt:message key="add-property.success" bundle="${lang}" />
+                        </c:if>
+                        <c:if test="${param.success eq 'bp'}">
+                            <fmt:message key="book-property.success" bundle="${lang}"/>
+                        </c:if>
+                    </div>
+                </c:if>
+
+                <c:if test="${not empty param.error}">
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <span class="glyphicon glyphicon-exclamation-sign"></span><strong><fmt:message key="general.error" bundle="${lang}"/> </strong> <fmt:message key="edit-property.period-collides" bundle="${lang}" />
                     </div>
                 </c:if>
                 <div class="page-header">

@@ -16,6 +16,8 @@
 
         <navs:stepper step="${pageContext.session.getAttribute(sessionMapName).step.ordinal()}" steps="${steps}" path="/property/booking-proposal/${property.id.toString()}"/>
 
+        <t:user-info-helper/>
+
         <div class="panel panel-warning">
             <div class="panel-heading">
                 ${subtitle}

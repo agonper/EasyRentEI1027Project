@@ -265,7 +265,7 @@ public class BookPropertyFlowController {
                 .sendTenantCreationEmail()
                 .sendOwnerCreationEmail();
 
-        return "redirect:../../../index.html#tenant";
+        return "redirect:../../../index.html?success=bp";
     }
 
     @RequestMapping(value = "/pay", method = RequestMethod.POST)

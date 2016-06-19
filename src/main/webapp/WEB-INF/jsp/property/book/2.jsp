@@ -23,8 +23,8 @@
                 <fmt:message key="proposal.help-title" bundle="${lang}"/>
             </div>
             <div class="panel-body">
-                    <%-- TODO fullfil this --%>
-                ## INCLUDE SOME TIPS HERE ##
+                <p><fmt:message key="proposal.help-title-message" bundle="${lang}"/></p>
+                <p><fmt:message key="proposal.advice" bundle="${lang}"/></p>
             </div>
         </div>
 
@@ -87,7 +87,7 @@
                                 <div class="col-lg-6">
                                     <strong><fmt:message key="property.price-per-day" bundle="${lang}"/> &nbsp;&nbsp;(<span class="glyphicon glyphicon-calendar"></span>)</strong>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 text-right">
                                     <er:calculate-vat value="${property.pricePerDay}" var="priceWithVat"/>
                                     <strong><span class="h2"><t:show-price amount="${priceWithVat}"/></span></strong>
                                 </div>

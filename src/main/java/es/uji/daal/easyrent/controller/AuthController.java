@@ -56,6 +56,6 @@ public class AuthController {
         form.setPassword(passwordEncryptor.generateHash(form.getPassword()));
         User user = form.update(new User());
         repository.save(user);
-        return "redirect:index.html";
+        return "redirect:index.html?success=su";
     }
 }
