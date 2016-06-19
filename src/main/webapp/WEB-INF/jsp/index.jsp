@@ -221,7 +221,7 @@
                                                                 <td>${property.type.label}</td>
                                                                 <td><spring:eval expression="property.creationDate"/></td>
                                                                 <td class="rowlink-skip"><a class="btn btn-warning" href="${pageContext.request.contextPath}/property/edit/${property.id}.html"><span class="glyphicon glyphicon-edit"></span></a></td>
-                                                                <td class="rowlink-skip"><button id="delete-${property.id}" data-toggle="modal" data-target="#property-delete-modal" class="btn btn-danger ${fn:length(property.bookingProposals) gt 0 ? 'disabled' : ''}"><span class="glyphicon glyphicon-remove"></span></button></td>
+                                                                <td class="rowlink-skip"><button id="delete-${property.id}" data-toggle="modal" data-target="#property-delete-modal" class="btn btn-danger ${fn:length(property.bookingProposals) gt 0 ? 'disabled' : ''}" ${fn:length(property.bookingProposals) gt 0 ? 'disabled' : ''}><span class="glyphicon glyphicon-remove"></span></button></td>
                                                             </tr>
                                                         </c:forEach>
                                                     </tbody>
@@ -263,14 +263,8 @@
                                                             <td>${bookingProposal.status.label}</td>
                                                             <td><spring:eval expression="bookingProposal.dateOfCreation"/></td>
                                                             <td><spring:eval expression="bookingProposal.dateOfUpdate"/></td>
-                                                            <c:set var="acceptLink" value="${pageContext.request.contextPath}/booking-proposal/accept/${bookingProposal.id}.html"/>
-                                                            <c:set var="rejectLink" value="${pageContext.request.contextPath}/booking-proposal/reject/${bookingProposal.id}.html"/>
-                                                            <c:if test="${bookingProposal.status != 'PENDING'}">
-                                                                <c:set var="acceptLink" value="#"/>
-                                                                <c:set var="rejectLink" value="#"/>
-                                                            </c:if>
-                                                            <td class="rowlink-skip"><a class="btn btn-success ${bookingProposal.status != 'PENDING' ? 'disabled' : ''}" href="${acceptLink}"><span class="glyphicon glyphicon-ok"></span></a></td>
-                                                            <td class="rowlink-skip"><a class="btn btn-danger ${bookingProposal.status != 'PENDING' ? 'disabled' : ''}" href="${rejectLink}"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                                            <td class="rowlink-skip"><button id="accept-${bookingProposal.id}" data-toggle="modal" data-target="#proposal-acceptation-modal" class="btn btn-success ${bookingProposal.status != 'PENDING' ? 'disabled' : ''}" ${bookingProposal.status != 'PENDING' ? 'disabled' : ''}><span class="glyphicon glyphicon-ok"></span></button></td>
+                                                            <td class="rowlink-skip"><button id="reject-${bookingProposal.id}" data-toggle="modal" data-target="#proposal-rejection-modal" class="btn btn-danger ${bookingProposal.status != 'PENDING' ? 'disabled' : ''}" ${bookingProposal.status != 'PENDING' ? 'disabled' : ''}><span class="glyphicon glyphicon-remove"></span></button></td>
                                                         </tr>
                                                     </c:forEach>
                                                     </tbody>
@@ -298,6 +292,36 @@
                         </div>
                     </div>
                 </div>
+                <%-- Proposal acceptation modal --%>
+                <div class="modal fade" id="proposal-acceptation-modal" tabindex="-1" role="dialog" aria-labelledby="proposalAcceptationLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="proposalAcceptationLabel"><fmt:message key="proposal.acceptation-confirmation" bundle="${lang}"/> </h4>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="general.cancel" bundle="${lang}"/> </button>
+                                <button type="button" id="confirm-accept-proposal" class="btn btn-success"><fmt:message key="proposal.accept" bundle="${lang}"/> </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%-- Proposal rejection modal --%>
+                <div class="modal fade" id="proposal-rejection-modal" tabindex="-1" role="dialog" aria-labelledby="proposalRejectionLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="proposalRejectionLabel"><fmt:message key="proposal.rejection-confirmation" bundle="${lang}"/> </h4>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="general.cancel" bundle="${lang}"/> </button>
+                                <button type="button" id="confirm-reject-proposal" class="btn btn-danger"><fmt:message key="proposal.reject" bundle="${lang}"/> </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <script>
                     (function () {
                         $(document).ready(function () {
@@ -308,7 +332,7 @@
                                 $('a[href="' + tab + '"]').tab('show');
                                 $('a[href="' + fragment + '"]').tab('show');
                             }
-                        })
+                        });
 
                         $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
                             var $toBeShown = $(e.target);
@@ -318,14 +342,34 @@
 
                         $('#property-delete-modal').on('show.bs.modal', function (e) {
                             var button = $(e.relatedTarget);
+                            var id = extractId(button);
+                            $('#confirm-delete-property').unbind('click').on('click', function () {
+                                window.location.replace('${pageContext.request.contextPath}/property/delete/'+ id +'.html');
+                            });
+                        });
+
+                        $('#proposal-acceptation-modal').on('show.bs.modal', function (e) {
+                            var button = $(e.relatedTarget);
+                            var id = extractId(button);
+                            $('#confirm-accept-proposal').unbind('click').on('click', function () {
+                                window.location.replace('${pageContext.request.contextPath}/booking-proposal/accept/'+ id +'.html');
+                            });
+                        });
+
+                        $('#proposal-rejection-modal').on('show.bs.modal', function (e) {
+                            var button = $(e.relatedTarget);
+                            var id = extractId(button);
+                            console.log(id);
+                            $('#confirm-reject-proposal').unbind('click').on('click', function () {
+                                window.location.replace('${pageContext.request.contextPath}/booking-proposal/reject/'+ id +'.html');
+                            });
+                        });
+
+                        function extractId(button) {
                             var idParts = button.attr('id').split('-');
                             idParts.shift();
-                            var id = idParts.join('-');
-                            $('#confirm-delete-property').unbind('click').on('click', function () {
-                                var url = '${pageContext.request.contextPath}/property/delete/'+ id +'.html';
-                                window.location.replace(url);
-                            });
-                        })
+                            return idParts.join('-');
+                        }
                     })();
                 </script>
             </c:otherwise>
