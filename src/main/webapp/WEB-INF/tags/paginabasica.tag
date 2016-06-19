@@ -80,7 +80,7 @@
 <footer class="container-fluid container-padded bg-concrete">
     <hr>
     <p class="text-white text-center">
-        &copy;<er:year-tag/> - <fmt:message key="easyrent.project" bundle="${lang}"/> | <a href="${pageContext.request.contextPath}/about-us.html"><fmt:message key="about-us.title" bundle="${lang}"/></a>
+        &copy;<er:year-tag/> - <fmt:message key="easyrent.project" bundle="${lang}"/> | <a href="${pageContext.request.contextPath}/about-us.html"><fmt:message key="about-us.title" bundle="${lang}"/></a> | <a href="mailto:info@easyrent.com">info@easyrent.com</a>
     </p>
 </footer>
 </body>
