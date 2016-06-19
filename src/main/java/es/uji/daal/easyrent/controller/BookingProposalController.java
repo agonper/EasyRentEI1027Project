@@ -58,7 +58,7 @@ public class BookingProposalController {
                     .setProposal(proposal)
                     .sendTenantRejectionEmail();
 
-            return "redirect:../../index.html#owner-proposals";
+            return "redirect:../../index.html?success=bpr#owner-proposals";
         }
         return "redirect:../../index.html";
     }
@@ -81,7 +81,7 @@ public class BookingProposalController {
             emailBroker
                     .setProposal(proposal)
                     .sendTenantAcceptationEmail();
-            return "redirect:../../index.html#owner-proposals";
+            return "redirect:../../index.html?success=bpa#owner-proposals";
         }
         return "redirect:../../index.html";
     }

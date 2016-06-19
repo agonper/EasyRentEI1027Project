@@ -15,7 +15,7 @@
         <c:choose>
             <c:when test="${empty loggedUser}">
 
-                <c:if test="${not empty param.success}">
+                <c:if test="${not empty param.success && param.success eq 'su'}">
                     <div class="alert alert-success alert-dismissible" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <strong><fmt:message key="general.success" bundle="${lang}"/> </strong>
@@ -52,6 +52,12 @@
                         </c:if>
                         <c:if test="${param.success eq 'bp'}">
                             <fmt:message key="book-property.success" bundle="${lang}"/>
+                        </c:if>
+                        <c:if test="${param.success eq 'bpa'}">
+                            <fmt:message key="proposal.accept-success" bundle="${lang}"/>
+                        </c:if>
+                        <c:if test="${param.success eq 'bpr'}">
+                            <fmt:message key="proposal.reject-success" bundle="${lang}"/>
                         </c:if>
                     </div>
                 </c:if>
