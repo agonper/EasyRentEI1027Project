@@ -22,6 +22,13 @@
             </div>
         </c:if>
 
+        <c:if test="${not empty param.error}">
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <span class="glyphicon glyphicon-exclamation-sign"></span><strong><fmt:message key="general.error" bundle="${lang}"/> </strong> <fmt:message key="edit-property.period-collides" bundle="${lang}" />
+            </div>
+        </c:if>
+
         <ol class="breadcrumb">
             <li><a href="${pageContext.request.contextPath}/index.html"><fmt:message key="index.home" bundle="${lang}"/></a></li>
             <li><a href="${pageContext.request.contextPath}/index.html#owner-properties"><fmt:message key="home.my-properties" bundle="${lang}"/></a></li>

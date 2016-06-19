@@ -1,6 +1,9 @@
 package es.uji.daal.easyrent.utils;
 
 import es.uji.daal.easyrent.model.AvailabilityPeriod;
+import es.uji.daal.easyrent.model.BookingProposal;
+import es.uji.daal.easyrent.model.ProposalStatus;
+import es.uji.daal.easyrent.view_models.AvailabilityForm;
 import es.uji.daal.easyrent.view_models.BookingForm;
 
 import java.util.*;
@@ -9,6 +12,30 @@ import java.util.*;
  * Created by Alberto on 15/06/2016.
  */
 public class BookingUtils {
+
+    public static boolean isPeriodCollidingWithProposals(AvailabilityForm form, Collection<BookingProposal> proposals) {
+
+        for (BookingProposal proposal : proposals) {
+            if (proposal.getStatus() != ProposalStatus.REJECTED) {
+                if (form.getStartDate().compareTo(proposal.getStartDate()) >= 0 &&
+                        form.getStartDate().compareTo(proposal.getEndDate()) <= 0) {
+                    return true;
+                }
+
+                if (!form.isEndless() && form.getEndDate().compareTo(proposal.getStartDate()) >= 0 &&
+                        form.getEndDate().compareTo(proposal.getEndDate()) <= 0) {
+                    return true;
+                }
+
+                if (form.getStartDate().compareTo(proposal.getStartDate()) <= 0) {
+                    if (form.isEndless() || form.getEndDate().compareTo(proposal.getEndDate()) >= 0) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 
     public static boolean isDatePeriodAvailable(BookingForm form, Collection<AvailabilityPeriod> periods) {
         Set<AvailabilityPeriod> orderedPeriods = new TreeSet<>((o1, o2) -> o1.getStartDate().compareTo(o2.getStartDate()));

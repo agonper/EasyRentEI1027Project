@@ -5,6 +5,7 @@ import es.uji.daal.easyrent.model.Property;
 import es.uji.daal.easyrent.model.User;
 import es.uji.daal.easyrent.repository.AvailabilityPeriodRepository;
 import es.uji.daal.easyrent.repository.PropertyRepository;
+import es.uji.daal.easyrent.utils.BookingUtils;
 import es.uji.daal.easyrent.view_models.AvailabilityForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -46,6 +47,9 @@ public class AvailabilityPeriodController {
         } else {
             Property property = propertyRepository.findOne(UUID.fromString(propertyId));
             if (!bindingResult.hasErrors()) {
+                if (BookingUtils.isPeriodCollidingWithProposals(availabilityForm, property.getBookingProposals())) {
+                    return "redirect:../../edit/" + property.getId() + ".html?error=ap#edit-availability-dates";
+                }
                 AvailabilityPeriod period = property.createAvailabilityPeriod();
                 repository.save(availabilityForm.update(period));
             }
@@ -71,6 +75,9 @@ public class AvailabilityPeriodController {
         } else {
             AvailabilityPeriod period = repository.findOne(UUID.fromString(id));
             if (!bindingResult.hasErrors()) {
+                if (BookingUtils.isPeriodCollidingWithProposals(availabilityForm, period.getProperty().getBookingProposals())) {
+                    return "redirect:../../edit/" + period.getProperty().getId() + ".html?error=ap#edit-availability-dates";
+                }
                 repository.save(availabilityForm.update(period));
             }
             return "redirect:../../edit/" + period.getProperty().getId() + ".html#edit-availability-dates";

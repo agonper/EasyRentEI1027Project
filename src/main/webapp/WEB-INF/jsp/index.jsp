@@ -14,6 +14,15 @@
     <jsp:body>
         <c:choose>
             <c:when test="${empty loggedUser}">
+
+                <c:if test="${not empty param.success && param.success eq 'su'}">
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong><fmt:message key="general.success" bundle="${lang}"/> </strong>
+                        <fmt:message key="signup.success" bundle="${lang}" />
+                    </div>
+                </c:if>
+
                 <div class="index-image-1 index-box corporate-text spare-box">
                     <h1><fmt:message key="index.need-some-rest" bundle="${lang}"/> </h1>
                     <h3><fmt:message key="index.relax-slogan" bundle="${lang}"/> </h3>
@@ -37,7 +46,29 @@
                 <c:if test="${not empty param.success}">
                     <div class="alert alert-success alert-dismissible" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <strong><fmt:message key="general.success" bundle="${lang}"/> </strong> <fmt:message key="add-property.success" bundle="${lang}" />
+                        <strong><fmt:message key="general.success" bundle="${lang}"/> </strong>
+                        <c:if test="${param.success eq 'p'}">
+                            <fmt:message key="add-property.success" bundle="${lang}" />
+                        </c:if>
+                        <c:if test="${param.success eq 'pd'}">
+                            <fmt:message key="property.delete-success" bundle="${lang}"/>
+                        </c:if>
+                        <c:if test="${param.success eq 'bp'}">
+                            <fmt:message key="book-property.success" bundle="${lang}"/>
+                        </c:if>
+                        <c:if test="${param.success eq 'bpa'}">
+                            <fmt:message key="proposal.accept-success" bundle="${lang}"/>
+                        </c:if>
+                        <c:if test="${param.success eq 'bpr'}">
+                            <fmt:message key="proposal.reject-success" bundle="${lang}"/>
+                        </c:if>
+                    </div>
+                </c:if>
+
+                <c:if test="${not empty param.error}">
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <span class="glyphicon glyphicon-exclamation-sign"></span><strong><fmt:message key="general.error" bundle="${lang}"/> </strong> <fmt:message key="property.delete-error" bundle="${lang}" />
                     </div>
                 </c:if>
                 <div class="page-header">
@@ -99,7 +130,7 @@
                                                         <td>${bookingProposal.status.label}</td>
                                                         <td><spring:eval expression="bookingProposal.dateOfCreation"/></td>
                                                         <td><spring:eval expression="bookingProposal.dateOfUpdate"/></td>
-                                                        <td class="rowlink-skip"><a class="btn btn-warning" href="${pageContext.request.contextPath}/booking-proposal/edit/${bookingProposal.id}.html"><span class="glyphicon glyphicon-edit"></span></a></td>
+                                                        <td class="rowlink-skip"><a class="btn btn-warning ${bookingProposal.status ne 'PENDING' ? 'disabled' : ''}" ${bookingProposal.status ne 'PENDING' ? 'disabled' : ''} href="${pageContext.request.contextPath}/booking-proposal/edit/${bookingProposal.id}.html"><span class="glyphicon glyphicon-edit"></span></a></td>
                                                     </tr>
                                                 </c:forEach>
                                                 </tbody>
@@ -163,6 +194,11 @@
                                             <div class="panel-heading">
                                                 <fmt:message key="owner.properties" bundle="${lang}"/>
                                             </div>
+                                            <div class="panel-body">
+                                                <div class="alert alert-info">
+                                                    <strong><fmt:message key="general.info" bundle="${lang}"/> </strong><fmt:message key="property.delete-info" bundle="${lang}"/>
+                                                </div>
+                                            </div>
                                             <div class="table-responsive">
                                                 <table class="table table-striped table-hover">
                                                     <thead>
@@ -177,17 +213,17 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody data-link="row" class="rowlink">
-                                                    <c:forEach var="property" items="${user.properties}" varStatus="loop">
-                                                        <tr>
-                                                            <td><a href="${pageContext.request.contextPath}/property/show/${property.id}.html">${loop.index+1}</a></td>
-                                                            <td>${property.title}</td>
-                                                            <td><spring:eval expression="property.pricePerDay"/></td>
-                                                            <td>${property.type.label}</td>
-                                                            <td><spring:eval expression="property.creationDate"/></td>
-                                                            <td class="rowlink-skip"><a class="btn btn-warning" href="${pageContext.request.contextPath}/property/edit/${property.id}.html"><span class="glyphicon glyphicon-edit"></span></a></td>
-                                                            <td class="rowlink-skip"><a class="btn btn-danger" href="${pageContext.request.contextPath}/property/delete/${property.id}.html"><span class="glyphicon glyphicon-remove"></span></a></td>
-                                                        </tr>
-                                                    </c:forEach>
+                                                        <c:forEach var="property" items="${user.properties}" varStatus="loop">
+                                                            <tr>
+                                                                <td><a href="${pageContext.request.contextPath}/property/show/${property.id}.html">${loop.index+1}</a></td>
+                                                                <td>${property.title}</td>
+                                                                <td><spring:eval expression="property.pricePerDay"/></td>
+                                                                <td>${property.type.label}</td>
+                                                                <td><spring:eval expression="property.creationDate"/></td>
+                                                                <td class="rowlink-skip"><a class="btn btn-warning" href="${pageContext.request.contextPath}/property/edit/${property.id}.html"><span class="glyphicon glyphicon-edit"></span></a></td>
+                                                                <td class="rowlink-skip"><button id="delete-${property.id}" data-toggle="modal" data-target="#property-delete-modal" class="btn btn-danger ${fn:length(property.bookingProposals) gt 0 ? 'disabled' : ''}" ${fn:length(property.bookingProposals) gt 0 ? 'disabled' : ''}><span class="glyphicon glyphicon-remove"></span></button></td>
+                                                            </tr>
+                                                        </c:forEach>
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -227,14 +263,8 @@
                                                             <td>${bookingProposal.status.label}</td>
                                                             <td><spring:eval expression="bookingProposal.dateOfCreation"/></td>
                                                             <td><spring:eval expression="bookingProposal.dateOfUpdate"/></td>
-                                                            <c:set var="acceptLink" value="${pageContext.request.contextPath}/booking-proposal/accept/${bookingProposal.id}.html"/>
-                                                            <c:set var="rejectLink" value="${pageContext.request.contextPath}/booking-proposal/reject/${bookingProposal.id}.html"/>
-                                                            <c:if test="${bookingProposal.status != 'PENDING'}">
-                                                                <c:set var="acceptLink" value="#"/>
-                                                                <c:set var="rejectLink" value="#"/>
-                                                            </c:if>
-                                                            <td class="rowlink-skip"><a class="btn btn-success ${bookingProposal.status != 'PENDING' ? 'disabled' : ''}" href="${acceptLink}"><span class="glyphicon glyphicon-ok"></span></a></td>
-                                                            <td class="rowlink-skip"><a class="btn btn-danger ${bookingProposal.status != 'PENDING' ? 'disabled' : ''}" href="${rejectLink}"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                                            <td class="rowlink-skip"><button id="accept-${bookingProposal.id}" data-toggle="modal" data-target="#proposal-acceptation-modal" class="btn btn-success ${bookingProposal.status != 'PENDING' ? 'disabled' : ''}" ${bookingProposal.status != 'PENDING' ? 'disabled' : ''}><span class="glyphicon glyphicon-ok"></span></button></td>
+                                                            <td class="rowlink-skip"><button id="reject-${bookingProposal.id}" data-toggle="modal" data-target="#proposal-rejection-modal" class="btn btn-danger ${bookingProposal.status != 'PENDING' ? 'disabled' : ''}" ${bookingProposal.status != 'PENDING' ? 'disabled' : ''}><span class="glyphicon glyphicon-remove"></span></button></td>
                                                         </tr>
                                                     </c:forEach>
                                                     </tbody>
@@ -247,14 +277,53 @@
                         </div>
                     </c:if>
                 </div>
+                <%-- Property delete modal --%>
+                <div class="modal fade" id="property-delete-modal" tabindex="-1" role="dialog" aria-labelledby="propertyDeleteLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="propertyDeleteLabel"><fmt:message key="property.delete-confirmation" bundle="${lang}"/> </h4>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="general.cancel" bundle="${lang}"/> </button>
+                                <button type="button" id="confirm-delete-property" class="btn btn-danger"><fmt:message key="general.delete" bundle="${lang}"/> </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%-- Proposal acceptation modal --%>
+                <div class="modal fade" id="proposal-acceptation-modal" tabindex="-1" role="dialog" aria-labelledby="proposalAcceptationLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="proposalAcceptationLabel"><fmt:message key="proposal.acceptation-confirmation" bundle="${lang}"/> </h4>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="general.cancel" bundle="${lang}"/> </button>
+                                <button type="button" id="confirm-accept-proposal" class="btn btn-success"><fmt:message key="proposal.accept" bundle="${lang}"/> </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%-- Proposal rejection modal --%>
+                <div class="modal fade" id="proposal-rejection-modal" tabindex="-1" role="dialog" aria-labelledby="proposalRejectionLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="proposalRejectionLabel"><fmt:message key="proposal.rejection-confirmation" bundle="${lang}"/> </h4>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="general.cancel" bundle="${lang}"/> </button>
+                                <button type="button" id="confirm-reject-proposal" class="btn btn-danger"><fmt:message key="proposal.reject" bundle="${lang}"/> </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <script>
                     (function () {
-                        $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
-                            var $toBeShown = $(e.target);
-                            $toBeShown.parent().find('.active').removeClass('active');
-                            $toBeShown.addClass('active');
-                        });
-
                         $(document).ready(function () {
                             var fragment = document.location.hash;
                             if (fragment != "") {
@@ -263,7 +332,44 @@
                                 $('a[href="' + tab + '"]').tab('show');
                                 $('a[href="' + fragment + '"]').tab('show');
                             }
-                        })
+                        });
+
+                        $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+                            var $toBeShown = $(e.target);
+                            $toBeShown.parent().find('.active').removeClass('active');
+                            $toBeShown.addClass('active');
+                        });
+
+                        $('#property-delete-modal').on('show.bs.modal', function (e) {
+                            var button = $(e.relatedTarget);
+                            var id = extractId(button);
+                            $('#confirm-delete-property').unbind('click').on('click', function () {
+                                window.location.replace('${pageContext.request.contextPath}/property/delete/'+ id +'.html');
+                            });
+                        });
+
+                        $('#proposal-acceptation-modal').on('show.bs.modal', function (e) {
+                            var button = $(e.relatedTarget);
+                            var id = extractId(button);
+                            $('#confirm-accept-proposal').unbind('click').on('click', function () {
+                                window.location.replace('${pageContext.request.contextPath}/booking-proposal/accept/'+ id +'.html');
+                            });
+                        });
+
+                        $('#proposal-rejection-modal').on('show.bs.modal', function (e) {
+                            var button = $(e.relatedTarget);
+                            var id = extractId(button);
+                            console.log(id);
+                            $('#confirm-reject-proposal').unbind('click').on('click', function () {
+                                window.location.replace('${pageContext.request.contextPath}/booking-proposal/reject/'+ id +'.html');
+                            });
+                        });
+
+                        function extractId(button) {
+                            var idParts = button.attr('id').split('-');
+                            idParts.shift();
+                            return idParts.join('-');
+                        }
                     })();
                 </script>
             </c:otherwise>

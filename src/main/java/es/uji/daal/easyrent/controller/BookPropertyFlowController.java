@@ -251,7 +251,8 @@ public class BookPropertyFlowController {
         }
 
         AvailabilityChanges changes = BookingUtils.getChanges(form, property.getAvailabilityPeriods());
-        availabilityRepository.delete(changes.getToBeRemoved());
+        property.removePeriods(changes.getToBeRemoved());
+        propertyRepository.save(property);
         availabilityRepository.save(changes.getToBeSaved());
 
         proposal.setPaymentReference(bookingForm.getPaymentReference());
@@ -264,7 +265,7 @@ public class BookPropertyFlowController {
                 .sendTenantCreationEmail()
                 .sendOwnerCreationEmail();
 
-        return "redirect:../../../index.html#tenant";
+        return "redirect:../../../index.html?success=bp";
     }
 
     @RequestMapping(value = "/pay", method = RequestMethod.POST)

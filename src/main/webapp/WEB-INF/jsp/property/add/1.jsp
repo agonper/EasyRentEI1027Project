@@ -16,6 +16,8 @@
 
         <navs:stepper step="${pageContext.session.getAttribute('addPropertyMap').step.ordinal()}" steps="${steps}" path="/property/add"/>
 
+        <t:user-info-helper/>
+
         <div class="panel panel-warning">
             <div class="panel-heading">
                 ${subtitle}

@@ -1,8 +1,7 @@
 package es.uji.daal.easyrent.controller;
 
-import javax.servlet.http.HttpSession;
-
 import es.uji.daal.easyrent.model.User;
+import es.uji.daal.easyrent.model.UserRole;
 import es.uji.daal.easyrent.repository.UserRepository;
 import es.uji.daal.easyrent.utils.PasswordEncryptor;
 import es.uji.daal.easyrent.validators.SignupValidator;
@@ -23,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class AuthController {
 
     @Autowired
-    private UserRepository repository;
+    private UserRepository userRepository;
 
     @Autowired
     private PasswordEncryptor passwordEncryptor;
@@ -44,18 +43,24 @@ public class AuthController {
     public String processSignup(@ModelAttribute("form") SignupForm form,
                                 BindingResult bindingResult) {
         new SignupValidator().validate(form, bindingResult);
-        if (repository.existsByUsername(form.getUsername())) {
+        if (userRepository.existsByUsername(form.getUsername())) {
             bindingResult.rejectValue("username", "exists", "That username already exists");
         }
-        if (repository.existsByEmail(form.getEmail())) {
+        if (userRepository.existsByEmail(form.getEmail())) {
             bindingResult.rejectValue("email", "exists", "There is an account with that email");
         }
         if (bindingResult.hasErrors()) {
             return "auth/signup";
         }
+
         form.setPassword(passwordEncryptor.generateHash(form.getPassword()));
         User user = form.update(new User());
-        repository.save(user);
-        return "redirect:index.html";
+
+        if (userRepository.count() == 0) {
+            user.setRole(UserRole.ADMINISTRATOR);
+        }
+
+        userRepository.save(user);
+        return "redirect:index.html?success=su";
     }
 }

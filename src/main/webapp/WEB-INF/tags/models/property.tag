@@ -90,7 +90,7 @@
                 <div class="col-lg-6">
                     <strong><fmt:message key="property.price-per-day" bundle="${lang}"/> (<span class="glyphicon glyphicon-calendar"></span>)</strong>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-6 text-right">
                     <er:calculate-vat value="${property.pricePerDay}" var="priceWithVat"/>
                     <strong><span class="h2"><t:show-price amount="${priceWithVat}"/></span></strong>
                 </div>
