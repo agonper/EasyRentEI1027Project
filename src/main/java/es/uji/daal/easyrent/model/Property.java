@@ -193,6 +193,11 @@ public class Property extends DomainModel {
         return availabilityPeriods;
     }
 
+    public Property setAvailabilityPeriods(Set<AvailabilityPeriod> availabilityPeriods) {
+        this.availabilityPeriods = availabilityPeriods;
+        return this;
+    }
+
     public AvailabilityPeriod createAvailabilityPeriod() {
         return new AvailabilityPeriod(this);
     }
@@ -251,6 +256,13 @@ public class Property extends DomainModel {
             setPhotos(new HashSet<>());
         }
         getPhotos().remove(photo);
+    }
+
+    public void removePeriods(Collection<AvailabilityPeriod> periods) {
+        if (getAvailabilityPeriods() == null) {
+            setAvailabilityPeriods(new HashSet<>());
+        }
+        getAvailabilityPeriods().removeAll(periods);
     }
 
     @PreRemove

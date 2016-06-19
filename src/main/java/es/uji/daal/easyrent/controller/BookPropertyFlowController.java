@@ -251,7 +251,8 @@ public class BookPropertyFlowController {
         }
 
         AvailabilityChanges changes = BookingUtils.getChanges(form, property.getAvailabilityPeriods());
-        availabilityRepository.delete(changes.getToBeRemoved());
+        property.removePeriods(changes.getToBeRemoved());
+        propertyRepository.save(property);
         availabilityRepository.save(changes.getToBeSaved());
 
         proposal.setPaymentReference(bookingForm.getPaymentReference());
