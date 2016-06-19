@@ -75,7 +75,7 @@
                     <span class="h1"><fmt:message key="index.home" bundle="${lang}"/> : ${loggedUser.username}</span>
                 </div>
 
-                <c:if test="${loggedUser.role eq 'OWNER'}">
+                <c:if test="${loggedUser.role eq 'OWNER' or loggedUser.role eq 'ADMINISTRATOR'}">
                     <ul class="nav nav-tabs nav-justified" id="user-options">
                         <li role="presentation" class="active"><a data-toggle="tab" href="#tenant"><fmt:message key="home.my-booking-proposals" bundle="${lang}"/></a></li>
                         <li role="presentation"><a data-toggle="tab" href="#owner"><fmt:message key="home.my-properties" bundle="${lang}"/></a></li>
@@ -107,34 +107,43 @@
                                             <fmt:message key="tenant.emited-proposals" bundle="${lang}"/>
                                         </div>
                                         <div class="table-responsive">
-                                            <table class="table table-striped table-hover">
-                                                <thead>
-                                                <tr>
-                                                    <th><fmt:message key="general.number" bundle="${lang}"/> </th>
-                                                    <th><fmt:message key="proposal.property" bundle="${lang}"/> </th>
-                                                    <th><fmt:message key="proposal.start-date" bundle="${lang}"/></th>
-                                                    <th><fmt:message key="proposal.end-date" bundle="${lang}"/></th>
-                                                    <th><fmt:message key="proposal.status" bundle="${lang}"/></th>
-                                                    <th><fmt:message key="proposal.created-at" bundle="${lang}"/></th>
-                                                    <th><fmt:message key="proposal.last-updated" bundle="${lang}"/></th>
-                                                    <th><fmt:message key="general.edit" bundle="${lang}"/></th>
-                                                </tr>
-                                                </thead>
-                                                <tbody data-link="row" class="rowlink">
-                                                <c:forEach var="bookingProposal" items="${user.bookingProposals}" varStatus="loop">
-                                                    <tr>
-                                                        <td><a href="${pageContext.request.contextPath}/booking-proposal/show/${bookingProposal.id}.html">${loop.index+1}</a></td>
-                                                        <td class="rowlink-skip"><a href="${pageContext.request.contextPath}/property/show/${bookingProposal.property.id}.html"><fmt:message key="general.link" bundle="${lang}"/> <span class="glyphicon glyphicon-new-window"></span> </a></td>
-                                                        <td><spring:eval expression="bookingProposal.startDate"/></td>
-                                                        <td><spring:eval expression="bookingProposal.endDate"/></td>
-                                                        <td>${bookingProposal.status.label}</td>
-                                                        <td><spring:eval expression="bookingProposal.dateOfCreation"/></td>
-                                                        <td><spring:eval expression="bookingProposal.dateOfUpdate"/></td>
-                                                        <td class="rowlink-skip"><a class="btn btn-warning ${bookingProposal.status ne 'PENDING' ? 'disabled' : ''}" ${bookingProposal.status ne 'PENDING' ? 'disabled' : ''} href="${pageContext.request.contextPath}/booking-proposal/edit/${bookingProposal.id}.html"><span class="glyphicon glyphicon-edit"></span></a></td>
-                                                    </tr>
-                                                </c:forEach>
-                                                </tbody>
-                                            </table>
+                                            <c:choose>
+                                                <c:when test="${fn:length(user.bookingProposals) eq 0}">
+                                                    <div class="text-silver text-center">
+                                                        <h3><fmt:message key="home.no-bookings" bundle="${lang}"/></h3>
+                                                    </div>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <table class="table table-striped table-hover">
+                                                        <thead>
+                                                        <tr>
+                                                            <th><fmt:message key="general.number" bundle="${lang}"/> </th>
+                                                            <th><fmt:message key="proposal.property" bundle="${lang}"/> </th>
+                                                            <th><fmt:message key="proposal.start-date" bundle="${lang}"/></th>
+                                                            <th><fmt:message key="proposal.end-date" bundle="${lang}"/></th>
+                                                            <th><fmt:message key="proposal.status" bundle="${lang}"/></th>
+                                                            <th><fmt:message key="proposal.created-at" bundle="${lang}"/></th>
+                                                            <th><fmt:message key="proposal.last-updated" bundle="${lang}"/></th>
+                                                            <th><fmt:message key="general.edit" bundle="${lang}"/></th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody data-link="row" class="rowlink">
+                                                        <c:forEach var="bookingProposal" items="${user.bookingProposals}" varStatus="loop">
+                                                            <tr>
+                                                                <td><a href="${pageContext.request.contextPath}/booking-proposal/show/${bookingProposal.id}.html">${loop.index+1}</a></td>
+                                                                <td class="rowlink-skip"><a href="${pageContext.request.contextPath}/property/show/${bookingProposal.property.id}.html"><fmt:message key="general.link" bundle="${lang}"/> <span class="glyphicon glyphicon-new-window"></span> </a></td>
+                                                                <td><spring:eval expression="bookingProposal.startDate"/></td>
+                                                                <td><spring:eval expression="bookingProposal.endDate"/></td>
+                                                                <td>${bookingProposal.status.label}</td>
+                                                                <td><spring:eval expression="bookingProposal.dateOfCreation"/></td>
+                                                                <td><spring:eval expression="bookingProposal.dateOfUpdate"/></td>
+                                                                <td class="rowlink-skip"><a class="btn btn-warning ${bookingProposal.status ne 'PENDING' ? 'disabled' : ''}" ${bookingProposal.status ne 'PENDING' ? 'disabled' : ''} href="${pageContext.request.contextPath}/booking-proposal/edit/${bookingProposal.id}.html"><span class="glyphicon glyphicon-edit"></span></a></td>
+                                                            </tr>
+                                                        </c:forEach>
+                                                        </tbody>
+                                                    </table>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </div>
                                     </div>
                                     <div id="tenant-invoices" class="panel panel-warning tab-pane fade">
@@ -142,35 +151,44 @@
                                             <fmt:message key="tenant.invoices" bundle="${lang}"/>
                                         </div>
                                         <div class="table-responsive">
-                                            <table class="table table-striped table-hover">
-                                                <thead>
-                                                <tr>
-                                                    <th><fmt:message key="general.number" bundle="${lang}"/> </th>
-                                                    <th><fmt:message key="invoice.booking" bundle="${lang}"/> </th>
-                                                    <th><fmt:message key="invoice.expedition-date" bundle="${lang}"/> </th>
-                                                    <th><fmt:message key="invoice.total-amount" bundle="${lang}"/></th>
-                                                    <th><fmt:message key="invoice.pdf" bundle="${lang}"/></th>
-                                                </tr>
-                                                </thead>
-                                                <tbody data-link="row" class="rowlink">
-                                                <c:forEach var="invoice" items="${invoices}">
-                                                    <tr>
-                                                        <td><a target="_blank" href="${pageContext.request.contextPath}/invoice/show/${invoice.id}.pdf"><fmt:formatNumber pattern="00000" value="${invoice.number}"/></a></td>
-                                                        <td class="rowlink-skip"><a href="${pageContext.request.contextPath}/booking-proposal/show/${invoice.proposal.id}.html"><fmt:message key="general.link" bundle="${lang}"/> <span class="glyphicon glyphicon-new-window"></span> </a></td>
-                                                        <td><spring:eval expression="invoice.expeditionDate"/></td>
-                                                        <td><tag:show-price amount="${(invoice.vat+1)*invoice.proposal.totalAmount}"/></td>
-                                                        <td class="rowlink-skip"><a class="btn btn-warning" target="_blank" href="${pageContext.request.contextPath}/invoice/show/${invoice.id}.pdf"><span class="glyphicon glyphicon-file"></span></a></td>
-                                                    </tr>
-                                                </c:forEach>
-                                                </tbody>
-                                            </table>
+                                            <c:choose>
+                                                <c:when test="${fn:length(invoices) eq 0}">
+                                                    <div class="text-silver text-center">
+                                                        <h3><fmt:message key="home.no-invoices" bundle="${lang}"/></h3>
+                                                    </div>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <table class="table table-striped table-hover">
+                                                        <thead>
+                                                        <tr>
+                                                            <th><fmt:message key="general.number" bundle="${lang}"/> </th>
+                                                            <th><fmt:message key="invoice.booking" bundle="${lang}"/> </th>
+                                                            <th><fmt:message key="invoice.expedition-date" bundle="${lang}"/> </th>
+                                                            <th><fmt:message key="invoice.total-amount" bundle="${lang}"/></th>
+                                                            <th><fmt:message key="invoice.pdf" bundle="${lang}"/></th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody data-link="row" class="rowlink">
+                                                        <c:forEach var="invoice" items="${invoices}">
+                                                            <tr>
+                                                                <td><a target="_blank" href="${pageContext.request.contextPath}/invoice/show/${invoice.id}.pdf"><fmt:formatNumber pattern="00000" value="${invoice.number}"/></a></td>
+                                                                <td class="rowlink-skip"><a href="${pageContext.request.contextPath}/booking-proposal/show/${invoice.proposal.id}.html"><fmt:message key="general.link" bundle="${lang}"/> <span class="glyphicon glyphicon-new-window"></span> </a></td>
+                                                                <td><spring:eval expression="invoice.expeditionDate"/></td>
+                                                                <td><tag:show-price amount="${(invoice.vat+1)*invoice.proposal.totalAmount}"/></td>
+                                                                <td class="rowlink-skip"><a class="btn btn-warning" target="_blank" href="${pageContext.request.contextPath}/invoice/show/${invoice.id}.pdf"><span class="glyphicon glyphicon-file"></span></a></td>
+                                                            </tr>
+                                                        </c:forEach>
+                                                        </tbody>
+                                                    </table>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <c:if test="${loggedUser.role eq 'OWNER'}">
+                    <c:if test="${loggedUser.role eq 'OWNER' or loggedUser.role eq 'ADMINISTRATOR'}">
                         <div id="owner" class="tab-pane fade">
                             <div class="row">
                                 <div class="col-md-3">
@@ -200,32 +218,41 @@
                                                 </div>
                                             </div>
                                             <div class="table-responsive">
-                                                <table class="table table-striped table-hover">
-                                                    <thead>
-                                                    <tr>
-                                                        <th><fmt:message key="general.number" bundle="${lang}"/> </th>
-                                                        <th><fmt:message key="property.title" bundle="${lang}"/> </th>
-                                                        <th><fmt:message key="property.price-per-day" bundle="${lang}"/></th>
-                                                        <th><fmt:message key="property.type" bundle="${lang}"/></th>
-                                                        <th><fmt:message key="property.creation-date" bundle="${lang}"/></th>
-                                                        <th><fmt:message key="general.edit" bundle="${lang}"/></th>
-                                                        <th><fmt:message key="general.delete" bundle="${lang}"/></th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody data-link="row" class="rowlink">
-                                                        <c:forEach var="property" items="${user.properties}" varStatus="loop">
+                                                <c:choose>
+                                                    <c:when test="${fn:length(user.properties) eq 0}">
+                                                        <div class="text-silver text-center">
+                                                            <h3><fmt:message key="home.no-properties" bundle="${lang}"/></h3>
+                                                        </div>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <table class="table table-striped table-hover">
+                                                            <thead>
                                                             <tr>
-                                                                <td><a href="${pageContext.request.contextPath}/property/show/${property.id}.html">${loop.index+1}</a></td>
-                                                                <td>${property.title}</td>
-                                                                <td><spring:eval expression="property.pricePerDay"/></td>
-                                                                <td>${property.type.label}</td>
-                                                                <td><spring:eval expression="property.creationDate"/></td>
-                                                                <td class="rowlink-skip"><a class="btn btn-warning" href="${pageContext.request.contextPath}/property/edit/${property.id}.html"><span class="glyphicon glyphicon-edit"></span></a></td>
-                                                                <td class="rowlink-skip"><button id="delete-${property.id}" data-toggle="modal" data-target="#property-delete-modal" class="btn btn-danger ${fn:length(property.bookingProposals) gt 0 ? 'disabled' : ''}" ${fn:length(property.bookingProposals) gt 0 ? 'disabled' : ''}><span class="glyphicon glyphicon-remove"></span></button></td>
+                                                                <th><fmt:message key="general.number" bundle="${lang}"/> </th>
+                                                                <th><fmt:message key="property.title" bundle="${lang}"/> </th>
+                                                                <th><fmt:message key="property.price-per-day" bundle="${lang}"/></th>
+                                                                <th><fmt:message key="property.type" bundle="${lang}"/></th>
+                                                                <th><fmt:message key="property.creation-date" bundle="${lang}"/></th>
+                                                                <th><fmt:message key="general.edit" bundle="${lang}"/></th>
+                                                                <th><fmt:message key="general.delete" bundle="${lang}"/></th>
                                                             </tr>
-                                                        </c:forEach>
-                                                    </tbody>
-                                                </table>
+                                                            </thead>
+                                                            <tbody data-link="row" class="rowlink">
+                                                            <c:forEach var="property" items="${user.properties}" varStatus="loop">
+                                                                <tr>
+                                                                    <td><a href="${pageContext.request.contextPath}/property/show/${property.id}.html">${loop.index+1}</a></td>
+                                                                    <td>${property.title}</td>
+                                                                    <td><spring:eval expression="property.pricePerDay"/></td>
+                                                                    <td>${property.type.label}</td>
+                                                                    <td><spring:eval expression="property.creationDate"/></td>
+                                                                    <td class="rowlink-skip"><a class="btn btn-warning" href="${pageContext.request.contextPath}/property/edit/${property.id}.html"><span class="glyphicon glyphicon-edit"></span></a></td>
+                                                                    <td class="rowlink-skip"><button id="delete-${property.id}" data-toggle="modal" data-target="#property-delete-modal" class="btn btn-danger ${fn:length(property.bookingProposals) gt 0 ? 'disabled' : ''}" ${fn:length(property.bookingProposals) gt 0 ? 'disabled' : ''}><span class="glyphicon glyphicon-remove"></span></button></td>
+                                                                </tr>
+                                                            </c:forEach>
+                                                            </tbody>
+                                                        </table>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </div>
                                             <div class="panel-footer">
                                                 <td><a class="btn btn-warning" href="${pageContext.request.contextPath}/property/add.html"><span class="glyphicon glyphicon-plus"></span> <fmt:message key="add-property.add" bundle="${lang}"/></a></td>
@@ -237,38 +264,47 @@
                                             </div>
 
                                             <div class="table-responsive">
-                                                <table class="table table-striped table-hover">
-                                                    <thead>
-                                                    <tr>
-                                                        <th><fmt:message key="general.number" bundle="${lang}"/> </th>
-                                                        <th><fmt:message key="proposal.property" bundle="${lang}"/> </th>
-                                                        <th><fmt:message key="proposal.tenant" bundle="${lang}"/> </th>
-                                                        <th><fmt:message key="proposal.start-date" bundle="${lang}"/></th>
-                                                        <th><fmt:message key="proposal.end-date" bundle="${lang}"/></th>
-                                                        <th><fmt:message key="proposal.status" bundle="${lang}"/></th>
-                                                        <th><fmt:message key="proposal.created-at" bundle="${lang}"/></th>
-                                                        <th><fmt:message key="proposal.last-updated" bundle="${lang}"/></th>
-                                                        <th><fmt:message key="proposal.accept" bundle="${lang}"/></th>
-                                                        <th><fmt:message key="proposal.reject" bundle="${lang}"/></th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody data-link="row" class="rowlink">
-                                                    <c:forEach var="bookingProposal" items="${bookingProposals}" varStatus="loop">
-                                                        <tr>
-                                                            <td><a href="${pageContext.request.contextPath}/booking-proposal/show/${bookingProposal.id}.html">${loop.index+1}</a></td>
-                                                            <td class="rowlink-skip"><a href="${pageContext.request.contextPath}/property/show/${bookingProposal.property.id}.html"><fmt:message key="general.link" bundle="${lang}"/> <span class="glyphicon glyphicon-new-window"></span></a></td>
-                                                            <td class="rowlink-skip"><a href="${pageContext.request.contextPath}/user/profile/${bookingProposal.tenant.id}.html"><fmt:message key="general.link" bundle="${lang}"/> <span class="glyphicon glyphicon-new-window"></span></a></td>
-                                                            <td><spring:eval expression="bookingProposal.startDate"/></td>
-                                                            <td><spring:eval expression="bookingProposal.endDate"/></td>
-                                                            <td>${bookingProposal.status.label}</td>
-                                                            <td><spring:eval expression="bookingProposal.dateOfCreation"/></td>
-                                                            <td><spring:eval expression="bookingProposal.dateOfUpdate"/></td>
-                                                            <td class="rowlink-skip"><button id="accept-${bookingProposal.id}" data-toggle="modal" data-target="#proposal-acceptation-modal" class="btn btn-success ${bookingProposal.status != 'PENDING' ? 'disabled' : ''}" ${bookingProposal.status != 'PENDING' ? 'disabled' : ''}><span class="glyphicon glyphicon-ok"></span></button></td>
-                                                            <td class="rowlink-skip"><button id="reject-${bookingProposal.id}" data-toggle="modal" data-target="#proposal-rejection-modal" class="btn btn-danger ${bookingProposal.status != 'PENDING' ? 'disabled' : ''}" ${bookingProposal.status != 'PENDING' ? 'disabled' : ''}><span class="glyphicon glyphicon-remove"></span></button></td>
-                                                        </tr>
-                                                    </c:forEach>
-                                                    </tbody>
-                                                </table>
+                                                <c:choose>
+                                                    <c:when test="${fn:length(bookingProposals) eq 0}">
+                                                        <div class="text-silver text-center">
+                                                            <h3><fmt:message key="home.no-received-proposals" bundle="${lang}"/></h3>
+                                                        </div>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <table class="table table-striped table-hover">
+                                                            <thead>
+                                                            <tr>
+                                                                <th><fmt:message key="general.number" bundle="${lang}"/> </th>
+                                                                <th><fmt:message key="proposal.property" bundle="${lang}"/> </th>
+                                                                <th><fmt:message key="proposal.tenant" bundle="${lang}"/> </th>
+                                                                <th><fmt:message key="proposal.start-date" bundle="${lang}"/></th>
+                                                                <th><fmt:message key="proposal.end-date" bundle="${lang}"/></th>
+                                                                <th><fmt:message key="proposal.status" bundle="${lang}"/></th>
+                                                                <th><fmt:message key="proposal.created-at" bundle="${lang}"/></th>
+                                                                <th><fmt:message key="proposal.last-updated" bundle="${lang}"/></th>
+                                                                <th><fmt:message key="proposal.accept" bundle="${lang}"/></th>
+                                                                <th><fmt:message key="proposal.reject" bundle="${lang}"/></th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody data-link="row" class="rowlink">
+                                                            <c:forEach var="bookingProposal" items="${bookingProposals}" varStatus="loop">
+                                                                <tr>
+                                                                    <td><a href="${pageContext.request.contextPath}/booking-proposal/show/${bookingProposal.id}.html">${loop.index+1}</a></td>
+                                                                    <td class="rowlink-skip"><a href="${pageContext.request.contextPath}/property/show/${bookingProposal.property.id}.html"><fmt:message key="general.link" bundle="${lang}"/> <span class="glyphicon glyphicon-new-window"></span></a></td>
+                                                                    <td class="rowlink-skip"><a href="${pageContext.request.contextPath}/user/profile/${bookingProposal.tenant.id}.html"><fmt:message key="general.link" bundle="${lang}"/> <span class="glyphicon glyphicon-new-window"></span></a></td>
+                                                                    <td><spring:eval expression="bookingProposal.startDate"/></td>
+                                                                    <td><spring:eval expression="bookingProposal.endDate"/></td>
+                                                                    <td>${bookingProposal.status.label}</td>
+                                                                    <td><spring:eval expression="bookingProposal.dateOfCreation"/></td>
+                                                                    <td><spring:eval expression="bookingProposal.dateOfUpdate"/></td>
+                                                                    <td class="rowlink-skip"><button id="accept-${bookingProposal.id}" data-toggle="modal" data-target="#proposal-acceptation-modal" class="btn btn-success ${bookingProposal.status != 'PENDING' ? 'disabled' : ''}" ${bookingProposal.status != 'PENDING' ? 'disabled' : ''}><span class="glyphicon glyphicon-ok"></span></button></td>
+                                                                    <td class="rowlink-skip"><button id="reject-${bookingProposal.id}" data-toggle="modal" data-target="#proposal-rejection-modal" class="btn btn-danger ${bookingProposal.status != 'PENDING' ? 'disabled' : ''}" ${bookingProposal.status != 'PENDING' ? 'disabled' : ''}><span class="glyphicon glyphicon-remove"></span></button></td>
+                                                                </tr>
+                                                            </c:forEach>
+                                                            </tbody>
+                                                        </table>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </div>
                                         </div>
                                     </div>

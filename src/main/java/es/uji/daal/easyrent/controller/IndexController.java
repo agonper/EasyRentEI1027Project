@@ -47,4 +47,14 @@ public class IndexController {
         }
         return "index";
     }
+
+    @RequestMapping("/become-a-host")
+    private String becomeAHost() {
+        return "index/becomeAHost";
+    }
+
+    @RequestMapping("/about-us")
+    private String aboutUs() {
+        return "index/aboutUs";
+    }
 }
