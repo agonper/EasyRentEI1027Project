@@ -46,6 +46,14 @@
                         </li>
                     </c:when>
                     <c:otherwise>
+                        <c:if test="${loggedUser.role eq 'ADMINISTRATOR'}">
+                            <li>
+                                <fmt:message key="administration.title" bundle="${lang}" var="administrationBtn"/>
+                                <a href="${pageContext.request.contextPath}/administration.html" title="${administrationBtn}">
+                                    <span class="glyphicon glyphicon-cog"></span> <span>${administrationBtn.toUpperCase()}</span>
+                                </a>
+                            </li>
+                        </c:if>
                         <li>
                             <fmt:message key="add-property.add" bundle="${lang}" var="addPropertyBtn"/>
                             <a href="${pageContext.request.contextPath}/property/add.html" title="${addPropertyBtn}">
