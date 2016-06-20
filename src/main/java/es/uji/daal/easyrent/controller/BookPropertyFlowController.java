@@ -8,6 +8,7 @@ import es.uji.daal.easyrent.model.User;
 import es.uji.daal.easyrent.repository.AvailabilityPeriodRepository;
 import es.uji.daal.easyrent.repository.BookingProposalRepository;
 import es.uji.daal.easyrent.repository.PropertyRepository;
+import es.uji.daal.easyrent.repository.UserRepository;
 import es.uji.daal.easyrent.tags.InvoiceTools;
 import es.uji.daal.easyrent.utils.AvailabilityChanges;
 import es.uji.daal.easyrent.utils.BookingUtils;
@@ -43,6 +44,9 @@ public class BookPropertyFlowController {
 
     @Autowired
     private BookingProposalRepository proposalRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private BookingProposalEmailBroker emailBroker;
@@ -239,6 +243,7 @@ public class BookPropertyFlowController {
                                          HttpSession session, @PathVariable("id") String propertyId) {
 
         Property property = propertyRepository.findOne(UUID.fromString(propertyId));
+        User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         Map<String, Object> bookProperty = (Map<String, Object>) session.getAttribute(getSessionMapName(propertyId));
         BookingProposal proposal = (BookingProposal) bookProperty.get("bookingProposal");
@@ -249,6 +254,12 @@ public class BookPropertyFlowController {
             model.addAttribute("bookingProposal", proposal);
             return "property/book/4";
         }
+
+        PersonalDataForm personalDataForm = (PersonalDataForm) bookProperty.get("personalDataForm");
+        AddressInfoForm addressInfoForm = (AddressInfoForm) bookProperty.get("addressInfoForm");
+        personalDataForm.update(loggedUser);
+        addressInfoForm.update(loggedUser);
+        userRepository.save(loggedUser);
 
         AvailabilityChanges changes = BookingUtils.getChanges(form, property.getAvailabilityPeriods());
         property.removePeriods(changes.getToBeRemoved());
