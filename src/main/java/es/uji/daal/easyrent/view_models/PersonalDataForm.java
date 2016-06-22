@@ -60,7 +60,7 @@ public class PersonalDataForm implements ViewModel<User>{
         setName(model.getName());
         setSurnames(model.getSurnames());
         setDni(model.getDni());
-        if (model.getPhoneNumber() != null && model.getPhoneNumber().matches(".* .*")) {
+        if (model.getPhoneNumber() != null && model.getPhoneNumber().matches("\\S+ \\S+")) {
             String[] phoneData = model.getPhoneNumber().split(" ");
             setCountryPrefix(phoneData[PREFIX]);
             setPhoneNumber(phoneData[NUMBER]);
