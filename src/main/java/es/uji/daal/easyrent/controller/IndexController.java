@@ -1,15 +1,21 @@
 package es.uji.daal.easyrent.controller;
 
+import es.uji.daal.easyrent.handler.ContactEmailBroker;
 import es.uji.daal.easyrent.model.User;
 import es.uji.daal.easyrent.repository.BookingProposalRepository;
 import es.uji.daal.easyrent.repository.InvoiceRepository;
 import es.uji.daal.easyrent.repository.UserRepository;
+import es.uji.daal.easyrent.validators.ContactFormValidator;
+import es.uji.daal.easyrent.view_models.ContactForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Created by Alberto on 05/05/2016.
@@ -25,6 +31,9 @@ public class IndexController {
 
     @Autowired
     private InvoiceRepository invoiceRepository;
+
+    @Autowired
+    private ContactEmailBroker emailBroker;
 
     @RequestMapping("/")
     public String root(Model model) {
@@ -56,5 +65,22 @@ public class IndexController {
     @RequestMapping("/about-us")
     private String aboutUs() {
         return "index/aboutUs";
+    }
+
+    @RequestMapping(value = "/contact-us")
+    private String contactUs(Model model) {
+        model.addAttribute("contactForm", new ContactForm());
+        return "index/contactUs";
+    }
+
+    @RequestMapping(value = "/contact-us", method = RequestMethod.POST)
+    private String processContactUs(@ModelAttribute("contactForm") ContactForm contactForm,
+                                    BindingResult bindingResult) {
+        new ContactFormValidator().validate(contactForm, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "index/contactUs";
+        }
+        emailBroker.setForm(contactForm).sendContactEmail();
+        return  "redirect:contact-us?success=t";
     }
 }

@@ -18,7 +18,7 @@ public class PersonalDataValidator implements Validator {
         PersonalDataForm form = (PersonalDataForm) obj;
 
         if (form.getName().equals("")) {
-            errors.rejectValue("name", "invalid", "A man needs a name.");
+            errors.rejectValue("name", "invalid", "Please, introduce your name.");
         }
 
         if (form.getSurnames().equals("")) {
