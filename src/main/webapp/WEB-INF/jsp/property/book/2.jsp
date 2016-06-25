@@ -100,7 +100,7 @@
                     <div class="col-md-7">
                         <div class="row">
                             <div class="col-sm-6">
-                                <span class="glyphicon glyphicon-map-marker"></span> ${property.location}
+                                <span class="glyphicon glyphicon-map-marker"></span> <c:out value="${property.location}"/>
                             </div>
                             <div class="col-sm-6">
                                 <strong><fmt:message key="general.max" bundle="${lang}"/></strong> <span class="glyphicon glyphicon-user"></span> <span class="badge">${property.capacity}</span>
@@ -120,7 +120,7 @@
                                 <fmt:message key="property.description" bundle="${lang}"/>
                             </div>
                             <div class="panel-body">
-                                ${property.description}
+                                <c:out value="${property.description}"/>
                             </div>
                         </div>
                     </div>

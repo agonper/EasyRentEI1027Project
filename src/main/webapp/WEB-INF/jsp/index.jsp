@@ -72,7 +72,7 @@
                     </div>
                 </c:if>
                 <div class="page-header">
-                    <span class="h1"><fmt:message key="index.home" bundle="${lang}"/> : ${loggedUser.username}</span>
+                    <span class="h1"><fmt:message key="index.home" bundle="${lang}"/> : <c:out value="${loggedUser.username}"/></span>
                 </div>
 
                 <c:if test="${loggedUser.role eq 'OWNER' or loggedUser.role eq 'ADMINISTRATOR'}">

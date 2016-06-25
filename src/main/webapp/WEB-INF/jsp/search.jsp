@@ -36,8 +36,8 @@
                         <tbody data-link="row" class="rowlink">
                         <c:forEach var="property" items="${properties}" varStatus="loop">
                             <tr>
-                                <td><a href="${pageContext.request.contextPath}/property/show/${property.id}.html?q=${param.q}">${property.title}</a></td>
-                                <td>${property.location}</td>
+                                <td><a href="${pageContext.request.contextPath}/property/show/${property.id}.html?q=${param.q}"><c:out value="${property.title}"/></a></td>
+                                <td><c:out value="${property.location}"/></td>
                                 <er:calculate-vat value="${property.pricePerDay}" var="priceWithVat"/>
                                 <td><t:show-price amount="${priceWithVat}"/></td>
                                 <td>${property.type.label}</td>

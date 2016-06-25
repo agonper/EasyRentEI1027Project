@@ -20,12 +20,12 @@
             <c:if test="${property.owner.equals(loggedUser)}">
                 <li><a href="${pageContext.request.contextPath}/index.html#owner-properties"><fmt:message key="home.my-properties" bundle="${lang}"/></a></li>
             </c:if>
-            <li class="active">${property.title}</li>
+            <li class="active"><c:out value="${property.title}"/></li>
         </ol>
         <div class="page-header">
             <div class="row">
                 <div class="col-md-11">
-                    <span class="h1">${property.title}  <small>${by} <a href="${pageContext.request.contextPath}/user/profile/${property.owner.id}.html">${property.owner.username}</a></small></span>
+                    <span class="h1"><c:out value="${property.title}"/>  <small>${by} <a href="${pageContext.request.contextPath}/user/profile/${property.owner.id}.html">${property.owner.username}</a></small></span>
                 </div>
                 <br class="hidden-md hidden-lg">
                 <div class="col-md-1">

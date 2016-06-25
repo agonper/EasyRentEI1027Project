@@ -9,7 +9,7 @@
 
 <div class="row">
     <div class="col-sm-4">
-        <span class="glyphicon glyphicon-map-marker"></span> ${property.location}
+        <span class="glyphicon glyphicon-map-marker"></span> <c:out value="${property.location}"/>
     </div>
     <div class="col-sm-4">
         <strong><fmt:message key="general.max" bundle="${lang}"/></strong> <span class="glyphicon glyphicon-user"></span> <span class="badge">${property.capacity}</span>
@@ -76,7 +76,7 @@
                 <fmt:message key="property.description" bundle="${lang}"/>
             </div>
             <div class="panel-body">
-                ${property.description}
+                <c:out value="${property.description}"/>
             </div>
             <div class="panel-heading">
                 <fmt:message key="property.availability-dates" bundle="${lang}"/>
@@ -143,7 +143,7 @@
                     <er:color-gen number="${status.index}" var="color"/>
                     <span class="h3">
                         <span style="margin: 5px" class="label label-${color}">
-                                ${service.name}
+                                <c:out value="${service.name}"/>
                         </span>
                     </span>
                 </c:forEach>

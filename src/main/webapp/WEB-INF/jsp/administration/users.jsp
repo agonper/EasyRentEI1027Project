@@ -166,16 +166,16 @@
                                     <c:forEach var="user" items="${users}">
                                         <tr>
                                             <td>${user.id}</td>
-                                            <td>${user.username}</td>
+                                            <td><c:out value="${user.username}"/></td>
                                             <td>${user.dni}</td>
                                             <td>${user.role}</td>
                                             <td>${user.password}</td>
-                                            <td>${user.name}</td>
-                                            <td>${user.surnames}</td>
+                                            <td><c:out value="${user.name}"/></td>
+                                            <td><c:out value="${user.surnames}"/></td>
                                             <td>${user.email}</td>
                                             <td>${user.phoneNumber}</td>
-                                            <td>${user.postalAddress}</td>
-                                            <td>${user.country}</td>
+                                            <td><c:out value="${user.postalAddress}"/></td>
+                                            <td><c:out value="${user.country}"/></td>
                                             <td>${user.postCode}</td>
                                             <td>${user.signUpDate}</td>
                                             <td>${user.active}</td>

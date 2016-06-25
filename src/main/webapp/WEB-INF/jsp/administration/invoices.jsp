@@ -113,6 +113,8 @@
                                         <th><fmt:message key="invoice.number" bundle="${lang}"/></th>
                                         <th><fmt:message key="invoice.vat" bundle="${lang}"/></th>
                                         <th><fmt:message key="invoice.address" bundle="${lang}"/></th>
+                                        <th><fmt:message key="user.country" bundle="${lang}"/></th>
+                                        <th><fmt:message key="user.post-code" bundle="${lang}"/></th>
                                         <th><fmt:message key="invoice.expedition-date" bundle="${lang}"/></th>
                                         <th><fmt:message key="invoice.total-amount" bundle="${lang}"/></th>
                                     </tr>
@@ -122,7 +124,9 @@
                                             <td>${invoice.proposal.id}</td>
                                             <td>${invoice.number}</td>
                                             <td>${invoice.vat}</td>
-                                            <td>${invoice.address}</td>
+                                            <td><c:out value="${invoice.address}"/></td>
+                                            <td><c:out value="${invoice.country}"/></td>
+                                            <td>${invoice.postCode}</td>
                                             <td>${invoice.expeditionDate}</td>
                                             <td>${invoice.proposal.totalAmount}</td>
                                         </tr>

@@ -133,8 +133,8 @@
                                             <td>${property.id}</td>
                                             <td>${property.owner.id}</td>
                                             <td>${property.owner.username}</td>
-                                            <td>${property.title}</td>
-                                            <td>${property.location}</td>
+                                            <td><c:out value="${property.title}"/></td>
+                                            <td><c:out value="${property.location}"/></td>
                                             <td>${property.rooms}</td>
                                             <td>${property.capacity}</td>
                                             <td>${property.beds}</td>
@@ -143,7 +143,7 @@
                                             <td>${property.pricePerDay}</td>
                                             <td>${property.creationDate}</td>
                                             <td>${property.type.label}</td>
-                                            <td>${property.description}</td>
+                                            <td><c:out value="${property.description}"/></td>
                                             <td><a href="${pageContext.request.contextPath}/administration/properties/delete/${property.id}.html" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span></a></td>
                                         </tr>
                                     </c:forEach>

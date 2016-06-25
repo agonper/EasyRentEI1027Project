@@ -30,7 +30,7 @@
                         <span class="btn-label">
                             <i class="glyphicon glyphicon-remove"></i>
                         </span>
-                            ${service.name}
+                            <c:out value="${service.name}"/>
                         </button>
                     </c:forEach>
                 </div>
