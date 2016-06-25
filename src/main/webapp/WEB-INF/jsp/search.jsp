@@ -22,31 +22,61 @@
                     </div>
                 </c:when>
                 <c:otherwise>
-                    <table class="table table-striped table-hover">
-                        <thead>
-                        <tr>
-                            <th><fmt:message key="property.title" bundle="${lang}"/> </th>
-                            <th><fmt:message key="property.location" bundle="${lang}"/> <span class="glyphicon glyphicon-map-marker"></span> </th>
-                            <th><fmt:message key="property.price-per-day" bundle="${lang}"/></th>
-                            <th><fmt:message key="property.type" bundle="${lang}"/></th>
-                            <th><fmt:message key="property.capacity" bundle="${lang}"/> (<span class="glyphicon glyphicon-user"></span> )</th>
-                            <th><fmt:message key="property.floor-space" bundle="${lang}"/></th>
-                        </tr>
-                        </thead>
-                        <tbody data-link="row" class="rowlink">
-                        <c:forEach var="property" items="${properties}" varStatus="loop">
-                            <tr>
-                                <td><a href="${pageContext.request.contextPath}/property/show/${property.id}.html?q=${param.q}"><c:out value="${property.title}"/></a></td>
-                                <td><c:out value="${property.location}"/></td>
-                                <er:calculate-vat value="${property.pricePerDay}" var="priceWithVat"/>
-                                <td><t:show-price amount="${priceWithVat}"/></td>
-                                <td>${property.type.label}</td>
-                                <td>${property.capacity}</td>
-                                <td>${property.floorSpace}</td>
-                            </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
+                    <c:forEach var="property" items="${properties}">
+                        <div class="media">
+                            <div class="media-left">
+                                <a href="${pageContext.request.contextPath}/property/show/${property.id}.html?q=${param.q}">
+                                    <c:choose>
+                                        <c:when test="${empty property.photos}">
+                                            <img class="media-object" src="${pageContext.request.contextPath}/img/neighborhood1.jpg" width="128">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <img class="media-object" src="${pageContext.request.contextPath}/uploads/property-pics/${property.photos.toArray()[0].filename}" width="128">
+                                        </c:otherwise>
+                                    </c:choose>
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                <a href="${pageContext.request.contextPath}/property/show/${property.id}.html?q=${param.q}"><h4 class="media-heading"><c:out value="${property.title}"/></h4></a>
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <p><c:out value="${property.description}"/></p>
+                                    </div>
+                                    <div class="col-md-2 hidden-xs">
+                                        <er:calculate-vat value="${property.pricePerDay}" var="priceWithVat"/>
+                                        <div class="text-right">
+                                            <strong><span class="h4"><t:show-price amount="${priceWithVat}"/></span></strong><br>
+                                            <span class="text-silver"><small><fmt:message key="property.price-per-day" bundle="${lang}"/></small></span><br>
+                                            <span class="text-silver"><small><small><fmt:message key="property.includes-vat-s" bundle="${lang}"/></small></small></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <strong><span class="glyphicon glyphicon-map-marker"></span></strong> <c:out value="${property.location}"/>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <strong><fmt:message key="property.capacity" bundle="${lang}"/></strong> <span class="glyphicon glyphicon-user"></span> <span class="badge">${property.capacity}</span>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <strong><span class="hidden-lg hidden-md"><fmt:message key="property.type" bundle="${lang}"/>:</span> ${property.type.label}</strong>
+                                    </div>
+                                    <div class="col-md-1">
+                                        ${property.floorSpace} <fmt:message key="property.floor-space" bundle="${lang}"/>
+                                    </div>
+                                </div>
+                                <div style="padding: 10px" class="visible-xs">
+                                    <er:calculate-vat value="${property.pricePerDay}" var="priceWithVat"/>
+                                    <div class="text-right">
+                                        <strong><span class="h4"><t:show-price amount="${priceWithVat}"/></span></strong><br>
+                                        <span class="text-silver"><small><fmt:message key="property.price-per-day" bundle="${lang}"/></small></span><br>
+                                        <span class="text-silver"><small><small><fmt:message key="property.includes-vat-s" bundle="${lang}"/></small></small></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    </c:forEach>
                 </c:otherwise>
             </c:choose>
         </div>
