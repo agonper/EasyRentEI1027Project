@@ -10,7 +10,7 @@
     </div>
     <div class="col-md-6">
         <fmt:message key="property.location" bundle="${lang}" var="location"/>
-        <tag:input path="location" label="${location}"/>
+        <tag:input id="location" path="location" label="${location}"/>
     </div>
 </div>
 <div class="row">
@@ -61,3 +61,11 @@
         <tag:input path="description" label="${description}" type="textarea"/>
     </div>
 </div>
+<script>
+    (function () {
+        var input = document.getElementById('location');
+        var options = { types: ['geocode'] };
+        var autocomplete = new google.maps.places.Autocomplete(input, options);
+        $(input).attr('placeholder', '');
+    })();
+</script>
