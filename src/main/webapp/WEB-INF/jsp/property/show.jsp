@@ -24,11 +24,11 @@
         </ol>
         <div class="page-header">
             <div class="row">
-                <div class="col-md-11">
+                <div class="col-md-10">
                     <span class="h1"><c:out value="${property.title}"/>  <small>${by} <a href="${pageContext.request.contextPath}/user/profile/${property.owner.id}.html">${property.owner.username}</a></small></span>
                 </div>
                 <br class="hidden-md hidden-lg">
-                <div class="col-md-1">
+                <div class="col-md-2 text-right">
                     <c:choose>
                         <c:when test="${property.owner.equals(loggedUser)}">
                             <a class="btn btn-warning" href="${pageContext.request.contextPath}/property/edit/${property.id}.html"><span class="glyphicon glyphicon-edit"></span> <fmt:message key="general.edit" bundle="${lang}"/></a>
@@ -36,10 +36,10 @@
                         <c:otherwise>
                             <c:choose>
                                 <c:when test="${empty property.availabilityPeriods}">
-                                    <a class="btn btn-warning disabled" href="#"><span class="glyphicon glyphicon-ok"></span> <fmt:message key="proposal.book" bundle="${lang}"/> </a>
+                                    <a class="btn btn-lg btn-danger disabled" href="#"><span class="glyphicon glyphicon-ok"></span> <fmt:message key="proposal.book" bundle="${lang}"/> </a>
                                 </c:when>
                                 <c:otherwise>
-                                    <a class="btn btn-warning" href="${pageContext.request.contextPath}/property/booking-proposal/${property.id}.html${not empty param.q ? '?q=' : ''}${not empty param.q ? param.q : ''}"><span class="glyphicon glyphicon-ok"></span> <fmt:message key="proposal.book" bundle="${lang}"/> </a>
+                                    <a class="btn btn-lg btn-danger btn-warning" href="${pageContext.request.contextPath}/property/booking-proposal/${property.id}.html${not empty param.q ? '?q=' : ''}${not empty param.q ? param.q : ''}"><span class="glyphicon glyphicon-ok"></span> <fmt:message key="proposal.book" bundle="${lang}"/> </a>
                                 </c:otherwise>
                             </c:choose>
                         </c:otherwise>
