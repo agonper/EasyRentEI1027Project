@@ -5,7 +5,7 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="er" uri="/WEB-INF/easy-rent.tld" %>
 
-<tag:paginabasica title="EasyRent">
+<tag:paginabasica title="EasyRent" resource="search">
     <jsp:body>
         <ol class="breadcrumb">
             <li><a href="${pageContext.request.contextPath}/index.html"><fmt:message key="index.home" bundle="${lang}"/></a></li>
@@ -14,35 +14,59 @@
         <div class="page-header">
             <h1><fmt:message key="search.title" bundle="${lang}"/></h1>
         </div>
-        <div class="table-responsive">
-            <c:choose>
-                <c:when test="${empty properties}">
-                    <div class="text-silver text-center">
-                        <h3><fmt:message key="search.no-results" bundle="${lang}"/> '${param.q}'. <fmt:message key="search.less-keywords" bundle="${lang}"/> </h3>
-                    </div>
-                </c:when>
-                <c:otherwise>
-                    <c:forEach var="property" items="${properties}">
-                        <div class="media">
-                            <div class="media-left">
-                                <a href="${pageContext.request.contextPath}/property/show/${property.id}.html?q=${param.q}">
-                                    <c:choose>
-                                        <c:when test="${empty property.photos}">
-                                            <img class="media-object" src="${pageContext.request.contextPath}/img/neighborhood1.jpg" width="128">
-                                        </c:when>
-                                        <c:otherwise>
-                                            <img class="media-object" src="${pageContext.request.contextPath}/uploads/property-pics/${property.photos.toArray()[0].filename}" width="128">
-                                        </c:otherwise>
-                                    </c:choose>
-                                </a>
-                            </div>
-                            <div class="media-body">
-                                <a href="${pageContext.request.contextPath}/property/show/${property.id}.html?q=${param.q}"><h4 class="media-heading"><c:out value="${property.title}"/></h4></a>
-                                <div class="row">
-                                    <div class="col-sm-10">
-                                        <p><c:out value="${property.description}"/></p>
+        <div class="row">
+            <div class="col-lg-8 col-sm-12 left-search">
+                <c:choose>
+                    <c:when test="${empty properties}">
+                        <div class="text-silver text-center">
+                            <h3><fmt:message key="search.no-results" bundle="${lang}"/> '${param.q}'. <fmt:message key="search.less-keywords" bundle="${lang}"/> </h3>
+                        </div>
+                    </c:when>
+                    <c:otherwise>
+                        <c:forEach var="property" items="${properties}">
+                            <div class="media">
+                                <div class="media-left">
+                                    <a href="${pageContext.request.contextPath}/property/show/${property.id}.html?q=${param.q}">
+                                        <c:choose>
+                                            <c:when test="${empty property.photos}">
+                                                <img class="media-object" src="${pageContext.request.contextPath}/img/neighborhood1.jpg" width="128">
+                                            </c:when>
+                                            <c:otherwise>
+                                                <img class="media-object" src="${pageContext.request.contextPath}/uploads/property-pics/${property.photos.toArray()[0].filename}" width="128">
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    <a href="${pageContext.request.contextPath}/property/show/${property.id}.html?q=${param.q}"><h4 class="media-heading"><c:out value="${property.title}"/></h4></a>
+                                    <div class="row">
+                                        <div class="col-sm-9">
+                                            <p><c:out value="${property.description}"/></p>
+                                        </div>
+                                        <div class="col-md-3 hidden-xs">
+                                            <er:calculate-vat value="${property.pricePerDay}" var="priceWithVat"/>
+                                            <div class="text-right">
+                                                <strong><span class="h4"><t:show-price amount="${priceWithVat}"/></span></strong><br>
+                                                <span class="text-silver"><small><fmt:message key="property.price-per-day" bundle="${lang}"/></small></span><br>
+                                                <span class="text-silver"><small><small><fmt:message key="property.includes-vat-s" bundle="${lang}"/></small></small></span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-md-2 hidden-xs">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <strong><span class="glyphicon glyphicon-map-marker"></span></strong> <c:out value="${property.location}"/>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <strong><fmt:message key="property.capacity" bundle="${lang}"/></strong> <span class="glyphicon glyphicon-user"></span> <span class="badge">${property.capacity}</span>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <strong><span class="hidden-lg hidden-md"><fmt:message key="property.type" bundle="${lang}"/>:</span> ${property.type.label}</strong>
+                                        </div>
+                                        <div class="col-md-2">
+                                                ${property.floorSpace} <fmt:message key="property.floor-space" bundle="${lang}"/>
+                                        </div>
+                                    </div>
+                                    <div style="padding: 10px" class="visible-xs">
                                         <er:calculate-vat value="${property.pricePerDay}" var="priceWithVat"/>
                                         <div class="text-right">
                                             <strong><span class="h4"><t:show-price amount="${priceWithVat}"/></span></strong><br>
@@ -51,37 +75,61 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <strong><span class="glyphicon glyphicon-map-marker"></span></strong> <c:out value="${property.location}"/>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <strong><fmt:message key="property.capacity" bundle="${lang}"/></strong> <span class="glyphicon glyphicon-user"></span> <span class="badge">${property.capacity}</span>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <strong><span class="hidden-lg hidden-md"><fmt:message key="property.type" bundle="${lang}"/>:</span> ${property.type.label}</strong>
-                                    </div>
-                                    <div class="col-md-1">
-                                        ${property.floorSpace} <fmt:message key="property.floor-space" bundle="${lang}"/>
-                                    </div>
-                                </div>
-                                <div style="padding: 10px" class="visible-xs">
-                                    <er:calculate-vat value="${property.pricePerDay}" var="priceWithVat"/>
-                                    <div class="text-right">
-                                        <strong><span class="h4"><t:show-price amount="${priceWithVat}"/></span></strong><br>
-                                        <span class="text-silver"><small><fmt:message key="property.price-per-day" bundle="${lang}"/></small></span><br>
-                                        <span class="text-silver"><small><small><fmt:message key="property.includes-vat-s" bundle="${lang}"/></small></small></span>
-                                    </div>
-                                </div>
                             </div>
-                        </div>
-                        <hr>
-                    </c:forEach>
-                </c:otherwise>
-            </c:choose>
+                            <hr>
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
+                <tag:paginator currentPage="${currentPage}" totalPages="${totalPages}" baseUri="search"/>
+                <div class="index-box bg-concrete">
+                    <hr>
+                    <p class="text-white text-center">
+                        &copy;<er:year-tag/> - <fmt:message key="easyrent.project" bundle="${lang}"/> | <a href="${pageContext.request.contextPath}/about-us.html"><fmt:message key="about-us.title" bundle="${lang}"/></a> | <a href="${pageContext.request.contextPath}/contact-us.html"><fmt:message key="contact-us.title" bundle="${lang}"/></a>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4 visible-lg right-search">
+                <div style="height: 100%;" id="map"></div>
+            </div>
         </div>
-        <tag:paginator currentPage="${currentPage}" totalPages="${totalPages}" baseUri="search"/>
+        <er:properties-map-data properties="${properties}" var="propertiesJson"/>
+        <script>
+            (function () {
+                $(document).ready(function () {
 
+                    var properties = JSON.parse('${propertiesJson}');
+
+                    var map = new google.maps.Map(document.getElementById('map'), {
+                        mapTypeId: google.maps.MapTypeId.ROADMAP
+                    });
+
+                    var bounds = new google.maps.LatLngBounds();
+                    var infoWindow = new google.maps.InfoWindow();
+
+                    properties.forEach(function (property) {
+                        var marker = new google.maps.Marker({
+                            position: new google.maps.LatLng(property.latitude, property.longitude),
+                            map: map
+                        });
+
+                        bounds.extend(marker.position);
+
+                        google.maps.event.addListener(marker, 'click', (function (marker, property) {
+                            return function () {
+                                var root = $('<div>');
+                                var title = $('<a>').attr('href', '${pageContext.request.contextPath}/property/show/'+property.id + '.html?q=' + '${param.q}').html($('<h4>').text(property.title))
+                                var subtitle = $('<p>').text(property.address);
+                                root.append(title, subtitle);
+                                infoWindow.setContent(root.prop("outerHTML"));
+                                infoWindow.open(map, marker);
+                            }
+                        })(marker, property));
+                    });
+
+                    map.fitBounds(bounds);
+                });
+            })();
+        </script>
     </jsp:body>
 </tag:paginabasica>
 

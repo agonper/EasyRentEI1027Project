@@ -136,3 +136,21 @@ a > .corporate-text:hover {
 .administrationInputField {
     width: 500px;
 }
+
+@media (min-width: 1200px) {
+    .left-search {
+        position: absolute;
+        top: 350px;
+        bottom: 0;
+        width: 555px;
+        overflow-y: scroll
+    }
+
+    .right-search {
+        position: absolute;
+        top: 350px;
+        bottom: 0;
+        margin-left: 545px;
+        width: 555px;
+    }
+}

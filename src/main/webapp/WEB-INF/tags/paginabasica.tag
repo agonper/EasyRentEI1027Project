@@ -79,11 +79,13 @@
 <div class="container ${resource ne 'index' ? 'container-padded' : ''}">
     <jsp:doBody />
 </div>
-<footer class="container-fluid container-padded bg-concrete">
-    <hr>
-    <p class="text-white text-center">
-        &copy;<er:year-tag/> - <fmt:message key="easyrent.project" bundle="${lang}"/> | <a href="${pageContext.request.contextPath}/about-us.html"><fmt:message key="about-us.title" bundle="${lang}"/></a> | <a href="${pageContext.request.contextPath}/contact-us.html"><fmt:message key="contact-us.title" bundle="${lang}"/></a>
-    </p>
-</footer>
+<c:if test="${resource ne 'search'}">
+    <footer class="container-fluid container-padded bg-concrete">
+        <hr>
+        <p class="text-white text-center">
+            &copy;<er:year-tag/> - <fmt:message key="easyrent.project" bundle="${lang}"/> | <a href="${pageContext.request.contextPath}/about-us.html"><fmt:message key="about-us.title" bundle="${lang}"/></a> | <a href="${pageContext.request.contextPath}/contact-us.html"><fmt:message key="contact-us.title" bundle="${lang}"/></a>
+        </p>
+    </footer>
+</c:if>
 </body>
 </html>
