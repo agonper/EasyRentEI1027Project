@@ -3,6 +3,7 @@ package es.uji.daal.easyrent.controller;
 import es.uji.daal.easyrent.model.*;
 
 import es.uji.daal.easyrent.repository.*;
+import es.uji.daal.easyrent.utils.AddressGeocoder;
 import es.uji.daal.easyrent.utils.DateUtils;
 import es.uji.daal.easyrent.utils.FileUploader;
 import es.uji.daal.easyrent.validators.AddressInfoValidator;
@@ -19,8 +20,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.Date;
 import java.util.*;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -38,6 +41,12 @@ public class PropertyController {
 
     @Autowired
     private PhotoRepository photoRepository;
+
+    @Autowired
+    private GeographicLocationRepository locationRepository;
+
+    @Autowired
+    private AddressGeocoder geocoder;
 
     @RequestMapping("/show/{id}")
     public String show(Model model, @PathVariable("id") String id) {
@@ -73,6 +82,18 @@ public class PropertyController {
         if (bindingResult.hasErrors()) {
             return "property/edit";
         }
+
+        GeographicLocation location = locationRepository.findByFullAddress(propertyForm.getLocation());
+        if (location == null) {
+            try {
+                location = geocoder.geocode(propertyForm.getLocation());
+            } catch (IOException e) {
+                Logger.getAnonymousLogger().severe("Unable to geolocate the specified address: " + propertyForm.getLocation());
+            }
+        }
+        property.setGeographicLocation(location);
+        locationRepository.save(location);
+
 
         repository.save(propertyForm.update(property));
         return "redirect:" + id + ".html?success=t";

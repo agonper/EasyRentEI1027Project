@@ -67,5 +67,8 @@
         var options = { types: ['geocode'] };
         var autocomplete = new google.maps.places.Autocomplete(input, options);
         $(input).attr('placeholder', '');
+        $(input).keydown(function (e) {
+            if (e.which == 13 && $('.pac-container:visible').length) return false;
+        });
     })();
 </script>
