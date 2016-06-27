@@ -137,6 +137,24 @@ a > .corporate-text:hover {
     width: 500px;
 }
 
+@media (min-width: 992px) {
+    .left-search {
+        position: absolute;
+        top: 350px;
+        bottom: 0;
+        width: 455px;
+        overflow-y: scroll
+    }
+
+    .right-search {
+        position: absolute;
+        top: 350px;
+        bottom: 0;
+        margin-left: 445px;
+        width: 455px;
+    }
+}
+
 @media (min-width: 1200px) {
     .left-search {
         position: absolute;
