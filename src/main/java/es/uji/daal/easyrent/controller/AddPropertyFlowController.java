@@ -2,6 +2,7 @@ package es.uji.daal.easyrent.controller;
 
 import es.uji.daal.easyrent.model.*;
 import es.uji.daal.easyrent.repository.*;
+import es.uji.daal.easyrent.utils.AddressGeocoder;
 import es.uji.daal.easyrent.validators.AddressInfoValidator;
 import es.uji.daal.easyrent.validators.PersonalDataValidator;
 import es.uji.daal.easyrent.validators.PropertyValidator;
@@ -17,7 +18,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.*;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -42,6 +45,12 @@ public class AddPropertyFlowController {
 
     @Autowired
     private PhotoRepository photoRepository;
+
+    @Autowired
+    private GeographicLocationRepository locationRepository;
+
+    @Autowired
+    private AddressGeocoder geocoder;
 
     private enum AddStep {
         PERSONAL_DATA, ADDRESS_INFO, PROPERTY_INFO, AVAILABILITY_DATES, SERVICES, PHOTOS, CHECK
@@ -264,6 +273,18 @@ public class AddPropertyFlowController {
         List<Service> services = (List<Service>) addProperty.get("services");
         property.addServices(services);
         serviceRepository.save(services);
+
+        GeographicLocation location = locationRepository.findByFullAddress(property.getLocation());
+        if (location == null) {
+            try {
+                location = geocoder.geocode(property.getLocation());
+            } catch (IOException e) {
+                Logger.getAnonymousLogger().severe("Unable to geolocate the specified address: " + property.getLocation());
+            }
+        }
+        property.setGeographicLocation(location);
+        locationRepository.save(location);
+
         repository.save(property);
 
         List<AvailabilityPeriod> periods = (List<AvailabilityPeriod>) addProperty.get("availabilities");
@@ -271,8 +292,6 @@ public class AddPropertyFlowController {
 
         List<Photo> photos = (List<Photo>) addProperty.get("photos");
         photoRepository.save(photos);
-
-        // FIXME Increment service usage
 
         session.removeAttribute("addPropertyMap");
 

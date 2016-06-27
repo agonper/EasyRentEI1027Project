@@ -32,7 +32,7 @@
         <ol class="breadcrumb">
             <li><a href="${pageContext.request.contextPath}/index.html"><fmt:message key="index.home" bundle="${lang}"/></a></li>
             <li><a href="${pageContext.request.contextPath}/index.html#owner-properties"><fmt:message key="home.my-properties" bundle="${lang}"/></a></li>
-            <li><a href="${pageContext.request.contextPath}/property/show/${property.id}.html">${property.title}</a></li>
+            <li><a href="${pageContext.request.contextPath}/property/show/${property.id}.html"><c:out value="${property.title}"/></a></li>
             <li class="active">${title}</li>
         </ol>
 
@@ -143,7 +143,7 @@
                                     <span class="btn-label">
                                         <i class="glyphicon glyphicon-remove"></i>
                                     </span>
-                                    ${service.name}
+                                    <c:out value="${service.name}"/>
                                 </button>
                             </c:forEach>
                         </div>

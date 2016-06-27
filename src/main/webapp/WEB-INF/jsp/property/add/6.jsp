@@ -4,6 +4,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="navs" tagdir="/WEB-INF/tags/navs" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <fmt:message key="add-property.title" bundle="${lang}" var="title"/>
 <fmt:message key="general.check" bundle="${lang}" var="subtitle"/>
@@ -21,7 +22,7 @@
                     ${subtitle}
             </div>
             <div class="panel-body">
-                <h1>${property.title}</h1>
+                <h1><c:out value="${property.title}"/></h1>
                 <m:property property="${property}" availabilityPeriods="${availabilityPeriods}" photos="${photos}" services="${services}"/>
                 <form method="post" class="form-horizontal" action="${pageContext.request.contextPath}/property/add/6">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

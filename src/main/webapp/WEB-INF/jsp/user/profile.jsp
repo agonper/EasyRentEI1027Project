@@ -17,7 +17,7 @@
             <li class="active">${title}</li>
         </ol>
         <div class="page-header">
-            <span class="h1">${title}: ${user.username}</span>
+            <span class="h1">${title}: <c:out value="${user.username}"/></span>
         </div>
 
         <c:if test="${user.equals(loggedUser)}">
@@ -97,9 +97,9 @@
                                             </div>
                                         </div>
                                     </t:li-hb>
-                                    <t:li-hb stringKey="user.username">${user.username}</t:li-hb>
+                                    <t:li-hb stringKey="user.username"><c:out value="${user.username}"/></t:li-hb>
                                     <c:if test="${not empty loggedUser and user.role ne 'ADMINISTRATOR'}">
-                                        <t:li-hb stringKey="user.email">${user.email}</t:li-hb>
+                                        <t:li-hb stringKey="user.email"><c:out value="${user.email}"/></t:li-hb>
                                     </c:if>
                                     <t:li-hb stringKey="user.user-type">${user.role.toString().substring(0,1).toUpperCase()}${user.role.toString().substring(1)}</t:li-hb>
                                     <t:li-hb stringKey="user.signup-date"><spring:eval expression="user.signUpDate"/></t:li-hb>
@@ -121,8 +121,8 @@
                                         <fmt:message key="profile.personal-data" bundle="${lang}"/>
                                     </div>
                                     <ul class="list-group">
-                                        <t:li-hb stringKey="user.name">${user.name}</t:li-hb>
-                                        <t:li-hb stringKey="user.surnames">${user.surnames}</t:li-hb>
+                                        <t:li-hb stringKey="user.name"><c:out value="${user.name}"/></t:li-hb>
+                                        <t:li-hb stringKey="user.surnames"><c:out value="${user.surnames}"/></t:li-hb>
                                         <t:li-hb stringKey="user.dni">${user.dni}</t:li-hb>
                                         <t:li-hb stringKey="user.phone-number">${user.phoneNumber}</t:li-hb>
                                     </ul>
@@ -139,8 +139,8 @@
                                         <fmt:message key="profile.address-info" bundle="${lang}"/>
                                     </div>
                                     <ul class="list-group">
-                                        <t:li-hb stringKey="user.address">${user.postalAddress}</t:li-hb>
-                                        <t:li-hb stringKey="user.country">${user.country}</t:li-hb>
+                                        <t:li-hb stringKey="user.address"><c:out value="${user.postalAddress}"/></t:li-hb>
+                                        <t:li-hb stringKey="user.country"><c:out value="${user.country}"/></t:li-hb>
                                         <t:li-hb stringKey="user.post-code">${user.postCode}</t:li-hb>
                                     </ul>
                                     <div class="panel-footer">

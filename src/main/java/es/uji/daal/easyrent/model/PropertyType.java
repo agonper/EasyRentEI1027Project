@@ -14,7 +14,7 @@ public enum PropertyType {
     APARTMENT;
 
     public String getLabel() {
-        return this.toString().substring(0,1) + this.toString().substring(1).toLowerCase();
+        return this.toString().substring(0,1) + this.toString().substring(1).toLowerCase().replace("_", " ");
     }
 
     public String getValue() {

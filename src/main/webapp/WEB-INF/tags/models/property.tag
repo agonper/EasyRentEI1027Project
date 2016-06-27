@@ -9,7 +9,7 @@
 
 <div class="row">
     <div class="col-sm-4">
-        <span class="glyphicon glyphicon-map-marker"></span> ${property.location}
+        <span class="glyphicon glyphicon-map-marker"></span> <c:out value="${property.location}"/>
     </div>
     <div class="col-sm-4">
         <strong><fmt:message key="general.max" bundle="${lang}"/></strong> <span class="glyphicon glyphicon-user"></span> <span class="badge">${property.capacity}</span>
@@ -76,7 +76,7 @@
                 <fmt:message key="property.description" bundle="${lang}"/>
             </div>
             <div class="panel-body">
-                ${property.description}
+                <c:out value="${property.description}"/>
             </div>
             <div class="panel-heading">
                 <fmt:message key="property.availability-dates" bundle="${lang}"/>
@@ -102,57 +102,73 @@
     </div>
 </div>
 <br>
-<div class="panel panel-warning">
-    <div class="panel-heading">
-        <fmt:message key="property.characteristics" bundle="${lang}"/>
-    </div>
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th><fmt:message key="property.type" bundle="${lang}"/></th>
-                <th><fmt:message key="property.rooms" bundle="${lang}"/></th>
-                <th><fmt:message key="property.beds" bundle="${lang}"/></th>
-                <th><fmt:message key="property.bathrooms" bundle="${lang}"/></th>
-                <th><fmt:message key="property.floor-space" bundle="${lang}"/></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>${property.type.label}</td>
-                <td>${property.rooms}</td>
-                <td>${property.beds}</td>
-                <td>${property.bathrooms}</td>
-                <td>${property.floorSpace}</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-<div class="panel panel-warning">
-    <div class="panel-heading">
-        <fmt:message key="property.services" bundle="${lang}"/>
-    </div>
-    <div class="panel-body">
-        <c:choose>
-            <c:when test="${not empty services or not empty property.services}">
-                <c:if test="${empty services}">
-                    <c:set var="services" value="${property.services}"/>
-                </c:if>
-                <c:forEach var="service" items="${services}" varStatus="status">
-                    <er:color-gen number="${status.index}" var="color"/>
+<div class="row">
+    <div class="${not empty property.geographicLocation ? 'col-md-8' : 'col-md-12'}">
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <fmt:message key="property.characteristics" bundle="${lang}"/>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th><fmt:message key="property.type" bundle="${lang}"/></th>
+                        <th><fmt:message key="property.rooms" bundle="${lang}"/></th>
+                        <th><fmt:message key="property.beds" bundle="${lang}"/></th>
+                        <th><fmt:message key="property.bathrooms" bundle="${lang}"/></th>
+                        <th><fmt:message key="property.floor-space" bundle="${lang}"/></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>${property.type.label}</td>
+                        <td>${property.rooms}</td>
+                        <td>${property.beds}</td>
+                        <td>${property.bathrooms}</td>
+                        <td>${property.floorSpace}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <fmt:message key="property.services" bundle="${lang}"/>
+            </div>
+            <div class="panel-body">
+                <c:choose>
+                    <c:when test="${not empty services or not empty property.services}">
+                        <c:if test="${empty services}">
+                            <c:set var="services" value="${property.services}"/>
+                        </c:if>
+                        <c:forEach var="service" items="${services}" varStatus="status">
+                            <er:color-gen number="${status.index}" var="color"/>
                     <span class="h3">
                         <span style="margin: 5px" class="label label-${color}">
-                                ${service.name}
+                                <c:out value="${service.name}"/>
                         </span>
                     </span>
-                </c:forEach>
-            </c:when>
-            <c:otherwise>
-                <fmt:message key="service.none" bundle="${lang}"/>
-            </c:otherwise>
-        </c:choose>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <fmt:message key="service.none" bundle="${lang}"/>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+        </div>
     </div>
+    <c:if test="${not empty property.geographicLocation}">
+        <div class="col-md-4">
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <fmt:message key="property.location" bundle="${lang}"/>
+                </div>
+                <div class="panel-body">
+                    <div style="height: 250px;" id="map"></div>
+                </div>
+            </div>
+        </div>
+    </c:if>
 </div>
 <er:time-config type="datepicker" var="datepickerFormat"/>
 <c:choose>
@@ -165,6 +181,37 @@
 </c:choose>
 <script>
     (function () {
+
+        <c:if test="${not empty property.geographicLocation}">
+            $(document).ready(function () {
+                var position = {lat: ${property.geographicLocation.latitude}, lng: ${property.geographicLocation.longitude}};
+
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    center: position,
+                    zoom: 14
+                });
+
+
+                var infoWindow = new google.maps.InfoWindow();
+
+                var marker = new google.maps.Marker({
+                    position: position,
+                    map: map
+                });
+
+
+                google.maps.event.addListener(marker, 'click', (function (marker) {
+                    return function () {
+                        infoWindow.setContent('' +
+                                '<h4><c:out value="${property.title}"/></h1>' +
+                                '<p><c:out value="${property.location}"/></p>');
+                        infoWindow.open(map, marker);
+                    }
+                })(marker));
+
+            });
+        </c:if>
+
         var availabilityPeriods = JSON.parse('${jsonPeriods}');
 
         $('#availability-calendar').datepicker({

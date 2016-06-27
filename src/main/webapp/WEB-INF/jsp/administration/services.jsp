@@ -41,8 +41,8 @@
                                     <c:forEach var="service" items="${mostDemandedServices}">
                                         <tr>
                                             <td>${service.id}</td>
-                                            <td>${service.name}</td>
-                                            <td>${service.value}</td>
+                                            <td><c:out value="${service.name}"/></td>
+                                            <td><c:out value="${service.value}"/></td>
                                             <td>${service.user.username}</td>
                                             <td>${service.active}</td>
                                             <td>${service.creationDate}</td>

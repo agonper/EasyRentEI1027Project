@@ -17,7 +17,6 @@ public class InvoiceTools extends SimpleTagSupport {
 
     @Value("${easyrent.invoices.vat}")
     public void setVat(String vat) {
-        System.out.println(vat);
         VAT = Float.parseFloat(vat);
     }
 

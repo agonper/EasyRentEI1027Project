@@ -73,6 +73,9 @@ public class Property extends DomainModel {
         inverseJoinColumns = @JoinColumn(name = "service_id", referencedColumnName = "id"))
     private Set<Service> services;
 
+    @ManyToOne
+    private GeographicLocation geographicLocation;
+
     /**
      * ======
      * Methods
@@ -173,6 +176,14 @@ public class Property extends DomainModel {
 
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public GeographicLocation getGeographicLocation() {
+        return geographicLocation;
+    }
+
+    public void setGeographicLocation(GeographicLocation geographicLocation) {
+        this.geographicLocation = geographicLocation;
     }
 
     /**

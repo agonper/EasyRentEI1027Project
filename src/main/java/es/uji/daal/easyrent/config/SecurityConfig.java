@@ -28,12 +28,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                     .antMatchers("/css/**", "/js/**", "/img/**",
-                            "/", "/index*", "/about*", "/become-a-host*", "/signup*",
-                            "/uploads/**/*", "/search*",
+                            "/", "/index*", "/about-us*", "/login*",
+                            "/contact-us*", "/become-a-host*", "/signup*",
+                            "/uploads/**/*", "/search*", "/user/activate*",
                             "/property/show/*", "/user/profile/*").permitAll()
                     .antMatchers("/user/list*", "/user/add*").permitAll()
                     .antMatchers("/admin/**").hasRole("ADMINISTRATOR")
-                    .antMatchers("/login*").anonymous()
                     .anyRequest().authenticated()
                 .and()
                 .formLogin()

@@ -61,7 +61,7 @@ public class User extends DomainModel {
     public User() {
         role = UserRole.TENANT;
         signUpDate = new Date();
-        active = true; //FIXME: For testing
+        active = false;
     }
 
     /**
@@ -210,6 +210,12 @@ public class User extends DomainModel {
 
     public Photo createPhoto(String filename) {
         return new Photo(this, filename);
+    }
+
+    public Token createActivationToken() {
+        Token token = new Token(this);
+        token.setType(TokenType.ACTIVATION);
+        return token;
     }
 
     public User activate() {

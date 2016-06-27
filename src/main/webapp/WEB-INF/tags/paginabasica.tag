@@ -12,7 +12,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>${title}</title>
+    <title><c:out value="${title}"/></title>
 
     <!-- Bootstrap -->
     <!-- Latest compiled and minified CSS -->
@@ -44,6 +44,8 @@
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/dropzone.min.css">
     <script src="${pageContext.request.contextPath}/js/dropzone.min.js"></script>
+
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAOjLkqYfh1-dvWvdcNXOtg6zN0ajK_x60&libraries=places"></script>
 
 </head>
 <body>
@@ -77,11 +79,13 @@
 <div class="container ${resource ne 'index' ? 'container-padded' : ''}">
     <jsp:doBody />
 </div>
-<footer class="container-fluid container-padded bg-concrete">
-    <hr>
-    <p class="text-white text-center">
-        &copy;<er:year-tag/> - <fmt:message key="easyrent.project" bundle="${lang}"/> | <a href="${pageContext.request.contextPath}/about-us.html"><fmt:message key="about-us.title" bundle="${lang}"/></a> | <a href="mailto:info@easyrent.com">info@easyrent.com</a>
-    </p>
-</footer>
+<c:if test="${resource ne 'search'}">
+    <footer class="container-fluid container-padded bg-concrete">
+        <hr>
+        <p class="text-white text-center">
+            &copy;<er:year-tag/> - <fmt:message key="easyrent.project" bundle="${lang}"/> | <a href="${pageContext.request.contextPath}/about-us.html"><fmt:message key="about-us.title" bundle="${lang}"/></a> | <a href="${pageContext.request.contextPath}/contact-us.html"><fmt:message key="contact-us.title" bundle="${lang}"/></a>
+        </p>
+    </footer>
+</c:if>
 </body>
 </html>
