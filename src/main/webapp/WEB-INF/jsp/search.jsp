@@ -7,15 +7,15 @@
 
 <tag:paginabasica title="EasyRent" resource="search">
     <jsp:body>
-        <ol class="breadcrumb">
-            <li><a href="${pageContext.request.contextPath}/index.html"><fmt:message key="index.home" bundle="${lang}"/></a></li>
-            <li class="active"><fmt:message key="general.search" bundle="${lang}"/></li>
-        </ol>
-        <div class="page-header">
-            <h1><fmt:message key="search.title" bundle="${lang}"/></h1>
-        </div>
         <div class="row">
             <div class="col-lg-8 col-sm-12 left-search">
+                <ol class="breadcrumb">
+                    <li><a href="${pageContext.request.contextPath}/index.html"><fmt:message key="index.home" bundle="${lang}"/></a></li>
+                    <li class="active"><fmt:message key="general.search" bundle="${lang}"/></li>
+                </ol>
+                <div class="page-header">
+                    <h1><fmt:message key="search.title" bundle="${lang}"/></h1>
+                </div>
                 <c:choose>
                     <c:when test="${empty properties}">
                         <div class="text-silver text-center">

@@ -140,7 +140,7 @@ a > .corporate-text:hover {
 @media (min-width: 992px) {
     .left-search {
         position: absolute;
-        top: 350px;
+        top: 175px;
         bottom: 0;
         width: 455px;
         overflow-y: scroll
@@ -148,7 +148,7 @@ a > .corporate-text:hover {
 
     .right-search {
         position: absolute;
-        top: 350px;
+        top: 175px;
         bottom: 0;
         margin-left: 445px;
         width: 455px;
@@ -158,7 +158,7 @@ a > .corporate-text:hover {
 @media (min-width: 1200px) {
     .left-search {
         position: absolute;
-        top: 350px;
+        top: 175px;
         bottom: 0;
         width: 555px;
         overflow-y: scroll
@@ -166,7 +166,7 @@ a > .corporate-text:hover {
 
     .right-search {
         position: absolute;
-        top: 350px;
+        top: 175px;
         bottom: 0;
         margin-left: 545px;
         width: 555px;
