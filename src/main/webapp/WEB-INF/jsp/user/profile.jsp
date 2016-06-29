@@ -214,11 +214,13 @@
                                             </c:if>
                                             <a href="${pageContext.request.contextPath}/notification/show/${notification.id}.html"><h4 class="media-heading">${heading}</h4></a>
                                             <div class="row">
-                                                <div class="col-xs-8 col-sm-10">
+                                                <div class="col-sm-8 col-md-10">
                                                     <c:out value="${description}"/>
                                                 </div>
-                                                <div class="col-xs-4 col-sm-2 text-right">
-                                                    <button style="margin: 10px;" id="remove-${notification.id}" class="btn btn-default remove-btn" aria-label="Close"><span aria-hidden="true"><strong>X</strong></span></button>
+                                                <div class="col-sm-4 col-md-2 text-right">
+                                                    <button style="margin: 10px;" id="remove-${notification.id}" class="btn btn-default remove-btn" aria-label="Close">
+                                                        <span aria-hidden="true"><strong><span class="visible-xs"><fmt:message key="general.dismiss" bundle="${lang}"/></span> <span class="hidden-xs">X</span></strong></span>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
