@@ -14,7 +14,7 @@ import java.util.UUID;
  * Created by Alberto on 07/05/2016.
  */
 public interface InvoiceRepository extends CrudRepository<Invoice, UUID> {
-    List<Invoice> findByProposal_Tenant_IdOrderByNumberAsc(UUID tenant);
+    List<Invoice> findByProposal_Tenant_IdOrderByExpeditionDateDesc(UUID tenant);
 
     @Query("select i from Invoice i where i.number = :number")
     List<Invoice> findByNumber(@Param("number") int number);

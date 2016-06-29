@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <fmt:message key="profile.title" var="title" bundle="${lang}"/>
 
 <sec:authorize access="isAuthenticated()">
@@ -23,7 +24,7 @@
         <c:if test="${user.equals(loggedUser)}">
             <ul class="nav nav-tabs nav-justified" role="tablist">
                 <li role="presentation" class="active"><a data-toggle="tab" href="#main">${title}</a></li>
-                <li role="presentation"><a data-toggle="tab" href="#notifications"><fmt:message key="notifications.title" bundle="${lang}"/> <span class="badge">0</span></a></li>
+                <li role="presentation"><a data-toggle="tab" href="#notifications"><fmt:message key="notifications.title" bundle="${lang}"/> <span class="badge">${fn:length(user.notifications)}</span></a></li>
             </ul>
             <br>
         </c:if>
@@ -155,9 +156,106 @@
                 </div>
             </div>
             <div id="notifications" class="tab-pane fade">
-                <div class="text-center text-silver well well-lg">
-                    <h1><fmt:message key="easyrent.available-soon" bundle="${lang}"/> </h1>
-                </div>
+                <c:choose>
+                    <c:when test="${fn:length(user.notifications) eq 0}">
+                        <div class="text-center text-silver well well-lg">
+                            <h1><fmt:message key="notifications.none" bundle="${lang}"/> </h1>
+                        </div>
+                    </c:when>
+                    <c:otherwise>
+                        <hr>
+                        <div class="text-right">
+                            <form method="post" action="${pageContext.request.contextPath}/notification/clear-all">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+                                <button type="submit" id="clear-btn" class="btn btn-danger"><fmt:message key="notifications.clear-all" bundle="${lang}"/></button>
+                            </form>
+                        </div>
+                        <hr>
+                        <div id="notification-container">
+                            <c:forEach var="notification" items="${user.notifications}">
+                                <div id="notification-${notification.id}">
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <a href="${pageContext.request.contextPath}/notification/show/${notification.id}.html">
+                                                <c:choose>
+                                                    <c:when test="${empty notification.thumbnail}">
+                                                        <c:set var="photoUrl" value="${pageContext.request.contextPath}/img/profile-pic.png"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <c:set var="photoUrl" value="${pageContext.request.contextPath}/uploads/profile-pics/${notification.thumbnail}"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <img class="media-object img-thumbnail" src="${photoUrl}" width="100">
+                                            </a>
+                                        </div>
+                                        <div class="media-body">
+                                            <c:if test="${notification.type eq 'BOOKING_RECEIVED'}">
+                                                <fmt:message key="proposal.received" bundle="${lang}" var="heading"/>
+                                                <fmt:message key="proposal.received-msg" bundle="${lang}" var="description"/>
+                                                <c:set value="${notification.source} ${description} ${notification.destination}" var="description"/>
+                                            </c:if>
+                                            <c:if test="${notification.type eq 'BOOKING_ACCEPTED'}">
+                                                <fmt:message key="proposal.accepted" bundle="${lang}" var="heading"/>
+                                                <fmt:message key="proposal.answered-msg" bundle="${lang}" var="answer"/>
+                                                <fmt:message key="proposal.accepted-msg" bundle="${lang}" var="description"/>
+                                                <c:set value="${answer} ${notification.destination} ${description}" var="description"/>
+                                            </c:if>
+                                            <c:if test="${notification.type eq 'BOOKING_REJECTED'}">
+                                                <fmt:message key="proposal.rejected" bundle="${lang}" var="heading"/>
+                                                <fmt:message key="proposal.answered-msg" bundle="${lang}" var="answer"/>
+                                                <fmt:message key="proposal.rejected-msg" bundle="${lang}" var="description"/>
+                                                <c:set value="${answer} ${notification.destination} ${description}" var="description"/>
+                                            </c:if>
+                                            <c:if test="${notification.type eq 'BOOKING_EXPIRED'}">
+                                                <fmt:message key="proposal.expired" bundle="${lang}" var="heading"/>
+                                                <fmt:message key="proposal.expired-msg-a" bundle="${lang}" var="start"/>
+                                                <fmt:message key="proposal.expired-msg-b" bundle="${lang}" var="ending"/>
+                                                <c:set value="${start} ${notification.destination} ${ending}"/>
+                                            </c:if>
+                                            <a href="${pageContext.request.contextPath}/notification/show/${notification.id}.html"><h4 class="media-heading">${heading}</h4></a>
+                                            <div class="row">
+                                                <div class="col-xs-8 col-sm-10">
+                                                    <c:out value="${description}"/>
+                                                </div>
+                                                <div class="col-xs-4 col-sm-2 text-right">
+                                                    <button style="margin: 10px;" id="remove-${notification.id}" class="btn btn-default remove-btn" aria-label="Close"><span aria-hidden="true"><strong>X</strong></span></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                </div>
+                            </c:forEach>
+                        </div>
+                        <script>
+                            (function () {
+                                var options = {};
+                                options['${_csrf.parameterName}'] = '${_csrf.token}';
+
+                                var url = '${pageContext.request.contextPath}/user/profile/${user.id}.html#notifications';
+
+                                $('.remove-btn').click(function () {
+                                    var btn = $(this);
+                                    var idParts = btn.attr('id').split('-');
+                                    idParts.shift();
+                                    var id = idParts.join('-');
+
+                                    $.post('${pageContext.request.contextPath}/notification/dismiss/'+id, options)
+                                            .done(function () {
+                                                if ($('#notification-container').children().length === 1) {
+                                                    return window.location.reload(true);
+                                                }
+                                                var notification = $('#notification-'+id);
+                                                notification.fadeOut(function () {
+                                                    notification.remove();
+                                                });
+                                            });
+                                });
+                            })();
+                        </script>
+                    </c:otherwise>
+                </c:choose>
+                
             </div>
         </div>
         <script>
@@ -173,7 +271,7 @@
                     if (fragment != "") {
                         $('a[href="' + fragment + '"]').tab('show');
                     }
-                })
+                });
             })();
         </script>
     </jsp:body>

@@ -58,6 +58,10 @@ public class User extends DomainModel {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Photo photo;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OrderBy("creationDate desc ")
+    private Set<Notification> notifications;
+
     public User() {
         role = UserRole.TENANT;
         signUpDate = new Date();
@@ -216,6 +220,18 @@ public class User extends DomainModel {
         Token token = new Token(this);
         token.setType(TokenType.ACTIVATION);
         return token;
+    }
+
+    public Set<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(Set<Notification> notifications) {
+        this.notifications = notifications;
+    }
+
+    public Notification createNotification(NotificationType type) {
+        return new Notification(this, type);
     }
 
     public User activate() {

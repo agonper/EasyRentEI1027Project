@@ -45,6 +45,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/dropzone.min.css">
     <script src="${pageContext.request.contextPath}/js/dropzone.min.js"></script>
 
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/animate.css">
+
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAOjLkqYfh1-dvWvdcNXOtg6zN0ajK_x60&libraries=places"></script>
 
 </head>

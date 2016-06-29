@@ -1,11 +1,14 @@
 package es.uji.daal.easyrent.config;
 
+import es.uji.daal.easyrent.utils.CustomAuthenticationSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 /**
  * Created by Alberto on 09/05/2016.
@@ -38,9 +41,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                     .loginPage("/login.html")
-                    .defaultSuccessUrl("/index.html")
+                    .successHandler(authenticationSuccessHandler())
+//                    .defaultSuccessUrl("/index.html")
                     .and()
                 .exceptionHandling()
                     .accessDeniedPage("/403.html");
+    }
+
+    @Bean
+    public AuthenticationSuccessHandler authenticationSuccessHandler() {
+        return new CustomAuthenticationSuccessHandler();
     }
 }

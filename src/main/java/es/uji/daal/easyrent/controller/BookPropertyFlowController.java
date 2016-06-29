@@ -1,14 +1,8 @@
 package es.uji.daal.easyrent.controller;
 
 import es.uji.daal.easyrent.handler.BookingProposalEmailBroker;
-import es.uji.daal.easyrent.model.BookingProposal;
-import es.uji.daal.easyrent.model.Invoice;
-import es.uji.daal.easyrent.model.Property;
-import es.uji.daal.easyrent.model.User;
-import es.uji.daal.easyrent.repository.AvailabilityPeriodRepository;
-import es.uji.daal.easyrent.repository.BookingProposalRepository;
-import es.uji.daal.easyrent.repository.PropertyRepository;
-import es.uji.daal.easyrent.repository.UserRepository;
+import es.uji.daal.easyrent.model.*;
+import es.uji.daal.easyrent.repository.*;
 import es.uji.daal.easyrent.tags.InvoiceTools;
 import es.uji.daal.easyrent.utils.AvailabilityChanges;
 import es.uji.daal.easyrent.utils.BookingUtils;
@@ -47,6 +41,9 @@ public class BookPropertyFlowController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private NotificationRepository notificationRepository;
 
     @Autowired
     private BookingProposalEmailBroker emailBroker;
@@ -270,6 +267,16 @@ public class BookPropertyFlowController {
         proposalRepository.save(proposal);
 
         session.removeAttribute(getSessionMapName(propertyId));
+
+        User tenant = proposal.getTenant();
+        Notification bookingEmitted = property.getOwner().createNotification(NotificationType.BOOKING_RECEIVED);
+        bookingEmitted.setTargetId(proposal.getId());
+        bookingEmitted.setSource(tenant.getUsername());
+        bookingEmitted.setDestination(property.getTitle());
+        if (tenant.getPhoto() != null) {
+            bookingEmitted.setThumbnail(tenant.getPhoto().getFilename());
+        }
+        notificationRepository.save(bookingEmitted);
 
         emailBroker
                 .setProposal(proposal)

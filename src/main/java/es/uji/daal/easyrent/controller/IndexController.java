@@ -51,7 +51,7 @@ public class IndexController {
             User loggedUser = (User) authentication.getPrincipal();
             User user = userRepository.findOne(loggedUser.getId());
             model.addAttribute("bookingProposals", proposalRepository.findByProperty_Owner_IdOrderByDateOfCreationDesc(loggedUser.getId()));
-            model.addAttribute("invoices", invoiceRepository.findByProposal_Tenant_IdOrderByNumberAsc(loggedUser.getId()));
+            model.addAttribute("invoices", invoiceRepository.findByProposal_Tenant_IdOrderByExpeditionDateDesc(loggedUser.getId()));
             model.addAttribute("user", user);
         }
         return "index";

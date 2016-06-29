@@ -1,15 +1,16 @@
 package es.uji.daal.easyrent.tasks;
 
 import es.uji.daal.easyrent.handler.BookingProposalEmailBroker;
-import es.uji.daal.easyrent.model.AvailabilityPeriod;
-import es.uji.daal.easyrent.model.BookingProposal;
+import es.uji.daal.easyrent.model.*;
 import es.uji.daal.easyrent.repository.AvailabilityPeriodRepository;
 import es.uji.daal.easyrent.repository.BookingProposalRepository;
+import es.uji.daal.easyrent.repository.NotificationRepository;
 import es.uji.daal.easyrent.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -26,6 +27,9 @@ public class BookingProposalRejector {
 
     @Autowired
     private AvailabilityPeriodRepository periodRepository;
+
+    @Autowired
+    private NotificationRepository notificationRepository;
 
     @Autowired
     private BookingProposalEmailBroker emailBroker;
@@ -51,6 +55,30 @@ public class BookingProposalRejector {
         periodRepository.save(periods);
 
         proposals.forEach(bookingProposal -> {
+
+            User owner = bookingProposal.getProperty().getOwner();
+            User tenant = bookingProposal.getTenant();
+
+            Notification bookingExpiredTenant = bookingProposal.getTenant()
+                    .createNotification(NotificationType.BOOKING_EXPIRED);
+            bookingExpiredTenant.setTargetId(bookingProposal.getId());
+            bookingExpiredTenant.setSource(owner.getUsername());
+            bookingExpiredTenant.setDestination(bookingProposal.getProperty().getTitle());
+            if (owner.getPhoto() != null) {
+                bookingExpiredTenant.setThumbnail(owner.getPhoto().getFilename());
+            }
+
+            Notification bookingExpiredOwner = bookingProposal.getProperty().getOwner()
+                    .createNotification(NotificationType.BOOKING_EXPIRED);
+            bookingExpiredOwner.setTargetId(bookingProposal.getId());
+            bookingExpiredOwner.setSource(tenant.getUsername());
+            bookingExpiredOwner.setDestination(bookingProposal.getProperty().getTitle());
+            if (tenant.getPhoto() != null) {
+                bookingExpiredOwner.setThumbnail(tenant.getPhoto().getFilename());
+            }
+
+            notificationRepository.save(Arrays.asList(bookingExpiredTenant, bookingExpiredOwner));
+
             emailBroker
                     .setProposal(bookingProposal)
                     .sendExpirationOwnerEmail()

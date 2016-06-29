@@ -72,10 +72,10 @@
                     </div>
                 </c:if>
                 <div class="page-header">
-                    <span class="h1"><fmt:message key="index.home" bundle="${lang}"/> : <c:out value="${loggedUser.username}"/></span>
+                    <span class="h1"><fmt:message key="index.home" bundle="${lang}"/> : <c:out value="${user.username}"/></span>
                 </div>
 
-                <c:if test="${loggedUser.role eq 'OWNER' or loggedUser.role eq 'ADMINISTRATOR'}">
+                <c:if test="${user.role eq 'OWNER' or user.role eq 'ADMINISTRATOR'}">
                     <ul class="nav nav-tabs nav-justified" id="user-options">
                         <li role="presentation" class="active"><a data-toggle="tab" href="#tenant"><fmt:message key="home.my-booking-proposals" bundle="${lang}"/></a></li>
                         <li role="presentation"><a data-toggle="tab" href="#owner"><fmt:message key="home.my-properties" bundle="${lang}"/></a></li>
@@ -188,7 +188,7 @@
                             </div>
                         </div>
                     </div>
-                    <c:if test="${loggedUser.role eq 'OWNER' or loggedUser.role eq 'ADMINISTRATOR'}">
+                    <c:if test="${user.role eq 'OWNER' or user.role eq 'ADMINISTRATOR'}">
                         <div id="owner" class="tab-pane fade">
                             <div class="row">
                                 <div class="col-md-3">
