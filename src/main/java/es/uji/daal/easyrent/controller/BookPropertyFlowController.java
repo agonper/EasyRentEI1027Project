@@ -252,11 +252,12 @@ public class BookPropertyFlowController {
             return "property/book/4";
         }
 
+        User userThatBooks = userRepository.findOne(loggedUser.getId());
         PersonalDataForm personalDataForm = (PersonalDataForm) bookProperty.get("personalDataForm");
         AddressInfoForm addressInfoForm = (AddressInfoForm) bookProperty.get("addressInfoForm");
-        personalDataForm.update(loggedUser);
-        addressInfoForm.update(loggedUser);
-        userRepository.save(loggedUser);
+        personalDataForm.update(userThatBooks);
+        addressInfoForm.update(userThatBooks);
+        userRepository.save(userThatBooks);
 
         AvailabilityChanges changes = BookingUtils.getChanges(form, property.getAvailabilityPeriods());
         property.removePeriods(changes.getToBeRemoved());
