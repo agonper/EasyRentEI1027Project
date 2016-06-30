@@ -24,6 +24,7 @@ public class Conversation extends DomainModel {
     private Date updateDate;
 
     @OneToMany(mappedBy = "conversation", cascade = CascadeType.ALL)
+    @OrderBy("sendDate asc")
     private Set<ConversationMessage> messages;
 
     protected Conversation() {
