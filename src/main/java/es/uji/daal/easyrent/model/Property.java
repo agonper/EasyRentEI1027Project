@@ -76,6 +76,9 @@ public class Property extends DomainModel {
     @ManyToOne
     private GeographicLocation geographicLocation;
 
+    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
+    private Set<Conversation> conversations;
+
     /**
      * ======
      * Methods
@@ -186,6 +189,14 @@ public class Property extends DomainModel {
         this.geographicLocation = geographicLocation;
     }
 
+    public Set<Conversation> getConversations() {
+        return conversations;
+    }
+
+    public void setConversations(Set<Conversation> conversations) {
+        this.conversations = conversations;
+    }
+
     /**
      * ======
      * Extra
@@ -274,6 +285,15 @@ public class Property extends DomainModel {
             setAvailabilityPeriods(new HashSet<>());
         }
         getAvailabilityPeriods().removeAll(periods);
+    }
+
+    public Conversation createConversation(User user) {
+        Conversation conversation = new Conversation(this, user);
+        if (getConversations() == null) {
+            setConversations(new HashSet<>());
+        }
+        getConversations().add(conversation);
+        return conversation;
     }
 
     @PreRemove

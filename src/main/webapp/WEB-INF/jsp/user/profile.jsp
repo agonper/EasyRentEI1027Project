@@ -23,8 +23,8 @@
 
         <c:if test="${user.equals(loggedUser)}">
             <ul class="nav nav-tabs nav-justified" role="tablist">
-                <li role="presentation" class="active"><a data-toggle="tab" href="#main">${title}</a></li>
-                <li role="presentation"><a data-toggle="tab" href="#notifications"><fmt:message key="notifications.title" bundle="${lang}"/> <span class="badge">${fn:length(user.notifications)}</span></a></li>
+                <li role="presentation" class="active"><a data-toggle="tab" href="#main"><strong>${title}</strong></a></li>
+                <li role="presentation"><a data-toggle="tab" href="#notifications"><strong><fmt:message key="notifications.title" bundle="${lang}"/></strong> <span class="badge">${fn:length(user.notifications)}</span></a></li>
             </ul>
             <br>
         </c:if>

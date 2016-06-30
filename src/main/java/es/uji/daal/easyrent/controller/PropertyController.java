@@ -152,4 +152,22 @@ public class PropertyController {
             return "none";
         }
     }
+
+    @RequestMapping(value = "/{propertyId}/start-conversation", method = RequestMethod.POST)
+    public String startConversation(@RequestParam("message") String message,
+                                    @PathVariable("propertyId") String propertyId) {
+        User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Property property = repository.findOne(UUID.fromString(propertyId));
+
+        if (property.getOwner().equals(loggedUser)) {
+            return "redirect:../show/"+propertyId+".html";
+        }
+
+        Conversation conversation = property.createConversation(loggedUser);
+        ConversationMessage conversationMessage = conversation.createMessage(loggedUser);
+        conversationMessage.setMessage(message);
+        repository.save(property);
+
+        return "redirect:../show/"+propertyId+".html?success=ms";
+    }
 }

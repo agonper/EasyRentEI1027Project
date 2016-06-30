@@ -12,6 +12,15 @@
 <fmt:message key="general.by" bundle="${lang}" var="by"/>
 <t:paginabasica title="${property.title}">
     <jsp:body>
+
+        <c:if test="${not empty param.success && param.success eq 'ms'}">
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong><fmt:message key="general.success" bundle="${lang}"/> </strong>
+                <fmt:message key="show-property.success" bundle="${lang}" />
+            </div>
+        </c:if>
+
         <ol class="breadcrumb">
             <li><a href="${pageContext.request.contextPath}/index.html"><fmt:message key="index.home" bundle="${lang}"/></a></li>
             <c:if test="${not empty param.q}">

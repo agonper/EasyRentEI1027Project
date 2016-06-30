@@ -77,8 +77,8 @@
 
                 <c:if test="${user.role eq 'OWNER' or user.role eq 'ADMINISTRATOR'}">
                     <ul class="nav nav-tabs nav-justified" id="user-options">
-                        <li role="presentation" class="active"><a data-toggle="tab" href="#tenant"><fmt:message key="home.my-booking-proposals" bundle="${lang}"/></a></li>
-                        <li role="presentation"><a data-toggle="tab" href="#owner"><fmt:message key="home.my-properties" bundle="${lang}"/></a></li>
+                        <li role="presentation" class="active"><a data-toggle="tab" href="#tenant"><strong><fmt:message key="home.my-booking-proposals" bundle="${lang}"/></strong></a></li>
+                        <li role="presentation"><a data-toggle="tab" href="#owner"><strong><fmt:message key="home.my-properties" bundle="${lang}"/></strong></a></li>
                     </ul>
                     <br>
                 </c:if>

@@ -23,7 +23,7 @@
             <c:if test='${type.equals("text")}'><form:input id="${id}" path="${path}" cssClass="form-control"/></c:if>
             <c:if test='${type.equals("email")}'><div class="input-group"><span class="input-group-addon">@</span><form:input id="${id}" type="email" path="${path}" cssClass="form-control" /></div></c:if>
             <c:if test='${type.equals("password")}'><form:password id="${id}" path="${path}" cssClass="form-control" /></c:if>
-            <c:if test='${type.equals("textarea")}'><form:textarea id="${id}" path="${path}" cssClass="form-control" /></c:if>
+            <c:if test='${type.equals("textarea")}'><form:textarea id="${id}" path="${path}" cssClass="form-control" maxlength="250" /></c:if>
             <c:if test='${type.equals("checkbox")}'><form:checkbox id="${id}" path="${path}" cssClass="form-control" value="${false}"/></c:if>
             <c:if test='${type.equals("date")}'><form:input id="${id}" path="${path}" type="date" cssClass="form-control"/></c:if>
             <c:if test='${type.equals("number") and not empty step}'><form:input id="${id}" path="${path}" type="number" cssClass="form-control" step="${step}" min="0" /></c:if>

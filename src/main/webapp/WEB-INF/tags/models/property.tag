@@ -6,6 +6,11 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="er" uri="/WEB-INF/easy-rent.tld" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
+<sec:authorize access="isAuthenticated()">
+    <sec:authentication var="loggedUser" property="principal" />
+</sec:authorize>
 
 <div class="row">
     <div class="col-sm-4">
@@ -156,6 +161,39 @@
                 </c:choose>
             </div>
         </div>
+        <c:if test="${loggedUser ne property.owner}">
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <fmt:message key="property.ask" bundle="${lang}"/>
+                </div>
+                <div class="panel-body">
+                    <c:choose>
+                        <c:when test="${empty loggedUser}">
+                            <a class="btn btn-warning" href="${pageContext.request.contextPath}/login.html"><fmt:message key="login.title" bundle="${lang}"/></a>
+                            <fmt:message key="property.send-a-message" bundle="${lang}"/>
+                        </c:when>
+                        <c:otherwise>
+                            <form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/property/${property.id}/start-conversation">
+                                <div class="form-group">
+                                    <fmt:message key="property.message" bundle="${lang}" var="message"/>
+                                    <fmt:message key="property.write-message" bundle="${lang}" var="writeMessage"/>
+                                    <label for="message" class="col-sm-2 control-label">${message}</label>
+                                    <div class="col-sm-10">
+                                        <textarea id="message" class="form-control" name="message" placeholder="${writeMessage}" maxlength="250"></textarea>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-send"></span> <fmt:message key="general.send" bundle="${lang}"/></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </div>
+        </c:if>
     </div>
     <c:if test="${not empty property.geographicLocation}">
         <div class="col-md-4">
