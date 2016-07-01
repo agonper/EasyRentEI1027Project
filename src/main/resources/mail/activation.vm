@@ -11,4 +11,4 @@
     <a href="http://${host}:${port}/user/activate?t=${activationToken.id}">http://${host}:${port}/user/activate?t=${activationToken.id}</a>
 </p>
 <br>
-<h4>This is an internal email, always reply with your corporative mail.</h4>
+<h4>Welcome to EasyRent</h4>
