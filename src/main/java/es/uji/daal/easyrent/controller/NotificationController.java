@@ -40,6 +40,9 @@ public class NotificationController {
             case BOOKING_REJECTED:
             case BOOKING_EXPIRED:
                 return "redirect:../../booking-proposal/show/" + notification.getTargetId() + ".html";
+            case CONVERSATION_STARTED:
+            case MESSAGE_RECEIVED:
+                return "redirect:../../conversation/show/" + notification.getTargetId() + ".html";
             default:
                 return "redirect:../../index.html";
         }

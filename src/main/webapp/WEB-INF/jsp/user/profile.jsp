@@ -210,7 +210,17 @@
                                                 <fmt:message key="proposal.expired" bundle="${lang}" var="heading"/>
                                                 <fmt:message key="proposal.expired-msg-a" bundle="${lang}" var="start"/>
                                                 <fmt:message key="proposal.expired-msg-b" bundle="${lang}" var="ending"/>
-                                                <c:set value="${start} ${notification.destination} ${ending}"/>
+                                                <c:set value="${start} ${notification.destination} ${ending}" var="description"/>
+                                            </c:if>
+                                            <c:if test="${notification.type eq 'CONVERSATION_STARTED'}">
+                                                <fmt:message key="conversation.started" bundle="${lang}" var="heading"/>
+                                                <fmt:message key="conversation.started-msg" bundle="${lang}" var="description"/>
+                                                <c:set value="${notification.source} ${description} ${notification.destination}" var="description"/>
+                                            </c:if>
+                                            <c:if test="${notification.type eq 'MESSAGE_RECEIVED'}">
+                                                <fmt:message key="message.received" bundle="${lang}" var="heading"/>
+                                                <fmt:message key="message.received-msg" bundle="${lang}" var="description"/>
+                                                <c:set value="${notification.source} ${description}" var="description"/>
                                             </c:if>
                                             <a href="${pageContext.request.contextPath}/notification/show/${notification.id}.html"><h4 class="media-heading">${heading}</h4></a>
                                             <div class="row">
