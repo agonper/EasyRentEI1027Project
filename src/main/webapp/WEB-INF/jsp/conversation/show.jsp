@@ -53,7 +53,7 @@
                                 <c:when test="${loggedUser eq message.user}">
                                     <div class="media-body text-right">
                                         <h4 class="media-heading">
-                                            <small><fmt:formatDate value="${message.sendDate}" pattern="dd/MM/yyyy HH:ss"/> </small>
+                                            <small><fmt:formatDate value="${message.sendDate}" pattern="dd/MM/yyyy HH:mm"/> </small>
                                             <a href="${pageContext.request.contextPath}/user/profile/${message.user.id}.html"><c:out value="${message.user.username}"/></a>
                                         </h4>
                                         <p><c:out value="${message.message}"/></p>
@@ -73,7 +73,7 @@
                                     <div class="media-body">
                                         <h4 class="media-heading">
                                             <a href="${pageContext.request.contextPath}/user/profile/${message.user.id}.html"><c:out value="${message.user.username}"/></a>
-                                            <small><fmt:formatDate value="${message.sendDate}" pattern="dd/MM/yyyy HH:ss"/> </small>
+                                            <small><fmt:formatDate value="${message.sendDate}" pattern="dd/MM/yyyy HH:mm"/> </small>
                                         </h4>
                                         <p><c:out value="${message.message}"/></p>
                                     </div>
