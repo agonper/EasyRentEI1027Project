@@ -59,6 +59,7 @@ public class Property extends DomainModel {
 
     @OrderBy("startDate asc ")
     @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
+    @IndexedEmbedded(depth = 1)
     private Set<AvailabilityPeriod> availabilityPeriods;
 
     @OneToMany(mappedBy = "property")

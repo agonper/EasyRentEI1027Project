@@ -24,7 +24,7 @@
         <ol class="breadcrumb">
             <li><a href="${pageContext.request.contextPath}/index.html"><fmt:message key="index.home" bundle="${lang}"/></a></li>
             <c:if test="${not empty param.q}">
-                <li><a href="${pageContext.request.contextPath}/search.html?q=${param.q}"><fmt:message key="general.search" bundle="${lang}"/></a></li>
+                <li><a href="${pageContext.request.contextPath}/search.html?q=${param.q}&s=${param.s}&e=${param.e}"><fmt:message key="general.search" bundle="${lang}"/></a></li>
             </c:if>
             <c:if test="${property.owner.equals(loggedUser)}">
                 <li><a href="${pageContext.request.contextPath}/index.html#owner-properties"><fmt:message key="home.my-properties" bundle="${lang}"/></a></li>
@@ -48,7 +48,14 @@
                                     <a class="btn btn-lg btn-danger disabled" href="#"><span class="glyphicon glyphicon-ok"></span> <fmt:message key="proposal.book" bundle="${lang}"/> </a>
                                 </c:when>
                                 <c:otherwise>
-                                    <a class="btn btn-lg btn-danger btn-warning" href="${pageContext.request.contextPath}/property/booking-proposal/${property.id}.html${not empty param.q ? '?q=' : ''}${not empty param.q ? param.q : ''}"><span class="glyphicon glyphicon-ok"></span> <fmt:message key="proposal.book" bundle="${lang}"/> </a>
+                                    <c:choose>
+                                        <c:when test="${not empty param.q}">
+                                            <a class="btn btn-lg btn-danger btn-warning" href="${pageContext.request.contextPath}/property/booking-proposal/${property.id}.html?q=${param.q}&s=${param.s}&e=${param.e}"><span class="glyphicon glyphicon-ok"></span> <fmt:message key="proposal.book" bundle="${lang}"/> </a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a class="btn btn-lg btn-danger btn-warning" href="${pageContext.request.contextPath}/property/booking-proposal/${property.id}.html"><span class="glyphicon glyphicon-ok"></span> <fmt:message key="proposal.book" bundle="${lang}"/> </a>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </c:otherwise>
                             </c:choose>
                         </c:otherwise>

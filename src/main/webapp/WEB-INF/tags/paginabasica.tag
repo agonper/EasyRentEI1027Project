@@ -67,10 +67,17 @@
             <h1>EasyRent</h1>
             <p><fmt:message key="easyrent.slogan" bundle="${lang}" /></p>
         </c:if>
-        <form class="form-inline" method="get" action="${pageContext.request.contextPath}/search.html">
-            <div class="input-group">
+        <form id="search-form" class="form-inline" method="get" action="${pageContext.request.contextPath}/search.html">
+            <div class="form-group">
                 <fmt:message key="home.search" bundle="${lang}" var="search"/>
-                <input class="form-control" name="q" placeholder="${search}" value="${param.q != null ? param.q : ''}" size="50">
+                <input class="form-control" name="q" placeholder="${search}" value="${param.q != null ? param.q : ''}" size="40">
+            </div>
+            <fmt:message key="general.enter-date" bundle="${lang}" var="enterDate"/>
+            <div class="input-group input-daterange" id="search-date-range">
+                <span class="input-group-addon"><fmt:message key="general.from" bundle="${lang}"/> </span>
+                <input name="s" required class="form-control" placeholder="${enterDate}" value="${param.s != null ? param.s : ''}" size="10"/>
+                <span class="input-group-addon"><fmt:message key="general.to" bundle="${lang}"/> </span>
+                <input name="e" required class="form-control" placeholder="${enterDate}" value="${param.e != null ? param.e : ''}" size="10"/>
                 <div class="input-group-btn">
                     <button type="submit" class="btn btn-default"><fmt:message key="home.search-btn" bundle="${lang}"/> </button>
                 </div>
@@ -89,5 +96,13 @@
         </p>
     </footer>
 </c:if>
+<er:time-config type="datepicker" var="datepickerFormat"/>
+<er:time-config type="moment" var="momentFormat"/>
+<script>
+    $('#search-form').find('.input-daterange').datepicker({
+        format: '${datepickerFormat}',
+        startDate: moment().format('${momentFormat}')
+    });
+</script>
 </body>
 </html>

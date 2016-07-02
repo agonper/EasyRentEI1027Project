@@ -41,7 +41,7 @@
                                 <div class="col-sm-9">
                                     <div class="input-daterange input-group" id="datepicker">
                                         <form:input path="startDate" required="true" cssClass="input-sm form-control"/>
-                                        <span class="input-group-addon">to</span>
+                                        <span class="input-group-addon"><fmt:message key="general.to" bundle="${lang}"/></span>
                                         <form:input path="endDate" required="true" cssClass="input-sm form-control"/>
                                     </div>
                                 </div>
