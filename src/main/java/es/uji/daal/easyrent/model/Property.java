@@ -6,11 +6,9 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import es.uji.daal.easyrent.utils.search.PropertyTypeBridge;
 import org.apache.lucene.analysis.es.SpanishAnalyzer;
-import org.hibernate.search.annotations.Analyzer;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.*;
 
 @Entity
 @Indexed
@@ -48,6 +46,8 @@ public class Property extends DomainModel {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
+    @Field
+    @FieldBridge(impl = PropertyTypeBridge.class)
     private PropertyType type;
 
     @Field(analyzer = @Analyzer(impl = SpanishAnalyzer.class))

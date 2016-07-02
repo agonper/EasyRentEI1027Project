@@ -43,6 +43,7 @@ public class PropertyRepositoryImpl implements PropertyRepositoryCustom {
                         .fuzzy()
                         .withThreshold(0.8f)
                         .onFields("title", "location", "description", "services.name")
+                        .andField("type").ignoreFieldBridge()
                         .matching(params.getQuery())
                         .createQuery())
                 .must(queryBuilder
