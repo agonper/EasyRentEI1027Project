@@ -35,6 +35,8 @@ public class PropertyRepositoryImpl implements PropertyRepositoryCustom {
 
         Query q = queryBuilder
                 .keyword()
+                .fuzzy()
+                .withThreshold(0.7f)
                 .onFields("title", "location", "description", "services.name")
                 .matching(query)
                 .createQuery();
