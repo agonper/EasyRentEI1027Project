@@ -10,7 +10,7 @@ import org.apache.lucene.analysis.es.SpanishAnalyzer;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.hibernate.search.annotations.IndexedEmbedded;
 
 @Entity
 @Indexed
@@ -67,10 +67,11 @@ public class Property extends DomainModel {
     @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Photo> photos;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "property_services",
         joinColumns = @JoinColumn(name = "property_id", referencedColumnName = "id"),
         inverseJoinColumns = @JoinColumn(name = "service_id", referencedColumnName = "id"))
+    @IndexedEmbedded(depth = 1)
     private Set<Service> services;
 
     @ManyToOne

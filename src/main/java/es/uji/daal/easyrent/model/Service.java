@@ -1,6 +1,8 @@
 package es.uji.daal.easyrent.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.search.annotations.ContainedIn;
+import org.hibernate.search.annotations.Field;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -16,6 +18,7 @@ import java.util.UUID;
 public class Service extends DomainModel {
 
     @Column(nullable = false)
+    @Field
     private String name;
 
     @Column(nullable = false, unique = true)
@@ -40,6 +43,7 @@ public class Service extends DomainModel {
 
     @JsonIgnore
     @ManyToMany(mappedBy = "services", cascade = CascadeType.ALL)
+    @ContainedIn
     private List<Property> properties;
 
     /**

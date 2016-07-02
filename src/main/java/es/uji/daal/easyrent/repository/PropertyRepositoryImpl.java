@@ -35,7 +35,7 @@ public class PropertyRepositoryImpl implements PropertyRepositoryCustom {
 
         Query q = queryBuilder
                 .keyword()
-                .onFields("title", "location", "description")
+                .onFields("title", "location", "description", "services.name")
                 .matching(query)
                 .createQuery();
 
