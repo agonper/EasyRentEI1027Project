@@ -147,12 +147,14 @@
                             <c:set var="services" value="${property.services}"/>
                         </c:if>
                         <c:forEach var="service" items="${services}" varStatus="status">
-                            <er:color-gen number="${status.index}" var="color"/>
-                    <span class="h3">
-                        <span style="margin: 5px" class="label label-${color}">
-                                <c:out value="${service.name}"/>
-                        </span>
-                    </span>
+                            <c:if test="${service.active}">
+                                <er:color-gen number="${status.index}" var="color"/>
+                                <span class="h3">
+                                    <span style="margin: 5px" class="label label-${color}">
+                                            <c:out value="${service.name}"/>
+                                    </span>
+                                </span>
+                            </c:if>
                         </c:forEach>
                     </c:when>
                     <c:otherwise>

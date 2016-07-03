@@ -55,7 +55,8 @@ public class Service extends DomainModel {
 
     public Service(User user) {
         initService(user);
-        active = false;
+        active = true;
+        activeSince = new Date();
     }
 
     public Service(User user, boolean active) {
