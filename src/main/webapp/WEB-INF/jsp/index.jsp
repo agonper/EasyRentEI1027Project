@@ -72,16 +72,17 @@
                     </div>
                 </c:if>
                 <div class="page-header">
-                    <span class="h1"><fmt:message key="index.home" bundle="${lang}"/> : <c:out value="${loggedUser.username}"/></span>
+                    <span class="h1"><fmt:message key="index.home" bundle="${lang}"/> : <c:out value="${user.username}"/></span>
                 </div>
 
-                <c:if test="${loggedUser.role eq 'OWNER' or loggedUser.role eq 'ADMINISTRATOR'}">
                     <ul class="nav nav-tabs nav-justified" id="user-options">
-                        <li role="presentation" class="active"><a data-toggle="tab" href="#tenant"><fmt:message key="home.my-booking-proposals" bundle="${lang}"/></a></li>
-                        <li role="presentation"><a data-toggle="tab" href="#owner"><fmt:message key="home.my-properties" bundle="${lang}"/></a></li>
+                        <li role="presentation" class="active"><a data-toggle="tab" href="#tenant"><strong><fmt:message key="home.my-booking-proposals" bundle="${lang}"/></strong></a></li>
+                        <c:if test="${user.role eq 'OWNER' or user.role eq 'ADMINISTRATOR'}">
+                            <li role="presentation"><a data-toggle="tab" href="#owner"><strong><fmt:message key="home.my-properties" bundle="${lang}"/></strong></a></li>
+                        </c:if>
+                        <li role="presentation"><a data-toggle="tab" href="#conversations"><strong><fmt:message key="home.conversations" bundle="${lang}"/></strong></a></li>
                     </ul>
                     <br>
-                </c:if>
                 <div class="tab-content">
                     <div id="tenant" class="tab-pane fade in active">
                         <div class="row">
@@ -188,7 +189,7 @@
                             </div>
                         </div>
                     </div>
-                    <c:if test="${loggedUser.role eq 'OWNER' or loggedUser.role eq 'ADMINISTRATOR'}">
+                    <c:if test="${user.role eq 'OWNER' or user.role eq 'ADMINISTRATOR'}">
                         <div id="owner" class="tab-pane fade">
                             <div class="row">
                                 <div class="col-md-3">
@@ -312,6 +313,64 @@
                             </div>
                         </div>
                     </c:if>
+                    <div id="conversations" class="tab-pane fade">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="panel panel-warning">
+                                    <div class="panel-heading">
+                                        <fmt:message key="conversation.sections" bundle="${lang}"/>
+                                    </div>
+                                    <div class="list-group">
+                                        <a class="list-group-item active" data-toggle="tab" href="#conversations-all">
+                                            <fmt:message key="conversations.all" bundle="${lang}"/> <span class="badge">${fn:length(conversations)}</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="tab-content">
+                                    <div id="conversations-all" class="panel panel-warning tab-pane fade in active">
+                                        <div class="panel-heading">
+                                            <fmt:message key="conversations.all" bundle="${lang}"/>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <c:choose>
+                                                <c:when test="${fn:length(conversations) eq 0}">
+                                                    <div class="text-silver text-center">
+                                                        <h3><fmt:message key="home.no-conversations" bundle="${lang}"/></h3>
+                                                    </div>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <table class="table table-striped table-hover">
+                                                        <thead>
+                                                        <tr>
+                                                            <th><fmt:message key="general.number" bundle="${lang}"/> </th>
+                                                            <th><fmt:message key="conversation.started-by" bundle="${lang}"/> </th>
+                                                            <th><fmt:message key="property.page-title" bundle="${lang}"/></th>
+                                                            <th><fmt:message key="conversation.begun-in" bundle="${lang}"/></th>
+                                                            <th><fmt:message key="proposal.last-updated" bundle="${lang}"/></th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody data-link="row" class="rowlink">
+                                                        <c:forEach var="conversation" items="${conversations}" varStatus="loop">
+                                                            <tr>
+                                                                <td><a href="${pageContext.request.contextPath}/conversation/show/${conversation.id}.html">${loop.index+1}</a></td>
+                                                                <td class="rowlink-skip"><a href="${pageContext.request.contextPath}/user/profile/${conversation.tenant.id}.html"><c:out value="${conversation.tenant.username}"/> <span class="glyphicon glyphicon-new-window"></span> </a></td>
+                                                                <td class="rowlink-skip"><a href="${pageContext.request.contextPath}/property/show/${conversation.property.id}.html"><fmt:message key="general.link" bundle="${lang}"/> <span class="glyphicon glyphicon-new-window"></span> </a></td>
+                                                                <td><spring:eval expression="conversation.creationDate"/></td>
+                                                                <td><spring:eval expression="conversation.updateDate"/></td>
+                                                            </tr>
+                                                        </c:forEach>
+                                                        </tbody>
+                                                    </table>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <%-- Property delete modal --%>
                 <div class="modal fade" id="property-delete-modal" tabindex="-1" role="dialog" aria-labelledby="propertyDeleteLabel">

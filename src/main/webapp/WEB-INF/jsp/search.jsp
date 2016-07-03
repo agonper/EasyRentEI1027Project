@@ -19,14 +19,14 @@
                 <c:choose>
                     <c:when test="${empty properties}">
                         <div class="text-silver text-center">
-                            <h3><fmt:message key="search.no-results" bundle="${lang}"/> '${param.q}'. <fmt:message key="search.less-keywords" bundle="${lang}"/> </h3>
+                            <h3><fmt:message key="search.no-results" bundle="${lang}"/> '${param.q} <fmt:message key="general.from" bundle="${lang}"/> ${param.s} <fmt:message key="general.from" bundle="${lang}"/> ${param.e}'. <fmt:message key="search.less-keywords" bundle="${lang}"/> </h3>
                         </div>
                     </c:when>
                     <c:otherwise>
                         <c:forEach var="property" items="${properties}">
                             <div class="media">
                                 <div class="media-left">
-                                    <a href="${pageContext.request.contextPath}/property/show/${property.id}.html?q=${param.q}">
+                                    <a href="${pageContext.request.contextPath}/property/show/${property.id}.html?q=${param.q}&s=${param.s}&e=${param.e}">
                                         <c:choose>
                                             <c:when test="${empty property.photos}">
                                                 <img class="media-object" src="${pageContext.request.contextPath}/img/neighborhood1.jpg" width="128">
@@ -38,7 +38,7 @@
                                     </a>
                                 </div>
                                 <div class="media-body">
-                                    <a href="${pageContext.request.contextPath}/property/show/${property.id}.html?q=${param.q}"><h4 class="media-heading"><c:out value="${property.title}"/></h4></a>
+                                    <a href="${pageContext.request.contextPath}/property/show/${property.id}.html?q=${param.q}&s=${param.s}&e=${param.e}"><h4 class="media-heading"><c:out value="${property.title}"/></h4></a>
                                     <div class="row">
                                         <div class="col-sm-8 col-md-7 col-lg-8">
                                             <p><c:out value="${property.description}"/></p>
@@ -121,7 +121,7 @@
                         google.maps.event.addListener(marker, 'click', (function (marker, property) {
                             return function () {
                                 var root = $('<div>');
-                                var title = $('<a>').attr('href', '${pageContext.request.contextPath}/property/show/'+property.id + '.html?q=' + '${param.q}').html($('<h4>').text(property.title))
+                                var title = $('<a>').attr('href', '${pageContext.request.contextPath}/property/show/' + property.id + '.html?q=${param.q}&s=${param.s}&e=${param.e}').html($('<h4>').text(property.title))
                                 var subtitle = $('<p>').text(property.address);
                                 root.append(title, subtitle);
                                 infoWindow.setContent(root.prop("outerHTML"));

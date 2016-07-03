@@ -260,14 +260,15 @@ public class AddPropertyFlowController {
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Map<String, Object> addProperty = (Map<String, Object>) session.getAttribute("addPropertyMap");
 
+        User userThatPublishes = userRepository.findOne(loggedUser.getId());
         PersonalDataForm personalDataForm = (PersonalDataForm) addProperty.get("personalDataForm");
         AddressInfoForm addressInfoForm = (AddressInfoForm) addProperty.get("addressInfoForm");
-        personalDataForm.update(loggedUser);
-        addressInfoForm.update(loggedUser);
-        if (loggedUser.getRole() == UserRole.TENANT) {
-            loggedUser.setRole(UserRole.OWNER);
+        personalDataForm.update(userThatPublishes);
+        addressInfoForm.update(userThatPublishes);
+        if (userThatPublishes.getRole() == UserRole.TENANT) {
+            userThatPublishes.setRole(UserRole.OWNER);
         }
-        userRepository.save(loggedUser);
+        userRepository.save(userThatPublishes);
 
         Property property = (Property) addProperty.get("property");
         List<Service> services = (List<Service>) addProperty.get("services");

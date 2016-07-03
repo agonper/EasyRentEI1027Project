@@ -6,11 +6,9 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import es.uji.daal.easyrent.utils.search.PropertyTypeBridge;
 import org.apache.lucene.analysis.es.SpanishAnalyzer;
-import org.hibernate.search.annotations.Analyzer;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.hibernate.search.annotations.*;
 
 @Entity
 @Indexed
@@ -48,6 +46,8 @@ public class Property extends DomainModel {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
+    @Field
+    @FieldBridge(impl = PropertyTypeBridge.class)
     private PropertyType type;
 
     @Field(analyzer = @Analyzer(impl = SpanishAnalyzer.class))
@@ -59,6 +59,7 @@ public class Property extends DomainModel {
 
     @OrderBy("startDate asc ")
     @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
+    @IndexedEmbedded(depth = 1)
     private Set<AvailabilityPeriod> availabilityPeriods;
 
     @OneToMany(mappedBy = "property")
@@ -67,14 +68,18 @@ public class Property extends DomainModel {
     @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Photo> photos;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "property_services",
         joinColumns = @JoinColumn(name = "property_id", referencedColumnName = "id"),
         inverseJoinColumns = @JoinColumn(name = "service_id", referencedColumnName = "id"))
+    @IndexedEmbedded(depth = 1)
     private Set<Service> services;
 
     @ManyToOne
     private GeographicLocation geographicLocation;
+
+    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
+    private Set<Conversation> conversations;
 
     /**
      * ======
@@ -186,6 +191,14 @@ public class Property extends DomainModel {
         this.geographicLocation = geographicLocation;
     }
 
+    public Set<Conversation> getConversations() {
+        return conversations;
+    }
+
+    public void setConversations(Set<Conversation> conversations) {
+        this.conversations = conversations;
+    }
+
     /**
      * ======
      * Extra
@@ -274,6 +287,15 @@ public class Property extends DomainModel {
             setAvailabilityPeriods(new HashSet<>());
         }
         getAvailabilityPeriods().removeAll(periods);
+    }
+
+    public Conversation createConversation(User user) {
+        Conversation conversation = new Conversation(this, user);
+        if (getConversations() == null) {
+            setConversations(new HashSet<>());
+        }
+        getConversations().add(conversation);
+        return conversation;
     }
 
     @PreRemove

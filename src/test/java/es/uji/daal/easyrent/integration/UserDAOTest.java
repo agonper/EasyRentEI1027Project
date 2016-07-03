@@ -31,27 +31,16 @@ public class UserDAOTest {
     @Test
     public void testFindAllRecords() throws Exception {
         final List<User> users = (List<User>) repository.findAll();
-        assertTrue(users.isEmpty());
+        assertFalse(users.isEmpty());
     }
 
     @Test
     public void testFullStorageCycle() throws Exception {
         // Test case
         User user = new User();
-        user.setUsername("user1");
-        user.setDni("11111111X");
-        user.setRole(UserRole.OWNER);
+        user.setUsername("testuser");
         user.setPassword("XXXXXXXXX");
-        user.setName("User");
-        user.setSurnames("One Unique");
-        user.setEmail("user.one@example.com");
-        user.setPhoneNumber("+34654321123");
-        user.setCountry("spain");
-        user.setPostalAddress("False street, 123");
-        user.setPostCode(12345);
-        user.setSignUpDate(new Date(1234564L));
-        user.setActive(true);
-        user.setDeactivatedSince(null);
+        user.setEmail("testuser@example.com");
 
         // Store user
         user = repository.save(user);
@@ -60,7 +49,7 @@ public class UserDAOTest {
 
         // Find user
         final User dbUser = repository.findOne(userID);
-        assertEquals(user.getName(), dbUser.getName());
+        assertEquals(user.getUsername(), dbUser.getUsername());
 
         // Update user
         final String newAddress = "Fake street, 456";

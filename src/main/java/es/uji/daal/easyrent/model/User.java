@@ -58,6 +58,10 @@ public class User extends DomainModel {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Photo photo;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OrderBy("creationDate desc ")
+    private Set<Notification> notifications;
+
     public User() {
         role = UserRole.TENANT;
         signUpDate = new Date();
@@ -218,6 +222,18 @@ public class User extends DomainModel {
         return token;
     }
 
+    public Set<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(Set<Notification> notifications) {
+        this.notifications = notifications;
+    }
+
+    public Notification createNotification(NotificationType type) {
+        return new Notification(this, type);
+    }
+
     public User activate() {
         this.active = true;
         this.deactivatedSince = null;
@@ -232,11 +248,13 @@ public class User extends DomainModel {
 
     @PreRemove
     void preRemove() {
-        if (!getProperties().isEmpty()) {
+        if (getProperties() != null && !getProperties().isEmpty()) {
             throw new IllegalStateException("An owner needs to be without properties before removing it!");
         }
-        for (BookingProposal proposal : bookingProposals) {
-            proposal.setTenant(null);
+        if (getBookingProposals() != null) {
+            for (BookingProposal proposal : bookingProposals) {
+                proposal.setTenant(null);
+            }
         }
     }
 }

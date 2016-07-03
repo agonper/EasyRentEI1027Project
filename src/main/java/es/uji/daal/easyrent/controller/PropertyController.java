@@ -1,5 +1,6 @@
 package es.uji.daal.easyrent.controller;
 
+import es.uji.daal.easyrent.handler.ConversationEmailBroker;
 import es.uji.daal.easyrent.model.*;
 
 import es.uji.daal.easyrent.repository.*;
@@ -46,7 +47,16 @@ public class PropertyController {
     private GeographicLocationRepository locationRepository;
 
     @Autowired
+    private ConversationRepository conversationRepository;
+
+    @Autowired
+    private NotificationRepository notificationRepository;
+
+    @Autowired
     private AddressGeocoder geocoder;
+
+    @Autowired
+    private ConversationEmailBroker emailBroker;
 
     @RequestMapping("/show/{id}")
     public String show(Model model, @PathVariable("id") String id) {
@@ -151,5 +161,34 @@ public class PropertyController {
             }
             return "none";
         }
+    }
+
+    @RequestMapping(value = "/{propertyId}/start-conversation", method = RequestMethod.POST)
+    public String startConversation(@RequestParam("message") String message,
+                                    @PathVariable("propertyId") String propertyId) {
+        User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Property property = repository.findOne(UUID.fromString(propertyId));
+
+        if (property.getOwner().equals(loggedUser)) {
+            return "redirect:../show/"+propertyId+".html";
+        }
+
+        Conversation conversation = property.createConversation(loggedUser);
+        ConversationMessage conversationMessage = conversation.createMessage(loggedUser);
+        conversationMessage.setMessage(message);
+        conversationRepository.save(conversation);
+
+        Notification conversationStarted = property.getOwner().createNotification(NotificationType.CONVERSATION_STARTED);
+        conversationStarted.setTargetId(conversation.getId());
+        conversationStarted.setSource(conversation.getTenant().getUsername());
+        conversationStarted.setDestination(property.getTitle());
+        if (conversation.getTenant().getPhoto() != null) {
+            conversationStarted.setThumbnail(conversation.getTenant().getPhoto().getFilename());
+        }
+        notificationRepository.save(conversationStarted);
+
+        emailBroker.setMessage(conversationMessage).sendNotificationEmail();
+
+        return "redirect:../show/"+propertyId+".html?success=ms";
     }
 }

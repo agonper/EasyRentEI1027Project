@@ -3,6 +3,7 @@ package es.uji.daal.easyrent.controller;
 import es.uji.daal.easyrent.handler.ContactEmailBroker;
 import es.uji.daal.easyrent.model.User;
 import es.uji.daal.easyrent.repository.BookingProposalRepository;
+import es.uji.daal.easyrent.repository.ConversationRepository;
 import es.uji.daal.easyrent.repository.InvoiceRepository;
 import es.uji.daal.easyrent.repository.UserRepository;
 import es.uji.daal.easyrent.validators.ContactFormValidator;
@@ -33,6 +34,9 @@ public class IndexController {
     private InvoiceRepository invoiceRepository;
 
     @Autowired
+    private ConversationRepository conversationRepository;
+
+    @Autowired
     private ContactEmailBroker emailBroker;
 
     @RequestMapping("/")
@@ -51,7 +55,8 @@ public class IndexController {
             User loggedUser = (User) authentication.getPrincipal();
             User user = userRepository.findOne(loggedUser.getId());
             model.addAttribute("bookingProposals", proposalRepository.findByProperty_Owner_IdOrderByDateOfCreationDesc(loggedUser.getId()));
-            model.addAttribute("invoices", invoiceRepository.findByProposal_Tenant_IdOrderByNumberAsc(loggedUser.getId()));
+            model.addAttribute("invoices", invoiceRepository.findByProposal_Tenant_IdOrderByExpeditionDateDesc(loggedUser.getId()));
+            model.addAttribute("conversations", conversationRepository.findForUser(user));
             model.addAttribute("user", user);
         }
         return "index";

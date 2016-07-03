@@ -4,6 +4,7 @@ import es.uji.daal.easyrent.handler.BookingProposalEmailBroker;
 import es.uji.daal.easyrent.model.*;
 import es.uji.daal.easyrent.repository.AvailabilityPeriodRepository;
 import es.uji.daal.easyrent.repository.BookingProposalRepository;
+import es.uji.daal.easyrent.repository.NotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,9 @@ public class BookingProposalController {
 
     @Autowired
     private AvailabilityPeriodRepository periodRepository;
+
+    @Autowired
+    private NotificationRepository notificationRepository;
 
     @Autowired
     private BookingProposalEmailBroker emailBroker;
@@ -77,6 +81,16 @@ public class BookingProposalController {
             period.setEndDate(proposal.getEndDate());
             periodRepository.save(period);
 
+            User owner = proposal.getProperty().getOwner();
+            Notification bookingRejected = proposal.getTenant().createNotification(NotificationType.BOOKING_REJECTED);
+            bookingRejected.setTargetId(proposal.getId());
+            bookingRejected.setSource(proposal.getProperty().getOwner().getUsername());
+            bookingRejected.setDestination(proposal.getProperty().getTitle());
+            if (owner.getPhoto() != null) {
+                bookingRejected.setThumbnail(owner.getPhoto().getFilename());
+            }
+            notificationRepository.save(bookingRejected);
+
             emailBroker
                     .setProposal(proposal)
                     .sendTenantRejectionEmail();
@@ -100,6 +114,16 @@ public class BookingProposalController {
             invoice.setPostCode(tenant.getPostCode());
 
             repository.save(proposal);
+
+            User owner = proposal.getProperty().getOwner();
+            Notification bookingAccepted = proposal.getTenant().createNotification(NotificationType.BOOKING_ACCEPTED);
+            bookingAccepted.setTargetId(proposal.getId());
+            bookingAccepted.setSource(owner.getUsername());
+            bookingAccepted.setDestination(proposal.getProperty().getTitle());
+            if (owner.getPhoto() != null) {
+                bookingAccepted.setThumbnail(owner.getPhoto().getFilename());
+            }
+            notificationRepository.save(bookingAccepted);
 
             emailBroker
                     .setProposal(proposal)

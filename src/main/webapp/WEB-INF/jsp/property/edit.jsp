@@ -80,7 +80,7 @@
                                         <label><fmt:message key="property.availability-period" bundle="${lang}"/> #${status.index+1}</label>
                                         <div class="input-daterange input-group" id="range-${status.index}">
                                             <input value="<spring:eval expression="availabilityPeriod.startDate"/>" name="startDate" class="input-sm form-control" required/>
-                                            <span class="input-group-addon">to</span>
+                                            <span class="input-group-addon"><fmt:message key="general.to" bundle="${lang}"/></span>
                                             <c:choose>
                                                 <c:when test="${empty availabilityPeriod.endDate}">
                                                     <input value="<spring:eval expression="availabilityPeriod.startDate"/>" name="endDate" class="input-sm form-control" required/>
@@ -109,7 +109,7 @@
                                 <label><fmt:message key="property.availability-period" bundle="${lang}"/></label>
                                 <div class="input-daterange input-group" id="new-range">
                                     <form:input path="startDate" required="true" cssClass="input-sm form-control"/>
-                                    <span class="input-group-addon">to</span>
+                                    <span class="input-group-addon"><fmt:message key="general.to" bundle="${lang}"/></span>
                                     <form:input path="endDate" required="true" cssClass="input-sm form-control"/>
                                 </div>
                             </div>

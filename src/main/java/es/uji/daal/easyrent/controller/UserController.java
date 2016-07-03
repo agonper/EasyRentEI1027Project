@@ -71,7 +71,8 @@ public class UserController {
 
     @RequestMapping(value = "/edit/{id}/account-info", method = RequestMethod.POST)
     public String processAccountInfo(@ModelAttribute AccountInfoForm accountInfoForm,
-                                     @PathVariable String id, BindingResult bindingResult) {
+                                     @PathVariable String id, BindingResult bindingResult,
+                                     HttpSession session) {
         User user = repository.findOne(UUID.fromString(id));
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (loggedUser.equals(user)) {
@@ -88,6 +89,7 @@ public class UserController {
             }
             accountInfoForm.update(user);
             repository.save(user);
+            session.setAttribute("username", user.getUsername());
         }
         return "redirect:../../profile/"+id+".html";
     }

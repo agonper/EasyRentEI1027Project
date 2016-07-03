@@ -1,5 +1,8 @@
 package es.uji.daal.easyrent.model;
 
+import es.uji.daal.easyrent.utils.search.NullableDateBridge;
+import org.hibernate.search.annotations.*;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -10,12 +13,17 @@ import java.util.Date;
 @Table(name = "availability_periods")
 public class AvailabilityPeriod extends DomainModel {
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ContainedIn
     private Property property;
 
     @Column(nullable = false)
+    @Field
+    @DateBridge(resolution = Resolution.DAY)
     private Date startDate;
 
+    @Field
+    @FieldBridge(impl = NullableDateBridge.class)
     private Date endDate;
 
     /**

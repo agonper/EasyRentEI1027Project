@@ -6,9 +6,14 @@
 <fmt:message key="book-property.title" bundle="${lang}" var="title"/>
 <ol class="breadcrumb">
     <li><a href="${pageContext.request.contextPath}/index.html"><fmt:message key="index.home" bundle="${lang}"/></a></li>
-    <c:if test="${not empty param.q}">
-        <li><a href="${pageContext.request.contextPath}/search.html?q=${param.q}"><fmt:message key="general.search" bundle="${lang}"/></a></li>
-    </c:if>
-    <li><a href="${pageContext.request.contextPath}/property/show/${property.id}.html${not empty param.q ? '?q=' : ''}${not empty param.q ? param.q : ''}"><c:out value="${property.title}"/></a></li>
+    <c:choose>
+        <c:when test="${not empty param.q}">
+            <li><a href="${pageContext.request.contextPath}/search.html?q=${param.q}&s=${param.s}&e=${param.e}"><fmt:message key="general.search" bundle="${lang}"/></a></li>
+            <li><a href="${pageContext.request.contextPath}/property/show/${property.id}.html?q=${param.q}&s=${param.s}&e=${param.e}"><c:out value="${property.title}"/></a></li>
+        </c:when>
+        <c:otherwise>
+            <li><a href="${pageContext.request.contextPath}/property/show/${property.id}.html"><c:out value="${property.title}"/></a></li>
+        </c:otherwise>
+    </c:choose>
     <li class="active">${title}: ${subtitle}</li>
 </ol>
