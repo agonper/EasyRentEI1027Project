@@ -19,7 +19,7 @@
                 <c:choose>
                     <c:when test="${empty properties}">
                         <div class="text-silver text-center">
-                            <h3><fmt:message key="search.no-results" bundle="${lang}"/> '${param.q} <fmt:message key="general.from" bundle="${lang}"/> ${param.s} <fmt:message key="general.from" bundle="${lang}"/> ${param.e}'. <fmt:message key="search.less-keywords" bundle="${lang}"/> </h3>
+                            <h3><fmt:message key="search.no-results" bundle="${lang}"/> '${param.q} <fmt:message key="general.from" bundle="${lang}"/> ${param.s} <fmt:message key="general.to" bundle="${lang}"/> ${param.e}'. <fmt:message key="search.less-keywords" bundle="${lang}"/> </h3>
                         </div>
                     </c:when>
                     <c:otherwise>
