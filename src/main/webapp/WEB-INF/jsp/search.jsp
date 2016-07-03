@@ -121,7 +121,7 @@
                         google.maps.event.addListener(marker, 'click', (function (marker, property) {
                             return function () {
                                 var root = $('<div>');
-                                var title = $('<a>').attr('href', '${pageContext.request.contextPath}/property/show/' + property.id + '.html?q=${param.q}&s=${param.s}&e=${param.e}').html($('<h4>').text(property.title))
+                                var title = $('<a>').attr('href', '${pageContext.request.contextPath}/property/show/' + property.id + '.html?q=${param.q}&s=${param.s}&e=${param.e}').html($('<h4>').text(property.title));
                                 var subtitle = $('<p>').text(property.address);
                                 root.append(title, subtitle);
                                 infoWindow.setContent(root.prop("outerHTML"));
