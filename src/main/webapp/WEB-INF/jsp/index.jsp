@@ -242,7 +242,7 @@
                                                             <c:forEach var="property" items="${user.properties}" varStatus="loop">
                                                                 <tr>
                                                                     <td><a href="${pageContext.request.contextPath}/property/show/${property.id}.html">${loop.index+1}</a></td>
-                                                                    <td>${property.title}</td>
+                                                                    <td><c:out value="${property.title}"/></td>
                                                                     <td><spring:eval expression="property.pricePerDay"/></td>
                                                                     <td>${property.type.label}</td>
                                                                     <td><spring:eval expression="property.creationDate"/></td>

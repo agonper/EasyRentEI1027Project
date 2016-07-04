@@ -41,8 +41,10 @@
                     <c:otherwise>
                         <div class="col-md-3">
                             <c:if test="${bookingProposal.status == 'PENDING'}">
-                                <a class="btn btn-warning" href="${pageContext.request.contextPath}/booking-proposal/accept/${bookingProposal.id}.html"><span class="glyphicon glyphicon-ok"></span> <fmt:message key="proposal.accept" bundle="${lang}"/></a>
-                                <a class="btn btn-warning" href="${pageContext.request.contextPath}/booking-proposal/reject/${bookingProposal.id}.html"><span class="glyphicon glyphicon-remove"></span> <fmt:message key="proposal.reject" bundle="${lang}"/></a>
+                                <%--<a class="btn btn-warning" href="${pageContext.request.contextPath}/booking-proposal/accept/${bookingProposal.id}.html"><span class="glyphicon glyphicon-ok"></span> <fmt:message key="proposal.accept" bundle="${lang}"/></a>
+                                <a class="btn btn-warning" href="${pageContext.request.contextPath}/booking-proposal/reject/${bookingProposal.id}.html"><span class="glyphicon glyphicon-remove"></span> <fmt:message key="proposal.reject" bundle="${lang}"/></a>--%>
+                                <button class="btn btn-success" data-toggle="modal" data-target="#proposal-acceptation-modal"><span class="glyphicon glyphicon-ok"></span> <fmt:message key="proposal.accept" bundle="${lang}"/></button>
+                                <button class="btn btn-danger" data-toggle="modal" data-target="#proposal-rejection-modal"><span class="glyphicon glyphicon-remove"></span> <fmt:message key="proposal.reject" bundle="${lang}"/></button>
                             </c:if>
                         </div>
                     </c:otherwise>
@@ -82,5 +84,49 @@
                 </div>
             </div>
         </div>
+        <c:if test="${bookingProposal.property.owner.equals(loggedUser)}">
+            <%-- Proposal acceptation modal --%>
+            <div class="modal fade" id="proposal-acceptation-modal" tabindex="-1" role="dialog" aria-labelledby="proposalAcceptationLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="proposalAcceptationLabel"><fmt:message key="proposal.acceptation-confirmation" bundle="${lang}"/> </h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="general.cancel" bundle="${lang}"/> </button>
+                            <button type="button" id="confirm-accept-proposal" class="btn btn-success"><fmt:message key="proposal.accept" bundle="${lang}"/> </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <%-- Proposal rejection modal --%>
+            <div class="modal fade" id="proposal-rejection-modal" tabindex="-1" role="dialog" aria-labelledby="proposalRejectionLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="proposalRejectionLabel"><fmt:message key="proposal.rejection-confirmation" bundle="${lang}"/> </h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="general.cancel" bundle="${lang}"/> </button>
+                            <button type="button" id="confirm-reject-proposal" class="btn btn-danger"><fmt:message key="proposal.reject" bundle="${lang}"/> </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                (function () {
+                    $('#confirm-accept-proposal').on('click', function () {
+                        window.location.assign('${pageContext.request.contextPath}/booking-proposal/accept/${bookingProposal.id}.html');
+                    });
+
+                    $('#confirm-reject-proposal').on('click', function () {
+                        window.location.assign('${pageContext.request.contextPath}/booking-proposal/reject/${bookingProposal.id}.html');
+                    });
+                })();
+            </script>
+        </c:if>
     </jsp:body>
 </t:paginabasica>

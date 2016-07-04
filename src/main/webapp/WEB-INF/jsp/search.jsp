@@ -19,7 +19,7 @@
                 <c:choose>
                     <c:when test="${empty properties}">
                         <div class="text-silver text-center">
-                            <h3><fmt:message key="search.no-results" bundle="${lang}"/> '${param.q} <fmt:message key="general.from" bundle="${lang}"/> ${param.s} <fmt:message key="general.from" bundle="${lang}"/> ${param.e}'. <fmt:message key="search.less-keywords" bundle="${lang}"/> </h3>
+                            <h3><fmt:message key="search.no-results" bundle="${lang}"/> '${param.q} <fmt:message key="general.from" bundle="${lang}"/> ${param.s} <fmt:message key="general.to" bundle="${lang}"/> ${param.e}'. <fmt:message key="search.less-keywords" bundle="${lang}"/> </h3>
                         </div>
                     </c:when>
                     <c:otherwise>
@@ -121,7 +121,7 @@
                         google.maps.event.addListener(marker, 'click', (function (marker, property) {
                             return function () {
                                 var root = $('<div>');
-                                var title = $('<a>').attr('href', '${pageContext.request.contextPath}/property/show/' + property.id + '.html?q=${param.q}&s=${param.s}&e=${param.e}').html($('<h4>').text(property.title))
+                                var title = $('<a>').attr('href', '${pageContext.request.contextPath}/property/show/' + property.id + '.html?q=${param.q}&s=${param.s}&e=${param.e}').html($('<h4>').text(property.title));
                                 var subtitle = $('<p>').text(property.address);
                                 root.append(title, subtitle);
                                 infoWindow.setContent(root.prop("outerHTML"));

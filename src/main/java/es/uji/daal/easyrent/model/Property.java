@@ -68,7 +68,7 @@ public class Property extends DomainModel {
     @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Photo> photos;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "property_services",
         joinColumns = @JoinColumn(name = "property_id", referencedColumnName = "id"),
         inverseJoinColumns = @JoinColumn(name = "service_id", referencedColumnName = "id"))
