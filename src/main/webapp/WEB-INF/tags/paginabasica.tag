@@ -48,6 +48,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/animate.css">
 
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAOjLkqYfh1-dvWvdcNXOtg6zN0ajK_x60&libraries=places"></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 
 </head>
 <body>

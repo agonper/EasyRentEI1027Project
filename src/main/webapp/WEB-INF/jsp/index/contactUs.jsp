@@ -31,6 +31,12 @@
         <t:input path="message" type="textarea" required="true"/>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
+                <div class="g-recaptcha" data-sitekey="6Le5NCQTAAAAAFcC9qKiAvV1VxbZx93M1Q2FrT3i"></div>
+                <form:errors path="captcha" cssClass="text-danger"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
                 <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-send"></span> <fmt:message key="contact-us.title" bundle="${lang}"/></button>
             </div>
         </div>

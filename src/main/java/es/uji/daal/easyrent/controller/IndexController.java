@@ -6,9 +6,12 @@ import es.uji.daal.easyrent.repository.BookingProposalRepository;
 import es.uji.daal.easyrent.repository.ConversationRepository;
 import es.uji.daal.easyrent.repository.InvoiceRepository;
 import es.uji.daal.easyrent.repository.UserRepository;
+import es.uji.daal.easyrent.utils.captcha.CaptchaValidator;
+import es.uji.daal.easyrent.utils.network.RequestTools;
 import es.uji.daal.easyrent.validators.ContactFormValidator;
 import es.uji.daal.easyrent.view_models.ContactForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -17,6 +20,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.logging.Logger;
 
 /**
  * Created by Alberto on 05/05/2016.
@@ -38,6 +46,9 @@ public class IndexController {
 
     @Autowired
     private ContactEmailBroker emailBroker;
+
+    @Autowired
+    private CaptchaValidator captchaValidator;
 
     @RequestMapping("/")
     public String root(Model model) {
@@ -80,8 +91,17 @@ public class IndexController {
 
     @RequestMapping(value = "/contact-us", method = RequestMethod.POST)
     private String processContactUs(@ModelAttribute("contactForm") ContactForm contactForm,
-                                    BindingResult bindingResult) {
-        new ContactFormValidator().validate(contactForm, bindingResult);
+                                    BindingResult bindingResult,
+                                    @RequestParam("g-recaptcha-response") String captcha,
+                                    HttpServletRequest request) {
+        boolean validCaptcha = false;
+        try {
+            validCaptcha = captchaValidator.validateCaptcha(captcha, request);
+        } catch (IOException e) {
+            Logger.getAnonymousLogger().warning("Failed to validate captcha for IP:"
+                    + RequestTools.getClientIpAddress(request));
+        }
+        new ContactFormValidator(validCaptcha).validate(contactForm, bindingResult);
         if (bindingResult.hasErrors()) {
             return "index/contactUs";
         }

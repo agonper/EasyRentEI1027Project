@@ -22,7 +22,7 @@
                 <form:select path="type" cssClass="form-control">
                     <form:options items="${propertyTypes}" itemValue="value" itemLabel="label"/>
                 </form:select>
-                <form:errors path="type" cssClass=""/>
+                <form:errors path="type" cssClass="text-danger"/>
             </div>
         </div>
     </div>

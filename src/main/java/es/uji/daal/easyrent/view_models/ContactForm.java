@@ -8,6 +8,7 @@ public class ContactForm {
     private String email;
     private String subject;
     private String message;
+    private String captcha;
 
     public String getName() {
         return name;
@@ -39,5 +40,13 @@ public class ContactForm {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getCaptcha() {
+        return captcha;
+    }
+
+    public void setCaptcha(String captcha) {
+        this.captcha = captcha;
     }
 }
