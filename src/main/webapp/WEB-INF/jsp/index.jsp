@@ -5,6 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="er" uri="/WEB-INF/easy-rent.tld" %>
 
 <sec:authorize access="isAuthenticated()">
     <sec:authentication var="loggedUser" property="principal" />
@@ -243,7 +244,8 @@
                                                                 <tr>
                                                                     <td><a href="${pageContext.request.contextPath}/property/show/${property.id}.html">${loop.index+1}</a></td>
                                                                     <td><c:out value="${property.title}"/></td>
-                                                                    <td><spring:eval expression="property.pricePerDay"/></td>
+                                                                    <er:calculate-vat value="${property.pricePerDay}" var="priceWithVat"/>
+                                                                    <td><tag:show-price amount="${priceWithVat}"/></td>
                                                                     <td>${property.type.label}</td>
                                                                     <td><spring:eval expression="property.creationDate"/></td>
                                                                     <td class="rowlink-skip"><a class="btn btn-warning" href="${pageContext.request.contextPath}/property/edit/${property.id}.html"><span class="glyphicon glyphicon-edit"></span></a></td>
