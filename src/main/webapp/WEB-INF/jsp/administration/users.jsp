@@ -197,7 +197,7 @@
                                                         <option value="OWNER">"<fmt:message key='owner.title' bundle='${lang}'/>" </option>
                                                         <option value="ADMINISTRATOR">"<fmt:message key='administrator.title' bundle='${lang}'/>" </option>
                                                     </select>
-                                                    <button type="submit" class="btn btn-primary"><span class="glyphicon-random"><fmt:message key="administration-users.change" bundle="${lang}"/></span></button>
+                                                    <button type="submit" class="btn btn-primary"><fmt:message key="administration-users.change" bundle="${lang}"/></button>
                                                 </form>
                                             </td>
                                         </tr>
