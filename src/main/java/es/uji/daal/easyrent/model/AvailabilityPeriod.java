@@ -13,7 +13,7 @@ import java.util.Date;
 @Table(name = "availability_periods")
 public class AvailabilityPeriod extends DomainModel {
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     @ContainedIn
     private Property property;
 
