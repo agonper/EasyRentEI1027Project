@@ -222,7 +222,7 @@
                                 if (id === String(index)) {
                                     return;
                                 }
-                                var startDate = moment(period.startDate);
+                                var startDate = moment(period.startDate).subtract(12, 'h');
                                 if (period.endless) {
                                     if (momentDate.isAfter(startDate) || momentDate.isSame(startDate, 'day')) {
                                         enabled = false;
