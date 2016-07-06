@@ -66,6 +66,7 @@ public class Property extends DomainModel {
     private Set<BookingProposal> bookingProposals;
 
     @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("uploadDate asc")
     private Set<Photo> photos;
 
     @ManyToMany
