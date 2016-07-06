@@ -166,7 +166,7 @@ public class AddPropertyFlowController {
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         new PersonalDataValidator().validate(personalDataForm, bindingResult);
-        if (!loggedUser.getDni().equalsIgnoreCase(personalDataForm.getDni()) &&
+        if (loggedUser.getDni() != null && !loggedUser.getDni().equalsIgnoreCase(personalDataForm.getDni()) &&
                 userRepository.existsByDni(personalDataForm.getDni())) {
             bindingResult.rejectValue("dni", "invalid", "That NID is already on the system");
         }
