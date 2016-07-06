@@ -150,7 +150,7 @@
                             <c:if test="${service.active}">
                                 <er:color-gen number="${status.index}" var="color"/>
                                 <span class="h3">
-                                    <span style="margin: 5px" class="label label-${color}">
+                                    <span class="label service-label label-${color}">
                                             <c:out value="${service.name}"/>
                                     </span>
                                 </span>

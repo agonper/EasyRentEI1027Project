@@ -172,3 +172,8 @@ a > .corporate-text:hover {
         width: 555px;
     }
 }
+
+.service-label {
+    margin: 5px;
+    border: white dotted 1px;
+}
