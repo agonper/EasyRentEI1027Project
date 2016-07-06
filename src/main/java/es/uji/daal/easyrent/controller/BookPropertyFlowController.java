@@ -163,9 +163,13 @@ public class BookPropertyFlowController {
     public String processBookSubmit(@ModelAttribute("personalDataForm") PersonalDataForm personalDataForm,
                                     BindingResult bindingResult,
                                     HttpSession session, @PathVariable("id") String propertyId) {
-        PersonalDataValidator validator = new PersonalDataValidator();
-        validator.validate(personalDataForm, bindingResult);
+
+        new PersonalDataValidator().validate(personalDataForm, bindingResult);
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (!loggedUser.getDni().equalsIgnoreCase(personalDataForm.getDni()) &&
+                userRepository.existsByDni(personalDataForm.getDni())) {
+            bindingResult.rejectValue("dni", "invalid", "That NID is already on the system");
+        }
 
         if (bindingResult.hasErrors())
             return "property/book/0";
@@ -183,14 +187,11 @@ public class BookPropertyFlowController {
     public String processBookSubmit(@ModelAttribute("addressInfoForm") AddressInfoForm addressInfoForm,
                                    BindingResult bindingResult,
                                    HttpSession session, @PathVariable("id") String propertyId) {
-        AddressInfoValidator validator = new AddressInfoValidator();
-        validator.validate(addressInfoForm, bindingResult);
-        User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        new AddressInfoValidator().validate(addressInfoForm, bindingResult);
 
         if (bindingResult.hasErrors())
             return "property/book/1";
-
-        addressInfoForm.update(loggedUser);
 
         Map<String, Object> bookProperty = (Map<String, Object>) session.getAttribute(getSessionMapName(propertyId));
         bookProperty.put("addressInfoForm", addressInfoForm);

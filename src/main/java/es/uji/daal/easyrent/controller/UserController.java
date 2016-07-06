@@ -150,6 +150,10 @@ public class UserController {
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (loggedUser.equals(user)) {
             new PersonalDataValidator().validate(personalDataForm, bindingResult);
+            if (!user.getDni().equalsIgnoreCase(personalDataForm.getDni()) &&
+                    repository.existsByDni(personalDataForm.getDni())) {
+                bindingResult.rejectValue("dni", "invalid", "That NID is already on the system");
+            }
             if (bindingResult.hasErrors()) {
                 return "user/edit/personalData";
             }

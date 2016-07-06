@@ -163,14 +163,16 @@ public class AddPropertyFlowController {
     public String processAddSubmit(@ModelAttribute("personalDataForm") PersonalDataForm personalDataForm,
                                    BindingResult bindingResult,
                                    HttpSession session) {
-        PersonalDataValidator validator = new PersonalDataValidator();
-        validator.validate(personalDataForm, bindingResult);
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        new PersonalDataValidator().validate(personalDataForm, bindingResult);
+        if (!loggedUser.getDni().equalsIgnoreCase(personalDataForm.getDni()) &&
+                userRepository.existsByDni(personalDataForm.getDni())) {
+            bindingResult.rejectValue("dni", "invalid", "That NID is already on the system");
+        }
 
         if (bindingResult.hasErrors())
             return "property/add/0";
-
-        personalDataForm.update(loggedUser);
 
         Map<String, Object> addProperty = (Map<String, Object>) session.getAttribute("addPropertyMap");
         addProperty.put("personalDataForm", personalDataForm);
@@ -183,14 +185,11 @@ public class AddPropertyFlowController {
     public String processAddSubmit(@ModelAttribute("addressInfoForm") AddressInfoForm addressInfoForm,
                                    BindingResult bindingResult,
                                    HttpSession session) {
-        AddressInfoValidator validator = new AddressInfoValidator();
-        validator.validate(addressInfoForm, bindingResult);
-        User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        new AddressInfoValidator().validate(addressInfoForm, bindingResult);
 
         if (bindingResult.hasErrors())
             return "property/add/1";
-
-        addressInfoForm.update(loggedUser);
 
         Map<String, Object> addProperty = (Map<String, Object>) session.getAttribute("addPropertyMap");
         addProperty.put("addressInfoForm", addressInfoForm);

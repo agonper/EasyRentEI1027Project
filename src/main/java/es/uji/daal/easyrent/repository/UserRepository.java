@@ -23,6 +23,9 @@ public interface UserRepository extends CrudRepository<User, UUID>, UserReposito
     @Query("select count(e)>0 from User e where lower(e.username) = lower(:username)")
     boolean existsByUsername(@Param("username") String username);
 
+    @Query("select count(e)>0 from User e where lower(e.Dni) = lower(:dni)")
+    boolean existsByDni(@Param("dni") String dni);
+
     @Query("select e from User e where lower(e.username) like lower( concat('%', :username, '%') )")
     List<User> findByUsernameContainedInSearchedName(@Param("username") String username);
 
